@@ -17,7 +17,11 @@ const Employees = () => {
       <h2>Employees</h2>
       <div>
         {employees.map((employee) => {
-          return <div key={employee._id}>{employee.firstName}</div>;
+          return (
+            <div href="/employees/form" key={employee._id}>
+              {employee.firstName}
+            </div>
+          );
         })}
       </div>
     </section>
