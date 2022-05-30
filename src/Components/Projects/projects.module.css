@@ -1,6 +1,24 @@
 .container {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 2%;
+}
+
+.projects {
+  font-size: 30px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px grey;
+}
+
+.addbtn {
+  padding: 1%;
+  background-color: #AACE9B;
+  border-radius: 10%;
+  border-color: #AACE9B;
+  box-shadow: 2px 2px 2px grey;
+  text-transform: uppercase;
+  text-align: center;
 }

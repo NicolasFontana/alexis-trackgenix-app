@@ -1,21 +1,27 @@
 import React from 'react';
+import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem }) => {
   const handleDelete = (_id) => {
     deleteItem(_id);
   };
   return (
-    <tr className="list-rows">
-      <td>{listItem.name} </td>
+    <tr className={styles.rows}>
+      <td>{listItem._id}</td>
+      <td>{listItem.name}</td>
       <td>{listItem.description}</td>
       <td>{listItem.startDate}</td>
       <td>{listItem.endDate}</td>
-      <td>{listItem.client}</td>
-      <td>{listItem.active}</td>
-      <td>{listItem.members.length}</td>
+      <td>{listItem.clientName}</td>
       <td>{listItem.active.toString()}</td>
+      <td>{listItem.members.length}</td>
       <td>
-        <button onClick={() => handleDelete(listItem._id)}>X</button>
+        <a href="http://localhost:8000/api/projects/form?id=${project._id}">
+          <button className={styles.editbtn}>&#9998;</button>
+        </a>
+        <button className={styles.deletebtn} onClick={() => handleDelete(listItem._id)}>
+          &#10006;
+        </button>
       </td>
     </tr>
   );

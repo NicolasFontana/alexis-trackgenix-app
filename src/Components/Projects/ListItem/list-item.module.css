@@ -1,0 +1,29 @@
+.rows {
+    background-color: #E4E4E4;
+    text-align: center;
+}
+
+.rows td {
+    font-size: 15px;
+    margin: 2% 1% 2% 1%;
+}
+
+.deletebtn {
+    margin: 10%;
+    background-color: #F36D6D;
+    border-color:#F36D6D;
+    font-size: 20px;
+    box-shadow: 5%;
+    border-radius: 20%;
+    color: #E4E4E4;
+}
+
+.editbtn {
+    margin: 10%;
+    background-color: grey;
+    border-color: grey;
+    font-size: 20px;
+    box-shadow: 5%;
+    border-radius: 20%;
+    color: #E4E4E4;
+}

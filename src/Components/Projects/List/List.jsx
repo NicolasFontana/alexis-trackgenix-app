@@ -1,13 +1,14 @@
 import React from 'react';
-import './list.module.css';
+import styles from './list.module.css';
 import ListItem from '../ListItem/ListItem';
 
 const List = ({ list, deleteItem }) => {
   return (
-    <div>
+    <div className={styles.table}>
       <table>
-        <thead>
+        <thead className={styles.row}>
           <tr>
+            <th> ID </th>
             <th> Name </th>
             <th> Description </th>
             <th> Start Date </th>
@@ -15,6 +16,7 @@ const List = ({ list, deleteItem }) => {
             <th> Client </th>
             <th> Active </th>
             <th> Members </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

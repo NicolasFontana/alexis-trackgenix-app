@@ -1,0 +1,12 @@
+.table  {
+    margin-bottom: 2%;
+    padding: 2%;
+}
+
+.table th {
+    text-transform: uppercase;
+}
+
+.row th {
+    background-color: grey;
+}
