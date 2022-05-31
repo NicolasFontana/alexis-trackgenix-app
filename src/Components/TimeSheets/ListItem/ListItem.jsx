@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ListItem.module.css';
+import EditItem from '../EditItem/EditItem';
 
-const ListItem = ({ listTimeSheet, deleteItem }) => {
+const ListItem = ({ listTimeSheet, deleteItem, setShowModal, setShowTitle }) => {
+  const [showFormEdit, setShowFormEdit] = useState(false);
   console.log(listTimeSheet);
+  const closeForm = () => {
+    setShowFormEdit(false);
+  };
+  const openForm = () => {
+    setShowFormEdit(true);
+  };
   return (
     <tr>
       <td>{listTimeSheet.projectId.name}</td>
@@ -14,9 +22,6 @@ const ListItem = ({ listTimeSheet, deleteItem }) => {
       <td>{listTimeSheet.Task[0].taskId.status}</td>
       <td>{listTimeSheet.approved ? 'Approved' : 'Not approved'}</td>
       <td>
-        <button>&#9998;</button>
-      </td>
-      <td>
         <button
           className={styles.delete}
           onClick={() => {
@@ -25,6 +30,19 @@ const ListItem = ({ listTimeSheet, deleteItem }) => {
         >
           &#10006;
         </button>
+      </td>
+      <td>
+        <EditItem
+          key={listTimeSheet._id}
+          show={showFormEdit}
+          closeForm={closeForm}
+          previewTimeSheet={listTimeSheet}
+          setShowModal={setShowModal}
+          setShowTitle={setShowTitle}
+        />
+        <a>
+          <button onClick={openForm}>&#9998;</button>
+        </a>
       </td>
     </tr>
   );

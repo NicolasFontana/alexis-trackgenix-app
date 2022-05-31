@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import List from './List/List';
+import AddItem from './AddItem/AddItem';
+import Modal from './Modal/Modal';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
+  const [showFormAdd, setShowFormAdd] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showTitle, setShowTitle] = useState('');
 
   useEffect(async () => {
     try {
@@ -28,10 +33,25 @@ function TimeSheets() {
     }
   };
 
+  const closeForm = () => {
+    setShowFormAdd(false);
+  };
+  const onClick = () => {
+    setShowFormAdd(true);
+  };
+
   return (
     <section className={styles.container}>
+      <AddItem
+        show={showFormAdd}
+        closeForm={closeForm}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
       <h2>Timesheets</h2>
       <List timeSheets={timeSheets} deleteItem={deleteItem} />
+      <button onClick={onClick}>+ Add TimeSheet</button>
+      <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }

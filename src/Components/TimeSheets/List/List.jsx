@@ -2,7 +2,7 @@ import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
 
-const List = ({ timeSheets, deleteItem }) => {
+const List = ({ timeSheets, deleteItem, setShowModal, setShowTitle }) => {
   return (
     <div className={styles.container}>
       <table>
@@ -22,7 +22,13 @@ const List = ({ timeSheets, deleteItem }) => {
         </thead>
         <tbody>
           {timeSheets.map((timeSheet) => (
-            <ListItem key={timeSheet._id} listTimeSheet={timeSheet} deleteItem={deleteItem} />
+            <ListItem
+              key={timeSheet._id}
+              listTimeSheet={timeSheet}
+              deleteItem={deleteItem}
+              setShowModal={setShowModal}
+              setShowTitle={setShowTitle}
+            />
           ))}
         </tbody>
       </table>
