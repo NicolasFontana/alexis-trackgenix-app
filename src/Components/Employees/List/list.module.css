@@ -1,0 +1,14 @@
+.table  {
+    margin-bottom: 1%;
+}
+
+.table th {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+}
+
+.row th {
+    background-color: #F0F4F9;
+}
