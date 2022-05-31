@@ -1,0 +1,16 @@
+.rows{
+  margin: 5px 0px;
+  background-color: #ffffff;
+}
+
+.items{
+  text-align: center;
+  border: 1px solid #000000;
+  padding: 5px 10px;
+}
+
+.button{
+  background-color: #ff5500;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}

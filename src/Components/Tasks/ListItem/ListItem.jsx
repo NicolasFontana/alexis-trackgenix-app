@@ -1,21 +1,28 @@
 import React from 'react';
+import styles from './listItem.module.css';
 
 const ListItem = (props) => {
-  const { task, delItem } = props;
+  const { task, delItem, setShowModal } = props;
 
   const handleDel = () => {
     delItem(task._id);
+    setShowModal(true);
   };
 
   return (
-    <tr className="rows">
-      <td>{task.taskName}</td>
-      <td>{task.startDate}</td>
-      <td>{task.workedHours}</td>
-      <td>{task.description}</td>
-      <td>{task.status}</td>
-      <td>
-        <button onClick={() => handleDel(task._id)}>X</button>
+    <tr className={styles.rows}>
+      <td className={styles.items}>{task.taskName}</td>
+      <td className={styles.items}>{task.startDate}</td>
+      <td className={styles.items}>{task.workedHours}</td>
+      <td className={styles.items}>{task.description}</td>
+      <td className={styles.items}>{task.status}</td>
+      <td className={styles.buttonContainer}>
+        <button className={styles.button}>Edit</button>
+      </td>
+      <td className={styles.buttonContainer}>
+        <button className={styles.button} onClick={() => handleDel(task._id)}>
+          X
+        </button>
       </td>
     </tr>
   );

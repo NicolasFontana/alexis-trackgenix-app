@@ -1,15 +1,16 @@
-import styles from 'modal.module.css';
+import styles from './modal.module.css';
 
-const Modal = (props) => {
-  if (!props.show) {
-    return null;
-  }
-
+const Modal = ({ title, setShowModal }) => {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <button className={styles.button}>Cancel</button>
-        <button className={styles.button}>Delete</button>
+        <h2>{title}</h2>
+        <button className={styles.button} onClick={() => setShowModal(false)}>
+          Delete
+        </button>
+        <button className={styles.button} onClick={() => setShowModal(false)}>
+          Cancel
+        </button>
       </div>
     </div>
   );

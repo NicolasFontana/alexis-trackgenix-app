@@ -1,13 +1,13 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
+import styles from './list.module.css';
 
 const List = (props) => {
-  const { tasks, delItem } = props;
-  // console.log('Array Tasks in LIST: ', tasks);
+  const { tasks, delItem, setShowModal } = props;
 
   return (
-    <div className="table-container">
-      <table>
+    <div className={styles.table}>
+      <table className={styles.header}>
         <thead>
           <tr>
             <th id="taskName">Task Name</th>
@@ -19,7 +19,7 @@ const List = (props) => {
         </thead>
         <tbody>
           {tasks.map((task) => (
-            <ListItem key={task._id} task={task} delItem={delItem} />
+            <ListItem key={task._id} task={task} delItem={delItem} setShowModal={setShowModal} />
           ))}
         </tbody>
       </table>
