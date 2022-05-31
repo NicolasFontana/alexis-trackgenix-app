@@ -10,6 +10,7 @@ const Form = () => {
     email: '',
     password: '',
     active: '',
+    isProjectManager: '',
     projects: [],
     timesheets: []
   });
@@ -20,6 +21,27 @@ const Form = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    fetch(`${process.env.REACT_APP_API_URL}api/employees/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName: employeeInput.firstName,
+        lastName: employeeInput.lastName,
+        phone: employeeInput.phone,
+        email: employeeInput.email,
+        password: employeeInput.password,
+        active: employeeInput.active,
+        isProjectManager: employeeInput.isProjectManager,
+        projects: employeeInput.projects,
+        timeSheets: employeeInput.timeSheets
+      }),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   return (
@@ -64,6 +86,13 @@ const Form = () => {
         name="active"
         placeholder="true/false"
         value={employeeInput.active}
+        onChange={onChange}
+      />
+      <Input
+        label="Is Project Manager?"
+        name="isProjectManager"
+        placeholder="true/false"
+        value={employeeInput.isProjectManager}
         onChange={onChange}
       />
       <Input
