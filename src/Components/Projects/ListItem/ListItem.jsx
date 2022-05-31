@@ -1,9 +1,20 @@
 import React from 'react';
 import styles from './list-item.module.css';
 
-const ListItem = ({ listItem, deleteItem }) => {
-  const handleDelete = (_id) => {
+const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
+  const handleDelete = async (_id) => {
     deleteItem(_id);
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}api/projects/${_id}`, {
+        method: 'DELETE'
+      });
+      setShowModal(true);
+      setTitleModal('Project deleted');
+    } catch (error) {
+      setShowModal(true);
+      setTitleModal('Error. Project could not be deleted');
+      console.error(error);
+    }
   };
   return (
     <tr className={styles.rows}>

@@ -1,11 +1,12 @@
 .rows {
-    background-color: #E4E4E4;
+    background-color: #F0F4F9;
     text-align: center;
 }
 
 .rows td {
-    font-size: 15px;
     margin: 2% 1% 2% 1%;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .deletebtn {
@@ -13,7 +14,7 @@
     background-color: #F36D6D;
     border-color:#F36D6D;
     font-size: 20px;
-    box-shadow: 5%;
+    box-shadow: 2px 2px 2px grey;
     border-radius: 20%;
     color: #E4E4E4;
 }
@@ -23,7 +24,7 @@
     background-color: grey;
     border-color: grey;
     font-size: 20px;
-    box-shadow: 5%;
+    box-shadow: 2px 2px 2px grey;
     border-radius: 20%;
     color: #E4E4E4;
 }

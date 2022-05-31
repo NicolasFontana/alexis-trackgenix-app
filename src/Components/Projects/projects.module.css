@@ -9,6 +9,7 @@
 
 .projects {
   font-size: 30px;
+  font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
 }
@@ -21,4 +22,6 @@
   box-shadow: 2px 2px 2px grey;
   text-transform: uppercase;
   text-align: center;
+  text-shadow: 2px 2px 2px gray;
+  font-family: 'Roboto', sans-serif;
 }

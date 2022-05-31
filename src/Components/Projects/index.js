@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import styles from './projects.module.css';
 import List from './List/List';
+import styles from './projects.module.css';
 
 const Projects = () => {
   const [list, setProjects] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/projects`)
+    fetch(`${process.env.REACT_APP_API_URL}api/projects`)
       .then((response) => response.json())
       .then((response) => {
         setProjects(response.data);
@@ -15,15 +15,6 @@ const Projects = () => {
   }, []);
 
   const deleteItem = async (_id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/projects/${_id}`, {
-        method: 'DELETE'
-      });
-      console.log('response', response);
-      confirm(`WARNING!\n Are you sure you want to delete this project?`);
-    } catch (error) {
-      console.error(error);
-    }
     setProjects([...list.filter((listItem) => listItem._id !== _id)]);
   };
 
