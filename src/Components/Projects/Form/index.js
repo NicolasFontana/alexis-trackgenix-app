@@ -21,12 +21,11 @@ const ProjectForm = () => {
     const projectID = params.get('id');
     if (projectID) {
       try {
-        const getProject = await fetch(`http://localhost:8000/api/projects/${projectID}`); //`${process.env.REACT_APP_API}/api/projects/${projectID}`
+        const getProject = await fetch(`${process.env.REACT_APP_API}/api/projects/${projectID}`);
         const projectData = await getProject.json();
         saveProjects([projectData.data]);
         setUserInput({
           name: projectData.data.name,
-          members: projectData.data.members,
           startDate: projectData.data.startDate,
           endDate: projectData.data.endDate,
           clientName: projectData.data.clientName,
@@ -36,10 +35,11 @@ const ProjectForm = () => {
         setLoading(false);
       } catch (error) {
         console.error(error);
+        alert(error);
       }
     } else {
       try {
-        const getProject = await fetch(`http://localhost:8000/api/projects`); // `${process.env.REACT_APP_API}/api/projects`
+        const getProject = await fetch(`${process.env.REACT_APP_API}/api/projects`);
         const projectData = await getProject.json();
         saveProjects(projectData.data);
         setOnAdd(true);
@@ -54,7 +54,7 @@ const ProjectForm = () => {
     e.preventDefault();
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
-    let url = `http://localhost:8000/api/projects/`;
+    let url = `${process.env.REACT_APP_API}/api/projects`;
     const options = {
       method: 'POST',
       headers: {
@@ -64,17 +64,21 @@ const ProjectForm = () => {
     };
     if (projectID) {
       options.method = 'PUT';
-      url = `http://localhost:8000/api/projects/${projectID}`;
+      url = `${process.env.REACT_APP_API}/api/projects/${projectID}`;
     }
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log(data);
+      console.log(response.status, data.message);
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error(data.error);
+      } else {
+        alert(data.message);
+      }
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
-
   const onChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
@@ -88,75 +92,88 @@ const ProjectForm = () => {
     <h1 className={styles.loading}>Loading form...</h1>
   ) : (
     <>
-      <div className={styles.container}>
-        <h2>Form </h2>
+      <div className={styles.maincontainer}>
         <form onSubmit={onSubmit} className={styles.container}>
-          <div>
-            <label>Project Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Insert project name"
-              value={userInput.name}
-              onChange={onChange}
-            />
+          {onAdd ? <h2>Add Project</h2> : <h2>Edit Project</h2>}
+          <div className={styles.maincontainer}>
+            <div className={styles.divcontainer}>
+              <div>
+                <label>Project Name</label>
+                <input
+                  className={styles.inputs}
+                  type="text"
+                  name="name"
+                  placeholder="Insert project name"
+                  value={userInput.name}
+                  onChange={onChange}
+                />
+              </div>
+              <div>
+                <label>Client</label>
+                <input
+                  className={styles.inputs}
+                  type="text"
+                  name="clientName"
+                  placeholder="Insert client name"
+                  value={userInput.clientName}
+                  onChange={onChange}
+                />
+              </div>
+              <div>
+                <label>Active</label>
+                <select
+                  name="active"
+                  defaultValue={userInput.active}
+                  onChange={onChangeActive}
+                  className={styles.inputs}
+                >
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div>
+                <label>Start Date</label>
+                <input
+                  className={styles.inputs}
+                  type="date"
+                  name="startDate"
+                  placeholder="mm/dd/yyyy"
+                  value={onAdd ? userInput.startDate : userInput.startDate.slice(0, 10)}
+                  onChange={onChange}
+                />
+              </div>
+              <div>
+                <label>End Date</label>
+                <input
+                  className={styles.inputs}
+                  type="date"
+                  name="endDate"
+                  placeholder="mm/dd/yyyy"
+                  value={onAdd ? userInput.endDate : userInput.endDate.slice(0, 10)}
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className={styles.divcontainer}>
+              <div>
+                <label>Description</label>
+                <textarea
+                  id="textarea"
+                  name="description"
+                  cols="30"
+                  rows="10"
+                  value={userInput.description}
+                  placeholder="Add a description of the project"
+                  onChange={onChange}
+                ></textarea>
+              </div>
+              <div>
+                <ListMembers project={project} onAdd={onAdd} />
+              </div>
+            </div>
           </div>
-          <div>
-            <label>Description</label>
-            <textarea
-              id="textarea"
-              name="description"
-              cols="30"
-              rows="10"
-              value={userInput.description}
-              placeholder="Add a description of the project"
-              onChange={onChange}
-            ></textarea>
-          </div>
-          <div>
-            <label>Client</label>
-            <input
-              type="text"
-              name="clientName"
-              placeholder="Insert client name"
-              value={userInput.clientName}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label>Start Date</label>
-            <input
-              type="date"
-              name="startDate"
-              placeholder="mm/dd/yyyy"
-              value={onAdd ? userInput.startDate : userInput.startDate.slice(0, 10)}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label>end Date</label>
-            <input
-              type="date"
-              name="endDate"
-              placeholder="mm/dd/yyyy"
-              value={onAdd ? userInput.endDate : userInput.endDate.slice(0, 10)}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <ListMembers project={project} onAdd={onAdd} />
-          </div>
-          ;
-          <div>
-            <label>Active</label>
-            <select name="active" defaultValue={userInput.active} onChange={onChangeActive}>
-              <option value="">Select an option</option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-          <div className="buttons">
-            <input type="submit" value="submit" onSubmit={onSubmit} />
+          <div className={styles.buttons}>
+            <input type="submit" value="Submit" onSubmit={onSubmit} />
           </div>
         </form>
       </div>
