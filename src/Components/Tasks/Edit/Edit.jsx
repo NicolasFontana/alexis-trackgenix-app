@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from '../Input/Input';
-import styles from './form.module.css';
+import styles from './edit.module.css';
 
-const Form = () => {
+const Edit = () => {
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -11,24 +11,48 @@ const Form = () => {
     status: ''
   });
 
+  const params = new URLSearchParams(window.location.search);
+  const taskID = params.get('id');
+
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`);
+      const data = await response.json();
+      setUserInput({
+        taskName: data.data.taskName,
+        startDate: data.data.startDate,
+        workedHours: data.data.workedHours,
+        description: data.data.description,
+        status: data.data.description
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   const onChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
-      method: 'POST',
+    console.log(userInput);
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInput)
-    });
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.form}>
         <div>
-          <h2>Add New Task</h2>
+          <h2>Edit New Task</h2>
         </div>
         <form onSubmit={onSubmit} className="form-input">
           <Input label="Task Name" name="taskName" value={userInput.taskName} onChange={onChange} />
@@ -68,4 +92,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Edit;

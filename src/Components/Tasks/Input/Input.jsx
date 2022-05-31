@@ -5,7 +5,7 @@ const Input = (props) => {
   const { label, name, value, onChange } = props;
 
   return (
-    <div>
+    <div className={styles.container}>
       <label>{label}</label>
       <input className={styles.input} name={name} value={value} onChange={onChange} required />
     </div>

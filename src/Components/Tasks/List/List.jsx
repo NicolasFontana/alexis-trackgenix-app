@@ -1,9 +1,47 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './list.module.css';
 
-const List = (props) => {
-  const { tasks, delItem, setShowModal } = props;
+const List = () => {
+  const [tasks, saveTasks] = useState([]);
+
+  useEffect(async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
+      const data = await response.json();
+      saveTasks(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const delTask = (id) => {
+    const confirmation = confirm('Are you sure you want to delete this task?');
+    if (confirmation) {
+      saveTasks([...tasks.filter((task) => task._id !== id)]);
+      return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
+        method: 'DELETE'
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+        });
+    }
+  };
+
+  // const editTask = (id) => {
+  //   const confirmation = confirm('Are you sure you want to delete this task?');
+  //   if (confirmation) {
+  //     saveTasks([...tasks.filter((task) => task._id !== id)]);
+  //     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
+  //       method: 'DELETE'
+  //     })
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         console.log(response);
+  //       });
+  //   }
+  // };
 
   return (
     <div className={styles.table}>
@@ -19,8 +57,9 @@ const List = (props) => {
         </thead>
         <tbody>
           {tasks.map((task) => (
-            <ListItem key={task._id} task={task} delItem={delItem} setShowModal={setShowModal} />
+            <ListItem key={task._id} task={task} delTask={delTask} />
           ))}
+          {/* <Modal /> */}
         </tbody>
       </table>
     </div>

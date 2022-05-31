@@ -2,12 +2,7 @@ import React from 'react';
 import styles from './listItem.module.css';
 
 const ListItem = (props) => {
-  const { task, delItem, setShowModal } = props;
-
-  const handleDel = () => {
-    delItem(task._id);
-    setShowModal(true);
-  };
+  const { task, delTask } = props;
 
   return (
     <tr className={styles.rows}>
@@ -17,10 +12,12 @@ const ListItem = (props) => {
       <td className={styles.items}>{task.description}</td>
       <td className={styles.items}>{task.status}</td>
       <td className={styles.buttonContainer}>
-        <button className={styles.button}>Edit</button>
+        <a className={styles.button} href={`/tasks/edit?id=${task._id}`}>
+          Edit
+        </a>
       </td>
       <td className={styles.buttonContainer}>
-        <button className={styles.button} onClick={() => handleDel(task._id)}>
+        <button className={styles.button} onClick={() => delTask(props.task._id)}>
           X
         </button>
       </td>
