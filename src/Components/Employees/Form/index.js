@@ -23,70 +23,67 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div>
-        <h2>Add new Employee</h2>
-      </div>
-      <form onSubmit={onSubmit}>
-        <Input
-          label="First Name"
-          name="firstName"
-          value={employeeInput.firstName}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Last Name"
-          name="lastName"
-          value={employeeInput.lastName}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Phone"
-          name="phone"
-          value={employeeInput.phone}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Email"
-          name="email"
-          value={employeeInput.email}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Password"
-          name="password"
-          value={employeeInput.password}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Active"
-          name="active"
-          value={employeeInput.active}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Projects"
-          name="projects"
-          value={employeeInput.projects}
-          onChange={onChange}
-          required
-        />
-        <Input
-          label="Timesheets"
-          name="timesheets"
-          value={employeeInput.timesheets}
-          onChange={onChange}
-          required
-        />
-        <button type="submit">Save</button>
-      </form>
-    </div>
+    <form className={styles.container} onSubmit={onSubmit}>
+      <Input
+        label="First Name"
+        name="firstName"
+        placeholder="Juan"
+        value={employeeInput.firstName}
+        onChange={onChange}
+      />
+      <Input
+        label="Last Name"
+        name="lastName"
+        placeholder="Perez"
+        value={employeeInput.lastName}
+        onChange={onChange}
+      />
+      <Input
+        label="Phone"
+        name="phone"
+        placeholder="123456789"
+        value={employeeInput.phone}
+        onChange={onChange}
+      />
+      <Input
+        label="Email"
+        name="email"
+        placeholder="juanperez@gmail.com"
+        value={employeeInput.email}
+        onChange={onChange}
+      />
+      <Input
+        label="Password"
+        name="password"
+        placeholder="********"
+        value={employeeInput.password}
+        onChange={onChange}
+      />
+      <Input
+        label="Active"
+        name="active"
+        placeholder="true/false"
+        value={employeeInput.active}
+        onChange={onChange}
+      />
+      <Input
+        label="Projects"
+        name="projects"
+        placeholder=""
+        value={employeeInput.projects}
+        onChange={onChange}
+      />
+      <Input
+        label="Timesheets"
+        name="timesheets"
+        placeholder=""
+        value={employeeInput.timesheets}
+        onChange={onChange}
+      />
+      <button className={styles.submitButton} type="submit">
+        Confirm
+      </button>
+    </form>
   );
 };
 
