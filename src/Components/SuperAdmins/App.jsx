@@ -6,7 +6,7 @@ const App = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/super-admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/super-admins`);
       const data = await response.json();
       setSuperAdmins(data.data);
     } catch (error) {
@@ -14,8 +14,17 @@ const App = () => {
     }
   }, []);
 
-  const deleteSuperA = (id) => {
-    setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== id)]);
+  const deleteSuperA = async (_id) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/super-admins/${_id}`, {
+        method: 'DELETE'
+      });
+      console.log('response', response);
+      confirm(`WARNING!\n Are you sure you want to delete this super admin?`);
+    } catch (error) {
+      console.error(error);
+    }
+    setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== _id)]);
   };
 
   return (

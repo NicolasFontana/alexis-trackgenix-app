@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import styles from './form.module.css';
+import styles from './add.module.css';
 
-const SuperAdminsForm = () => {
+const SuperAdminsAdd = () => {
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
     lastName: '',
@@ -13,6 +13,23 @@ const SuperAdminsForm = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    fetch(`${process.env.REACT_APP_API_URL}api/super-admins`, {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName: superAdminInput.firstName,
+        lastName: superAdminInput.lastName,
+        email: superAdminInput.email,
+        password: superAdminInput.password,
+        active: superAdminInput.active === 'true'
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   const onChange = (e) => {
@@ -21,7 +38,10 @@ const SuperAdminsForm = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Form</h2>
+      <h2>Create Super Admin</h2>
+      <a href="/super-admins">
+        <button>Exit</button>
+      </a>
       <form onSubmit={onSubmit}>
         <div>
           <div>
@@ -29,9 +49,10 @@ const SuperAdminsForm = () => {
               First Name:
               <input
                 type="text"
-                name="first-name"
+                name="firstName"
                 value={superAdminInput.firstName}
                 onChange={onChange}
+                required
               />
             </label>
           </div>
@@ -40,16 +61,23 @@ const SuperAdminsForm = () => {
               Last Name:
               <input
                 type="text"
-                name="last-name"
+                name="lastName"
                 value={superAdminInput.lastName}
                 onChange={onChange}
+                required
               />
             </label>
           </div>
           <div>
             <label>
               Email:
-              <input type="email" name="email" value={superAdminInput.email} onChange={onChange} />
+              <input
+                type="email"
+                name="email"
+                value={superAdminInput.email}
+                onChange={onChange}
+                required
+              />
             </label>
           </div>
           <div>
@@ -60,13 +88,15 @@ const SuperAdminsForm = () => {
                 name="password"
                 value={superAdminInput.password}
                 onChange={onChange}
+                required
               />
             </label>
           </div>
           <div>
             <label>
               Active:
-              <select value={superAdminInput.active} onChange={onChange}>
+              <select name="active" value={superAdminInput.active} onChange={onChange}>
+                <option value=""></option>
                 <option value="true">True</option>
                 <option value="false">False</option>
               </select>
@@ -74,12 +104,9 @@ const SuperAdminsForm = () => {
           </div>
         </div>
         <button type="submit">Save</button>
-        <a href="/super-admins/">
-          <button>Exit</button>
-        </a>
       </form>
     </section>
   );
 };
 
-export default SuperAdminsForm;
+export default SuperAdminsAdd;
