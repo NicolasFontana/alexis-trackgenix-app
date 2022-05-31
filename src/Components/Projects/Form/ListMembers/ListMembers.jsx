@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
 
 const ListMembers = ({ project, onAdd }) => {
   const [members] = onAdd ? useState([]) : useState(project[0].members);
-  return onAdd ? (
-    <a href="project/form/addmembers">Click here to add or edit members</a>
+  return onAdd || !members.length ? (
+    <a href="project/form/addmembers" className={styles.addmember}>
+      Click here to add or edit members
+    </a>
   ) : (
-    <div>
-      <h3>List of current members</h3>
+    <div className={styles.container}>
+      <h3>Current team members</h3>
       <table>
         <thead>
           <tr>

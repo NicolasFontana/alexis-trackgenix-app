@@ -1,7 +1,103 @@
+.maincontainer textarea, .maincontainer select {
+  font-family: 'Roboto', sans-serif;
+}
+
+.maincontainer textarea {
+  padding: 4px 6px;
+  width: 100%;
+  border: 0.5px solid #373867;
+  border-radius: 3px;
+  color: #373867;
+  margin-top: 10px;
+  height: 80px;
+}
+
+.maincontainer h2 {
+  width: 700px;
+  margin-bottom: 20px;
+  padding: 15px 0;
+  background-color: #373867;
+  border-radius: 15px 15px 0 0;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 35px;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.maincontainer {
+  margin: 0 60px;
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  color: #373867;
+}
+
+.formcontainer {
+  display: flex;
+}
+
+.divcontainer {
+  flex:48;
+  display: flex;
+  flex-direction: column;
+  margin: 0 30px;
+}
+
 .container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.maincontainer label {
+  line-height: 18px;
+  display: block;
+  padding-bottom: 3px;
+  text-align: justify;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.inputs {
+  margin: 5px 0 10px 0;  
+  font-family: 'Roboto', sans-serif;
+  padding: 4px 6px;
+  width: 100%;
+  height: 25px;
+  border: 0.5px solid #373867;
+  border-radius: 3px;
+  color: #373867;
+}
+
+input::placeholder, textarea::placeholder {
+  font-weight: 400;
+  font-size: 12px;
+  color: #373867;
+  opacity: 0.5;
+}
+
+.buttons input {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 56px;
+  background: #AACE9B;
+  border-radius: 3.7px;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  color: #373867;
+}
+
+.container a {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 12px;
+  opacity: 0.9;
+}
+.loading {
+  margin: auto;
+}

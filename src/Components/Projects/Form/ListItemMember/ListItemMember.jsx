@@ -1,6 +1,8 @@
+import styles from './listitemmember.module.css';
+
 const ListItemMember = ({ member }) => {
   return (
-    <tr>
+    <tr className={styles.row}>
       <td>
         {member.employeeId.lastName}, {member.employeeId.firstName}
       </td>
