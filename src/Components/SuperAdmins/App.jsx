@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './Modal';
 import List from './List/List';
 
 const App = () => {
-  const [showModal, setShowModal] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
 
   useEffect(async () => {
@@ -16,10 +14,6 @@ const App = () => {
     }
   }, []);
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   const deleteSuperA = async (_id) => {
     try {
       const response = await fetch(`http://localhost:8000/api/super-admins/${_id}`, {
@@ -28,6 +22,7 @@ const App = () => {
       console.log('response', response);
       confirm(`WARNING!\n Are you sure you want to delete this super admin?`);
     } catch (error) {
+      alert(`Error\n${error}`);
       console.error(error);
     }
     setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== _id)]);
@@ -35,7 +30,6 @@ const App = () => {
 
   return (
     <div>
-      <Modal show={showModal} close={closeModal} />
       <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
     </div>
   );

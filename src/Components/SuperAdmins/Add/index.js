@@ -1,10 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import styles from './add.module.css';
-import Modal from '../Modal';
 
 const SuperAdminsAdd = () => {
-  const [showModal, setShowModal] = useState(false);
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
     lastName: '',
@@ -12,8 +10,6 @@ const SuperAdminsAdd = () => {
     password: '',
     active: ''
   });
-
-  let message = '';
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -32,10 +28,7 @@ const SuperAdminsAdd = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        message = response.message;
-        console.log(message);
-        setShowModal(true);
+        alert(response.message);
       });
   };
 
@@ -43,19 +36,8 @@ const SuperAdminsAdd = () => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   return (
     <section className={styles.container}>
-      <Modal
-        show={showModal}
-        modalTitle={'Success'}
-        modalMessage={message}
-        closeModal={closeModal}
-        confirmModal={closeModal}
-      />
       <h2>Create Super Admin</h2>
       <a href="/super-admins">
         <button>Exit</button>
