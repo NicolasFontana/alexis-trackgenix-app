@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import Input from '../Input';
+import SuccessModal from '../SuccessModal';
 import styles from './form.module.css';
 
-const Form = () => {
+const Form = (props) => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const closeModal = () => {
+    setShowSuccessModal(false);
+  };
+
   const [employeeInput, setEmployeeInput] = useState({
     firstName: '',
     lastName: '',
@@ -12,8 +20,27 @@ const Form = () => {
     active: '',
     isProjectManager: '',
     projects: [],
-    timesheets: []
+    timeSheets: []
   });
+  if (
+    props.edit &&
+    props.employee._id &&
+    employeeInput.firstName === '' &&
+    employeeInput.lastName === '' &&
+    employeeInput.password === ''
+  ) {
+    setEmployeeInput({
+      firstName: props.employee.firstName,
+      lastName: props.employee.lastName,
+      phone: props.employee.phone,
+      email: props.employee.email,
+      password: props.employee.password,
+      active: props.employee.active,
+      isProjectManager: props.employee.isProjectManager,
+      projects: props.employee.projects,
+      timeSheets: props.employee.timeSheets
+    });
+  }
 
   const onChange = (event) => {
     setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });
@@ -21,27 +48,51 @@ const Form = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}api/employees/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        firstName: employeeInput.firstName,
-        lastName: employeeInput.lastName,
-        phone: employeeInput.phone,
-        email: employeeInput.email,
-        password: employeeInput.password,
-        active: employeeInput.active,
-        isProjectManager: employeeInput.isProjectManager,
-        projects: employeeInput.projects,
-        timeSheets: employeeInput.timeSheets
-      }),
-      headers: {
-        'Content-type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-      });
+    if (props.edit) {
+      fetch(`${process.env.REACT_APP_API_URL}api/employees/${props.employee._id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          firstName: employeeInput.firstName,
+          lastName: employeeInput.lastName,
+          phone: employeeInput.phone,
+          email: employeeInput.email,
+          password: employeeInput.password,
+          active: employeeInput.active,
+          isProjectManager: employeeInput.isProjectManager,
+          projects: employeeInput.projects,
+          timeSheets: employeeInput.timeSheets
+        }),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setSuccessMessage(response.message);
+        });
+    } else {
+      fetch(`${process.env.REACT_APP_API_URL}api/employees/`, {
+        method: 'POST',
+        body: JSON.stringify({
+          firstName: employeeInput.firstName,
+          lastName: employeeInput.lastName,
+          phone: employeeInput.phone,
+          email: employeeInput.email,
+          password: employeeInput.password,
+          active: employeeInput.active,
+          isProjectManager: employeeInput.isProjectManager,
+          projects: employeeInput.projects,
+          timeSheets: employeeInput.timeSheets
+        }),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setSuccessMessage(response.message);
+        });
+    }
   };
 
   return (
@@ -109,9 +160,16 @@ const Form = () => {
         value={employeeInput.timesheets}
         onChange={onChange}
       />
-      <button className={styles.submitButton} type="submit">
+      <button
+        onClick={() => {
+          setShowSuccessModal(true);
+        }}
+        className={styles.submitButton}
+        type="submit"
+      >
         Confirm
       </button>
+      <SuccessModal show={showSuccessModal} closeModal={closeModal} message={successMessage} />
     </form>
   );
 };

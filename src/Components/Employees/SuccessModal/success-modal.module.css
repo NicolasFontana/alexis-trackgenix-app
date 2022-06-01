@@ -17,8 +17,9 @@
 	flex-direction: column;
 	align-self: center;
 	margin: 0 auto;
-	width: 700px;
-	height: 550px;
+	width: fit-content;
+	min-width: 300px;
+	height: 150px;
 	background-color: rgba(255, 255, 255, 1);
 	border-radius: 10px;
 	box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
@@ -43,4 +44,11 @@
 .closeButton {
 	width: 36px;
 	height: 36px;
+}
+
+.message {
+	padding: 0 15px;
+	font-size: 24px;
+	line-height: 28px;
+	text-align: center;
 }

@@ -1,26 +1,25 @@
-import styles from './form-modal.module.css';
-import Form from '../Form';
+import styles from './success-modal.module.css';
 
-const FormModal = (props) => {
+const SuccessModal = (props) => {
   if (!props.show) {
     return null;
   }
-
+  console.log(props.message);
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h2>Add/Edit Employee</h2>
+          <h2>Success/Error</h2>
           <img
             className={styles.closeButton}
             onClick={props.closeModal}
             src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
           />
         </div>
-        <Form employee={props.listItem} edit={props.edit} />
+        <p className={styles.message}> {props.message} </p>
       </div>
     </div>
   );
 };
 
-export default FormModal;
+export default SuccessModal;

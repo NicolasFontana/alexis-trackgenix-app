@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Modal from './FormModal';
+import FormModal from './FormModal';
 import List from './List/List';
 import styles from './employees.module.css';
 
@@ -27,7 +27,7 @@ const Employees = () => {
     <section className={styles.container}>
       <h2>Employees</h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <Modal show={showModal} closeModal={closeModal} />
+      <FormModal show={showModal} closeModal={closeModal} />
       <img
         onClick={() => {
           setShowModal(true);
