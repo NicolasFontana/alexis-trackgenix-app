@@ -3,25 +3,24 @@ import List from './List/List';
 import styles from './projects.module.css';
 
 const Projects = () => {
-  const [list, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}api/projects`)
       .then((response) => response.json())
       .then((response) => {
         setProjects(response.data);
-        console.log(response);
       });
   }, []);
 
   const deleteItem = async (_id) => {
-    setProjects([...list.filter((listItem) => listItem._id !== _id)]);
+    setProjects([...projects.filter((listItem) => listItem._id !== _id)]);
   };
 
   return (
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>
-      <List list={list} setProjects={setProjects} deleteItem={deleteItem} />
+      <List projects={projects} setProjects={setProjects} deleteItem={deleteItem} />
       <a href={'/projects/form'}>
         <button className={styles.addbtn}>&#10010;</button>
       </a>
