@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import Modal from './Modal';
+import Modal from './FormModal';
+import List from './List/List';
 import styles from './employees.module.css';
 
 const Employees = () => {
   const [showModal, setShowModal] = useState(false);
-  const [employees, saveEmployees] = useState([]);
+  const [list, setEmployees] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}api/employees/`)
       .then((response) => response.json())
       .then((response) => {
-        saveEmployees(response.data);
+        setEmployees(response.data);
       });
   }, []);
 
@@ -18,14 +19,14 @@ const Employees = () => {
     setShowModal(false);
   };
 
+  const deleteItem = async (_id) => {
+    setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
+  };
+
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      <div>
-        {employees.map((employee) => {
-          return <div key={employee._id}>{employee.firstName}</div>;
-        })}
-      </div>
+      <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
       <Modal show={showModal} closeModal={closeModal} />
       <img
         onClick={() => {

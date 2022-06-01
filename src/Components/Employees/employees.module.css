@@ -4,4 +4,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 2%;
+}
+
+.employees {
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px grey;
+}
+
+.addbtn {
+  padding: 1%;
+  border-radius: 10%;
+  border-color: #AACE9B;
+  box-shadow: 2px 2px 2px grey;
+  background-color: #AACE9B;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 2px 2px 2px gray;
+  font-family: 'Roboto', sans-serif;
 }
