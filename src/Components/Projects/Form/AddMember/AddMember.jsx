@@ -13,7 +13,7 @@ const AddMember = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/employees`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
       const data = await response.json();
       setEmployees(data.data);
     } catch (error) {
@@ -24,7 +24,7 @@ const AddMember = () => {
       const params = new URLSearchParams(window.location.search);
       const projectID = params.get('id');
       setRouteID(projectID);
-      const getProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${projectID}`);
+      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${projectID}`);
       const projectData = await getProject.json();
       setProjectMembers(projectData.data.members);
       setLoading(false);
@@ -73,7 +73,7 @@ const AddMember = () => {
     console.log(asignMember());
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
-    let url = `${process.env.REACT_APP_API_URL}api/projects/${projectID}`;
+    let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`;
     const options = {
       method: 'PUT',
       headers: {
