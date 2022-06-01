@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Modal from './Modal';
 import List from './List/List';
 
 const App = () => {
+  const [showModal, setShowModal] = useState(false);
   const [superAdmins, setSuperAdmins] = useState([]);
 
   useEffect(async () => {
@@ -13,6 +15,10 @@ const App = () => {
       console.error(error);
     }
   }, []);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const deleteSuperA = async (_id) => {
     try {
@@ -28,7 +34,8 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
+      <Modal show={showModal} close={closeModal} />
       <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
     </div>
   );

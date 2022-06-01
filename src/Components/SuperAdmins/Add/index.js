@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import styles from './add.module.css';
+import Modal from '../Modal';
 
 const SuperAdminsAdd = () => {
+  const [showModal, setShowModal] = useState(false);
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
     lastName: '',
@@ -10,6 +12,8 @@ const SuperAdminsAdd = () => {
     password: '',
     active: ''
   });
+
+  let message = '';
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -29,6 +33,9 @@ const SuperAdminsAdd = () => {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
+        message = response.message;
+        console.log(message);
+        setShowModal(true);
       });
   };
 
@@ -36,71 +43,72 @@ const SuperAdminsAdd = () => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <section className={styles.container}>
+      <Modal
+        show={showModal}
+        modalTitle={'Success'}
+        modalMessage={message}
+        closeModal={closeModal}
+        confirmModal={closeModal}
+      />
       <h2>Create Super Admin</h2>
       <a href="/super-admins">
         <button>Exit</button>
       </a>
       <form onSubmit={onSubmit}>
-        <div>
-          <div>
-            <label>
-              First Name:
-              <input
-                type="text"
-                name="firstName"
-                value={superAdminInput.firstName}
-                onChange={onChange}
-                required
-              />
-            </label>
+        <div className={styles.formBody}>
+          <div className={styles.formRow}>
+            <label className={styles.label}>First Name:</label>
+            <input
+              type="text"
+              name="firstName"
+              value={superAdminInput.firstName}
+              onChange={onChange}
+              required
+            />
           </div>
-          <div>
-            <label>
-              Last Name:
-              <input
-                type="text"
-                name="lastName"
-                value={superAdminInput.lastName}
-                onChange={onChange}
-                required
-              />
-            </label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>Last Name:</label>
+            <input
+              type="text"
+              name="lastName"
+              value={superAdminInput.lastName}
+              onChange={onChange}
+              required
+            />
           </div>
-          <div>
-            <label>
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={superAdminInput.email}
-                onChange={onChange}
-                required
-              />
-            </label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={superAdminInput.email}
+              onChange={onChange}
+              required
+            />
           </div>
-          <div>
-            <label>
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={superAdminInput.password}
-                onChange={onChange}
-                required
-              />
-            </label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={superAdminInput.password}
+              onChange={onChange}
+              required
+            />
           </div>
-          <div>
-            <label>
-              Active:
-              <select name="active" value={superAdminInput.active} onChange={onChange}>
-                <option value=""></option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </select>
-            </label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>Active:</label>
+            <select name="active" value={superAdminInput.active} onChange={onChange}>
+              <option value=""></option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
           </div>
         </div>
         <button type="submit">Save</button>

@@ -4,4 +4,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+    margin: 2%;
+}
+
+.formBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.formRow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
+
+.label {
+  font-family: 'Roboto', sans-serif;
+}
