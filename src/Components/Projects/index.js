@@ -6,7 +6,7 @@ const Projects = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}api/projects`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/projects`)
       .then((response) => response.json())
       .then((response) => {
         setProjects(response.data);

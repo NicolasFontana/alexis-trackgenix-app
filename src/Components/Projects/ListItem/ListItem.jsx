@@ -5,7 +5,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const handleDelete = async (_id) => {
     deleteItem(_id);
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}api/projects/${_id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
         method: 'DELETE'
       });
       setShowModal(true);
