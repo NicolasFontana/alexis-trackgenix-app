@@ -21,7 +21,7 @@ const ProjectForm = () => {
     const projectID = params.get('id');
     if (projectID) {
       try {
-        const getProject = await fetch(`${process.env.REACT_APP_API}/api/projects/${projectID}`);
+        const getProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects/${projectID}`);
         const projectData = await getProject.json();
         saveProjects([projectData.data]);
         setUserInput({
@@ -39,7 +39,7 @@ const ProjectForm = () => {
       }
     } else {
       try {
-        const getProject = await fetch(`${process.env.REACT_APP_API}/api/projects`);
+        const getProject = await fetch(`${process.env.REACT_APP_API_URL}api/projects`);
         const projectData = await getProject.json();
         saveProjects(projectData.data);
         setOnAdd(true);
@@ -54,7 +54,7 @@ const ProjectForm = () => {
     e.preventDefault();
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
-    let url = `${process.env.REACT_APP_API}/api/projects`;
+    let url = `${process.env.REACT_APP_API_URL}api/projects`;
     const options = {
       method: 'POST',
       headers: {
@@ -64,7 +64,7 @@ const ProjectForm = () => {
     };
     if (projectID) {
       options.method = 'PUT';
-      url = `${process.env.REACT_APP_API}/api/projects/${projectID}`;
+      url = `${process.env.REACT_APP_API_URL}api/projects/${projectID}`;
     }
     try {
       const response = await fetch(url, options);
@@ -175,6 +175,9 @@ const ProjectForm = () => {
           <div className={styles.buttons}>
             <input type="submit" value="Submit" onSubmit={onSubmit} />
           </div>
+          <a href={'/projects'} className={styles.goBack}>
+            Go back
+          </a>
         </form>
       </div>
     </>
