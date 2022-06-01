@@ -5,7 +5,7 @@ import ListItemMember from '../ListItemMember/ListItemMember';
 const ListMembers = ({ project, onAdd }) => {
   const [members] = onAdd ? useState([]) : useState(project[0].members);
   return onAdd || !members.length ? (
-    <a href="project/form/addmembers" className={styles.addmember}>
+    <a href={`addmembers?id=${project[0]._id}`} className={styles.addmember}>
       Click here to add or edit members
     </a>
   ) : (
@@ -20,12 +20,16 @@ const ListMembers = ({ project, onAdd }) => {
           </tr>
         </thead>
         <tbody>
-          {members.map((member) => (
-            <ListItemMember key={member.employeeId._id} member={member} onAdd={onAdd} />
-          ))}
+          {members.map((member) =>
+            member.employeeId == null ? (
+              <></>
+            ) : (
+              <ListItemMember key={member.employeeId._id} member={member} onAdd={onAdd} />
+            )
+          )}
         </tbody>
       </table>
-      <a href="project/form/addmembers">Add or edit members</a>
+      <a href={`addmembers?id=${project[0]._id}`}>Add or edit members</a>
     </div>
   );
 };
