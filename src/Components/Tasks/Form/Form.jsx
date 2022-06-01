@@ -17,7 +17,7 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    return fetch(`${process.env.REACT_APP_API_URL}api/tasks/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInput)

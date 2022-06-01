@@ -7,7 +7,7 @@ const List = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/tasks`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
       const data = await response.json();
       saveTasks(data.data);
     } catch (error) {
@@ -19,7 +19,7 @@ const List = () => {
     const confirmation = confirm('Are you sure you want to delete this task?');
     if (confirmation) {
       saveTasks([...tasks.filter((task) => task._id !== id)]);
-      return fetch(`${process.env.REACT_APP_API_URL}api/tasks/${id}`, {
+      return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
         method: 'DELETE'
       })
         .then((response) => response.json())
