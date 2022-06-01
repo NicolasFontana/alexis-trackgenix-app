@@ -22,7 +22,9 @@ const Projects = () => {
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>
       <List list={list} setProjects={setProjects} deleteItem={deleteItem} />
-      <button className={styles.addbtn}>&#10010;</button>
+      <a href={'/projects/form'}>
+        <button className={styles.addbtn}>&#10010;</button>
+      </a>
     </section>
   );
 };
