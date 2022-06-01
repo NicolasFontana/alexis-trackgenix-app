@@ -22,11 +22,7 @@ const Projects = () => {
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>
       <List list={list} setProjects={setProjects} deleteItem={deleteItem} />
-      <a href="http://localhost:8000/api/projects/form">
-        <button className={styles.addbtn} href="/projects/form">
-          &#10010; Add New Project
-        </button>
-      </a>
+      <button className={styles.addbtn}>&#10010;</button>
     </section>
   );
 };

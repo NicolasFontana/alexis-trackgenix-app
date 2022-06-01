@@ -27,9 +27,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItem.active.toString()}</td>
       <td>{listItem.members.length}</td>
       <td>
-        <a href="http://localhost:8000/api/projects/form?id=${project._id}">
-          <button className={styles.editbtn}>&#9998;</button>
-        </a>
+        <button className={styles.editbtn}>&#9998;</button>
         <button className={styles.deletebtn} onClick={() => handleDelete(listItem._id)}>
           &#10006;
         </button>
