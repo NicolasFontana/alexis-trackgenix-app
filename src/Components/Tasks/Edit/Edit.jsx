@@ -45,16 +45,17 @@ const Edit = () => {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
+        alert('Task edited successfully');
       });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-        <div>
+        <div className={styles.header}>
           <h2>Edit New Task</h2>
         </div>
-        <form onSubmit={onSubmit} className="form-input">
+        <form onSubmit={onSubmit} className={styles.formInputs}>
           <Input label="Task Name" name="taskName" value={userInput.taskName} onChange={onChange} />
           <Input
             label="Start Date"
@@ -74,9 +75,8 @@ const Edit = () => {
             value={userInput.description}
             onChange={onChange}
           />
-          <label>Status</label>
           <select name="status" value={userInput.status} onChange={onChange}>
-            <option value=""></option>
+            <option value="">Status</option>
             <option value="To do">To do</option>
             <option value="In progress">In progress</option>
             <option value="Review">Review</option>

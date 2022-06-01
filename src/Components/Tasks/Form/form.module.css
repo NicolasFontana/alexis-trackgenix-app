@@ -2,24 +2,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid #000000; */
+  margin: 20px 0px;
 }
 
 .form{
-  margin: 10px;
-  padding: 10px 20px;
+  text-align: center;
   border: 1px solid #000000;
   border-radius: 5px;
+  width: 30%;
 }
 
-.form form{
+.header{
+  background-color: #232F3E;
+  border: 0.5px solid #000000;
+  padding: 0px;
+  margin: 0px;
+}
+
+.header h2{
+  color: #ffffff;
+}
+
+
+.formInputs{
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  padding: 10px 20px;
 }
 
 .form select, .form button, .form a{
-  width: 90%;
-  margin: 10px;
+  text-align: center;
+  height: 30px;
+  width: 80%;
+  margin: 10px auto;
+  background-color: #AACE9B;
+  border: 1px solid #000000;
+  border-radius: 5px;
 }

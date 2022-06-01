@@ -5,7 +5,9 @@ function Tasks() {
   return (
     <section className={styles.container}>
       <List />
-      <a href="/tasks/add">Add New Task</a>
+      <a className={styles.anchor} href="/tasks/add">
+        Add New Task
+      </a>
     </section>
   );
 }

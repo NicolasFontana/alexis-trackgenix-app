@@ -25,29 +25,16 @@ const List = () => {
         .then((response) => response.json())
         .then((response) => {
           console.log(response);
+          alert('Task deleted successfully');
         });
     }
   };
 
-  // const editTask = (id) => {
-  //   const confirmation = confirm('Are you sure you want to delete this task?');
-  //   if (confirmation) {
-  //     saveTasks([...tasks.filter((task) => task._id !== id)]);
-  //     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
-  //       method: 'DELETE'
-  //     })
-  //       .then((response) => response.json())
-  //       .then((response) => {
-  //         console.log(response);
-  //       });
-  //   }
-  // };
-
   return (
     <div className={styles.table}>
-      <table className={styles.header}>
+      <table>
         <thead>
-          <tr>
+          <tr className={styles.header}>
             <th id="taskName">Task Name</th>
             <th id="startDate">Start Date</th>
             <th id="workedHours">Worked Hours</th>
@@ -59,7 +46,6 @@ const List = () => {
           {tasks.map((task) => (
             <ListItem key={task._id} task={task} delTask={delTask} />
           ))}
-          {/* <Modal /> */}
         </tbody>
       </table>
     </div>
