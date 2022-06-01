@@ -22,7 +22,7 @@ const Employees = () => {
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <button className={styles.addbtn}>&#10010; Add New Employee</button>
+      <button className={styles.addbtn}>&#10010;</button>
     </section>
   );
 };
