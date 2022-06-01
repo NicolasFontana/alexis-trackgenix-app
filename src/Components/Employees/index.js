@@ -25,7 +25,7 @@ const Employees = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Employees</h2>
+      <h2 className={styles.employees}>Employees</h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
       <FormModal show={showModal} closeModal={closeModal} />
       <img
