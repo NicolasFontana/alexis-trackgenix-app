@@ -16,7 +16,7 @@ const Edit = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/tasks/${taskID}`);
       const data = await response.json();
       setUserInput({
         taskName: data.data.taskName,
@@ -36,16 +36,18 @@ const Edit = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userInput);
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}api/tasks/${taskID}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInput)
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        alert('Task edited successfully');
+        if (response.error) {
+          alert('The data entered is not correct');
+        } else {
+          alert('Task edited successfully');
+        }
       });
   };
 
