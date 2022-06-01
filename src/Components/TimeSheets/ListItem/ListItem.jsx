@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './ListItem.module.css';
 
-const ListItem = ({ listTimeSheet, deleteItem }) => {
-  console.log(listTimeSheet);
+const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
   return (
     <tr>
       <td>{listTimeSheet.projectId.name}</td>
@@ -20,6 +19,7 @@ const ListItem = ({ listTimeSheet, deleteItem }) => {
         <button
           className={styles.delete}
           onClick={() => {
+            setShowModal(true);
             deleteItem(listTimeSheet._id);
           }}
         >
