@@ -5,6 +5,8 @@ const ListItem = ({ listItem, deleteAdmins }) => {
     deleteAdmins(listItem._id);
   };
 
+  const url = `/admins/Edit?id=${listItem._id}`;
+
   return (
     <tr className="rows">
       <td>{listItem._id}</td>
@@ -14,7 +16,7 @@ const ListItem = ({ listItem, deleteAdmins }) => {
       <td>{listItem.password}</td>
       <td>{listItem.active.toString()}</td>
       <td>
-        <a href="/admins/Edit">
+        <a href={url}>
           <button>&#9998;</button>
         </a>
       </td>
