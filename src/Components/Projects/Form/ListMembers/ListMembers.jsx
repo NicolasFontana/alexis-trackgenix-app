@@ -4,7 +4,9 @@ import ListItemMember from '../ListItemMember/ListItemMember';
 
 const ListMembers = ({ project, onAdd }) => {
   const [members] = onAdd ? useState([]) : useState(project[0].members);
-  return onAdd || !members.length ? (
+  return onAdd ? (
+    <></>
+  ) : !members.length ? (
     <a href={`addmembers?id=${project[0]._id}`} className={styles.addmember}>
       Click here to add or edit members
     </a>
