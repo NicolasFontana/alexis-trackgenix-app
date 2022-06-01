@@ -13,7 +13,7 @@ const AdminsAdd = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:8000/api/admins/`, {
+    fetch(`${process.env.REACT_APP_API_URL}api/admins/`, {
       method: 'POST',
       body: JSON.stringify({
         firstName: adminInput.firstName,
@@ -38,14 +38,14 @@ const AdminsAdd = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Create Super Admin</h2>
+      <h2>Create Admin</h2>
       <a href="/admins">
         <button>Exit</button>
       </a>
       <form onSubmit={onSubmit}>
-        <div>
-          <div>
-            <label>
+        <div className={styles.formBody}>
+          <div className={styles.formRow}>
+            <label className={styles.label}>
               First Name:
               <input
                 type="text"
@@ -56,8 +56,8 @@ const AdminsAdd = () => {
               />
             </label>
           </div>
-          <div>
-            <label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>
               Last Name:
               <input
                 type="text"
@@ -68,8 +68,8 @@ const AdminsAdd = () => {
               />
             </label>
           </div>
-          <div>
-            <label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>
               Email:
               <input
                 type="email"
@@ -80,8 +80,8 @@ const AdminsAdd = () => {
               />
             </label>
           </div>
-          <div>
-            <label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>
               Password:
               <input
                 type="password"
@@ -92,8 +92,8 @@ const AdminsAdd = () => {
               />
             </label>
           </div>
-          <div>
-            <label>
+          <div className={styles.formRow}>
+            <label className={styles.label}>
               Active:
               <select name="active" value={adminInput.active} onChange={onChange}>
                 <option value=""></option>

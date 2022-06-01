@@ -6,7 +6,7 @@ const App = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}api/admins`);
       const data = await response.json();
       setAdmins(data.data);
     } catch (error) {
