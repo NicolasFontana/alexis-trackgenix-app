@@ -14,8 +14,17 @@ const App = () => {
     }
   }, []);
 
-  const deleteAdmins = (id) => {
-    setAdmins([...admins.filter((listItem) => listItem._id !== id)]);
+  const deleteAdmins = async (_id) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/admins/${_id}`, {
+        method: 'DELETE'
+      });
+      console.log('response', response);
+      confirm(`WARNING!\n Are you sure you want to delete this admin?`);
+    } catch (error) {
+      console.error(error);
+    }
+    setAdmins([...admins.filter((listItem) => listItem._id !== _id)]);
   };
 
   return (

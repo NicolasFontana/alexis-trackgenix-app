@@ -14,6 +14,11 @@ const ListItem = ({ listItem, deleteAdmins }) => {
       <td>{listItem.password}</td>
       <td>{listItem.active.toString()}</td>
       <td>
+        <a href="/admins/Edit">
+          <button>&#9998;</button>
+        </a>
+      </td>
+      <td>
         <button onClick={() => handleDelete(listItem._id)}>X</button>
       </td>
     </tr>
