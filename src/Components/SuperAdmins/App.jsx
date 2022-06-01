@@ -15,17 +15,19 @@ const App = () => {
   }, []);
 
   const deleteSuperA = async (_id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/super-admins/${_id}`, {
-        method: 'DELETE'
-      });
-      console.log('response', response);
-      confirm(`WARNING!\n Are you sure you want to delete this super admin?`);
-    } catch (error) {
-      alert(`Error\n${error}`);
-      console.error(error);
+    if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}api/super-admins/${_id}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        alert(`${data.message}\nID:${_id}`);
+        setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== _id)]);
+      } catch (error) {
+        alert(`Error\n${error}`);
+        console.error(error);
+      }
     }
-    setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== _id)]);
   };
 
   return (

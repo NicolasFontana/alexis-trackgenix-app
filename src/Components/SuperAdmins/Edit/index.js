@@ -11,10 +11,11 @@ const SuperAdminsEdit = () => {
     active: ''
   });
 
+  const params = new URLSearchParams(window.location.search);
+  const superAdminID = params.get('id');
+
   useEffect(async () => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const superAdminID = params.get('id');
       const getSuperAdmin = await fetch(
         `${process.env.REACT_APP_API_URL}api/super-admins/${superAdminID}`
       );
@@ -34,8 +35,6 @@ const SuperAdminsEdit = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    const superAdminID = params.get('id');
     fetch(`${process.env.REACT_APP_API_URL}api/super-admins/${superAdminID}`, {
       method: 'PUT',
       body: JSON.stringify({
