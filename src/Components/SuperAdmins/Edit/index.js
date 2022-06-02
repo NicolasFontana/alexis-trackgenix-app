@@ -17,7 +17,7 @@ const SuperAdminsEdit = () => {
   useEffect(async () => {
     try {
       const getSuperAdmin = await fetch(
-        `${process.env.REACT_APP_API_URL}api/super-admins/${superAdminID}`
+        `${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminID}`
       );
       const superAdminData = await getSuperAdmin.json();
       setsuperAdminInput({
@@ -35,7 +35,7 @@ const SuperAdminsEdit = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}api/super-admins/${superAdminID}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminID}`, {
       method: 'PUT',
       body: JSON.stringify({
         firstName: superAdminInput.firstName,
@@ -61,9 +61,6 @@ const SuperAdminsEdit = () => {
   return (
     <section className={styles.container}>
       <h2>Edit Super Admin</h2>
-      <a href="/super-admins">
-        <button>Exit</button>
-      </a>
       <form onSubmit={onSubmit}>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
@@ -106,7 +103,12 @@ const SuperAdminsEdit = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Save</button>
+        <button className={styles.submit} type="submit">
+          Save
+        </button>
+        <a className={styles.cancel} href="/super-admins">
+          Cancel
+        </a>
       </form>
     </section>
   );

@@ -13,7 +13,7 @@ const SuperAdminsAdd = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}api/super-admins`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
       method: 'POST',
       body: JSON.stringify({
         firstName: superAdminInput.firstName,
@@ -39,9 +39,6 @@ const SuperAdminsAdd = () => {
   return (
     <section className={styles.container}>
       <h2>Create Super Admin</h2>
-      <a href="/super-admins">
-        <button>Exit</button>
-      </a>
       <form onSubmit={onSubmit}>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
@@ -86,14 +83,19 @@ const SuperAdminsAdd = () => {
           </div>
           <div className={styles.formRow}>
             <label className={styles.label}>Active:</label>
-            <select name="active" value={superAdminInput.active} onChange={onChange}>
+            <select name="active" value={superAdminInput.active} onChange={onChange} required>
               <option value=""></option>
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
           </div>
         </div>
-        <button type="submit">Save</button>
+        <button className={styles.submit} type="submit">
+          Save
+        </button>
+        <a className={styles.cancel} href="/super-admins">
+          Cancel
+        </a>
       </form>
     </section>
   );
