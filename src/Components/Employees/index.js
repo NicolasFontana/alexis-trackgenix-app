@@ -4,19 +4,20 @@ import List from './List/List';
 import styles from './employees.module.css';
 
 const Employees = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
   const [list, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}api/employees/`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/employees/`)
       .then((response) => response.json())
       .then((response) => {
         setEmployees(response.data);
+        console.log(response.data);
       });
   }, []);
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeFormModal = () => {
+    setShowFormModal(false);
   };
 
   const deleteItem = async (_id) => {
@@ -25,12 +26,12 @@ const Employees = () => {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.employees}>Employees</h2>
+      <h2>Employees</h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <FormModal show={showModal} closeModal={closeModal} />
+      <FormModal show={showFormModal} closeModal={closeFormModal} />
       <img
         onClick={() => {
-          setShowModal(true);
+          setShowFormModal(true);
         }}
         src={`${process.env.PUBLIC_URL}/assets/images/add-icon.svg`}
       />

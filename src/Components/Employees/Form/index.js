@@ -7,7 +7,7 @@ const Form = (props) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  const closeModal = () => {
+  const closeSuccessModal = () => {
     setShowSuccessModal(false);
   };
 
@@ -29,6 +29,7 @@ const Form = (props) => {
     employeeInput.lastName === '' &&
     employeeInput.password === ''
   ) {
+    // console.log(props.employee.projects);
     setEmployeeInput({
       firstName: props.employee.firstName,
       lastName: props.employee.lastName,
@@ -37,8 +38,8 @@ const Form = (props) => {
       password: props.employee.password,
       active: props.employee.active,
       isProjectManager: props.employee.isProjectManager,
-      projects: props.employee.projects,
-      timeSheets: props.employee.timeSheets
+      projects: props.employee.projects.map((x) => x._id),
+      timeSheets: props.employee.timeSheets.map((x) => x._id)
     });
   }
 
@@ -49,7 +50,7 @@ const Form = (props) => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (props.edit) {
-      fetch(`${process.env.REACT_APP_API_URL}api/employees/${props.employee._id}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employee._id}`, {
         method: 'PUT',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -59,8 +60,8 @@ const Form = (props) => {
           password: employeeInput.password,
           active: employeeInput.active,
           isProjectManager: employeeInput.isProjectManager,
-          projects: employeeInput.projects,
-          timeSheets: employeeInput.timeSheets
+          projects: employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+          timeSheets: employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
         }),
         headers: {
           'Content-type': 'application/json'
@@ -71,7 +72,7 @@ const Form = (props) => {
           setSuccessMessage(response.message);
         });
     } else {
-      fetch(`${process.env.REACT_APP_API_URL}api/employees/`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
         method: 'POST',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -81,8 +82,8 @@ const Form = (props) => {
           password: employeeInput.password,
           active: employeeInput.active,
           isProjectManager: employeeInput.isProjectManager,
-          projects: employeeInput.projects,
-          timeSheets: employeeInput.timeSheets
+          projects: employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+          timeSheets: employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
         }),
         headers: {
           'Content-type': 'application/json'
@@ -147,17 +148,17 @@ const Form = (props) => {
         onChange={onChange}
       />
       <Input
-        label="Projects"
+        label="Projects (separate IDs with a comma)"
         name="projects"
         placeholder=""
         value={employeeInput.projects}
         onChange={onChange}
       />
       <Input
-        label="Timesheets"
-        name="timesheets"
+        label="Timesheets (separate IDs with a comma)"
+        name="timeSheets"
         placeholder=""
-        value={employeeInput.timesheets}
+        value={employeeInput.timeSheets}
         onChange={onChange}
       />
       <button
@@ -169,7 +170,11 @@ const Form = (props) => {
       >
         Confirm
       </button>
-      <SuccessModal show={showSuccessModal} closeModal={closeModal} message={successMessage} />
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={closeSuccessModal}
+        message={successMessage}
+      />
     </form>
   );
 };

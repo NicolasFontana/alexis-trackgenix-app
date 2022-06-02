@@ -5,14 +5,14 @@ import styles from './list-item.module.css';
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const closeModal = () => {
+  const closeEditModal = () => {
     setShowEditModal(false);
   };
 
   const handleDelete = async (_id) => {
     deleteItem(_id);
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}api/employees/${_id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
         method: 'DELETE'
       });
       setShowModal(true);
@@ -35,7 +35,12 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItem.isProjectManager.toString()}</td>
       <td>{listItem.projects.length}</td>
       <td>
-        <FormModal show={showEditModal} closeModal={closeModal} listItem={listItem} edit={true} />
+        <FormModal
+          show={showEditModal}
+          closeModal={closeEditModal}
+          listItem={listItem}
+          edit={true}
+        />
         <button
           onClick={() => {
             setShowEditModal(true);
