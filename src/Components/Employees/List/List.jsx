@@ -24,6 +24,7 @@ const List = ({ list, deleteItem }) => {
             <th> Active </th>
             <th> Project Manager </th>
             <th> Projects </th>
+            <th> Timesheets </th>
             <th></th>
           </tr>
         </thead>

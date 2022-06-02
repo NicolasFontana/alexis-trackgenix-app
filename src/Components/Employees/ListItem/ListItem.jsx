@@ -5,7 +5,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const handleDelete = async (_id) => {
     deleteItem(_id);
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}api/employees/${_id}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
         method: 'DELETE'
       });
       setShowModal(true);
@@ -26,6 +26,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItem.active.toString()}</td>
       <td>{listItem.isProjectManager.toString()}</td>
       <td>{listItem.projects.length}</td>
+      <td>{listItem.timeSheets.length}</td>
       <td>
         <button className={styles.editbtn}>&#9998;</button>
         <button className={styles.deletebtn} onClick={() => handleDelete(listItem._id)}>

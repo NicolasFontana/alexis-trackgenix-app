@@ -6,7 +6,7 @@ const Employees = () => {
   const [list, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}api/employees`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
       .then((response) => response.json())
       .then((response) => {
         setEmployees(response.data);

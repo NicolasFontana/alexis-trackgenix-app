@@ -1,6 +1,10 @@
 .rows {
     text-align: center;
-    background-color: #F0F4F9;
+    background-color: #ffffff;
+}
+
+.rows:nth-child(odd) {
+    background-color: #e5f6df;
 }
 
 .rows td {
