@@ -103,12 +103,14 @@ const SuperAdminsEdit = () => {
             </select>
           </div>
         </div>
-        <button className={styles.submit} type="submit">
-          Save
-        </button>
-        <a className={styles.cancel} href="/super-admins">
-          Cancel
-        </a>
+        <div className={styles.buttons}>
+          <button className={styles.submit} type="submit">
+            Save
+          </button>
+          <a className={styles.cancel} href="/super-admins">
+            Cancel
+          </a>
+        </div>
       </form>
     </section>
   );
