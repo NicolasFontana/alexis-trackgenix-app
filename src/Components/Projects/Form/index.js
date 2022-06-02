@@ -71,7 +71,6 @@ const ProjectForm = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log(response.status, data.message);
       if (response.status !== 200 && response.status !== 201) {
         throw new Error(data.error);
       } else {
@@ -87,7 +86,6 @@ const ProjectForm = () => {
 
   const onChangeActive = (e) => {
     setUserInput({ ...userInput, active: e.target.value == 'true' ? true : false });
-    console.log(e.target.name);
   };
 
   return isLoading ? (

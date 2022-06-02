@@ -70,7 +70,6 @@ const AddMember = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(asignMember());
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
     let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`;
@@ -84,7 +83,6 @@ const AddMember = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log(response.status, data.message);
       if (response.status !== 200 && response.status !== 201) {
         throw new Error(data.error);
       } else {
@@ -102,20 +100,13 @@ const AddMember = () => {
       <h2>Add or Edit a member</h2>
       <form onSubmit={onSubmit} className={styles.container}>
         <label>Employee</label>
-        <select
-          value={member}
-          defaultValue=""
-          onChange={onChangeMember}
-          className={styles.inputs}
-          required
-        >
+        <select value={member} onChange={onChangeMember} className={styles.inputs} required>
           <option disabled value="">
             Choose Member
           </option>
           {employees.map((employee) => {
             return (
               <option
-                defaultValue={employee._id}
                 value={employee._id}
                 key={employee._id}
               >{`${employee.lastName}, ${employee.firstName}`}</option>
@@ -124,14 +115,7 @@ const AddMember = () => {
           ;
         </select>
         <label>Role</label>
-        <select
-          required
-          name="role"
-          value={role}
-          defaultValue=""
-          onChange={onChangeRole}
-          className={styles.inputs}
-        >
+        <select required name="role" value={role} onChange={onChangeRole} className={styles.inputs}>
           <option disabled value="">
             Choose Role
           </option>

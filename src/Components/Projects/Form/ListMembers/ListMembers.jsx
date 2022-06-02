@@ -3,7 +3,8 @@ import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
 
 const ListMembers = ({ project, onAdd }) => {
-  const [members] = onAdd ? useState([]) : useState(project[0].members);
+  let [members] = onAdd ? useState([]) : useState(project[0].members);
+  members = members.filter((member) => member.employeeId !== null);
   return onAdd ? (
     <></>
   ) : !members.length ? (

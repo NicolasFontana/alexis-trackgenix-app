@@ -90,6 +90,7 @@ input::placeholder, textarea::placeholder {
   font-weight: 700;
   font-size: 16px;
   color: #373867;
+  cursor: pointer;
 }
 
 .container a {
