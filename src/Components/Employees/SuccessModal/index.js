@@ -4,7 +4,7 @@ const SuccessModal = (props) => {
   if (!props.show) {
     return null;
   }
-  console.log(props.message);
+
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
