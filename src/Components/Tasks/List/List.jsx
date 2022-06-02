@@ -24,7 +24,6 @@ const List = () => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response);
           alert('Task deleted successfully');
         });
     }
