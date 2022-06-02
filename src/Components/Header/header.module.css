@@ -1,4 +1,4 @@
- .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,21 +6,20 @@
   min-height: 100px;
   background-color: #AACE9B;
 }
- 
+
 .appName {
   padding: 30px;
   font-size: 2rem;
   font-weight: bold;
-  background-color: #FAFAFA;
 }
- 
+
 .rutes {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   list-style-type: none;
 }
- 
+
 .rutes > li > a {
   margin-left: 15px;
   font-size: 1rem;
