@@ -6,7 +6,7 @@ const App = () => {
 
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}api/admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
       const data = await response.json();
       setAdmins(data.data);
     } catch (error) {
@@ -17,7 +17,7 @@ const App = () => {
   const deleteAdmins = async (_id) => {
     if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}api/admins/${_id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
           method: 'DELETE'
         });
         const data = await response.json();

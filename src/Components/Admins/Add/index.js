@@ -13,7 +13,7 @@ const AdminsAdd = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}api/admins/`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
       method: 'POST',
       body: JSON.stringify({
         firstName: adminInput.firstName,
