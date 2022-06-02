@@ -45,65 +45,62 @@ const AdminsAdd = () => {
       <form onSubmit={onSubmit}>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
-            <label className={styles.label}>
-              First Name:
-              <input
-                type="text"
-                name="firstName"
-                value={adminInput.firstName}
-                onChange={onChange}
-                required
-              />
-            </label>
+            <label className={styles.label}>First Name:</label>
+            <input
+              type="text"
+              name="firstName"
+              value={adminInput.firstName}
+              onChange={onChange}
+              required
+            />
           </div>
           <div className={styles.formRow}>
-            <label className={styles.label}>
-              Last Name:
-              <input
-                type="text"
-                name="lastName"
-                value={adminInput.lastName}
-                onChange={onChange}
-                required
-              />
-            </label>
+            <label className={styles.label}>Last Name:</label>
+            <input
+              type="text"
+              name="lastName"
+              value={adminInput.lastName}
+              onChange={onChange}
+              required
+            />
           </div>
           <div className={styles.formRow}>
-            <label className={styles.label}>
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={adminInput.email}
-                onChange={onChange}
-                required
-              />
-            </label>
+            <label className={styles.label}>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={adminInput.email}
+              onChange={onChange}
+              required
+            />
           </div>
           <div className={styles.formRow}>
-            <label className={styles.label}>
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={adminInput.password}
-                onChange={onChange}
-                required
-              />
-            </label>
+            <label className={styles.label}>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={adminInput.password}
+              onChange={onChange}
+              required
+            />
           </div>
           <div className={styles.formRow}>
-            <label className={styles.label}>
-              Active:
-              <select name="active" value={adminInput.active} onChange={onChange}>
-                <option value=""></option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </select>
-            </label>
+            <label className={styles.label}>Active:</label>
+            <select name="active" value={adminInput.active} onChange={onChange}>
+              <option value=""></option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
           </div>
         </div>
-        <button type="submit">Save</button>
+        <div className={styles.buttons}>
+          <button className={styles.submit} type="submit">
+            Save
+          </button>
+          <a className={styles.cancel} href="/admins">
+            Cancel
+          </a>
+        </div>
       </form>
     </section>
   );

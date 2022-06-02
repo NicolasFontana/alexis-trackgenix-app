@@ -33,17 +33,9 @@ const AdminsEdit = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    const AdminID = params.get('id');
-    fetch(`${process.env.REACT_APP_API_URL}/api/admins/${AdminID}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
       method: 'PUT',
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active === 'true'
-      }),
+      body: JSON.stringify(adminInput),
       headers: {
         'content-type': 'application/json'
       }
@@ -61,9 +53,6 @@ const AdminsEdit = () => {
   return (
     <section className={styles.container}>
       <h2>Edit Admin</h2>
-      <a href="/admins">
-        <button>Exit</button>
-      </a>
       <form onSubmit={onSubmit}>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
@@ -96,7 +85,14 @@ const AdminsEdit = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Save</button>
+        <div className={styles.buttons}>
+          <button className={styles.submit} type="submit">
+            Save
+          </button>
+          <a className={styles.cancel} href="/admins">
+            Cancel
+          </a>
+        </div>
       </form>
     </section>
   );

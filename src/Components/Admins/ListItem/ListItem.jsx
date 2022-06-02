@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './listItem.module.css';
 
 const ListItem = ({ listItem, deleteAdmins }) => {
   const handleDelete = () => {
@@ -8,19 +9,19 @@ const ListItem = ({ listItem, deleteAdmins }) => {
   const url = `/admins/Edit?id=${listItem._id}`;
 
   return (
-    <tr className="rows">
-      <td>{listItem._id}</td>
-      <td>{listItem.firstName}</td>
-      <td>{listItem.lastName}</td>
-      <td>{listItem.email}</td>
-      <td>{listItem.password}</td>
-      <td>{listItem.active.toString()}</td>
-      <td>
+    <tr className={styles.tr}>
+      <td className={styles.td}>{listItem._id}</td>
+      <td className={styles.td}>{listItem.firstName}</td>
+      <td className={styles.td}>{listItem.lastName}</td>
+      <td className={styles.td}>{listItem.email}</td>
+      <td className={styles.td}>{listItem.password}</td>
+      <td className={styles.td}>{listItem.active.toString()}</td>
+      <td className={styles.td}>
         <a href={url}>
           <button>&#9998;</button>
         </a>
       </td>
-      <td>
+      <td className={styles.td}>
         <button onClick={() => handleDelete(listItem._id)}>X</button>
       </td>
     </tr>
