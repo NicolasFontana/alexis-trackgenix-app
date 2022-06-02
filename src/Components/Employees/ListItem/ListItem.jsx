@@ -13,7 +13,6 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
     } catch (error) {
       setShowModal(true);
       setTitleModal('Error. Employee could not be deleted');
-      console.error(error);
     }
   };
   return (

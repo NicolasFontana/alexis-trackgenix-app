@@ -10,7 +10,6 @@ const Employees = () => {
       .then((response) => response.json())
       .then((response) => {
         setEmployees(response.data);
-        console.log(response);
       });
   }, []);
 
