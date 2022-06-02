@@ -3,53 +3,20 @@ import styles from './footer.module.css';
 function Footer() {
   return (
     <footer className={styles.container}>
-      <div className={styles.main}>
-        <div className={styles.appName}>
-          Track<span>GENIX</span>
-        </div>
-        <ul className={styles.rutes}>
-          <li>
-            <a href="/admins">admins</a>
-          </li>
-          <li>
-            <a href="/super-admins">super admins</a>
-          </li>
-          <li>
-            <a href="/employees">employees</a>
-          </li>
-          <li>
-            <a href="/projects">projects</a>
-          </li>
-          <li>
-            <a href="/time-sheets">timesheets</a>
-          </li>
-          <li>
-            <a href="/tasks">tasks</a>
-          </li>
-        </ul>
+      <div className={styles.socialContainer}>
+        <a href="">
+          <img className={styles.socialIcon} src="/assets/images/twitter.svg" />
+        </a>
+        <a href="">
+          <img className={styles.socialIcon} src="/assets/images/facebook.svg" />
+        </a>
+        <a href="">
+          <img className={styles.socialIcon} src="/assets/images/instagram.svg" />
+        </a>
       </div>
       <div className={styles.license}>
-        <div className={styles.copyright}>Copyright © 2021 Radium Rocket</div>
-        <div>
-          <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            />
-          </a>
-          <a href={'https://twitter.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            />
-          </a>
-          <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-            <img
-              className={styles.socialIcon}
-              src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            />
-          </a>
-        </div>
+        <div className={styles.location}>Rosario, Argentina</div>
+        <div className={styles.copyright}>Copyright © 2022 Trackgenix SA. All rights reserved.</div>
       </div>
     </footer>
   );
