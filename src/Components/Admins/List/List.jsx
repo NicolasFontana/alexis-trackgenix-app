@@ -3,7 +3,6 @@ import styles from './list.module.css';
 import ListItem from '../ListItem/ListItem';
 
 const List = ({ admins, deleteAdmins }) => {
-  console.log(admins);
   return (
     <div className={styles.container}>
       <table className={styles.table}>

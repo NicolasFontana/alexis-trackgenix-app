@@ -11,10 +11,11 @@ const AdminsEdit = () => {
     active: ''
   });
 
+  const params = new URLSearchParams(window.location.search);
+  const adminID = params.get('id');
+
   useEffect(async () => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const adminID = params.get('id');
       const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}api/admins/${adminID}`);
       const adminData = await getAdmin.json();
       setadminInput({
@@ -49,7 +50,7 @@ const AdminsEdit = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
+        alert(response.message);
       });
   };
 
