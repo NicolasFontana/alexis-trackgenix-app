@@ -2,6 +2,13 @@ import React from 'react';
 import styles from './ListItem.module.css';
 
 const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
+  const handleDelete = () => {
+    if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
+      deleteItem(listTimeSheet._id);
+      setShowModal(true);
+    }
+  };
+
   return (
     <tr>
       <td>{listTimeSheet.projectId.name}</td>
@@ -19,8 +26,7 @@ const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
         <button
           className={styles.delete}
           onClick={() => {
-            setShowModal(true);
-            deleteItem(listTimeSheet._id);
+            handleDelete();
           }}
         >
           &#10006;
