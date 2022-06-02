@@ -13,10 +13,9 @@ const AdminsEdit = () => {
 
   const params = new URLSearchParams(window.location.search);
   const adminID = params.get('id');
-
   useEffect(async () => {
     try {
-      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`);
+      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${adminID}`);
       const adminData = await getAdmin.json();
       setadminInput({
         firstName: adminData.data.firstName,
@@ -35,7 +34,13 @@ const AdminsEdit = () => {
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
       method: 'PUT',
-      body: JSON.stringify(adminInput),
+      body: JSON.stringify({
+        firstName: adminInput.firstName,
+        lastName: adminInput.lastName,
+        email: adminInput.email,
+        password: adminInput.password,
+        active: adminInput.active === 'true'
+      }),
       headers: {
         'content-type': 'application/json'
       }
