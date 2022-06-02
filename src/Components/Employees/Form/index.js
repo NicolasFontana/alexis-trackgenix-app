@@ -29,7 +29,6 @@ const Form = (props) => {
     employeeInput.lastName === '' &&
     employeeInput.password === ''
   ) {
-    // console.log(props.employee.projects);
     setEmployeeInput({
       firstName: props.employee.firstName,
       lastName: props.employee.lastName,
