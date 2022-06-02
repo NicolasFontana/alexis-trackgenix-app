@@ -24,10 +24,26 @@ const Form = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          alert('The data entered is not correct');
+        if (response.message == '"taskName" length must be at least 3 characters long') {
+          alert('Task name length must be at least 3 characters longs');
+        } else if (response.message == '"startDate" must be a valid date') {
+          alert('Start date must be a valid date');
+        } else if (response.message == '"workedHours" must be a number') {
+          alert('Worked Hours must be a number');
+        } else if (response.message == '"workedHours" must be an integer') {
+          alert('Worked Hours must be an integer');
+        } else if (response.message == '"description" length must be at least 6 characters long') {
+          alert('Description length must be at least 6 characters long');
+        } else if (
+          response.message ==
+          '"status" must be one of [To do, In progress, Review, Blocked, Done, Cancelled]'
+        ) {
+          alert('Status must be: [To do, In progress, Review, Blocked, Done, Cancelled]');
         } else {
-          alert('Task added successfully');
+          alert('Task edited successfully');
+          window.location.replace(
+            'https://alexis-trackgenix-app-git-feature-tg-30tasks-agustin-basp-m2022.vercel.app/tasks'
+          );
         }
       });
   };
@@ -39,22 +55,31 @@ const Form = () => {
           <h2>Add New Task</h2>
         </div>
         <form onSubmit={onSubmit} className={styles.formInputs}>
-          <Input label="Task Name" name="taskName" value={userInput.taskName} onChange={onChange} />
+          <Input
+            label="Task Name"
+            name="taskName"
+            type="text"
+            value={userInput.taskName}
+            onChange={onChange}
+          />
           <Input
             label="Start Date"
             name="startDate"
+            type="date"
             value={userInput.startDate}
             onChange={onChange}
           />
           <Input
             label="Worked Hours"
             name="workedHours"
+            type="number"
             value={userInput.workedHours}
             onChange={onChange}
           />
           <Input
             label="Description"
             name="description"
+            type="text"
             value={userInput.description}
             onChange={onChange}
           />
