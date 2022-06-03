@@ -1,27 +1,36 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
+import List from './List/List';
 
-function Employees() {
-  const [employees, saveEmployees] = useState([]);
+const Employees = () => {
+  const [list, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
       .then((response) => response.json())
       .then((response) => {
-        saveEmployees(response);
+        setEmployees(response.data);
       });
   }, []);
 
+  const deleteItem = async (_id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
+  };
+
   return (
     <section className={styles.container}>
-      <h2>Employees</h2>
-      <div>
-        {employees.map((employee) => {
-          return <div key={employee.id}>{employee.name}</div>;
-        })}
-      </div>
+      <h2 className={styles.employees}> Employees </h2>
+      <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
+      <button className={styles.addbtn}>&#10010;</button>
     </section>
   );
-}
+};
 
 export default Employees;
