@@ -3,7 +3,7 @@ import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const handleDelete = () => {
-    if (confirm(`Are you sure you want to delete this project?`)) {
+    if (confirm(`Are you sure you want to delete this employee?`)) {
       deleteItem(listItem._id);
       setShowModal(true);
       setTitleModal('Employee deleted');
