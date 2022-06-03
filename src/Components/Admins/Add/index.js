@@ -97,6 +97,9 @@ const AdminsAdd = () => {
             Cancel
           </a>
         </div>
+        <a className={styles.back} href="/admins">
+          Go Back
+        </a>
       </form>
     </section>
   );

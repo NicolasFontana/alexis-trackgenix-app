@@ -20,7 +20,7 @@ const App = () => {
         await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
           method: 'DELETE'
         });
-        alert(`Admin delete ID:${_id}`);
+        alert(`Admin deleted ID:${_id}`);
         setAdmins([...admins.filter((listItem) => listItem._id !== _id)]);
       } catch (error) {
         alert(`Error\n${error}`);

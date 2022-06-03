@@ -39,7 +39,7 @@ const AdminsEdit = () => {
         lastName: adminInput.lastName,
         email: adminInput.email,
         password: adminInput.password,
-        active: adminInput.active === 'true'
+        active: adminInput.active
       }),
       headers: {
         'content-type': 'application/json'
@@ -98,6 +98,9 @@ const AdminsEdit = () => {
             Cancel
           </a>
         </div>
+        <a className={styles.back} href="/admins">
+          Go Back
+        </a>
       </form>
     </section>
   );
