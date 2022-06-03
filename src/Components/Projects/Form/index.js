@@ -13,6 +13,7 @@ const ProjectForm = () => {
   });
   const [project, saveProjects] = useState([]);
   const [onAdd, setOnAdd] = useState(false);
+  const [edited, setEdited] = useState(true);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(async () => {
@@ -54,6 +55,7 @@ const ProjectForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setEdited(true);
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
     let url = `${process.env.REACT_APP_API_URL}/api/projects`;
@@ -82,10 +84,12 @@ const ProjectForm = () => {
   };
   const onChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
+    setEdited(false);
   };
 
   const onChangeActive = (e) => {
     setUserInput({ ...userInput, active: e.target.value == 'true' ? true : false });
+    setEdited(false);
   };
 
   return isLoading ? (
@@ -168,14 +172,23 @@ const ProjectForm = () => {
                 ></textarea>
               </div>
               <div>
-                <ListMembers project={project} onAdd={onAdd} />
+                <ListMembers project={project} onAdd={onAdd} edited={edited} />
               </div>
             </div>
           </div>
           <div className={styles.buttons}>
             <input type="submit" value="Submit" onSubmit={onSubmit} />
           </div>
-          <a href={'/projects'} className={styles.goBack}>
+          <a
+            onClick={() => {
+              edited
+                ? (window.location.href = '/projects')
+                : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+                ? (window.location.href = '/projects')
+                : null;
+            }}
+            className={styles.goBack}
+          >
             Go back
           </a>
         </form>

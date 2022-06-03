@@ -2,13 +2,22 @@ import { useState } from 'react';
 import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
 
-const ListMembers = ({ project, onAdd }) => {
+const ListMembers = ({ project, onAdd, edited }) => {
   let [members] = onAdd ? useState([]) : useState(project[0].members);
   members = members.filter((member) => member.employeeId !== null);
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <a href={`addmembers?id=${project[0]._id}`} className={styles.addmember}>
+    <a
+      onClick={() => {
+        edited
+          ? (window.location.href = `addmembers?id=${project[0]._id}`)
+          : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+          ? (window.location.href = `addmembers?id=${project[0]._id}`)
+          : null;
+      }}
+      className={styles.addmember}
+    >
       Click here to add or edit members
     </a>
   ) : (
@@ -32,7 +41,18 @@ const ListMembers = ({ project, onAdd }) => {
           )}
         </tbody>
       </table>
-      <a href={`addmembers?id=${project[0]._id}`}>Add or edit members</a>
+      <a
+        onClick={() => {
+          edited
+            ? (window.location.href = `addmembers?id=${project[0]._id}`)
+            : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+            ? (window.location.href = `addmembers?id=${project[0]._id}`)
+            : null;
+        }}
+      >
+        Add or edit members
+      </a>
+      {/* <a href=>Add or edit members</a> */}
     </div>
   );
 };
