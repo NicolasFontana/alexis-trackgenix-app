@@ -15,13 +15,12 @@ const App = () => {
   }, []);
 
   const deleteAdmins = async (_id) => {
-    if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
+    if (confirm(`WARNING!\n Are you sure you want to delete this admin?`)) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
           method: 'DELETE'
         });
-        const data = await response.json();
-        alert(`${data.message}\nID:${_id}`);
+        alert(`Admin delete ID:${_id}`);
         setAdmins([...admins.filter((listItem) => listItem._id !== _id)]);
       } catch (error) {
         alert(`Error\n${error}`);

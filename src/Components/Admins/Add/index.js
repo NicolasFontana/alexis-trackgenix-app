@@ -10,7 +10,6 @@ const AdminsAdd = () => {
     password: '',
     active: ''
   });
-
   const onSubmit = (event) => {
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
@@ -28,7 +27,7 @@ const AdminsAdd = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(response.message);
+        alert(`${response.message}(It must contain the proper format.)`);
       });
   };
 
@@ -39,9 +38,6 @@ const AdminsAdd = () => {
   return (
     <section className={styles.container}>
       <h2>Create Admin</h2>
-      <a href="/admins">
-        <button>Exit</button>
-      </a>
       <form onSubmit={onSubmit}>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
@@ -86,7 +82,7 @@ const AdminsAdd = () => {
           </div>
           <div className={styles.formRow}>
             <label className={styles.label}>Active:</label>
-            <select name="active" value={adminInput.active} onChange={onChange}>
+            <select name="active" value={adminInput.active} onChange={onChange} required>
               <option value=""></option>
               <option value="true">True</option>
               <option value="false">False</option>
@@ -95,7 +91,7 @@ const AdminsAdd = () => {
         </div>
         <div className={styles.buttons}>
           <button className={styles.submit} type="submit">
-            Save
+            Create
           </button>
           <a className={styles.cancel} href="/admins">
             Cancel
