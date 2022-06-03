@@ -7,10 +7,12 @@ const Modal = ({ title, showModal, closeModal }) => {
   }
   return (
     <div className={styles.container}>
-      <div className={styles.modal}>{title}</div>
-      <button className={styles.button} onClick={closeModal}>
-        &#10006;
-      </button>
+      <div className={styles.modal}>
+        <button className={styles.button} onClick={closeModal}>
+          &#10006;
+        </button>
+        <div className={styles.message}>{title}</div>
+      </div>
     </div>
   );
 };
