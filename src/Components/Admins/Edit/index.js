@@ -47,7 +47,7 @@ const AdminsEdit = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(`${response.message}(It must contain the proper format.)`);
+        alert(response.message);
       });
   };
 
@@ -92,7 +92,7 @@ const AdminsEdit = () => {
         </div>
         <div className={styles.buttons}>
           <button className={styles.submit} type="submit">
-            Save
+            Edit
           </button>
           <a className={styles.cancel} href="/admins">
             Cancel

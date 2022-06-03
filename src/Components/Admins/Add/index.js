@@ -27,7 +27,7 @@ const AdminsAdd = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(`${response.message}(It must contain the proper format.)`);
+        alert(response.message);
       });
   };
 
