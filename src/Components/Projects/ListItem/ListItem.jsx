@@ -2,17 +2,11 @@ import React from 'react';
 import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
-  const handleDelete = async (_id) => {
-    deleteItem(_id);
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
-        method: 'DELETE'
-      });
+  const handleDelete = () => {
+    if (confirm(`Are you sure you want to delete this project?`)) {
+      deleteItem(listItem._id);
       setShowModal(true);
       setTitleModal('Project deleted');
-    } catch (error) {
-      setShowModal(true);
-      setTitleModal('Error. Project could not be deleted');
     }
   };
   return (

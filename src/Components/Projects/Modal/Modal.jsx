@@ -9,7 +9,7 @@ const Modal = ({ title, showModal, closeModal }) => {
     <div className={styles.container}>
       <div className={styles.modal}>{title}</div>
       <button className={styles.button} onClick={closeModal}>
-        Continue
+        &#10006;
       </button>
     </div>
   );

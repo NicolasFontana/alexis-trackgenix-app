@@ -14,6 +14,13 @@ const Projects = () => {
   }, []);
 
   const deleteItem = async (_id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error(error);
+    }
     setProjects([...projects.filter((listItem) => listItem._id !== _id)]);
   };
 
