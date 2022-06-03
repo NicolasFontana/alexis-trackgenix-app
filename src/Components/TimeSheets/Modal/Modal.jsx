@@ -8,7 +8,8 @@ const Modal = ({ showModal, showTitle, setShowModal }) => {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <div>{showTitle}</div>
+        <div className={styles.tittle}>Delete timesheet</div>
+        <div className={styles.description}>{showTitle}</div>
         <button className={styles.btnClose} onClick={() => setShowModal(false)}>
           Close
         </button>

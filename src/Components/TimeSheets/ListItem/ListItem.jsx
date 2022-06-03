@@ -3,7 +3,7 @@ import styles from './ListItem.module.css';
 
 const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
   const handleDelete = () => {
-    if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
+    if (confirm(`WARNING!\n Are you sure you want to delete this timesheet?`)) {
       deleteItem(listTimeSheet._id);
       setShowModal(true);
     }
@@ -20,7 +20,9 @@ const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
       <td>{listTimeSheet.Task[0].taskId.status}</td>
       <td>{listTimeSheet.approved ? 'Approved' : 'Not approved'}</td>
       <td>
-        <button>&#9998;</button>
+        <a href={`/time-sheets/form?id=${listTimeSheet._id}`}>
+          <button>&#9998;</button>
+        </a>
       </td>
       <td>
         <button
