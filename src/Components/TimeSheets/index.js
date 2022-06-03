@@ -1,9 +1,50 @@
+import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
+import List from './List/List';
+import Modal from './Modal/Modal';
 
 function TimeSheets() {
-  return (
+  const [timeSheets, setTimeSheets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showTitle, setShowTitle] = useState('');
+
+  useEffect(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
+      const responseJSON = await response.json();
+      setTimeSheets(responseJSON.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const deleteItem = async (_id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${_id}`, {
+        method: 'DELETE'
+      });
+      const responseJSON = await response.json();
+      if (responseJSON.error === false) {
+        setShowTitle(responseJSON.message);
+      }
+      setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== _id)]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return loading ? (
+    <section className={styles.containerLoading}>
+      <div className={styles.loader}></div>
+    </section>
+  ) : (
     <section className={styles.container}>
-      <h2>TimeSheets</h2>
+      <h2>Timesheets</h2>
+      <List timeSheets={timeSheets} deleteItem={deleteItem} setShowModal={setShowModal} />
+      <Modal showModal={showModal} setShowModal={setShowModal} showTitle={showTitle} />
     </section>
   );
 }
