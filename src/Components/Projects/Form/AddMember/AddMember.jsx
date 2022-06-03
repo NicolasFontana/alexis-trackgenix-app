@@ -84,7 +84,7 @@ const AddMember = () => {
       const response = await fetch(url, options);
       const data = await response.json();
       if (response.status !== 200 && response.status !== 201) {
-        throw new Error(data.error);
+        throw new Error(data.message);
       } else {
         alert(data.message);
       }
