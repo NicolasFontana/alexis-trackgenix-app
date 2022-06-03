@@ -47,7 +47,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
         <FormModal
           show={showEditModal}
           closeModal={closeEditModal}
-          listItem={listItemState}
+          listItemId={listItemState._id}
           edit={true}
         />
         <button

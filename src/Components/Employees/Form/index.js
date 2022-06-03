@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../Input';
 import SuccessModal from '../SuccessModal';
 import styles from './form.module.css';
@@ -6,41 +6,47 @@ import styles from './form.module.css';
 const Form = (props) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-
-  const closeSuccessModal = () => {
-    setShowSuccessModal(false);
-  };
-
   const [employeeInput, setEmployeeInput] = useState({
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     password: '',
-    active: '',
-    isProjectManager: '',
+    active: true,
+    isProjectManager: false,
     projects: [],
     timeSheets: []
   });
-  if (
-    props.edit &&
-    props.employee._id &&
-    employeeInput.firstName === '' &&
-    employeeInput.lastName === '' &&
-    employeeInput.password === ''
-  ) {
-    setEmployeeInput({
-      firstName: props.employee.firstName,
-      lastName: props.employee.lastName,
-      phone: props.employee.phone,
-      email: props.employee.email,
-      password: props.employee.password,
-      active: props.employee.active,
-      isProjectManager: props.employee.isProjectManager,
-      projects: props.employee.projects.map((x) => x._id),
-      timeSheets: props.employee.timeSheets.map((x) => x._id)
-    });
-  }
+
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
+
+  useEffect(() => {
+    if (
+      props.edit &&
+      props.employeeId &&
+      employeeInput.firstName === '' &&
+      employeeInput.lastName === '' &&
+      employeeInput.password === ''
+    ) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`)
+        .then((response) => response.json())
+        .then((response) => {
+          setEmployeeInput({
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            phone: response.data.phone,
+            email: response.data.email,
+            password: response.data.password,
+            active: response.data.active,
+            isProjectManager: response.data.isProjectManager,
+            projects: response.data.projects.map((x) => x._id),
+            timeSheets: response.data.timeSheets.map((x) => x._id)
+          });
+        });
+    }
+  }, []);
 
   const onChange = (event) => {
     setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });
@@ -49,7 +55,7 @@ const Form = (props) => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (props.edit) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employee._id}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`, {
         method: 'PUT',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -74,7 +80,7 @@ const Form = (props) => {
       })
         .then((response) => response.json())
         .then((response) => {
-          setSuccessMessage(response.message);
+          setSuccessMessage(response);
         });
     } else {
       fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
@@ -102,7 +108,7 @@ const Form = (props) => {
       })
         .then((response) => response.json())
         .then((response) => {
-          setSuccessMessage(response.message);
+          setSuccessMessage(response);
         });
     }
   };
@@ -147,15 +153,15 @@ const Form = (props) => {
       <div className={styles.select}>
         <label>Active?</label>
         <select name="active" value={employeeInput.active} onChange={onChange}>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
+          <option value={true}>Active</option>
+          <option value={false}>Inactive</option>
         </select>
       </div>
       <div className={styles.select}>
         <label>Is Project Manager?</label>
         <select name="isProjectManager" value={employeeInput.isProjectManager} onChange={onChange}>
-          <option value="false">No</option>
-          <option value="true">Yes</option>
+          <option value={true}>Yes</option>
+          <option value={false}>No</option>
         </select>
       </div>
       <Input
@@ -184,7 +190,9 @@ const Form = (props) => {
       <SuccessModal
         show={showSuccessModal}
         closeModal={closeSuccessModal}
-        message={successMessage}
+        closeFormModal={props.closeFormModal}
+        successResponse={successMessage}
+        edit={props.edit}
       />
     </form>
   );

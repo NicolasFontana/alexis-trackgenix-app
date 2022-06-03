@@ -17,7 +17,7 @@ const FormModal = (props) => {
             src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
           />
         </div>
-        <Form employee={props.listItem} edit={props.edit} />
+        <Form employeeId={props.listItemId} edit={props.edit} closeFormModal={props.closeModal} />
       </div>
     </div>
   );
