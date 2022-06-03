@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormModal from '../FormModal';
 import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [listItemState, setlistItemState] = useState(listItem);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/employees/${listItem._id}`)
+      .then((response) => response.json())
+      .then((response) => {
+        setlistItemState(response.data);
+      });
+  }, [showEditModal]);
 
   const closeEditModal = () => {
     setShowEditModal(false);
@@ -26,19 +35,19 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
 
   return (
     <tr className={styles.rows}>
-      <td>{listItem._id}</td>
-      <td>{listItem.firstName}</td>
-      <td>{listItem.lastName}</td>
-      <td>{listItem.phone}</td>
-      <td>{listItem.email}</td>
-      <td>{listItem.active.toString()}</td>
-      <td>{listItem.isProjectManager.toString()}</td>
-      <td>{listItem.projects.length}</td>
+      <td>{listItemState._id}</td>
+      <td>{listItemState.firstName}</td>
+      <td>{listItemState.lastName}</td>
+      <td>{listItemState.phone}</td>
+      <td>{listItemState.email}</td>
+      <td>{listItemState.active.toString()}</td>
+      <td>{listItemState.isProjectManager.toString()}</td>
+      <td>{listItemState.projects.length}</td>
       <td>
         <FormModal
           show={showEditModal}
           closeModal={closeEditModal}
-          listItem={listItem}
+          listItem={listItemState}
           edit={true}
         />
         <button
@@ -49,7 +58,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
         >
           &#9998;
         </button>
-        <button className={styles.deletebtn} onClick={() => handleDelete(listItem._id)}>
+        <button className={styles.deletebtn} onClick={() => handleDelete(listItemState._id)}>
           &#10006;
         </button>
       </td>

@@ -13,7 +13,7 @@ const Employees = () => {
       .then((response) => {
         setEmployees(response.data);
       });
-  }, []);
+  }, [showFormModal]);
 
   const closeFormModal = () => {
     setShowFormModal(false);

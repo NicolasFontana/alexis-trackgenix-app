@@ -59,8 +59,14 @@ const Form = (props) => {
           password: employeeInput.password,
           active: employeeInput.active,
           isProjectManager: employeeInput.isProjectManager,
-          projects: employeeInput.projects.toString().replace(/\s+/g, '').split(','),
-          timeSheets: employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+          projects:
+            employeeInput.projects.length === 0
+              ? []
+              : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+          timeSheets:
+            employeeInput.timeSheets.length === 0
+              ? []
+              : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
         }),
         headers: {
           'Content-type': 'application/json'
@@ -81,8 +87,14 @@ const Form = (props) => {
           password: employeeInput.password,
           active: employeeInput.active,
           isProjectManager: employeeInput.isProjectManager,
-          projects: employeeInput.projects.toString().replace(/\s+/g, '').split(','),
-          timeSheets: employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+          projects:
+            employeeInput.projects.length === 0
+              ? []
+              : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+          timeSheets:
+            employeeInput.timeSheets.length === 0
+              ? []
+              : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
         }),
         headers: {
           'Content-type': 'application/json'
@@ -132,20 +144,20 @@ const Form = (props) => {
         value={employeeInput.password}
         onChange={onChange}
       />
-      <Input
-        label="Active"
-        name="active"
-        placeholder="true/false"
-        value={employeeInput.active}
-        onChange={onChange}
-      />
-      <Input
-        label="Is Project Manager?"
-        name="isProjectManager"
-        placeholder="true/false"
-        value={employeeInput.isProjectManager}
-        onChange={onChange}
-      />
+      <div className={styles.select}>
+        <label>Active?</label>
+        <select name="active" value={employeeInput.active} onChange={onChange}>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      </div>
+      <div className={styles.select}>
+        <label>Is Project Manager?</label>
+        <select name="isProjectManager" value={employeeInput.isProjectManager} onChange={onChange}>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
       <Input
         label="Projects (separate IDs with a comma)"
         name="projects"
