@@ -1,20 +1,18 @@
 .container {
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    margin-left: 32%;
-    margin-top: 10%;
-    justify-content: center;
+    position: fixed;
     align-items: center;
     justify-content: space-around;
     width: 300px;
     height: 150px;
+    margin-left: 30%;
     background-color: white;
     border-radius: 20%;
     box-shadow: 2px 2px 2px 2px grey;
   }
   
   .modal {
+    margin-left: 10%;
     text-transform: uppercase;
     text-shadow: 2px gray;
     font-size: 20px;
@@ -22,10 +20,12 @@
    }
   
   .button {
+      margin-bottom: 20%;
+      margin-right: 10%;
       border-radius: 10%;
       border-color: grey;
       box-shadow: 2px 2px 2px grey;
       font-size: 15px;
       font-family: 'Roboto', sans-serif;
-      background-color: #AACE9B ;
+      pointer-events:stroke;
   }

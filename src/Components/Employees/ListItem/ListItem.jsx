@@ -2,17 +2,11 @@ import React from 'react';
 import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
-  const handleDelete = async (_id) => {
-    deleteItem(_id);
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
-        method: 'DELETE'
-      });
+  const handleDelete = () => {
+    if (confirm(`Are you sure you want to delete this project?`)) {
+      deleteItem(listItem._id);
       setShowModal(true);
       setTitleModal('Employee deleted');
-    } catch (error) {
-      setShowModal(true);
-      setTitleModal('Error. Employee could not be deleted');
     }
   };
   return (
@@ -28,7 +22,12 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItem.timeSheets.length}</td>
       <td>
         <button className={styles.editbtn}>&#9998;</button>
-        <button className={styles.deletebtn} onClick={() => handleDelete(listItem._id)}>
+        <button
+          className={styles.deletebtn}
+          onClick={() => {
+            handleDelete(listItem._id);
+          }}
+        >
           &#10006;
         </button>
       </td>
