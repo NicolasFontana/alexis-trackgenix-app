@@ -1,0 +1,20 @@
+.container {
+    margin: 2% 1%;
+}
+
+.table {
+    width: 1000px;
+}
+
+.table, .th {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border: 1px solid;
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+}
+
+.th {
+    background-color: #909090;
+    border: 1px solid;
+}

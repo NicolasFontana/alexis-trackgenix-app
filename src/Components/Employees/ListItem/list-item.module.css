@@ -1,0 +1,34 @@
+.rows {
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.rows:nth-child(odd) {
+  background-color: #e5f6df;
+}
+
+.rows td {
+  margin: 2% 1% 2% 1%;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.deletebtn {
+  margin: 10%;
+  border-color: #f36d6d;
+  background-color: #f36d6d;
+  font-size: 20px;
+  box-shadow: 2px 2px 2px grey;
+  border-radius: 20%;
+  color: #e4e4e4;
+}
+
+.editbtn {
+  margin: 10%;
+  box-shadow: 2px 2px 2px grey;
+  border-radius: 20%;
+  border-color: grey;
+  background-color: grey;
+  font-size: 20px;
+  color: #e4e4e4;
+}

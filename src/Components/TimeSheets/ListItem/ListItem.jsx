@@ -4,13 +4,19 @@ import EditItem from '../EditItem/EditItem';
 
 const ListItem = ({ listTimeSheet, deleteItem, setShowModal, setShowTitle }) => {
   const [showFormEdit, setShowFormEdit] = useState(false);
-  console.log(listTimeSheet);
   const closeForm = () => {
     setShowFormEdit(false);
   };
   const openForm = () => {
     setShowFormEdit(true);
   };
+  const handleDelete = () => {
+    if (confirm(`WARNING!\n Are you sure you want to delete this timesheet?`)) {
+      deleteItem(listTimeSheet._id);
+      setShowModal(true);
+    }
+  };
+
   return (
     <tr>
       <td>{listTimeSheet.projectId.name}</td>
@@ -25,7 +31,7 @@ const ListItem = ({ listTimeSheet, deleteItem, setShowModal, setShowTitle }) => 
         <button
           className={styles.delete}
           onClick={() => {
-            deleteItem(listTimeSheet._id);
+            handleDelete();
           }}
         >
           &#10006;

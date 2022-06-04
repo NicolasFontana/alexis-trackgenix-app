@@ -7,14 +7,17 @@ import Modal from './Modal/Modal';
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
   const [showFormAdd, setShowFormAdd] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showTitle, setShowTitle] = useState('');
 
   useEffect(async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
       const responseJSON = await response.json();
       setTimeSheets(responseJSON.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -25,8 +28,10 @@ function TimeSheets() {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${_id}`, {
         method: 'DELETE'
       });
-      console.log('test', response);
-      confirm(`WARNING!\n Are you sure you want to delete this timesheet?`);
+      const responseJSON = await response.json();
+      if (responseJSON.error === false) {
+        setShowTitle(responseJSON.message);
+      }
       setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== _id)]);
     } catch (error) {
       console.error(error);
@@ -40,7 +45,11 @@ function TimeSheets() {
     setShowFormAdd(true);
   };
 
-  return (
+  return loading ? (
+    <section className={styles.containerLoading}>
+      <div className={styles.loader}></div>
+    </section>
+  ) : (
     <section className={styles.container}>
       <AddItem
         show={showFormAdd}
@@ -49,7 +58,12 @@ function TimeSheets() {
         setShowTitle={setShowTitle}
       />
       <h2>Timesheets</h2>
-      <List timeSheets={timeSheets} deleteItem={deleteItem} />
+      <List
+        timeSheets={timeSheets}
+        deleteItem={deleteItem}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
       <button onClick={onClick}>+ Add TimeSheet</button>
       <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
