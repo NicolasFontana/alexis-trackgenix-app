@@ -32,12 +32,6 @@ const List = ({ timeSheets, deleteItem, setShowModal, setShowTitle }) => {
           ))}
         </tbody>
       </table>
-      <div className={styles.containerAdd}>
-        <h3>Add new timesheet</h3>
-        <a href={'/time-sheets/add'}>
-          <button className={styles.addbtn}>&#10010;</button>
-        </a>
-      </div>
     </div>
   );
 };
