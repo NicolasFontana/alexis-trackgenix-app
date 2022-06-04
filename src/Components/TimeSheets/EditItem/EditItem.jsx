@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './EditItem.module.css';
 
 const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitle }) => {
@@ -6,31 +6,43 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
     return null;
   }
 
-  const [editTimeSheet, setEditTimeSheet] = useState({
-    projectName: previewTimeSheet.projectId.name,
-    taskId: previewTimeSheet.Task[0].taskId._id,
-    taskName: previewTimeSheet.Task[0].taskId.taskName,
-    startDate: previewTimeSheet.Task[0].taskId.startDate,
-    workedHours: previewTimeSheet.Task[0].taskId.workedHours,
-    description: previewTimeSheet.Task[0].taskId.description,
-    status: previewTimeSheet.Task[0].taskId.status
-  });
+  const [listTask, setListTask] = useState([]);
+  const [listProject, setListProject] = useState([]);
+  const [task, setTask] = useState(previewTimeSheet.Task[0].taskId._id);
+  const [projectId, setProjectId] = useState(previewTimeSheet.projectId._id);
+  const [approved, setApproved] = useState(previewTimeSheet.approved);
 
-  const onChange = (e) => {
-    setEditTimeSheet({ ...editTimeSheet, [e.target.name]: e.target.value });
+  const fetchTask = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
+      const data = await response.json();
+      console.log(data);
+      setListTask(...listTask, data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    fetchTask();
+  }, []);
+
+  const fetchProject = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
+      const data = await response.json();
+      setListProject(...listProject, data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProject();
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setEditTimeSheet({
-      projectName: '',
-      taskId: '',
-      taskName: '',
-      startDate: '',
-      workedHours: '',
-      description: '',
-      status: ''
-    });
 
     const TimeSheetId = previewTimeSheet._id;
 
@@ -40,13 +52,9 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        projectName: editTimeSheet.projectName,
-        taskId: editTimeSheet.taskId,
-        taskName: editTimeSheet.taskName,
-        startDate: editTimeSheet.startDate,
-        workedHours: editTimeSheet.workedHours,
-        description: editTimeSheet.description,
-        status: editTimeSheet.status
+        projectId: projectId,
+        task: task,
+        approved: approved
       })
     };
     const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${TimeSheetId}`;
@@ -56,7 +64,6 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
         return response.json().then(({ message }) => {
           setShowModal(true);
           setShowTitle(message);
-          throw new Error(message);
         });
       }
       setShowTitle('Time Sheet edited Successfully');
@@ -70,19 +77,36 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <div>
-          <label>Project Name</label>
-          <input
-            type="text"
-            name="projectName"
-            value={editTimeSheet.projectName}
-            onChange={onChange}
-          ></input>
+          <label>Project</label>
+          <select
+            name="project"
+            onChange={(e) => {
+              setProjectId(e.target.value);
+            }}
+          >
+            {listProject.map((project) => (
+              <option key={project._id} value={project._id}>
+                {project._id}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label>Task ID</label>
-          <input type="text" name="taskId" value={editTimeSheet.taskId} onChange={onChange}></input>
+          <label>Task</label>
+          <select
+            name="Task"
+            onChange={(e) => {
+              setTask(e.target.value);
+            }}
+          >
+            {listTask.map((task) => (
+              <option key={task._id} value={task._id}>
+                {task._id}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
+        {/* <div>
           <label>Task Name</label>
           <input
             type="text"
@@ -126,6 +150,19 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
             value={editTimeSheet.status}
             onChange={onChange}
           ></input>
+        </div> */}
+        <div>
+          <label>Approved</label>
+          <select
+            name="approved"
+            onChange={(e) => {
+              setApproved(e.target.value);
+            }}
+          >
+            <option></option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
         </div>
         <div>
           <input
@@ -143,4 +180,5 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
     </div>
   );
 };
+
 export default EditItem;

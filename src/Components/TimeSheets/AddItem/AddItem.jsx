@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AddItem.module.css';
 
 const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
@@ -6,31 +6,59 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
     return null;
   }
 
-  const [userInput, setUserInput] = useState({
-    projectName: '',
-    taskId: '',
-    taskName: '',
-    startDate: '',
-    workedHours: '',
-    description: '',
-    status: ''
-  });
+  // const [userInput, setUserInput] = useState({
+  //   projectName: '',
+  //   taskId: '',
+  //   taskName: '',
+  //   startDate: '',
+  //   workedHours: '',
+  //   description: '',
+  //   status: ''
+  // });
+
+  const [listTask, setListTask] = useState([]);
+  const [listProject, setListProject] = useState([]);
+  // const [projectName, setProjectName] = useState('');
+  const [task, setTask] = useState('');
+  const [projectId, setProjectId] = useState('');
+
+  const [approved, setApproved] = useState('');
+
+  const fetchTask = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
+      const data = await response.json();
+      console.log(data);
+      setListTask(...listTask, data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTask();
+  }, []);
+
+  const fetchProject = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
+      const data = await response.json();
+      setListProject(...listProject, data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProject();
+  }, []);
 
   const onChange = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
+    setTask({ ...task, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setUserInput({
-      projectName: '',
-      taskId: '',
-      taskName: '',
-      startDate: '',
-      workedHours: '',
-      description: '',
-      status: ''
-    });
 
     const options = {
       method: 'POST',
@@ -38,13 +66,10 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        projectId: '62940f0a8e6848e55acaf6f3',
-        Task: userInput.Task,
-        Startdate: userInput.Startdate,
-        Workedhours: userInput.Workedhours,
-        Description: userInput.Description,
-        Status: userInput.Status,
-        approved: userInput.approved
+        projectId: projectId,
+        // projectName: projectName,
+        Task: [task],
+        approved: approved
       })
     };
     const url = `${process.env.REACT_APP_API_URL}/api/time-sheets`;
@@ -54,7 +79,6 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
         return response.json().then(({ message }) => {
           setShowModal(true);
           setShowTitle(message);
-          throw new Error(message);
         });
       }
       setShowTitle('Time Sheet Created');
@@ -68,37 +92,55 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <div>
+          <label>Project ID</label>
+          <select
+            name="project"
+            onChange={(e) => {
+              setProjectId(e.target.value);
+            }}
+          >
+            {listProject.map((project) => (
+              <option key={project._id} value={project._id}>
+                {project._id}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* <div>
           <label>Project Name</label>
           <input
             type="text"
             name="projectName"
-            value={userInput.projectName}
-            onChange={onChange}
+            value={projectName}
+            onChange={(e) => {
+              setProjectName(e.target.value);
+            }}
           ></input>
-        </div>
+        </div> */}
         <div>
           <label>Task ID</label>
-          <input type="text" name="taskId" value={userInput.taskId} onChange={onChange}></input>
+          <select name="Task" onChange={onChange}>
+            {listTask.map((task) => (
+              <option key={task._id} value={task._id}>
+                {task._id}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
+        {/* <div>
           <label>Task Name</label>
-          <input type="text" name="taskName" value={userInput.taskName} onChange={onChange}></input>
+          <input type="text" name="taskName" value={task.taskName} onChange={onChange}></input>
         </div>
         <div>
           <label>Start Date</label>
-          <input
-            type="date"
-            name="startDate"
-            value={userInput.startDate}
-            onChange={onChange}
-          ></input>
+          <input type="date" name="startDate" value={task.startDate} onChange={onChange}></input>
         </div>
         <div>
           <label>Worked Hours</label>
           <input
             type="number"
             name="workedHours"
-            value={userInput.workedHours}
+            value={task.workedHours}
             onChange={onChange}
           ></input>
         </div>
@@ -107,13 +149,26 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
           <input
             type="text"
             name="description"
-            value={userInput.description}
+            value={task.description}
             onChange={onChange}
           ></input>
         </div>
         <div>
           <label>Status</label>
-          <input type="boolean" name="status" value={userInput.status} onChange={onChange}></input>
+          <input type="boolean" name="status" value={task.status} onChange={onChange}></input>
+        </div> */}
+        <div>
+          <label>Approved</label>
+          <select
+            name="approved"
+            onChange={(e) => {
+              setApproved(e.target.value);
+            }}
+          >
+            <option></option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
         </div>
         <div>
           <input
