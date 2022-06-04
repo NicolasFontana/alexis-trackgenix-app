@@ -16,7 +16,6 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
       const data = await response.json();
-      console.log(data);
       setListTask(...listTask, data.data);
     } catch (error) {
       console.error(error);
@@ -41,6 +40,11 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
     fetchProject();
   }, []);
 
+  const handleSelectedTask = (e) => {
+    const id = e;
+    setTask(id);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -53,11 +57,11 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
       },
       body: JSON.stringify({
         projectId: projectId,
-        task: task,
+        Task: [{ taskId: task }],
         approved: approved
       })
     };
-    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${TimeSheetId}`;
+    const url = `http://localhost:8000/api/time-sheets/${TimeSheetId}`;
 
     fetch(url, options).then((response) => {
       if (response.status !== 200 && response.status !== 201) {
@@ -96,7 +100,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
           <select
             name="Task"
             onChange={(e) => {
-              setTask(e.target.value);
+              handleSelectedTask(e.target.value);
             }}
           >
             {listTask.map((task) => (
@@ -106,51 +110,6 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
             ))}
           </select>
         </div>
-        {/* <div>
-          <label>Task Name</label>
-          <input
-            type="text"
-            name="taskName"
-            value={editTimeSheet.taskName}
-            onChange={onChange}
-          ></input>
-        </div>
-        <div>
-          <label>Start Date</label>
-          <input
-            type="date"
-            name="startDate"
-            value={editTimeSheet.startDate}
-            onChange={onChange}
-          ></input>
-        </div>
-        <div>
-          <label>Worked Hours</label>
-          <input
-            type="number"
-            name="workedHours"
-            value={editTimeSheet.workedHours}
-            onChange={onChange}
-          ></input>
-        </div>
-        <div>
-          <label>Description</label>
-          <input
-            type="text"
-            name="description"
-            value={editTimeSheet.description}
-            onChange={onChange}
-          ></input>
-        </div>
-        <div>
-          <label>Status</label>
-          <input
-            type="boolean"
-            name="status"
-            value={editTimeSheet.status}
-            onChange={onChange}
-          ></input>
-        </div> */}
         <div>
           <label>Approved</label>
           <select
