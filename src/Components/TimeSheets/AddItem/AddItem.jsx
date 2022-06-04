@@ -53,13 +53,22 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
     fetchProject();
   }, []);
 
-  const onChange = (e) => {
-    setTask({ ...task, [e.target.name]: e.target.value });
+  // const onChange = (e) => {
+  //   setTask({ ...task, [e.target.name]: e.target.value });
+  // };
+
+  const handleSelectedTask = (e) => {
+    console.log('asd', e);
+    const id = e;
+    // console.log('asd task', listTask);
+    // const taskSelected = listTask.filter((task) => id === task._id);
+    // console.log('asd taskSelected', taskSelected);
+    setTask(id);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log('asd', { taskId: task });
     const options = {
       method: 'POST',
       headers: {
@@ -68,11 +77,11 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
       body: JSON.stringify({
         projectId: projectId,
         // projectName: projectName,
-        Task: [task],
+        Task: [...listTask, { taskId: task }],
         approved: approved
       })
     };
-    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets`;
+    const url = `http://localhost:8000/api/time-sheets`;
 
     fetch(url, options).then((response) => {
       if (response.status !== 200 && response.status !== 201) {
@@ -93,16 +102,33 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
         <h2>Form</h2>
         <div>
           <label>Project ID</label>
+          {/* <select
+            name="project"
+            onChange={(e) => {
+              setProjectId(e.target.value);
+            }}
+          >
+            <option>Select</option>
+            {
+            listProject.map((project) => (
+              <option key={project._id} value={project._id}>
+                {project._id}
+              </option>
+            ))}
+          </select> */}
           <select
             name="project"
             onChange={(e) => {
               setProjectId(e.target.value);
             }}
           >
+            <option></option>
             {listProject.map((project) => (
-              <option key={project._id} value={project._id}>
-                {project._id}
-              </option>
+              <>
+                <option key={project._id} value={project._id}>
+                  {project._id}
+                </option>
+              </>
             ))}
           </select>
         </div>
@@ -119,11 +145,32 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
         </div> */}
         <div>
           <label>Task ID</label>
-          <select name="Task" onChange={onChange}>
+          {/* <select name="Task" onChange={onChange}>
             {listTask.map((task) => (
               <option key={task._id} value={task._id}>
                 {task._id}
               </option>
+            ))}
+          </select> */}
+          <select
+            name="Task"
+            onChange={(e) => {
+              handleSelectedTask(e.target.value);
+            }}
+          >
+            <option></option>
+            {listTask.map((task) => (
+              <>
+                <option
+                  key={task._id}
+                  value={task._id}
+                  // onClick={() => {
+                  //   handleSelectedTask(task._id);
+                  // }}
+                >
+                  {task._id}
+                </option>
+              </>
             ))}
           </select>
         </div>
