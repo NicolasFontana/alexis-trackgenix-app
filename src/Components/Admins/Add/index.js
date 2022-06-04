@@ -27,7 +27,14 @@ const AdminsAdd = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(response.message);
+        if (response.message == 'Admin created') {
+          alert('Admin created');
+          window.location.replace(
+            'https://alexis-trackgenix-app-git-feature-tg-28admin-basp-m2022.vercel.app/admins'
+          );
+        } else if (response.message) {
+          alert(response.message);
+        }
       });
   };
 
@@ -97,9 +104,6 @@ const AdminsAdd = () => {
             Cancel
           </a>
         </div>
-        <a className={styles.back} href="/admins">
-          Go Back
-        </a>
       </form>
     </section>
   );
