@@ -1,0 +1,30 @@
+.container {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    border: solid 0.5px;
+    border-radius: 3px;
+    font-size: 14px;
+    align-items: center;
+}
+
+.container table {
+    margin: 0 10px;
+    border-spacing: 5px;
+}
+
+.container th {
+    margin: 0 5px;
+    text-align: left;
+}
+.container a, .addmember{
+    display: block;
+    margin: 13px auto;
+    padding: 7px;
+    background: #AACE9B;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 12px;
+    text-decoration: none;
+    color: #373867;
+}

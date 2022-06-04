@@ -1,7 +1,24 @@
-import React from 'react';
 import styles from './list-item.module.css';
+import { useEffect, useState } from 'react';
+import React from 'react';
+import FormModal from '../FormModal';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [listItemState, setlistItemState] = useState(listItem);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/employees/${listItem._id}`)
+      .then((response) => response.json())
+      .then((response) => {
+        setlistItemState(response.data);
+      });
+  }, [showEditModal]);
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+  };
+
   const handleDelete = () => {
     if (confirm(`Are you sure you want to delete this employee?`)) {
       deleteItem(listItem._id);
@@ -9,19 +26,33 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       setTitleModal('Employee deleted');
     }
   };
+
   return (
     <tr className={styles.rows}>
-      <td>{listItem._id}</td>
-      <td>{listItem.firstName}</td>
-      <td>{listItem.lastName}</td>
-      <td>{listItem.phone}</td>
-      <td>{listItem.email}</td>
-      <td>{listItem.active.toString()}</td>
-      <td>{listItem.isProjectManager.toString()}</td>
-      <td>{listItem.projects.length}</td>
-      <td>{listItem.timeSheets.length}</td>
+      <td>{listItemState._id}</td>
+      <td>{listItemState.firstName}</td>
+      <td>{listItemState.lastName}</td>
+      <td>{listItemState.phone}</td>
+      <td>{listItemState.email}</td>
+      <td>{listItemState.active.toString()}</td>
+      <td>{listItemState.isProjectManager.toString()}</td>
+      <td>{listItemState.projects.length}</td>
+      <td>{listItemState.timeSheets.length}</td>
       <td>
-        <button className={styles.editbtn}>&#9998;</button>
+        <FormModal
+          show={showEditModal}
+          closeModal={closeEditModal}
+          listItemId={listItemState._id}
+          edit={true}
+        />
+        <button
+          onClick={() => {
+            setShowEditModal(true);
+          }}
+          className={styles.editbtn}
+        >
+          &#9998;
+        </button>
         <button
           className={styles.deletebtn}
           onClick={() => {
