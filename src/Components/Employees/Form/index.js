@@ -18,10 +18,6 @@ const Form = (props) => {
     timeSheets: []
   });
 
-  const closeSuccessModal = () => {
-    setShowSuccessModal(false);
-  };
-
   useEffect(() => {
     if (
       props.edit &&
@@ -47,6 +43,10 @@ const Form = (props) => {
         });
     }
   }, []);
+
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
 
   const onChange = (event) => {
     setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });

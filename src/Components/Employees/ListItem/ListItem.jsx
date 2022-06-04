@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import FormModal from '../FormModal';
 import styles from './list-item.module.css';
+import { useEffect, useState } from 'react';
+import React from 'react';
+import FormModal from '../FormModal';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -18,18 +19,11 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
     setShowEditModal(false);
   };
 
-  const handleDelete = async (_id) => {
-    deleteItem(_id);
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
-        method: 'DELETE'
-      });
+  const handleDelete = () => {
+    if (confirm(`Are you sure you want to delete this employee?`)) {
+      deleteItem(listItem._id);
       setShowModal(true);
       setTitleModal('Employee deleted');
-    } catch (error) {
-      setShowModal(true);
-      setTitleModal('Error. Employee could not be deleted');
-      console.error(error);
     }
   };
 
@@ -43,6 +37,7 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItemState.active.toString()}</td>
       <td>{listItemState.isProjectManager.toString()}</td>
       <td>{listItemState.projects.length}</td>
+      <td>{listItemState.timeSheets.length}</td>
       <td>
         <FormModal
           show={showEditModal}
@@ -58,7 +53,12 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
         >
           &#9998;
         </button>
-        <button className={styles.deletebtn} onClick={() => handleDelete(listItemState._id)}>
+        <button
+          className={styles.deletebtn}
+          onClick={() => {
+            handleDelete(listItem._id);
+          }}
+        >
           &#10006;
         </button>
       </td>

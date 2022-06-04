@@ -1,9 +1,13 @@
 import styles from './tasks.module.css';
+import List from './List/List';
 
 function Tasks() {
   return (
     <section className={styles.container}>
-      <h2>Tasks</h2>
+      <List />
+      <a className={styles.anchor} href="/tasks/add">
+        Add New Task
+      </a>
     </section>
   );
 }

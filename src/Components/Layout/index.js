@@ -8,8 +8,12 @@ import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
+import ProjectsForm from '../Projects/Form/index';
+import AddMember from '../Projects/Form/AddMember/AddMember';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
+import TaskForm from '../Tasks/Form/Form';
+import TaskEdit from '../Tasks/Edit/Edit';
 
 function Layout() {
   let currentScreen = <Home />;
@@ -32,11 +36,23 @@ function Layout() {
     case '/projects':
       currentScreen = <Projects />;
       break;
+    case '/projects/form':
+      currentScreen = <ProjectsForm />;
+      break;
+    case '/projects/addmembers':
+      currentScreen = <AddMember />;
+      break;
     case '/time-sheets':
       currentScreen = <TimeSheets />;
       break;
     case '/tasks':
       currentScreen = <Tasks />;
+      break;
+    case '/tasks/add':
+      currentScreen = <TaskForm />;
+      break;
+    case '/tasks/edit':
+      currentScreen = <TaskEdit />;
       break;
     default:
       break;

@@ -3,7 +3,7 @@ import ListItem from '../ListItem/ListItem';
 import Modal from '../Modal/Modal';
 import styles from './list.module.css';
 
-const List = ({ list, deleteItem }) => {
+const List = ({ projects, deleteItem }) => {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState('');
   const closeModal = () => {
@@ -18,18 +18,17 @@ const List = ({ list, deleteItem }) => {
           <tr>
             <th> ID </th>
             <th> Name </th>
-            <th> Surname </th>
-            <th> Phone </th>
-            <th> Email </th>
+            <th> Description </th>
+            <th> Start Date </th>
+            <th> End Date </th>
+            <th> Client </th>
             <th> Active </th>
-            <th> Project Manager </th>
-            <th> Projects </th>
-            <th> Timesheets </th>
+            <th> Members </th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {list.map((item) => {
+          {projects.map((item) => {
             return (
               <ListItem
                 key={item._id}
