@@ -31,7 +31,7 @@
   }
 
   .container input[type="submit"]{
-    padding: 15px;
+    padding: 10px;
     background-color: #AACE9B;
     border: black solid 1px;
     border-radius: 5px;
@@ -51,17 +51,6 @@
   }
 
   .container button{
-    padding: 15px;
+    padding: 10px;
     color: #373867;
-  }
-
-  .container button:hover{
-    background-color: #37781c;
-    color: #fff;
-    transition-duration: 0,4s;
-  }
-
-  .container button:active{
-    background-color: #265213;
-    transform: translateY(4px);
   }
