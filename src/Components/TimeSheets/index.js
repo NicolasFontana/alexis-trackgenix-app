@@ -64,7 +64,7 @@ function TimeSheets() {
         setShowModal={setShowModal}
         setShowTitle={setShowTitle}
       />
-      <button onClick={onClick}>+ Add TimeSheet</button>
+      <button onClick={onClick}>Add Time-sheet</button>
       <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );

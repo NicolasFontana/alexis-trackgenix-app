@@ -79,7 +79,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
   return (
     <div className={styles.container}>
       <form onSubmit={onSubmit}>
-        <h2>Form</h2>
+        <h2>Edit TimeSheet</h2>
         <div>
           <label>Project</label>
           <select

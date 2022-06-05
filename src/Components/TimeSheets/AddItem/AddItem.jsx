@@ -76,7 +76,7 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
   return (
     <div className={styles.container}>
       <form onSubmit={onSubmit}>
-        <h2>Form</h2>
+        <h2>Add Time Sheet</h2>
         <div>
           <label>Project</label>
           <select

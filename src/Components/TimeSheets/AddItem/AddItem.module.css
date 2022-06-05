@@ -13,10 +13,6 @@
     background-color: rgba(0,0,0,0.5);
   }
 
-  .container h2{
-    margin-left: 5%;
-  }
-
   .container label{
     display: flex;
     flex-direction: column;
@@ -27,22 +23,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 35%;
-    height: 80%;
+    width: 25%;
+    height: 50%;
     background-color: #fff;
-    margin-left: 5%;
     border-radius: 10px;
     gap: 15px
   }
 
   .container input[type="submit"]{
-    padding: 10px 15px;
-    margin-right: 10px;
+    padding: 15px;
     background-color: #AACE9B;
     border: black solid 1px;
     border-radius: 5px;
+    font-size: 15px;
     color: #373867;
-    box-shadow: 3px 3px 10px
   }
 
   .container input[type="submit"]:hover{
@@ -57,12 +51,8 @@
   }
 
   .container button{
-    padding: 10px 15px;
-    background-color: #AACE9B;
-    border: black solid 1px;
-    border-radius: 5px;
+    padding: 15px;
     color: #373867;
-    box-shadow: 3px 3px 10px
   }
 
   .container button:hover{
