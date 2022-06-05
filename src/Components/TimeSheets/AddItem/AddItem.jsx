@@ -58,7 +58,7 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
         approved: approved
       })
     };
-    const url = `http://localhost:8000/api/time-sheets`;
+    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets`;
 
     fetch(url, options).then((response) => {
       if (response.status !== 200 && response.status !== 201) {

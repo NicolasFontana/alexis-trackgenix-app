@@ -61,7 +61,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
         approved: approved
       })
     };
-    const url = `http://localhost:8000/api/time-sheets/${TimeSheetId}`;
+    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${TimeSheetId}`;
 
     fetch(url, options).then((response) => {
       if (response.status !== 200 && response.status !== 201) {
