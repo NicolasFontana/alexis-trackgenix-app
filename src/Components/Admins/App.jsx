@@ -34,7 +34,7 @@ const App = () => {
 
   return loading ? (
     <Preloader>
-      <p>Loading super admins</p>
+      <p>Loading admins</p>
     </Preloader>
   ) : (
     <div className="App">
