@@ -6,15 +6,17 @@ const Modal = ({ showModal, showTitle, setShowModal }) => {
     return null;
   }
   return (
-    <div className={styles.container}>
-      <div className={styles.modal}>
-        <div className={styles.tittle}>Delete timesheet</div>
-        <div className={styles.description}>{showTitle}</div>
-        <button className={styles.btnClose} onClick={() => setShowModal(false)}>
-          Close
-        </button>
+    <>
+      <div className={styles.container}>
+        <div className={styles.modal}>
+          <div className={styles.tittle}>Confirmation Timesheet</div>
+          <div className={styles.description}>{showTitle}</div>
+          <button className={styles.btnClose} onClick={() => setShowModal(false)}>
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
