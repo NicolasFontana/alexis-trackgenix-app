@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import List from './List/List';
+import AddItem from './AddItem/AddItem';
 import Modal from './Modal/Modal';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
+  const [showFormAdd, setShowFormAdd] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showTitle, setShowTitle] = useState('');
@@ -21,6 +23,14 @@ function TimeSheets() {
     }
   }, []);
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
+      .then((response) => response.json())
+      .then((response) => {
+        setTimeSheets(response.data);
+      });
+  }, [showModal]);
+
   const deleteItem = async (_id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${_id}`, {
@@ -36,15 +46,34 @@ function TimeSheets() {
     }
   };
 
+  const closeForm = () => {
+    setShowFormAdd(false);
+  };
+  const onClick = () => {
+    setShowFormAdd(true);
+  };
+
   return loading ? (
     <section className={styles.containerLoading}>
       <div className={styles.loader}></div>
     </section>
   ) : (
     <section className={styles.container}>
+      <AddItem
+        show={showFormAdd}
+        closeForm={closeForm}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
       <h2>Timesheets</h2>
-      <List timeSheets={timeSheets} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <Modal showModal={showModal} setShowModal={setShowModal} showTitle={showTitle} />
+      <List
+        timeSheets={timeSheets}
+        deleteItem={deleteItem}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
+      <button onClick={onClick}>Add Time-sheet</button>
+      <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }
