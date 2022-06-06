@@ -190,7 +190,7 @@ const Form = (props) => {
       <SuccessModal
         show={showSuccessModal}
         closeModal={closeSuccessModal}
-        closeFormModal={props.closeFormModal}
+        closeModalForm={props.closeModalForm}
         successResponse={successMessage}
         edit={props.edit}
       />

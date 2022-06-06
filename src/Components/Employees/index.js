@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import List from './List/List';
-import FormModal from './FormModal';
+import ModalForm from '../Shared/ModalForm';
+import Form from './Form';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
-  const [showFormModal, setShowFormModal] = useState(false);
+  const [showModalForm, setShowModalForm] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
@@ -13,10 +14,10 @@ const Employees = () => {
       .then((response) => {
         setEmployees(response.data);
       });
-  }, [showFormModal]);
+  }, [showModalForm]);
 
-  const closeFormModal = () => {
-    setShowFormModal(false);
+  const closeModalForm = () => {
+    setShowModalForm(false);
   };
 
   const deleteItem = async (_id) => {
@@ -34,11 +35,13 @@ const Employees = () => {
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <FormModal show={showFormModal} closeModal={closeFormModal} />
+      <ModalForm show={showModalForm} closeModalForm={closeModalForm}>
+        <Form closeModalForm={closeModalForm} />
+      </ModalForm>
       <button
         className={styles.addbtn}
         onClick={() => {
-          setShowFormModal(true);
+          setShowModalForm(true);
         }}
       >
         &#10010;

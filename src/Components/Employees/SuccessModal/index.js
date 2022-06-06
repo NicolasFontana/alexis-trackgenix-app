@@ -7,7 +7,7 @@ const SuccessModal = (props) => {
 
   const closeBothModals = () => {
     props.closeModal();
-    props.closeFormModal();
+    props.closeModalForm();
   };
 
   return props.successResponse.error === true ? (
