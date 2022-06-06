@@ -89,7 +89,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
             }}
           >
             {listProject.map((project) => (
-              <option key={project.name} value={project.name}>
+              <option key={project._id} value={project._id}>
                 {project.name}
               </option>
             ))}
@@ -104,7 +104,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
             }}
           >
             {listTask.map((task) => (
-              <option key={task.taskName} value={task.taskName}>
+              <option key={task._id} value={task._id}>
                 {task.taskName}
               </option>
             ))}
