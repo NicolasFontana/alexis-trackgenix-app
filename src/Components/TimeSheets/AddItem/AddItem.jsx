@@ -88,7 +88,7 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
             <option></option>
             {listProject.map((project) => (
               <>
-                <option key={project.name} value={project.name}>
+                <option key={project._id} value={project._id}>
                   {project.name}
                 </option>
               </>
@@ -106,7 +106,7 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
             <option></option>
             {listTask.map((task) => (
               <>
-                <option key={task.taskName} value={task.taskName}>
+                <option key={task._id} value={task._id}>
                   {task.taskName}
                 </option>
               </>
