@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ListItem.module.css';
+import styles from './listItem.module.css';
 
 const ListItem = ({ listTimeSheet, deleteItem, setShowModal }) => {
   const handleDelete = () => {
