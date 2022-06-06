@@ -23,6 +23,14 @@ function TimeSheets() {
     }
   }, []);
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
+      .then((response) => response.json())
+      .then((response) => {
+        setTimeSheets(response.data);
+      });
+  }, [showModal]);
+
   const deleteItem = async (_id) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${_id}`, {

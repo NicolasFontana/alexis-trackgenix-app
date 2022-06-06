@@ -15,7 +15,7 @@ const List = ({ timeSheets, deleteItem, setShowModal, setShowTitle }) => {
             <th>Worked hours</th>
             <th>Description</th>
             <th>Status</th>
-            <th>Approved PM</th>
+            <th>PMs approval</th>
             <th></th>
             <th></th>
           </tr>
