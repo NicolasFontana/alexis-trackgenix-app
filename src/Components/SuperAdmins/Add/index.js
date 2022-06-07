@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './add.module.css';
-import Button from '../../Shared/Button';
+import ButtonText from '../../Shared/Buttons/ButtonText';
 
 const SuperAdminsAdd = () => {
   const [superAdminInput, setsuperAdminInput] = useState({
@@ -99,8 +99,8 @@ const SuperAdminsAdd = () => {
           </div>
         </div>
         <div>
-          <Button clickAction={submitAdd} buttonText="Submit" className={styles.button}></Button>
-          <Button clickAction={routeChange} buttonText="Cancel" className={styles.button}></Button>
+          <ButtonText clickAction={submitAdd} label="Submit"></ButtonText>
+          <ButtonText clickAction={routeChange} label="Cancel"></ButtonText>
         </div>
       </form>
     </section>

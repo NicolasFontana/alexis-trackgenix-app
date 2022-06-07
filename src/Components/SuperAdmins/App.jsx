@@ -3,15 +3,11 @@ import { useHistory } from 'react-router-dom';
 import List from './List/List';
 import Preloader from '../Shared/Preloader/Preloader';
 import styles from './super-admins.module.css';
-import Button from '../Shared/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 
 const App = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const plus = <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>;
 
   const history = useHistory();
 
@@ -20,15 +16,13 @@ const App = () => {
     history.push(path);
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`)
+      .then((response) => response.json())
+      .then((response) => {
+        setSuperAdmins(response.data);
+        setLoading(false);
+      });
   }, []);
 
   const deleteSuperA = async (_id) => {
@@ -54,7 +48,7 @@ const App = () => {
   ) : (
     <div className={styles.container}>
       <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
-      <Button clickAction={routeChange} buttonText={plus} className={styles.buttonAdd}></Button>
+      <ButtonAdd clickAction={routeChange}></ButtonAdd>
     </div>
   );
 };

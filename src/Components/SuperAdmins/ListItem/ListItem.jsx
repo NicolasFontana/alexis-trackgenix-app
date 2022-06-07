@@ -1,18 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './listItem.module.css';
-import Button from '../../Shared/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import ButtonEdit from '../../Shared/Buttons/ButtonEdit';
+import ButtonDelete from '../../Shared/Buttons/ButtonDelete';
 
 const ListItem = ({ listItem, deleteSuperA }) => {
   const handleDelete = () => {
     deleteSuperA(listItem._id);
   };
-
-  const trash = <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>;
-  const pencil = <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>;
 
   const history = useHistory();
 
@@ -30,18 +25,10 @@ const ListItem = ({ listItem, deleteSuperA }) => {
       <td className={styles.td}>{listItem.password}</td>
       <td className={styles.td}>{listItem.active.toString()}</td>
       <td className={styles.td}>
-        <Button
-          clickAction={routeChange}
-          buttonText={pencil}
-          className={styles.buttonEdit}
-        ></Button>
+        <ButtonEdit clickAction={routeChange}></ButtonEdit>
       </td>
       <td className={styles.td}>
-        <Button
-          clickAction={() => handleDelete(listItem._id)}
-          buttonText={trash}
-          className={styles.buttonDelete}
-        ></Button>
+        <ButtonDelete clickAction={() => handleDelete(listItem._id)}></ButtonDelete>
       </td>
     </tr>
   );
