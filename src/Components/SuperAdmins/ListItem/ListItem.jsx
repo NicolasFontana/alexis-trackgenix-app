@@ -1,12 +1,25 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './listItem.module.css';
+import Button from '../../Shared/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const ListItem = ({ listItem, deleteSuperA }) => {
   const handleDelete = () => {
     deleteSuperA(listItem._id);
   };
 
-  const url = `/super-admins/edit?id=${listItem._id}`;
+  const trash = <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>;
+  const pencil = <FontAwesomeIcon icon={faPencil}></FontAwesomeIcon>;
+
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins/edit?id=${listItem._id}`;
+    history.push(path);
+  };
 
   return (
     <tr className={styles.tr}>
@@ -17,12 +30,18 @@ const ListItem = ({ listItem, deleteSuperA }) => {
       <td className={styles.td}>{listItem.password}</td>
       <td className={styles.td}>{listItem.active.toString()}</td>
       <td className={styles.td}>
-        <a href={url}>
-          <button>&#9998;</button>
-        </a>
+        <Button
+          clickAction={routeChange}
+          buttonText={pencil}
+          className={styles.buttonEdit}
+        ></Button>
       </td>
       <td className={styles.td}>
-        <button onClick={() => handleDelete(listItem._id)}>X</button>
+        <Button
+          clickAction={() => handleDelete(listItem._id)}
+          buttonText={trash}
+          className={styles.buttonDelete}
+        ></Button>
       </td>
     </tr>
   );

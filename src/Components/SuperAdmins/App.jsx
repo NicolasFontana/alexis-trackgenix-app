@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import List from './List/List';
 import Preloader from '../Shared/Preloader/Preloader';
+import styles from './super-admins.module.css';
+import Button from '../Shared/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const plus = <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>;
+
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins/add`;
+    history.push(path);
+  };
 
   useEffect(async () => {
     try {
@@ -38,8 +52,9 @@ const App = () => {
       <p>Loading super admins</p>
     </Preloader>
   ) : (
-    <div>
+    <div className={styles.container}>
       <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
+      <Button clickAction={routeChange} buttonText={plus} className={styles.buttonAdd}></Button>
     </div>
   );
 };

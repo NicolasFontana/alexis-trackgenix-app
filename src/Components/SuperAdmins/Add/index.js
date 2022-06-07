@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './add.module.css';
+import Button from '../../Shared/Button';
 
 const SuperAdminsAdd = () => {
   const [superAdminInput, setsuperAdminInput] = useState({
@@ -11,8 +13,7 @@ const SuperAdminsAdd = () => {
     active: ''
   });
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const submitAdd = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
       method: 'POST',
       body: JSON.stringify({
@@ -32,6 +33,13 @@ const SuperAdminsAdd = () => {
       });
   };
 
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins`;
+    history.push(path);
+  };
+
   const onChange = (e) => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
@@ -39,7 +47,7 @@ const SuperAdminsAdd = () => {
   return (
     <section className={styles.container}>
       <h2>Create Super Admin</h2>
-      <form onSubmit={onSubmit}>
+      <form>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
             <label className={styles.label}>First Name:</label>
@@ -90,13 +98,9 @@ const SuperAdminsAdd = () => {
             </select>
           </div>
         </div>
-        <div className={styles.buttons}>
-          <button className={styles.submit} type="submit">
-            Save
-          </button>
-          <a className={styles.cancel} href="/super-admins">
-            Cancel
-          </a>
+        <div>
+          <Button clickAction={submitAdd} buttonText="Submit" className={styles.button}></Button>
+          <Button clickAction={routeChange} buttonText="Cancel" className={styles.button}></Button>
         </div>
       </form>
     </section>
