@@ -1,5 +1,6 @@
 .table {
-  margin: 0% 5% 1% 5%;
+  margin: 0px auto;
+  width: 100%;
 }
 
 .tableHead {

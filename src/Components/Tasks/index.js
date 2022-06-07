@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './tasks.module.css';
-import TableList from '../Shared/Table/Table';
+import Table from '../Shared/Table/Table';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
@@ -31,7 +31,8 @@ function Tasks() {
 
   return (
     <section className={styles.container}>
-      <TableList
+      <h2>TASKS</h2>
+      <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
         titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
