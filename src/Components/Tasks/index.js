@@ -38,9 +38,7 @@ function Tasks() {
         delAction={delTask}
         editAction="todavia no hay"
       />
-      <a className={styles.anchor} href="/tasks/add">
-        Add New Task
-      </a>
+      <a className={styles.anchor}>Add New Task</a>
     </section>
   );
 }

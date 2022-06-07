@@ -1,12 +1,6 @@
 import React from 'react';
 import styles from './table.module.css';
 
-// data={tasks}
-// headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
-// titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
-// delAction = handle del function (comes from his parent)
-// editAction = handle edit function (comes from his parent)
-
 const Table = (props) => {
   const { data, titles, headers, delAction, editAction } = props;
 
@@ -17,7 +11,7 @@ const Table = (props) => {
           <tr>
             {headers.map((header, index) => {
               return (
-                <th key={index} className={styles.tableCell}>
+                <th key={header} className={styles.tableCell}>
                   {titles[index]}
                 </th>
               );
@@ -28,11 +22,15 @@ const Table = (props) => {
         <tbody>
           {data.map((row) => {
             return (
-              <tr key={row.id}>
+              <tr key={row._id}>
                 {headers.map((header, index) => {
                   return (
-                    <td key={index} className={styles.tableCell}>
-                      {row[header]}
+                    <td key={`${row._id}-${index}`} className={styles.tableCell}>
+                      {Array.isArray(row[header])
+                        ? row[header].length
+                        : row[header] === false || row[header] === true
+                        ? row[header].toString()
+                        : row[header]}
                     </td>
                   );
                 })}
