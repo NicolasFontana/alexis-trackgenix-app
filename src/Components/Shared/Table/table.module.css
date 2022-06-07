@@ -1,5 +1,7 @@
 .table {
-  margin: 0% 5% 1% 5%;
+  margin: 5% auto;
+  width: 20%;
+  overflow-x: auto;
 }
 
 .tableHead {
