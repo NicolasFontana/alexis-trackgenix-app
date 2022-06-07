@@ -32,7 +32,11 @@ const Table = (props) => {
                 {headers.map((header, index) => {
                   return (
                     <td key={index} className={styles.tableCell}>
-                      {row[header]}
+                      {Array.isArray(row[header])
+                        ? row[header].length
+                        : row[header] === false || row[header] === true
+                        ? row[header].toString()
+                        : row[header]}
                     </td>
                   );
                 })}
