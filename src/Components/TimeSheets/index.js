@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import List from './List/List';
+import AddItem from './AddItem/AddItem';
 import Modal from './Modal/Modal';
+import Preloader from '../Shared/Preloader/Preloader';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
+  const [showFormAdd, setShowFormAdd] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showTitle, setShowTitle] = useState('');
 
   useEffect(async () => {
-    setLoading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
       const responseJSON = await response.json();
@@ -20,6 +22,14 @@ function TimeSheets() {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
+      .then((response) => response.json())
+      .then((response) => {
+        setTimeSheets(response.data);
+      });
+  }, [showModal]);
 
   const deleteItem = async (_id) => {
     try {
@@ -36,15 +46,34 @@ function TimeSheets() {
     }
   };
 
+  const closeForm = () => {
+    setShowFormAdd(false);
+  };
+  const onClick = () => {
+    setShowFormAdd(true);
+  };
+
   return loading ? (
-    <section className={styles.containerLoading}>
-      <div className={styles.loader}></div>
-    </section>
+    <Preloader>
+      <p>Loading timesheets</p>
+    </Preloader>
   ) : (
     <section className={styles.container}>
+      <AddItem
+        show={showFormAdd}
+        closeForm={closeForm}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
       <h2>Timesheets</h2>
-      <List timeSheets={timeSheets} deleteItem={deleteItem} setShowModal={setShowModal} />
-      <Modal showModal={showModal} setShowModal={setShowModal} showTitle={showTitle} />
+      <List
+        timeSheets={timeSheets}
+        deleteItem={deleteItem}
+        setShowModal={setShowModal}
+        setShowTitle={setShowTitle}
+      />
+      <button onClick={onClick}>Add Time-sheet</button>
+      <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }
