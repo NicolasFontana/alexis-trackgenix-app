@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import styles from './tasks.module.css';
 import Table from '../Shared/Table/Table';
+import Preloader from '../Shared/Preloader/Preloader';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      saveTasks(data.data);
-    } catch (error) {
-      console.error(error);
-    }
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
+      .then((response) => response.json())
+      .then((response) => {
+        saveTasks(response.data);
+        setLoading(false);
+      });
   }, []);
 
   const delTask = (id) => {
@@ -29,7 +30,11 @@ function Tasks() {
     }
   };
 
-  return (
+  return loading ? (
+    <Preloader>
+      <p>Loading Tasks</p>
+    </Preloader>
+  ) : (
     <section className={styles.container}>
       <h2>TASKS</h2>
       <Table
