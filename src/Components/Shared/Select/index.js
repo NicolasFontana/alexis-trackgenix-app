@@ -18,7 +18,7 @@ const Select = (props) => {
         {props.data.map((item, index) => {
           return item._id ? (
             <option value={item._id} key={item._id} className={styles.options}>
-              {item.name}
+              {item.optionText}
             </option>
           ) : (
             <option value={item} key={index} className={styles.options}>
