@@ -2,16 +2,19 @@ import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import List from './List/List';
 import FormModal from './FormModal';
+import Preloader from '../Shared/Preloader/Preloader';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
   const [showFormModal, setShowFormModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
       .then((response) => response.json())
       .then((response) => {
         setEmployees(response.data);
+        setLoading(false);
       });
   }, [showFormModal]);
 
@@ -30,7 +33,11 @@ const Employees = () => {
     setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
   };
 
-  return (
+  return loading ? (
+    <Preloader>
+      <p>Loading employees</p>
+    </Preloader>
+  ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
       <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />

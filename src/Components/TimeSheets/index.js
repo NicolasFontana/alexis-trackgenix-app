@@ -3,6 +3,7 @@ import styles from './time-sheets.module.css';
 import List from './List/List';
 import AddItem from './AddItem/AddItem';
 import Modal from './Modal/Modal';
+import Preloader from '../Shared/Preloader/Preloader';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
@@ -12,7 +13,6 @@ function TimeSheets() {
   const [showTitle, setShowTitle] = useState('');
 
   useEffect(async () => {
-    setLoading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
       const responseJSON = await response.json();
@@ -54,9 +54,9 @@ function TimeSheets() {
   };
 
   return loading ? (
-    <section className={styles.containerLoading}>
-      <div className={styles.loader}></div>
-    </section>
+    <Preloader>
+      <p>Loading timesheets</p>
+    </Preloader>
   ) : (
     <section className={styles.container}>
       <AddItem

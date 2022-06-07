@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './list.module.css';
+import Preloader from '../../Shared/Preloader/Preloader';
 
 const List = () => {
   const [tasks, saveTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
       const data = await response.json();
       saveTasks(data.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -29,7 +32,11 @@ const List = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <Preloader>
+      <p>Loading tasks</p>
+    </Preloader>
+  ) : (
     <div className={styles.table}>
       <table>
         <thead>
