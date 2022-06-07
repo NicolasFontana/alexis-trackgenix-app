@@ -3,19 +3,22 @@
   flex-direction: column;
   align-items: center;
   background-color: #AACE9B;
-  min-height: 100px;
+  height: 100px;
   justify-content: center;
   padding: 20px;
+  
 }
 
 .socialContainer {
   display: flex;
   justify-content: space-around;
   width: 180px;
+  /* margin-left: 20%; */
 }
 
 .socialIcon {
   width: 40px;
+  color: #ffffff;
 }
 
 .license {
@@ -24,7 +27,9 @@
   justify-content: center;
   align-items: center;
   width: 90%;
+  height: 100px;
   padding: 0 20px;
+  /* margin-left: 20%; */
   background-color: #AACE9B;
 }
 
@@ -37,3 +42,8 @@
   font-style: italic;
 }
 
+@media screen and (min-width: 750px) {
+  .container {
+    margin-left: 15%;
+  }
+}

@@ -1,0 +1,34 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 15%;
+}
+.navbar li {
+  display: table-cell;
+  list-style: none;
+  padding-top: 30px ;
+/*   text-align: center; */
+}
+
+.navbar ul a {
+  align-items: center;
+  color: #ffffff;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.navbar ul a:hover {
+  color: #AACE9B;
+} 
+
+.navbar ul a:active {
+  font-weight: 700;
+  color: #AACE9B;
+}
+

@@ -1,0 +1,29 @@
+.sidebar {
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    width: 15%;
+    height: 100%;
+    background-color: #232F3E;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    width:100%;
+    background-color: #C4C4C4;
+    color: #232F3E;
+    text-transform: uppercase;
+    font-size: 170%;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+    .sidebar {
+        display: flex;
+    }
+}

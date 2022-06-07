@@ -1,19 +1,20 @@
-import Header from '../Header/index';
-import Footer from '../Footer/index';
 import Admins from '../Admins/index';
-import SuperAdmins from '../SuperAdmins/index';
+import Employees from '../Employees/index';
+import Footer from '../Footer/index';
+import Header from '../Header/index';
+import Home from '../Home/index';
+import Projects from '../Projects';
+import AddMember from '../Projects/Form/AddMember/AddMember';
+import ProjectsForm from '../Projects/Form/index';
+import SideBar from '../SideBar/index';
 import SuperAdminsAdd from '../SuperAdmins/Add';
 import SuperAdminsEdit from '../SuperAdmins/Edit';
-import Home from '../Home/index';
-import styles from './layout.module.css';
-import Employees from '../Employees/index';
-import Projects from '../Projects';
-import ProjectsForm from '../Projects/Form/index';
-import AddMember from '../Projects/Form/AddMember/AddMember';
-import TimeSheets from '../TimeSheets';
-import Tasks from '../Tasks/index';
-import TaskForm from '../Tasks/Form/Form';
+import SuperAdmins from '../SuperAdmins/index';
 import TaskEdit from '../Tasks/Edit/Edit';
+import TaskForm from '../Tasks/Form/Form';
+import Tasks from '../Tasks/index';
+import TimeSheets from '../TimeSheets';
+import styles from './layout.module.css';
 
 function Layout() {
   let currentScreen = <Home />;
@@ -61,8 +62,11 @@ function Layout() {
   return (
     <div className={styles.container}>
       <Header />
-      {currentScreen}
+      <div className={styles.currentScreen}>{currentScreen}</div>
       <Footer />
+      <div className={styles.sidebar}>
+        <SideBar />
+      </div>
     </div>
   );
 }
