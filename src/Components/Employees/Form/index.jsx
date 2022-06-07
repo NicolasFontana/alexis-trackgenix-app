@@ -3,7 +3,7 @@ import Input from '../Input';
 import SuccessModal from '../SuccessModal';
 import styles from './form.module.css';
 
-const Form = (props) => {
+const Form = ({ closeModalForm, edit, itemId }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [employeeInput, setEmployeeInput] = useState({
@@ -17,16 +17,16 @@ const Form = (props) => {
     projects: [],
     timeSheets: []
   });
-
+  console.log(itemId);
   useEffect(() => {
     if (
-      props.edit &&
-      props.employeeId &&
+      edit &&
+      itemId &&
       employeeInput.firstName === '' &&
       employeeInput.lastName === '' &&
       employeeInput.password === ''
     ) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`)
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`)
         .then((response) => response.json())
         .then((response) => {
           setEmployeeInput({
@@ -54,8 +54,8 @@ const Form = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (props.edit) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`, {
+    if (edit) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`, {
         method: 'PUT',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -190,9 +190,9 @@ const Form = (props) => {
       <SuccessModal
         show={showSuccessModal}
         closeModal={closeSuccessModal}
-        closeModalForm={props.closeModalForm}
+        closeModalForm={closeModalForm}
         successResponse={successMessage}
-        edit={props.edit}
+        edit={edit}
       />
     </form>
   );

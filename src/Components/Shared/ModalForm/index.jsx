@@ -1,23 +1,27 @@
 import styles from './modal-form.module.css';
+import React from 'react';
 
-const ModalForm = (props) => {
-  if (!props.show) {
+const ModalForm = ({ children, isOpen, handleClose, title }) => {
+  if (!isOpen) {
+    document.body.style.overflow = 'unset';
     return null;
+  }
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h2>Add/Edit Employee</h2>
+          <h2>{title}</h2>
           <img
             className={styles.closeButton}
-            onClick={props.closeModalForm}
+            onClick={handleClose}
             src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
           />
         </div>
-        {props.children}
-        {/* <Form employeeId={props.listItemId} edit={props.edit} closeFormModal={props.closeModal} /> */}
+        <div className={styles.form}>{children}</div>
       </div>
     </div>
   );

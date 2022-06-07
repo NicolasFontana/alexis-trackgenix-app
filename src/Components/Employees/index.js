@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import List from './List/List';
+import Preloader from '../Shared/Preloader/Preloader';
+import TableList from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
-import Preloader from '../Shared/Preloader/Preloader';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
-  const [showModalForm, setShowModalForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showModalForm, setShowModalForm] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [idToEdit, setIdToEdit] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
@@ -17,10 +19,19 @@ const Employees = () => {
         setEmployees(response.data);
         setLoading(false);
       });
-  }, [showModalForm]);
+  }, [showModalForm, showModalFormEdit]);
 
   const closeModalForm = () => {
     setShowModalForm(false);
+  };
+
+  const closeModalFormEdit = () => {
+    setShowModalFormEdit(false);
+  };
+
+  const openModalFormEdit = (id) => {
+    setShowModalFormEdit(true);
+    setIdToEdit(id);
   };
 
   const deleteItem = async (_id) => {
@@ -41,8 +52,37 @@ const Employees = () => {
   ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
-      <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <ModalForm show={showModalForm} closeModalForm={closeModalForm}>
+      <TableList
+        data={list}
+        headers={[
+          '_id',
+          'firstName',
+          'lastName',
+          'phone',
+          'email',
+          'active',
+          'isProjectManager',
+          'projects.length',
+          'timeSheets.length'
+        ]}
+        titles={[
+          'ID',
+          'Name',
+          'Surname',
+          'Phone',
+          'Email',
+          'Active',
+          'Project Manager',
+          'Projects',
+          'TimeSheets'
+        ]}
+        delAction={deleteItem}
+        editAction={openModalFormEdit}
+      />
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
+        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
+      </ModalForm>
+      <ModalForm isOpen={showModalForm} handleClose={closeModalForm} title="Add Employee">
         <Form closeModalForm={closeModalForm} />
       </ModalForm>
       <button
