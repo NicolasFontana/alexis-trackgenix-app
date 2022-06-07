@@ -1,0 +1,30 @@
+import styles from './modal-form.module.css';
+import React from 'react';
+
+const ModalForm = ({ children, isOpen, handleClose, title }) => {
+  if (!isOpen) {
+    document.body.style.overflow = 'unset';
+    return null;
+  }
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.modal}>
+        <div className={styles.header}>
+          <h2>{title}</h2>
+          <img
+            className={styles.closeButton}
+            onClick={handleClose}
+            src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
+          />
+        </div>
+        <div className={styles.form}>{children}</div>
+      </div>
+    </div>
+  );
+};
+
+export default ModalForm;

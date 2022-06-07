@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Input from '../Input';
-import SuccessModal from '../SuccessModal';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import styles from './form.module.css';
 
-const Form = (props) => {
+const Form = ({ closeModalForm, edit, itemId }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [employeeInput, setEmployeeInput] = useState({
@@ -20,13 +20,13 @@ const Form = (props) => {
 
   useEffect(() => {
     if (
-      props.edit &&
-      props.employeeId &&
+      edit &&
+      itemId &&
       employeeInput.firstName === '' &&
       employeeInput.lastName === '' &&
       employeeInput.password === ''
     ) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`)
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`)
         .then((response) => response.json())
         .then((response) => {
           setEmployeeInput({
@@ -54,8 +54,8 @@ const Form = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (props.edit) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`, {
+    if (edit) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`, {
         method: 'PUT',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -178,6 +178,12 @@ const Form = (props) => {
         value={employeeInput.timeSheets}
         onChange={onChange}
       />
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={closeSuccessModal}
+        closeModalForm={closeModalForm}
+        successResponse={successMessage}
+      />
       <button
         onClick={() => {
           setShowSuccessModal(true);
@@ -187,13 +193,6 @@ const Form = (props) => {
       >
         Confirm
       </button>
-      <SuccessModal
-        show={showSuccessModal}
-        closeModal={closeSuccessModal}
-        closeFormModal={props.closeFormModal}
-        successResponse={successMessage}
-        edit={props.edit}
-      />
     </form>
   );
 };

@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import List from './List/List';
-import FormModal from './FormModal';
 import Preloader from '../Shared/Preloader/Preloader';
+import Table from '../Shared/Table/Table';
+import ModalForm from '../Shared/ModalForm';
+import Form from './Form';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
-  const [showFormModal, setShowFormModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showModalForm, setShowModalForm] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [idToEdit, setIdToEdit] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
@@ -16,10 +19,19 @@ const Employees = () => {
         setEmployees(response.data);
         setLoading(false);
       });
-  }, [showFormModal]);
+  }, [showModalForm, showModalFormEdit]);
 
-  const closeFormModal = () => {
-    setShowFormModal(false);
+  const closeModalForm = () => {
+    setShowModalForm(false);
+  };
+
+  const closeModalFormEdit = () => {
+    setShowModalFormEdit(false);
+  };
+
+  const openModalFormEdit = (id) => {
+    setShowModalFormEdit(true);
+    setIdToEdit(id);
   };
 
   const deleteItem = async (_id) => {
@@ -40,12 +52,43 @@ const Employees = () => {
   ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
-      <List list={list} setEmployees={setEmployees} deleteItem={deleteItem} />
-      <FormModal show={showFormModal} closeModal={closeFormModal} />
+      <Table
+        data={list}
+        headers={[
+          '_id',
+          'firstName',
+          'lastName',
+          'phone',
+          'email',
+          'active',
+          'isProjectManager',
+          'projects',
+          'timeSheets'
+        ]}
+        titles={[
+          'ID',
+          'Name',
+          'Surname',
+          'Phone',
+          'Email',
+          'Active',
+          'Project Manager',
+          'Projects',
+          'TimeSheets'
+        ]}
+        delAction={deleteItem}
+        editAction={openModalFormEdit}
+      />
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
+        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
+      </ModalForm>
+      <ModalForm isOpen={showModalForm} handleClose={closeModalForm} title="Add Employee">
+        <Form closeModalForm={closeModalForm} />
+      </ModalForm>
       <button
         className={styles.addbtn}
         onClick={() => {
-          setShowFormModal(true);
+          setShowModalForm(true);
         }}
       >
         &#10010;

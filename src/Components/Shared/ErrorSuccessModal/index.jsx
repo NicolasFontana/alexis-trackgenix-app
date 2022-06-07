@@ -1,6 +1,6 @@
-import styles from './success-modal.module.css';
+import styles from './errorsuccessmodal.module.css';
 
-const SuccessModal = ({ show, closeModal, closeModalForm, successResponse }) => {
+const modalErrorSuccess = ({ show, closeModal, closeModalForm, successResponse }) => {
   if (!show) {
     return null;
   }
@@ -22,4 +22,4 @@ const SuccessModal = ({ show, closeModal, closeModalForm, successResponse }) => 
   );
 };
 
-export default SuccessModal;
+export default modalErrorSuccess;
