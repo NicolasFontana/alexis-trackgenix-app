@@ -2,7 +2,7 @@ import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
 
-const List = ({ timeSheets, deleteItem, setShowModal }) => {
+const List = ({ timeSheets, deleteItem, setShowModal, setShowTitle }) => {
   return (
     <div className={styles.container}>
       <table>
@@ -15,7 +15,7 @@ const List = ({ timeSheets, deleteItem, setShowModal }) => {
             <th>Worked hours</th>
             <th>Description</th>
             <th>Status</th>
-            <th>Approved PM</th>
+            <th>PMs approval</th>
             <th></th>
             <th></th>
           </tr>
@@ -27,16 +27,11 @@ const List = ({ timeSheets, deleteItem, setShowModal }) => {
               listTimeSheet={timeSheet}
               deleteItem={deleteItem}
               setShowModal={setShowModal}
+              setShowTitle={setShowTitle}
             />
           ))}
         </tbody>
       </table>
-      <div className={styles.containerAdd}>
-        <h3>Add new timesheet</h3>
-        <a href={'/time-sheets/add'}>
-          <button className={styles.addbtn}>&#10010;</button>
-        </a>
-      </div>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Header from '../Header/index';
 import Footer from '../Footer/index';
 import Admins from '../Admins/index';
@@ -11,65 +13,36 @@ import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
 import ProjectsForm from '../Projects/Form/index';
-import AddMember from '../Projects/Form/AddMember/AddMember';
+import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
-import TaskForm from '../Tasks/Form/Form';
-import TaskEdit from '../Tasks/Edit/Edit';
+import TasksForm from '../Tasks/Form/Form';
+import TasksEdit from '../Tasks/Edit/Edit';
 
 function Layout() {
-  let currentScreen = <Home />;
-  switch (window.location.pathname) {
-    case '/admins':
-      currentScreen = <Admins />;
-      break;
-    case '/admins/Add':
-      currentScreen = <AdminsAdd />;
-      break;
-    case '/admins/Edit':
-      currentScreen = <AdminsEdit />;
-      break;
-    case '/super-admins':
-      currentScreen = <SuperAdmins />;
-      break;
-    case '/super-admins/add':
-      currentScreen = <SuperAdminsAdd />;
-      break;
-    case '/super-admins/edit':
-      currentScreen = <SuperAdminsEdit />;
-      break;
-    case '/employees':
-      currentScreen = <Employees />;
-      break;
-    case '/projects':
-      currentScreen = <Projects />;
-      break;
-    case '/projects/form':
-      currentScreen = <ProjectsForm />;
-      break;
-    case '/projects/addmembers':
-      currentScreen = <AddMember />;
-      break;
-    case '/time-sheets':
-      currentScreen = <TimeSheets />;
-      break;
-    case '/tasks':
-      currentScreen = <Tasks />;
-      break;
-    case '/tasks/add':
-      currentScreen = <TaskForm />;
-      break;
-    case '/tasks/edit':
-      currentScreen = <TaskEdit />;
-      break;
-    default:
-      break;
-  }
-
   return (
     <div className={styles.container}>
       <Header />
-      {currentScreen}
+      <Switch>
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/admins" component={Admins} />
+        <Route exact path="/admins/add" component={AdminsAdd} />
+        <Route exact path="/admins/edit" component={AdminsEdit} />
+        <Route exact path="/super-admins" component={SuperAdmins} />
+        <Route exact path="/super-admins/add" component={SuperAdminsAdd} />
+        <Route exact path="/super-admins/edit" component={SuperAdminsEdit} />
+        <Route exact path="/employees" component={Employees} />
+        <Route exact path="/projects" component={Projects} />
+        <Route exact path="/projects/form" component={ProjectsForm} />
+        <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
+        <Route exact path="/time-sheets" component={TimeSheets} />
+        <Route exact path="/tasks" component={Tasks} />
+        <Route exact path="/tasks/add" component={TasksForm} />
+        <Route exact path="/tasks/edit" component={TasksEdit} />
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   );
