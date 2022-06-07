@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 3% 20%;
   row-gap: 5px;
   overflow: auto;
 }

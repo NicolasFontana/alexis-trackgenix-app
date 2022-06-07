@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import Preloader from '../Shared/Preloader/Preloader';
-import TableList from '../Shared/Table/Table';
+import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 
@@ -52,7 +52,7 @@ const Employees = () => {
   ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
-      <TableList
+      <Table
         data={list}
         headers={[
           '_id',

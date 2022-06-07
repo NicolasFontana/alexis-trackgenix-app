@@ -1,41 +1,22 @@
 import styles from './success-modal.module.css';
 
-const SuccessModal = (props) => {
-  if (!props.show) {
+const SuccessModal = ({ show, closeModal, closeModalForm, successResponse }) => {
+  if (!show) {
     return null;
   }
 
-  const closeBothModals = () => {
-    props.closeModal();
-    props.closeModalForm();
-  };
-
-  return props.successResponse.error === true ? (
+  return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h2>Error</h2>
+          <h2>{successResponse.error === false ? 'Success' : 'Error'}</h2>
           <img
             className={styles.closeButton}
-            onClick={props.closeModal}
+            onClick={successResponse.error === false ? closeModalForm : closeModal}
             src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
           />
         </div>
-        <p className={styles.message}> {props.successResponse.message} </p>
-      </div>
-    </div>
-  ) : (
-    <div className={styles.container}>
-      <div className={styles.modal}>
-        <div className={styles.header}>
-          <h2>Success</h2>
-          <img
-            className={styles.closeButton}
-            onClick={closeBothModals}
-            src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
-          />
-        </div>
-        <p className={styles.message}> {props.successResponse.message} </p>
+        <p className={styles.message}> {successResponse.message} </p>
       </div>
     </div>
   );
