@@ -78,10 +78,6 @@ const Employees = () => {
         ]}
         delAction={deleteItem}
         editAction={openModalFormEdit}
-        modifier={(x) => {
-          if (x == 'isProjectManager' || x == 'active') return x.toString();
-          if (x == 'projects' || x == 'timeSheets') return x.length;
-        }}
       />
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
         <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
