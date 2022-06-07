@@ -1,0 +1,34 @@
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label {
+    display: block;
+    padding-bottom: 3px;
+    text-align: justify;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    color: #373867;
+}
+
+.select {
+    margin: 5px 0 10px 0;
+    padding: 4px 6px;
+    border: 1px solid #373867;
+    border-radius: 4px;
+    height: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #373867;
+}
+
+.select:focus {
+    outline: #373867 solid 0.5px;
+}
+
+.options{
+    color: #373867;
+}
