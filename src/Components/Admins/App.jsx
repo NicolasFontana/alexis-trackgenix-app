@@ -7,7 +7,16 @@ const App = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [idDelete, setIdDelete] = useState(false);
+  const [idDelete, setIdDelete] = useState(0);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/admins`)
+      .then((response) => response.json())
+      .then((response) => {
+        setAdmins(response.data);
+        setLoading(false);
+      });
+  }, []);
 
   const closeConfirmModal = () => {
     setShowModal(false);
@@ -16,33 +25,18 @@ const App = () => {
   const openConfirmModal = (id) => {
     setShowModal(true);
     setIdDelete(id);
-    console.log('entro al confirm modal');
-    console.log(id);
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`);
-      const data = await response.json();
-      setAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  const deleteAdmins = async (idDelete) => {
-    console.log('entro al delete');
-    console.log(idDelete);
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
-        method: 'DELETE'
+  const confirmDeleteAdmin = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response) {
+          setAdmins([...admins.filter((listItem) => listItem._id !== idDelete)]);
+        }
       });
-      setAdmins([...admins.filter((listItem) => listItem._id !== idDelete)]);
-    } catch (error) {
-      alert(`Error\n${error}`);
-      console.error(error);
-    }
     setShowModal(false);
   };
 
@@ -56,10 +50,9 @@ const App = () => {
       <ConfirmModal
         isOpen={showModal}
         handleClose={closeConfirmModal}
-        confirmDelete={deleteAdmins}
-        idDelete={idDelete}
+        confirmDelete={confirmDeleteAdmin}
       >
-        <h2>Confirm delete admin ?</h2>
+        <h2>Are you sure to delete the admin ?</h2>
       </ConfirmModal>
     </div>
   );

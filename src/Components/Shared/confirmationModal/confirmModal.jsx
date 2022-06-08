@@ -1,22 +1,19 @@
 import React from 'react';
 import styles from './confirmModal.module.css';
 
-const ConfirmModal = ({ children, isOpen, handleClose, confirmDelete, idDelete }) => {
+const ConfirmModal = ({ children, isOpen, handleClose, confirmDelete }) => {
   if (!isOpen) {
     return null;
   }
 
-  console.log('entro al modal');
-  console.log(idDelete);
-
   return (
-    <div className={styles.modalOveray}>
+    <div className={styles.modalOvelay}>
       <div className={styles.modalWrapper}>
         {children}
-        <button onClick={confirmDelete(idDelete)} className={styles.confirmButton}>
-          Confirm
+        <button onClick={confirmDelete} className={styles.Button}>
+          Delete
         </button>
-        <button onClick={handleClose} className={styles.cancelButton}>
+        <button onClick={handleClose} className={styles.Button}>
           Cancel
         </button>
       </div>
