@@ -1,13 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import NavBar from '../Shared/NavBar/navbar';
 import styles from './sidebar.module.css';
 
-const SideBar = () => {
+const SideBar = ({ routes }) => {
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.header}>Trackgenix</div>
+      <div className={styles.headerContainer}>
+        <Link className={styles.header} to="/home">
+          Trackgenix
+        </Link>
+      </div>
       <div>
-        <NavBar />
+        <NavBar routes={routes} />
       </div>
     </aside>
   );

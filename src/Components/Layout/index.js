@@ -21,32 +21,42 @@ import TimeSheets from '../TimeSheets';
 import styles from './layout.module.css';
 
 function Layout() {
+  const mainRoutes = [
+    { path: '/admins', section: 'Admins' },
+    { path: '/super-admins', section: 'Super-Admins' },
+    { path: '/employees', section: 'Employees' },
+    { path: '/projects', section: 'Projects' },
+    { path: '/time-sheets', section: 'Timesheets' },
+    { path: '/tasks', section: 'Tasks' }
+  ];
   return (
     <div className={styles.container}>
-      <Header />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/admins" component={Admins} />
-        <Route exact path="/admins/add" component={AdminsAdd} />
-        <Route exact path="/admins/edit" component={AdminsEdit} />
-        <Route exact path="/super-admins" component={SuperAdmins} />
-        <Route exact path="/super-admins/add" component={SuperAdminsAdd} />
-        <Route exact path="/super-admins/edit" component={SuperAdminsEdit} />
-        <Route exact path="/employees" component={Employees} />
-        <Route exact path="/projects" component={Projects} />
-        <Route exact path="/projects/form" component={ProjectsForm} />
-        <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
-        <Route exact path="/time-sheets" component={TimeSheets} />
-        <Route exact path="/tasks" component={Tasks} />
-        <Route exact path="/tasks/add" component={TasksForm} />
-        <Route exact path="/tasks/edit" component={TasksEdit} />
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </Switch>
+      <Header routes={mainRoutes} />
+      <div className={styles.currentScreen}>
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/admins" component={Admins} />
+          <Route exact path="/admins/add" component={AdminsAdd} />
+          <Route exact path="/admins/edit" component={AdminsEdit} />
+          <Route exact path="/super-admins" component={SuperAdmins} />
+          <Route exact path="/super-admins/add" component={SuperAdminsAdd} />
+          <Route exact path="/super-admins/edit" component={SuperAdminsEdit} />
+          <Route exact path="/employees" component={Employees} />
+          <Route exact path="/projects" component={Projects} />
+          <Route exact path="/projects/form" component={ProjectsForm} />
+          <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
+          <Route exact path="/time-sheets" component={TimeSheets} />
+          <Route exact path="/tasks" component={Tasks} />
+          <Route exact path="/tasks/add" component={TasksForm} />
+          <Route exact path="/tasks/edit" component={TasksEdit} />
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+        </Switch>
+      </div>
       <Footer />
       <div className={styles.sidebar}>
-        <SideBar />
+        <SideBar routes={mainRoutes} />
       </div>
     </div>
   );

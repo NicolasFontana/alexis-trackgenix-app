@@ -1,32 +1,25 @@
 import React from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './navbar.module.css';
 
-const NavBar = () => {
+const NavBar = ({ routes }) => {
   return (
     <nav className={styles.navbar}>
+      <div className={styles.homeContainer}>
+        <Link className={styles.homepage} to="/home">
+          &#9751; Home
+        </Link>
+      </div>
       <ul>
-        <li>
-          <a href="/home">home</a>
-        </li>
-        <li>
-          <a href="/admins">admins</a>
-        </li>
-        <li>
-          <a href="/super-admins">super admins</a>
-        </li>
-        <li>
-          <a href="/employees">employees</a>
-        </li>
-        <li>
-          <a href="/projects">projects</a>
-        </li>
-        <li>
-          <a href="/time-sheets">timesheets</a>
-        </li>
-        <li>
-          <a href="/tasks">tasks</a>
-        </li>
+        {routes.map((route) => {
+          return (
+            <li key={route.section}>
+              <Link className={styles.link} to={route.path}>
+                {route.section}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

@@ -1,23 +1,46 @@
 .appName {
-  height: 100px;
-  padding: 25px;
-  font-size: 35px;
+  height: 75px;
+  font-size: 30px;
   font-weight: bold;
-  
 }
+
 .appName h2 {
-  visibility:visible;
-  color: #ffffff;
-  text-align: center;
+  margin: 0;
+  padding-top: 5%;
+ color: #ffffff;
 }
+
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   background-color: #AACE9B;
 }
 
+.navbar ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  color: #ffffff;
+}
+
+.list {
+  margin: 0 3% 0 0;
+}
+
+.link  {
+  color: #ffffff;
+}
 
 
 @media screen and (min-width: 750px) {
   .appName h2{
+    visibility: hidden;
+  }
+
+  .navbar {
     visibility: hidden;
   }
 
