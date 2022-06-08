@@ -14,12 +14,12 @@ const SuperAdminsEdit = () => {
   const params = new URLSearchParams(window.location.search);
   const superAdminID = params.get('id');
 
-  useEffect(() => {
+  const fetchData = async () => {
     try {
-      const getSuperAdmin = fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminID}`
       );
-      const superAdminData = getSuperAdmin.json();
+      const superAdminData = await response.json();
       setsuperAdminInput({
         firstName: superAdminData.data.firstName,
         lastName: superAdminData.data.lastName,
@@ -29,8 +29,11 @@ const SuperAdminsEdit = () => {
       });
     } catch (error) {
       console.error(error);
-      alert(error);
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const onSubmit = (event) => {
