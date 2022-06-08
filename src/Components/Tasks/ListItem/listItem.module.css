@@ -1,9 +1,3 @@
-/* No usar selector global, afecta a toda la app */
-/* *{
-  text-decoration: none;
-  color: #000000;
-} */
-
 .rows {
   margin: 5px 0px;
   background-color: #ffffff;
