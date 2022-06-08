@@ -8,9 +8,17 @@ import Form from './Form';
 const Employees = () => {
   const [list, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModalForm, setShowModalForm] = useState(false);
+  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idToEdit, setIdToEdit] = useState(false);
+  const [idToEdit, setIdToEdit] = useState();
+
+  const closeModalForm = () => {
+    setShowModalFormAdd(false);
+  };
+
+  const closeModalFormEdit = () => {
+    setShowModalFormEdit(false);
+  };
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
@@ -19,31 +27,41 @@ const Employees = () => {
         setEmployees(response.data);
         setLoading(false);
       });
-  }, [showModalForm, showModalFormEdit]);
-
-  const closeModalForm = () => {
-    setShowModalForm(false);
-  };
-
-  const closeModalFormEdit = () => {
-    setShowModalFormEdit(false);
-  };
+  }, [showModalFormAdd, showModalFormEdit]);
 
   const openModalFormEdit = (id) => {
-    setShowModalFormEdit(true);
     setIdToEdit(id);
+    setShowModalFormEdit(true);
   };
 
   const deleteItem = async (_id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
-        method: 'DELETE'
-      });
-    } catch (error) {
-      console.error(error);
+    if (confirm(`Are you sure you want to delete this employee?`)) {
+      try {
+        await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
+          method: 'DELETE'
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
     }
-    setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
   };
+  let modalEdit;
+  if (showModalFormEdit) {
+    modalEdit = (
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
+        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
+      </ModalForm>
+    );
+  }
+  let modalAdd;
+  if (showModalFormAdd) {
+    modalAdd = (
+      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalForm} title="Add Employee">
+        <Form closeModalForm={closeModalForm} />
+      </ModalForm>
+    );
+  }
 
   return loading ? (
     <Preloader>
@@ -79,16 +97,12 @@ const Employees = () => {
         delAction={deleteItem}
         editAction={openModalFormEdit}
       />
-      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
-        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
-      </ModalForm>
-      <ModalForm isOpen={showModalForm} handleClose={closeModalForm} title="Add Employee">
-        <Form closeModalForm={closeModalForm} />
-      </ModalForm>
+      {modalEdit}
+      {modalAdd}
       <button
         className={styles.addbtn}
         onClick={() => {
-          setShowModalForm(true);
+          setShowModalFormAdd(true);
         }}
       >
         &#10010;
