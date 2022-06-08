@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import ListMembers from './ListMembers/ListMembers';
-import Select from '../../Shared/Select';
+// import Select from '../../Shared/Select';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
 
@@ -99,7 +99,7 @@ const ProjectForm = () => {
   };
 
   const onChangeActive = (e) => {
-    setUserInput({ ...userInput, active: e.target.value == 'True' ? true : false });
+    setUserInput({ ...userInput, active: e.target.checked });
     setEdited(false);
   };
 
@@ -138,13 +138,21 @@ const ProjectForm = () => {
                 onChange={onChange}
                 required={true}
               />
-              <Select
+              {/* <Select
                 label="Active"
                 name="active"
                 defaultValue={userInput.active}
                 onChange={onChangeActive}
                 data={['True', 'False']}
                 required={true}
+              /> */}
+              {/* <label>Active</label> */}
+              <Input
+                label="Active"
+                name="active"
+                type="checkbox"
+                checked={userInput.active}
+                onChange={onChangeActive}
               />
               <Input
                 label="Start Date"
