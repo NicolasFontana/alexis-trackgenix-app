@@ -1,19 +1,19 @@
 import styles from './textarea.module.css';
 
-const Textarea = (props) => {
+const Textarea = ({ label, name, value, onChange, placeholder, required }) => {
   return (
     <div className={styles.textareaContainer}>
-      <label className={styles.label}>{props.label}</label>
+      <label className={styles.label}>{label}</label>
       <textarea
         cols="30"
         rows="5"
         maxLength={150}
         className={styles.textarea}
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
-        placeholder={props.placeholder}
-        required={props.required}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        required={required}
       ></textarea>
     </div>
   );

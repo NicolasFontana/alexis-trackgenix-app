@@ -1,21 +1,21 @@
 import styles from './select.module.css';
 
-const Select = (props) => {
+const Select = ({ label, name, value, defaultValue, onChange, required, title, data }) => {
   return (
     <div className={styles.selectContainer}>
-      <label className={styles.label}>{props.label}</label>
+      <label className={styles.label}>{label}</label>
       <select
         className={styles.select}
-        name={props.name}
-        value={props.value}
-        defaultValue={props.defaultValue}
-        onChange={props.onChange}
-        required={props.required}
+        name={name}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        required={required}
       >
         <option value="" disabled hidden>
-          {props.title}
+          {title}
         </option>
-        {props.data.map((item, index) => {
+        {data.map((item, index) => {
           return item._id ? (
             <option value={item._id} key={item._id} className={styles.options}>
               {item.optionText}
