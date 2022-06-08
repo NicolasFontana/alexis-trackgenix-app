@@ -127,6 +127,7 @@ const ProjectForm = () => {
                 placeholder="Insert project name"
                 value={userInput.name}
                 onChange={onChange}
+                required={true}
               />
               <Input
                 label="Client"
@@ -135,6 +136,7 @@ const ProjectForm = () => {
                 placeholder="Insert client name"
                 value={userInput.clientName}
                 onChange={onChange}
+                required={true}
               />
               <Select
                 label="Active"
@@ -142,22 +144,23 @@ const ProjectForm = () => {
                 defaultValue={userInput.active}
                 onChange={onChangeActive}
                 data={['True', 'False']}
+                required={true}
               />
               <Input
                 label="Start Date"
                 type="date"
                 name="startDate"
-                placeholder="yyyy-mm-dd"
                 value={onAdd ? userInput.startDate : userInput.startDate.slice(0, 10)}
                 onChange={onChange}
+                required={true}
               />
               <Input
                 label="End Date"
                 type="date"
                 name="endDate"
-                placeholder="mm/dd/yyyy"
                 value={onAdd ? userInput.endDate : userInput.endDate.slice(0, 10)}
                 onChange={onChange}
+                required={true}
               />
             </div>
             <div className={styles.divcontainer}>
@@ -167,6 +170,7 @@ const ProjectForm = () => {
                 value={userInput.description}
                 placeholder="Add a description of the project"
                 onChange={onChange}
+                required={true}
               />
               <div>
                 <ListMembers project={project} onAdd={onAdd} edited={edited} />

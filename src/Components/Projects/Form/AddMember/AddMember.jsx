@@ -116,6 +116,7 @@ const AddMember = () => {
           onChange={onChangeMember}
           className={styles.inputs}
           title="Choose Member"
+          required={true}
           data={employees.map((employee) => ({
             _id: employee._id,
             optionText: `${employee.firstName} ${employee.lastName}`
@@ -128,6 +129,7 @@ const AddMember = () => {
           onChange={onChangeRole}
           title="Choose Role"
           data={['TL', 'QA', 'DEV', 'PM']}
+          required={true}
         />
         <Input
           label="Rate"
@@ -135,6 +137,7 @@ const AddMember = () => {
           value={rate}
           onChange={OnChangeRate}
           placeholder="Insert rate"
+          required={true}
         />
         <button type="submit">Submit</button>
       </form>
