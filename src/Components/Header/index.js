@@ -1,27 +1,21 @@
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
-const Header = ({ routes }) => {
+const user = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+
+const Header = () => {
+  const location = useLocation();
+
   return (
     <header>
-      <div className={styles.appName}>
-        <h2>Trackgenix</h2>
+      <div className={styles.pathname}>{location.pathname.slice(1)}</div>
+      <div className={styles.user}>
+        <div> {user} </div>
+        <p> Username</p>
       </div>
-      <nav className={styles.navbar}>
-        <Link className={styles.homepage} to="/home"></Link>
-        <ul>
-          {routes.map((route) => {
-            return (
-              <li className={styles.list} key={route.section}>
-                <Link className={styles.link} to={route.path}>
-                  {route.section}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
     </header>
   );
 };

@@ -6,7 +6,7 @@
   height: 100px;
   justify-content: center;
   padding: 20px;
-  
+  margin-left: 15%;
 }
 
 .socialContainer {
@@ -15,9 +15,9 @@
   width: 180px;
 }
 
-.socialIcon {
-  width: 40px;
-  color: #ffffff;
+.socialContainer * {
+  color: #373867;
+  font-size: 30px;
 }
 
 .license {
@@ -40,10 +40,4 @@
   font-size: 0.8rem;
   font-style: italic;
   color: #373867;
-}
-
-@media screen and (min-width: 750px) {
-  .container {
-    margin-left: 15%;
-  }
 }

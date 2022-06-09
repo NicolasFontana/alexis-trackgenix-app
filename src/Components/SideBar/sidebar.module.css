@@ -1,5 +1,5 @@
 .sidebar {
-    display: none;
+    display: flex;
     position: fixed;
     flex-direction: column;
     align-items: center;
@@ -12,22 +12,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 150px;
+    height: 157px;
     width:100%;
     background-color: #dddee5;
 }
 
 .header {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: oblique;
+    color: #373867;
     text-align: center;
     text-transform: uppercase;
-    font-size:2vw;
-    font-weight: 700;
-    color: #373867;
     text-shadow: 1px 1px 1px #373867;
-}
-
-@media screen and (min-width: 750px) {
-    .sidebar {
-        display: flex;
-    }
 }

@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 5%;
+  margin-left: 0;
 }
 .navbar li {
   display: table-cell;
@@ -22,19 +23,25 @@
   padding: 5%;
   font-size: 30px;
   color: #ffffff;
-  text-transform: uppercase;
+  text-transform:uppercase;
+  text-shadow: 2px 2px 2px grey;
 }
 
 .link {
-  align-items: center;
   font-size: 20px;
   color: #ffffff;
   text-transform: capitalize;
 }
 
-.link:link, .homepage:link {
-  color: #AACE9B;
+.link *, .homepage *{
+  color: #ffffff;
+  margin-right: 2px;
 }
+
+.link:link, .homepage:link {
+  color: #ffffff;
+}
+
 .link:hover, .homepage:hover{
   color: #AACE9B;
 } 

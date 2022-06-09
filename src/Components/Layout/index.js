@@ -21,17 +21,9 @@ import TimeSheets from '../TimeSheets';
 import styles from './layout.module.css';
 
 function Layout() {
-  const mainRoutes = [
-    { path: '/admins', section: 'Admins' },
-    { path: '/super-admins', section: 'Super-Admins' },
-    { path: '/employees', section: 'Employees' },
-    { path: '/projects', section: 'Projects' },
-    { path: '/time-sheets', section: 'Timesheets' },
-    { path: '/tasks', section: 'Tasks' }
-  ];
   return (
     <div className={styles.container}>
-      <Header routes={mainRoutes} />
+      <Header />
       <div className={styles.currentScreen}>
         <Switch>
           <Route exact path="/home" component={Home} />
@@ -56,7 +48,7 @@ function Layout() {
       </div>
       <Footer />
       <div className={styles.sidebar}>
-        <SideBar routes={mainRoutes} />
+        <SideBar />
       </div>
     </div>
   );

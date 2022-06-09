@@ -9,8 +9,6 @@
   position: fixed;
 }
 
-@media screen and (min-width: 750px) {
 .currentScreen {
     margin-left:15%;
-  }
 }

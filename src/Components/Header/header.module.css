@@ -1,51 +1,41 @@
-.appName {
-  height: 75px;
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.appName h2 {
-  margin: 0;
-  padding-top: 5%;
- color: #ffffff;
-}
 
 header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: #AACE9B;
 }
 
-.navbar ul {
+.user {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  list-style: none;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5%;
+  padding-bottom: 1%;
+}
+.user p {
+  margin: 0;
   color: #ffffff;
+  font-size: 20px;
+  text-shadow: 2px 2px 2px grey;
 }
 
-.list {
-  margin: 0 3% 0 0;
-}
-
-.link  {
+.user * {
   color: #ffffff;
+  font-size: 90px;
+}
+header p {
+  padding-right: 6%;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
 }
 
-
-@media screen and (min-width: 750px) {
-  .appName h2{
-    visibility: hidden;
-  }
-
-  .navbar {
-    visibility: hidden;
-  }
-
-  header {
-    margin-left: 15%;
-    
-  }
+.pathname {
+  margin-left: 20%;
+  color: #ffffff;
+  font-size: 40px;
+  text-transform: capitalize;
+  text-shadow: 2px 2px 2px grey;
 }
