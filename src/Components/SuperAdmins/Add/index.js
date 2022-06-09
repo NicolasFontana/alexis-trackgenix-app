@@ -99,8 +99,8 @@ const SuperAdminsAdd = () => {
           </div>
         </div>
         <div>
-          <ButtonText clickAction={submitAdd} label="Submit"></ButtonText>
           <ButtonText clickAction={routeChange} label="Cancel"></ButtonText>
+          <ButtonText clickAction={submitAdd} label="Submit"></ButtonText>
         </div>
       </form>
     </section>
