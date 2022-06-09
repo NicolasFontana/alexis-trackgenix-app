@@ -6,7 +6,7 @@ import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 const App = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
 
   useEffect(() => {
@@ -19,11 +19,11 @@ const App = () => {
   }, []);
 
   const closeConfirmModal = () => {
-    setShowModal(false);
+    setShowModalConfirm(false);
   };
 
   const openConfirmModal = (id) => {
-    setShowModal(true);
+    setShowModalConfirm(true);
     setIdDelete(id);
   };
 
@@ -37,8 +37,22 @@ const App = () => {
           setAdmins([...admins.filter((listItem) => listItem._id !== idDelete)]);
         }
       });
-    setShowModal(false);
+    setShowModalConfirm(false);
   };
+
+  let modalConfirm;
+
+  if (showModalConfirm) {
+    modalConfirm = (
+      <ConfirmModal
+        isOpen={showModalConfirm}
+        handleClose={closeConfirmModal}
+        confirmDelete={confirmDeleteAdmin}
+        title="Delete Admin"
+        message="Are you sure to delete the admin ?"
+      ></ConfirmModal>
+    );
+  }
 
   return loading ? (
     <Preloader>
@@ -47,13 +61,7 @@ const App = () => {
   ) : (
     <div className="App">
       <List admins={admins} setAdmins={setAdmins} deleteAction={openConfirmModal} />
-      <ConfirmModal
-        isOpen={showModal}
-        handleClose={closeConfirmModal}
-        confirmDelete={confirmDeleteAdmin}
-        title="Delete Admin"
-        message="Are you sure to delete the admin ?"
-      ></ConfirmModal>
+      {modalConfirm}
     </div>
   );
 };
