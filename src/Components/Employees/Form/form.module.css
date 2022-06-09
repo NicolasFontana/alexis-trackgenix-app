@@ -1,21 +1,30 @@
 .container {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  row-gap: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: space-between;
+  row-gap: 15px;
   overflow: auto;
+}
+
+.container > * {
+  width: 33vh;
 }
 
 .select {
   display: flex;
   flex-direction: column;
-  width: 100%;
+}
+
+.select > select {
+  height: 21px;
 }
 
 .submitButton {
-  width: 100%;
+  width: 70vh;
   height: 45px;
   color: #ffffff;
   background: #aace9b;
