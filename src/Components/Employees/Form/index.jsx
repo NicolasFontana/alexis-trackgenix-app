@@ -3,7 +3,7 @@ import Input from '../Input';
 import SuccessModal from '../SuccessModal';
 import styles from './form.module.css';
 
-const Form = (props) => {
+const Form = ({ closeModalForm, edit, itemId }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [employeeInput, setEmployeeInput] = useState({
@@ -20,13 +20,13 @@ const Form = (props) => {
 
   useEffect(() => {
     if (
-      props.edit &&
-      props.employeeId &&
+      edit &&
+      itemId &&
       employeeInput.firstName === '' &&
       employeeInput.lastName === '' &&
       employeeInput.password === ''
     ) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`)
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`)
         .then((response) => response.json())
         .then((response) => {
           setEmployeeInput({
@@ -54,8 +54,8 @@ const Form = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (props.edit) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${props.employeeId}`, {
+    if (edit) {
+      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`, {
         method: 'PUT',
         body: JSON.stringify({
           firstName: employeeInput.firstName,
@@ -121,6 +121,7 @@ const Form = (props) => {
         placeholder="Juan"
         value={employeeInput.firstName}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Last Name"
@@ -128,6 +129,7 @@ const Form = (props) => {
         placeholder="Perez"
         value={employeeInput.lastName}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Phone"
@@ -135,6 +137,7 @@ const Form = (props) => {
         placeholder="123456789"
         value={employeeInput.phone}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Email"
@@ -142,6 +145,7 @@ const Form = (props) => {
         placeholder="juanperez@gmail.com"
         value={employeeInput.email}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Password"
@@ -149,6 +153,7 @@ const Form = (props) => {
         placeholder="********"
         value={employeeInput.password}
         onChange={onChange}
+        type="password"
       />
       <div className={styles.select}>
         <label>Active?</label>
@@ -170,6 +175,7 @@ const Form = (props) => {
         placeholder=""
         value={employeeInput.projects}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Timesheets (separate IDs with a comma)"
@@ -177,6 +183,7 @@ const Form = (props) => {
         placeholder=""
         value={employeeInput.timeSheets}
         onChange={onChange}
+        type="text"
       />
       <button
         onClick={() => {
@@ -190,9 +197,8 @@ const Form = (props) => {
       <SuccessModal
         show={showSuccessModal}
         closeModal={closeSuccessModal}
-        closeFormModal={props.closeFormModal}
+        closeModalForm={closeModalForm}
         successResponse={successMessage}
-        edit={props.edit}
       />
     </form>
   );
