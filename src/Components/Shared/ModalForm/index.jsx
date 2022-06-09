@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 const ModalForm = ({ children, isOpen, handleClose, title }) => {
   if (!isOpen) {
-    // document.body.style.overflow = 'unset';
     return null;
   }
 
@@ -16,8 +15,8 @@ const ModalForm = ({ children, isOpen, handleClose, title }) => {
   }, []);
 
   return (
-    <div className={styles.container} onClick={handleClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.container} onPointerDown={handleClose}>
+      <div className={styles.modal} onPointerDown={(e) => e.stopPropagation()}>
         <div className={`${styles.header} ${styles.noselect}`}>
           <h2>{title}</h2>
           <img
