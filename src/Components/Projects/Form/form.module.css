@@ -1,17 +1,3 @@
-/* .maincontainer textarea, .maincontainer select {
-  font-family: 'Roboto', sans-serif;
-}
-
-.maincontainer textarea {
-  padding: 4px 6px;
-  width: 100%;
-  border: 0.5px solid #373867;
-  border-radius: 3px;
-  color: #373867;
-  margin-top: 10px;
-  height: 80px;
-} */
-
 .maincontainer h2 {
   width: 700px;
   margin-bottom: 20px;
@@ -53,33 +39,6 @@
   align-items: center;
 }
 
-/* .maincontainer label {
-  line-height: 18px;
-  display: block;
-  padding-bottom: 3px;
-  text-align: justify;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.inputs {
-  margin: 5px 0 10px 0;  
-  font-family: 'Roboto', sans-serif;
-  padding: 4px 6px;
-  width: 100%;
-  height: 25px;
-  border: 0.5px solid #373867;
-  border-radius: 3px;
-  color: #373867;
-}
-
-input::placeholder, textarea::placeholder {
-  font-weight: 400;
-  font-size: 12px;
-  color: #373867;
-  opacity: 0.5;
-} */
-
 .buttons input {
   display: block;
   margin: 15px auto;
@@ -100,9 +59,7 @@ input::placeholder, textarea::placeholder {
   opacity: 0.9;
   cursor: pointer;
 }
-.loading {
-  margin: auto;
-}
+
 .goBack {
   display: block;
   margin: 15px auto;

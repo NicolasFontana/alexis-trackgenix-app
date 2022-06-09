@@ -3,7 +3,7 @@ import styles from './select.module.css';
 const Select = ({ label, name, value, defaultValue, onChange, required, title, data }) => {
   return (
     <div className={styles.selectContainer}>
-      <label className={styles.label}>{label}</label>
+      <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
       <select
         className={styles.select}
         name={name}

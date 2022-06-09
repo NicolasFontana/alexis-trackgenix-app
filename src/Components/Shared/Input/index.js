@@ -5,7 +5,7 @@ const Input = ({ label, name, type, value, onChange, placeholder, checked, requi
     <div className={type == 'checkbox' ? styles.checkboxContainer : styles.inputContainer}>
       <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
       <input
-        className={`${styles.input} ${styles.noselect}`}
+        className={styles.input}
         name={name}
         type={type}
         value={value}

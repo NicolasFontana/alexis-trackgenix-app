@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './addMember.module.css';
 import Select from '../../../Shared/Select';
 import Input from '../../../Shared/Input';
+import Preloader from '../../../Shared/Preloader/Preloader';
 
 const AddMember = () => {
   let edit;
@@ -105,7 +106,9 @@ const AddMember = () => {
   };
 
   return isLoading ? (
-    <h1 className={styles.loading}>Loading form...</h1>
+    <Preloader>
+      <p>Loading projects</p>
+    </Preloader>
   ) : (
     <div className={styles.divcontainer}>
       <h2>Add or Edit a member</h2>

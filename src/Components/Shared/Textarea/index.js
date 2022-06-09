@@ -3,7 +3,7 @@ import styles from './textarea.module.css';
 const Textarea = ({ label, name, value, onChange, placeholder, required }) => {
   return (
     <div className={styles.textareaContainer}>
-      <label className={styles.label}>{label}</label>
+      <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
       <textarea
         cols="30"
         rows="5"
