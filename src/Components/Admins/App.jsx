@@ -51,9 +51,9 @@ const App = () => {
         isOpen={showModal}
         handleClose={closeConfirmModal}
         confirmDelete={confirmDeleteAdmin}
-      >
-        <h2>Are you sure to delete the admin ?</h2>
-      </ConfirmModal>
+        title="Delete Admin"
+        message="Are you sure to delete the admin ?"
+      ></ConfirmModal>
     </div>
   );
 };
