@@ -1,4 +1,5 @@
 .table {
+<<<<<<< HEAD
     margin: 5% auto;
     width: 20%;
     overflow-x: auto;
@@ -17,3 +18,22 @@
   .row th {
     background-color: #e4e4e4;
   }
+=======
+  margin: 0px auto;
+  width: 100%;
+}
+
+.tableHead {
+  background-color: #f0f4f9;
+}
+
+.tableCell {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.row th {
+  background-color: #e4e4e4;
+}
+>>>>>>> f8fff3d95f0087c03d2b6671c4403db6c3844302

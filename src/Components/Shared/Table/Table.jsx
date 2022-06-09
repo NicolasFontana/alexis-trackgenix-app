@@ -11,7 +11,7 @@ const Table = (props) => {
           <tr>
             {headers.map((header, index) => {
               return (
-                <th key={index} className={styles.tableCell}>
+                <th key={header} className={styles.tableCell}>
                   {titles[index]}
                 </th>
               );
@@ -25,7 +25,7 @@ const Table = (props) => {
               <tr key={row._id}>
                 {headers.map((header, index) => {
                   return (
-                    <td key={row._id.concat(index)} className={styles.tableCell}>
+                    <td key={`${row._id}-${index}`} className={styles.tableCell}>
                       {Array.isArray(row[header])
                         ? row[header].length
                         : row[header] === false || row[header] === true
