@@ -8,7 +8,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 5%;
-  margin-left: 0;
+  padding: 0;
 }
 .navbar li {
   display: table-cell;
@@ -17,10 +17,9 @@
 }
 
 .homeContainer {
-  padding: 20% 0 0 5%;
+  padding: 30% 0 0 0;
 }
 .homepage {
-  padding: 5%;
   font-size: 30px;
   color: #ffffff;
   text-transform:uppercase;
@@ -38,7 +37,8 @@
   margin-right: 2px;
 }
 
-.link:link, .homepage:link {
+
+.link, .homepage{
   color: #ffffff;
 }
 
@@ -47,6 +47,12 @@
 } 
 
 .link:active, .homepage:active{
+  font-weight: 700;
+  color: #AACE9B;
+  text-shadow: 1px 1px 1px grey;
+}
+
+.link:focus, .homepage:focus{
   font-weight: 700;
   color: #AACE9B;
   text-shadow: 1px 1px 1px grey;
