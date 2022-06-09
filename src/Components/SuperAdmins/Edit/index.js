@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './edit.module.css';
+import ButtonText from '../../Shared/Buttons/ButtonText';
 
 const SuperAdminsEdit = () => {
   const [superAdminInput, setsuperAdminInput] = useState({
@@ -14,12 +16,12 @@ const SuperAdminsEdit = () => {
   const params = new URLSearchParams(window.location.search);
   const superAdminID = params.get('id');
 
-  useEffect(async () => {
+  const fetchData = async () => {
     try {
-      const getSuperAdmin = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminID}`
       );
-      const superAdminData = await getSuperAdmin.json();
+      const superAdminData = await response.json();
       setsuperAdminInput({
         firstName: superAdminData.data.firstName,
         lastName: superAdminData.data.lastName,
@@ -29,12 +31,14 @@ const SuperAdminsEdit = () => {
       });
     } catch (error) {
       console.error(error);
-      alert(error);
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const submitEdit = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminID}`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -54,6 +58,13 @@ const SuperAdminsEdit = () => {
       });
   };
 
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins`;
+    history.push(path);
+  };
+
   const onChange = (e) => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
   };
@@ -61,7 +72,7 @@ const SuperAdminsEdit = () => {
   return (
     <section className={styles.container}>
       <h2>Edit Super Admin</h2>
-      <form onSubmit={onSubmit}>
+      <form>
         <div className={styles.formBody}>
           <div className={styles.formRow}>
             <label className={styles.label}>First Name:</label>
@@ -104,12 +115,8 @@ const SuperAdminsEdit = () => {
           </div>
         </div>
         <div className={styles.buttons}>
-          <button className={styles.submit} type="submit">
-            Save
-          </button>
-          <a className={styles.cancel} href="/super-admins">
-            Cancel
-          </a>
+          <ButtonText clickAction={routeChange} label="Cancel"></ButtonText>
+          <ButtonText clickAction={submitEdit} label="Submit"></ButtonText>
         </div>
       </form>
     </section>
