@@ -6,8 +6,11 @@ const modalErrorSuccess = ({ show, closeModal, closeModalForm, successResponse }
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.modal}>
+    <div
+      className={styles.container}
+      onPointerDown={successResponse.error === false ? closeModalForm : closeModal}
+    >
+      <div className={styles.modal} onPointerDown={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <h2>{successResponse.error === false ? 'Success' : 'Error'}</h2>
           <img

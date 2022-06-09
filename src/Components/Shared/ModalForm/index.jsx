@@ -3,11 +3,7 @@ import React from 'react';
 
 const ModalForm = ({ children, isOpen, handleClose, title }) => {
   if (!isOpen) {
-    document.body.style.overflow = 'unset';
     return null;
-  }
-  if (isOpen) {
-    document.body.style.overflow = 'hidden';
   }
 
   return (
