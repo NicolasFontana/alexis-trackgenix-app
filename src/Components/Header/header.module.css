@@ -5,6 +5,7 @@ header {
   align-items: center;
   justify-content: space-between;
   background-color: #AACE9B;
+  height: 30%;
 }
 
 .user {
@@ -12,7 +13,7 @@ header {
   flex-direction: column;
   align-items: center;
   margin-right: 5%;
-  padding:1% 0 1% 0;
+  padding:1.5% 0 1.5% 0;
 }
 .user p {
   margin: 0;
