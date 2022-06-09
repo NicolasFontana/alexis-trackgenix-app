@@ -178,12 +178,6 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         value={employeeInput.timeSheets}
         onChange={onChange}
       />
-      <SuccessModal
-        show={showSuccessModal}
-        closeModal={closeSuccessModal}
-        closeModalForm={closeModalForm}
-        successResponse={successMessage}
-      />
       <button
         onClick={() => {
           setShowSuccessModal(true);
@@ -193,6 +187,12 @@ const Form = ({ closeModalForm, edit, itemId }) => {
       >
         Confirm
       </button>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={closeSuccessModal}
+        closeModalForm={closeModalForm}
+        successResponse={successMessage}
+      />
     </form>
   );
 };

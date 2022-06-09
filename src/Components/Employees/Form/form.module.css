@@ -10,8 +10,12 @@
   overflow: auto;
 }
 
-.container > * {
+.container > div {
   width: 33vh;
+}
+
+.container > div:last-child {
+  width: 100vw;
 }
 
 .select {
@@ -24,7 +28,7 @@
 }
 
 .submitButton {
-  width: 70vh;
+  width: 100%;
   height: 45px;
   color: #ffffff;
   background: #aace9b;
