@@ -1,36 +1,51 @@
-.container {
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    height: 200px;
-    overflow-y: scroll;
-    border: solid 0.5px;
-    border-radius: 3px;
-    font-size: 14px;
-    align-items: center;
+.divcontainer {
+margin-top: 15px;
 }
 
-.container h3 {
-    color: #373867;
+.container {
+margin: 15px 0;
+overflow-y: scroll;
+border: 1px solid #373867;
+border-radius: 4px;
+font-size: 14px;
+}
+
+.divcontainer h3 {
+display: inline;
+color: #373867;
+font-size: 14px;
+text-align: justify;
 }
 
 .container table {
-    margin: 0 10px;
-    border-spacing: 5px;
+box-sizing: unset;
+margin: 0 10px;
+border-spacing: 5px;
 }
 
-.container th {
-    margin: 0 5px;
-    text-align: left;
+.container tr {
+height: 20px;
 }
-.container a, .addmember{
-    display: block;
-    margin: auto;
-    padding: 7px;
-    background: #AACE9B;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 12px;
-    text-decoration: none;
-    color: #373867;
+
+.container th,
+.container td {
+padding: 9px;
+margin: 0 5px;
+text-align: left;
+}
+.container a,
+.addmember {
+display: inline;
+margin: auto;
+padding: 7px;
+background: #aace9b;
+border-radius: 5px;
+font-weight: 500;
+font-size: 12px;
+text-decoration: none;
+color: #373867;
+}
+
+.addmember {
+margin-left: 40px;
 }

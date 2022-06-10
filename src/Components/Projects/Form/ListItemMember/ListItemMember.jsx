@@ -1,6 +1,6 @@
 import styles from './listitemmember.module.css';
 
-const ListItemMember = ({ member }) => {
+const ListItemMember = ({ member, onDelete }) => {
   return (
     <tr className={styles.row}>
       <td>
@@ -8,6 +8,9 @@ const ListItemMember = ({ member }) => {
       </td>
       <td>{member.role}</td>
       <td>{member.rate}</td>
+      <td>
+        <a onClick={() => onDelete(member.employeeId._id)}>Delete</a>
+      </td>
     </tr>
   );
 };

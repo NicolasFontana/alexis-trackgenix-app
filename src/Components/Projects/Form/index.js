@@ -16,7 +16,7 @@ const ProjectForm = () => {
   });
   const [project, saveProjects] = useState([]);
   const [onAdd, setOnAdd] = useState(false);
-  const [edited, setEdited] = useState(true);
+  const [edited, setEdited] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -85,30 +85,32 @@ const ProjectForm = () => {
     } catch (error) {
       alert(error);
     }
+    setEdited(false);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setEdited(true);
-    handleOnSubmit();
+    edited
+      ? handleOnSubmit()
+      : (setEdited(false), alert('No input changed. The project stayed the same'));
   };
 
   const onChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
-    setEdited(false);
+    setEdited(true);
   };
 
   const onChangeActive = (e) => {
     setUserInput({ ...userInput, active: e.target.checked });
-    setEdited(false);
+    setEdited(true);
   };
 
-  const handleOnClick = () => {
+  const handleOnClick = (route) => {
     edited
-      ? (window.location.href = '/projects')
-      : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-      ? (window.location.href = '/projects')
-      : null;
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? (window.location.href = route)
+        : null
+      : (window.location.href = route);
   };
 
   return isLoading ? (
@@ -120,7 +122,7 @@ const ProjectForm = () => {
       <div className={styles.maincontainer}>
         <form onSubmit={onSubmit} className={styles.container}>
           {onAdd ? <h2>Add Project</h2> : <h2>Edit Project</h2>}
-          <div className={styles.maincontainer}>
+          <div className={onAdd ? styles.maincontainer.add : styles.maincontainer}>
             <div className={styles.divcontainer}>
               <Input
                 label="Project Name"
@@ -174,14 +176,19 @@ const ProjectForm = () => {
                 required={true}
               />
               <div>
-                <ListMembers project={project} onAdd={onAdd} edited={edited} />
+                <ListMembers
+                  project={project}
+                  onAdd={onAdd}
+                  edited={edited}
+                  onClick={handleOnClick}
+                />
               </div>
             </div>
           </div>
           <div className={styles.buttons}>
             <input type="submit" value="Submit" onSubmit={onSubmit} />
           </div>
-          <a onClick={() => handleOnClick()} className={styles.goBack}>
+          <a onClick={() => handleOnClick('/projects')} className={styles.goBack}>
             Go back
           </a>
         </form>
