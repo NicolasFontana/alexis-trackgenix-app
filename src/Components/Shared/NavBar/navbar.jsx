@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './navbar.module.css';
 
 const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
@@ -20,40 +20,75 @@ const NavBar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.homeContainer}>
-        <Link className={styles.homepage} to="/home">
+        <NavLink
+          className={styles.homepage}
+          exact
+          activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+          to="/home"
+        >
           {home} Home
-        </Link>
+        </NavLink>
       </div>
       <ul>
         <li>
-          <Link className={styles.link} to="/admins">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/admins"
+          >
             {users} Admins
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className={styles.link} to="/super-admins">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/super-admins"
+          >
             {users} Super Admins
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className={styles.link} to="/employees">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/employees"
+          >
             {users} Employees
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className={styles.link} to="/projects">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/projects"
+          >
             {projects} Projects
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className={styles.link} to="/time-sheets">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/time-sheets"
+          >
             {timesheets} Timesheets
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className={styles.link} to="/tasks">
+          <NavLink
+            className={styles.link}
+            exact
+            activeStyle={{ color: '#A1D28C', fontWeight: 700 }}
+            to="/tasks"
+          >
             {tasks} Tasks
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
