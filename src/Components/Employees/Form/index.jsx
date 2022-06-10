@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import Input from '../Input';
+import Input from '../../Shared/Input';
+import Select from '../../Shared/Select';
 import SuccessModal from '../SuccessModal';
 import styles from './form.module.css';
 
@@ -12,8 +13,8 @@ const Form = ({ closeModalForm, edit, itemId }) => {
     phone: '',
     email: '',
     password: '',
-    active: true,
-    isProjectManager: false,
+    active: '',
+    isProjectManager: '',
     projects: [],
     timeSheets: []
   });
@@ -35,8 +36,8 @@ const Form = ({ closeModalForm, edit, itemId }) => {
             phone: response.data.phone,
             email: response.data.email,
             password: response.data.password,
-            active: response.data.active,
-            isProjectManager: response.data.isProjectManager,
+            active: response.data.active === true ? 'Active' : 'Inactive',
+            isProjectManager: response.data.isProjectManager === true ? 'Yes' : 'No',
             projects: response.data.projects.map((x) => x._id),
             timeSheets: response.data.timeSheets.map((x) => x._id)
           });
@@ -63,8 +64,8 @@ const Form = ({ closeModalForm, edit, itemId }) => {
           phone: employeeInput.phone,
           email: employeeInput.email,
           password: employeeInput.password,
-          active: employeeInput.active,
-          isProjectManager: employeeInput.isProjectManager,
+          active: employeeInput.active === 'Active' ? true : false,
+          isProjectManager: employeeInput.isProjectManager === 'Yes' ? true : false,
           projects:
             employeeInput.projects.length === 0
               ? []
@@ -91,8 +92,8 @@ const Form = ({ closeModalForm, edit, itemId }) => {
           phone: employeeInput.phone,
           email: employeeInput.email,
           password: employeeInput.password,
-          active: employeeInput.active,
-          isProjectManager: employeeInput.isProjectManager,
+          active: employeeInput.active === 'Active' ? true : false,
+          isProjectManager: employeeInput.isProjectManager === 'Yes' ? true : false,
           projects:
             employeeInput.projects.length === 0
               ? []
@@ -118,72 +119,74 @@ const Form = ({ closeModalForm, edit, itemId }) => {
       <Input
         label="First Name"
         name="firstName"
-        placeholder="Juan"
+        type="text"
         value={employeeInput.firstName}
         onChange={onChange}
-        type="text"
+        placeholder="Juan"
       />
       <Input
         label="Last Name"
         name="lastName"
-        placeholder="Perez"
+        type="text"
         value={employeeInput.lastName}
         onChange={onChange}
-        type="text"
+        placeholder="Perez"
       />
       <Input
         label="Phone"
         name="phone"
-        placeholder="123456789"
+        type="text"
         value={employeeInput.phone}
         onChange={onChange}
-        type="text"
+        placeholder="123456789"
       />
       <Input
         label="Email"
         name="email"
-        placeholder="juanperez@gmail.com"
+        type="text"
         value={employeeInput.email}
         onChange={onChange}
-        type="text"
+        placeholder="juanperez@gmail.com"
       />
       <Input
         label="Password"
         name="password"
-        placeholder="********"
+        type="password"
         value={employeeInput.password}
         onChange={onChange}
-        type="password"
+        placeholder="********"
       />
-      <div className={styles.select}>
-        <label>Active?</label>
-        <select name="active" value={employeeInput.active} onChange={onChange}>
-          <option value={true}>Active</option>
-          <option value={false}>Inactive</option>
-        </select>
-      </div>
-      <div className={styles.select}>
-        <label>Is Project Manager?</label>
-        <select name="isProjectManager" value={employeeInput.isProjectManager} onChange={onChange}>
-          <option value={true}>Yes</option>
-          <option value={false}>No</option>
-        </select>
-      </div>
+      <Select
+        label="Active?"
+        name="active"
+        value={employeeInput.active}
+        onChange={onChange}
+        title="Define condition"
+        data={['Active', 'Inactive']}
+      />
+      <Select
+        label="Is a Project Manager?"
+        name="isProjectManager"
+        value={employeeInput.isProjectManager}
+        onChange={onChange}
+        title="Define PM condition"
+        data={['Yes', 'No']}
+      />
       <Input
         label="Projects (separate IDs with a comma)"
         name="projects"
-        placeholder=""
+        type="text"
         value={employeeInput.projects}
         onChange={onChange}
-        type="text"
+        placeholder=""
       />
       <Input
         label="Timesheets (separate IDs with a comma)"
         name="timeSheets"
-        placeholder=""
+        type="text"
         value={employeeInput.timeSheets}
         onChange={onChange}
-        type="text"
+        placeholder=""
       />
       <button
         onClick={() => {
