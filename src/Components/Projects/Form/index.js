@@ -79,7 +79,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
       alert(error);
     }
     setEdited(false);
-    handleOnClick();
+    closeModalForm();
   };
 
   const onSubmit = () => {
@@ -176,21 +176,21 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
             </div>
           </div>
         </div>
-        <div>
-          <ButtonText
-            clickAction={function () {
-              onSubmit();
-            }}
-            label="Submit"
-          ></ButtonText>
-          <ButtonText
-            clickAction={function () {
-              handleOnClick();
-            }}
-            label="Close"
-          ></ButtonText>
-        </div>
       </form>
+      <div>
+        <ButtonText
+          clickAction={function () {
+            onSubmit();
+          }}
+          label="Submit"
+        ></ButtonText>
+        <ButtonText
+          clickAction={function () {
+            handleOnClick();
+          }}
+          label="Close"
+        ></ButtonText>
+      </div>
     </>
   );
 };

@@ -7,15 +7,16 @@ import ButtonText from '../../../Shared/Buttons/ButtonText';
 
 const AddMember = ({ itemId, functionValue }) => {
   let edit;
+  let projectId = itemId;
   let [projectMembers, setProjectMembers] = useState([]);
   const [member, setMember] = useState('');
   const [role, setRole] = useState('');
   const [rate, setRate] = useState('');
   const [employees, setEmployees] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [edited, setEdited] = useState(false);
 
   const fetchData = async () => {
-    // setLoading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
       const data = await response.json();
@@ -25,10 +26,7 @@ const AddMember = ({ itemId, functionValue }) => {
       alert(error);
     }
     try {
-      // const params = new URLSearchParams(window.location.search);
-      // const projectID = params.get('id');
-      // setRouteID(projectID);
-      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${itemId}`);
+      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`);
       const projectData = await getProject.json();
       setProjectMembers(projectData.data.members);
     } catch (error) {
@@ -44,13 +42,16 @@ const AddMember = ({ itemId, functionValue }) => {
 
   const onChangeMember = (event) => {
     setMember(event.target.value);
+    setEdited(true);
   };
   const onChangeRole = (event) => {
     setRole(event.target.value);
+    setEdited(true);
   };
 
   const OnChangeRate = (event) => {
     setRate(event.target.value);
+    setEdited(true);
   };
 
   const asignMember = () => {
@@ -77,7 +78,7 @@ const AddMember = ({ itemId, functionValue }) => {
   };
 
   const handleOnSubmit = async () => {
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${itemId}`;
+    let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectId}`;
     const options = {
       method: 'PUT',
       headers: {
@@ -92,6 +93,7 @@ const AddMember = ({ itemId, functionValue }) => {
         throw new Error(data.message);
       } else {
         alert(data.message);
+        functionValue(false);
       }
     } catch (error) {
       alert(error);
@@ -99,9 +101,11 @@ const AddMember = ({ itemId, functionValue }) => {
     fetchData();
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    handleOnSubmit();
+  const onSubmit = () => {
+    console.log(edited);
+    edited
+      ? handleOnSubmit()
+      : (setEdited(false), alert('No input changed. The project stayed the same'));
   };
 
   return isLoading ? (
@@ -140,14 +144,18 @@ const AddMember = ({ itemId, functionValue }) => {
           placeholder="Insert rate"
           required={true}
         />
-        <button type="submit">Submit</button>
+        <ButtonText
+          clickAction={function () {
+            onSubmit();
+          }}
+          label="Submit"
+        ></ButtonText>
       </form>
-      {/* <ListMembers projectMembers={projectMembers} itemId={itemId} isLoading={isLoading} /> */}
       <ButtonText
         clickAction={function () {
           functionValue(false);
         }}
-        label="Close"
+        label="Go Back"
       ></ButtonText>
     </div>
   );

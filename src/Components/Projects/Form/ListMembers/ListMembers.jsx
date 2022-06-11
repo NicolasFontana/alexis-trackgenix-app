@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
+import ButtonAdd from '../../../Shared/Buttons/ButtonAdd';
 
 const ListMembers = ({ project, onAdd, functionValue }) => {
   let [members, setMembers] = onAdd ? useState([]) : useState(project[0].members);
@@ -31,26 +32,30 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
         if (response.status !== 200 && response.status !== 201) {
           throw new Error(data.message);
         } else {
-          console.log(data.message);
+          alert('Member deleted successfully');
         }
       } catch (error) {
         alert(error);
       }
     }
-    console.log(membersToSave);
   };
+
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <a onClick={() => functionValue(true)} className={styles.addmember}>
-      Click here to add or edit members
-    </a>
+    <ButtonAdd
+      clickAction={function () {
+        functionValue(true);
+      }}
+    ></ButtonAdd>
   ) : (
     <div className={styles.divcontainer}>
       <h3>Team members</h3>
-      <a onClick={() => functionValue(true)} className={styles.addmember}>
-        Add/Edit
-      </a>
+      <ButtonAdd
+        clickAction={function () {
+          functionValue(true);
+        }}
+      ></ButtonAdd>
       <div className={styles.container}>
         <table>
           <thead>

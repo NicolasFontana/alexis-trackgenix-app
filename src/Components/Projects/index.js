@@ -30,6 +30,7 @@ const Projects = () => {
         setProjects(response.data);
         setLoading(false);
       });
+    setValue(false);
   }, [showModalFormEdit]);
 
   const deleteItem = async (_id) => {

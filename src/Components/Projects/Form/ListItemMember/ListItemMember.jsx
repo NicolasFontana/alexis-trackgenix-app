@@ -1,4 +1,5 @@
 import styles from './listitemmember.module.css';
+import ButtonDelete from '../../../Shared/Buttons/ButtonDelete';
 
 const ListItemMember = ({ member, onDelete }) => {
   return (
@@ -9,7 +10,11 @@ const ListItemMember = ({ member, onDelete }) => {
       <td>{member.role}</td>
       <td>{member.rate}</td>
       <td>
-        <a onClick={() => onDelete(member.employeeId._id)}>Delete</a>
+        <ButtonDelete
+          clickAction={function () {
+            onDelete(member.employeeId._id);
+          }}
+        ></ButtonDelete>
       </td>
     </tr>
   );
