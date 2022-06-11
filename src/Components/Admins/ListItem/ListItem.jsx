@@ -1,11 +1,7 @@
 import React from 'react';
 import styles from './listItem.module.css';
 
-const ListItem = ({ listItem, deleteAdmins }) => {
-  const handleDelete = () => {
-    deleteAdmins(listItem._id);
-  };
-
+const ListItem = ({ listItem, deleteAction }) => {
   const url = `/admins/Edit?id=${listItem._id}`;
 
   return (
@@ -22,7 +18,7 @@ const ListItem = ({ listItem, deleteAdmins }) => {
         </a>
       </td>
       <td className={styles.td}>
-        <button onClick={() => handleDelete(listItem._id)}>X</button>
+        <button onClick={() => deleteAction(listItem._id)}>X</button>
       </td>
     </tr>
   );

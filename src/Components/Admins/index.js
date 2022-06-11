@@ -5,10 +5,10 @@ function Admins() {
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>Admins</h2>
-      <a href="/admins/Add">
-        <button className={styles.button}>Add New</button>
-      </a>
       <App />
+      <a href="/admins/Add">
+        <button className={styles.button}>+</button>
+      </a>
     </section>
   );
 }

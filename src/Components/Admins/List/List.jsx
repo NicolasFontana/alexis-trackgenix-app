@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './list.module.css';
 import ListItem from '../ListItem/ListItem';
 
-const List = ({ admins, deleteAdmins }) => {
+const List = ({ admins, deleteAction }) => {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -32,7 +32,7 @@ const List = ({ admins, deleteAdmins }) => {
         </thead>
         <tbody>
           {admins.map((item) => (
-            <ListItem key={item._id} listItem={item} deleteAdmins={deleteAdmins} />
+            <ListItem key={item._id} listItem={item} deleteAction={deleteAction} />
           ))}
         </tbody>
       </table>
