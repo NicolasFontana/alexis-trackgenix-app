@@ -2,14 +2,10 @@ import { useState } from 'react';
 import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
 
-const ListMembers = ({ project, onAdd, onClick }) => {
+const ListMembers = ({ project, onAdd, functionValue }) => {
   let [members, setMembers] = onAdd ? useState([]) : useState(project[0].members);
   let membersToSave;
   members = members.filter((member) => member.employeeId !== null);
-
-  const handleOnClick = () => {
-    onClick(`addmembers?id=${project[0]._id}`);
-  };
 
   const deleteMember = async (id) => {
     const confirmation = confirm('Are you sure you want to delete this member?');
@@ -46,13 +42,13 @@ const ListMembers = ({ project, onAdd, onClick }) => {
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <a onClick={() => handleOnClick()} className={styles.addmember}>
+    <a onClick={() => functionValue(true)} className={styles.addmember}>
       Click here to add or edit members
     </a>
   ) : (
     <div className={styles.divcontainer}>
-      <h3>Current team members</h3>
-      <a onClick={() => handleOnClick()} className={styles.addmember}>
+      <h3>Team members</h3>
+      <a onClick={() => functionValue(true)} className={styles.addmember}>
         Add/Edit
       </a>
       <div className={styles.container}>

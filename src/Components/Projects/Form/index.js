@@ -4,8 +4,9 @@ import ListMembers from './ListMembers/ListMembers';
 import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
+import ButtonText from '../../Shared/Buttons/ButtonText';
 
-const ProjectForm = () => {
+const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const [userInput, setUserInput] = useState({
     name: '',
     startDate: '',
@@ -15,20 +16,15 @@ const ProjectForm = () => {
     description: ''
   });
   const [project, saveProjects] = useState([]);
-  const [onAdd, setOnAdd] = useState(false);
   const [edited, setEdited] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const params = new URLSearchParams(window.location.search);
-      const projectID = params.get('id');
-      if (projectID) {
+      if (edit) {
         try {
-          const getProject = await fetch(
-            `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`
-          );
+          const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${itemId}`);
           const projectData = await getProject.json();
           saveProjects([projectData.data]);
           setUserInput({
@@ -49,7 +45,6 @@ const ProjectForm = () => {
           const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
           const projectData = await getProject.json();
           saveProjects(projectData.data);
-          setOnAdd(true);
           setLoading(false);
         } catch (error) {
           console.error(error);
@@ -60,8 +55,6 @@ const ProjectForm = () => {
   }, []);
 
   const handleOnSubmit = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const projectID = params.get('id');
     let url = `${process.env.REACT_APP_API_URL}/api/projects`;
     const options = {
       method: 'POST',
@@ -70,9 +63,9 @@ const ProjectForm = () => {
       },
       body: JSON.stringify(userInput)
     };
-    if (projectID) {
+    if (edit) {
       options.method = 'PUT';
-      url = `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`;
+      url = `${process.env.REACT_APP_API_URL}/api/projects/${itemId}`;
     }
     try {
       const response = await fetch(url, options);
@@ -86,10 +79,10 @@ const ProjectForm = () => {
       alert(error);
     }
     setEdited(false);
+    handleOnClick();
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     edited
       ? handleOnSubmit()
       : (setEdited(false), alert('No input changed. The project stayed the same'));
@@ -105,12 +98,12 @@ const ProjectForm = () => {
     setEdited(true);
   };
 
-  const handleOnClick = (route) => {
+  const handleOnClick = () => {
     edited
       ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-        ? (window.location.href = route)
+        ? closeModalForm()
         : null
-      : (window.location.href = route);
+      : closeModalForm();
   };
 
   return isLoading ? (
@@ -119,80 +112,85 @@ const ProjectForm = () => {
     </Preloader>
   ) : (
     <>
-      <div className={styles.maincontainer}>
-        <form onSubmit={onSubmit} className={styles.container}>
-          {onAdd ? <h2>Add Project</h2> : <h2>Edit Project</h2>}
-          <div className={onAdd ? styles.maincontainer.add : styles.maincontainer}>
-            <div className={styles.divcontainer}>
-              <Input
-                label="Project Name"
-                type="text"
-                name="name"
-                placeholder="Insert project name"
-                value={userInput.name}
-                onChange={onChange}
-                required={true}
-              />
-              <Input
-                label="Client"
-                type="text"
-                name="clientName"
-                placeholder="Insert client name"
-                value={userInput.clientName}
-                onChange={onChange}
-                required={true}
-              />
-              <Input
-                label="Active"
-                name="active"
-                type="checkbox"
-                checked={userInput.active}
-                onChange={onChangeActive}
-              />
-              <Input
-                label="Start Date"
-                type="date"
-                name="startDate"
-                value={onAdd ? userInput.startDate : userInput.startDate.slice(0, 10)}
-                onChange={onChange}
-                required={true}
-              />
-              <Input
-                label="End Date"
-                type="date"
-                name="endDate"
-                value={onAdd ? userInput.endDate : userInput.endDate.slice(0, 10)}
-                onChange={onChange}
-                required={true}
+      <form onSubmit={onSubmit} className={styles.container}>
+        <div className={!edit ? styles.maincontainer.add : styles.maincontainer}>
+          <div className={styles.divcontainer}>
+            <Input
+              label="Project Name"
+              type="text"
+              name="name"
+              placeholder="Insert project name"
+              value={userInput.name}
+              onChange={onChange}
+              required={true}
+            />
+            <Input
+              label="Client"
+              type="text"
+              name="clientName"
+              placeholder="Insert client name"
+              value={userInput.clientName}
+              onChange={onChange}
+              required={true}
+            />
+            <Input
+              label="Active"
+              name="active"
+              type="checkbox"
+              checked={userInput.active}
+              onChange={onChangeActive}
+            />
+            <Input
+              label="Start Date"
+              type="date"
+              name="startDate"
+              value={!edit ? userInput.startDate : userInput.startDate.slice(0, 10)}
+              onChange={onChange}
+              required={true}
+            />
+            <Input
+              label="End Date"
+              type="date"
+              name="endDate"
+              value={!edit ? userInput.endDate : userInput.endDate.slice(0, 10)}
+              onChange={onChange}
+              required={true}
+            />
+          </div>
+          <div className={styles.larger}>
+            <Textarea
+              label="Description"
+              name="description"
+              value={userInput.description}
+              placeholder="Add a description of the project"
+              onChange={onChange}
+              required={true}
+            />
+            <div>
+              <ListMembers
+                project={project}
+                onAdd={!edit}
+                edited={edited}
+                functionValue={functionValue}
               />
             </div>
-            <div className={styles.divcontainer}>
-              <Textarea
-                label="Description"
-                name="description"
-                value={userInput.description}
-                placeholder="Add a description of the project"
-                onChange={onChange}
-                required={true}
-              />
-              <div>
-                <ListMembers
-                  project={project}
-                  onAdd={onAdd}
-                  edited={edited}
-                  onClick={handleOnClick}
-                />
-              </div>
-            </div>
           </div>
-          <div className={styles.buttons}>
-            <input type="submit" value="Submit" onSubmit={onSubmit} />
-          </div>
-          <a onClick={() => handleOnClick('/projects')} className={styles.goBack}>
-            Go back
-          </a>
-        </form>
-      </div>
+        </div>
+        <div>
+          <ButtonText
+            clickAction={function () {
+              onSubmit();
+            }}
+            label="Submit"
+          ></ButtonText>
+          <ButtonText
+            clickAction={function () {
+              handleOnClick();
+            }}
+            label="Close"
+          ></ButtonText>
+        </div>
+      </form>
     </>
   );
 };

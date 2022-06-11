@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    /* width: 300px; */
 }
 
 .container label {
@@ -44,7 +44,7 @@
     flex-direction: column;
     align-items: center;
 }
-.divcontainer h2 {
+/* .divcontainer h2 {
     text-align: center;
     width: 700px;
     margin-bottom: 20px;
@@ -57,7 +57,7 @@
     color: #ffffff;
     text-transform: uppercase;
     text-align: center;
-}
+} */
 .loading {
     margin: auto;
 }

@@ -8,6 +8,9 @@ overflow-y: scroll;
 border: 1px solid #373867;
 border-radius: 4px;
 font-size: 14px;
+height: 200px;
+overflow-y: scroll;
+overflow-x: hidden;
 }
 
 .divcontainer h3 {
@@ -33,6 +36,7 @@ padding: 9px;
 margin: 0 5px;
 text-align: left;
 }
+
 .container a,
 .addmember {
 display: inline;
@@ -47,5 +51,5 @@ color: #373867;
 }
 
 .addmember {
-margin-left: 40px;
+margin-left: 80px;
 }

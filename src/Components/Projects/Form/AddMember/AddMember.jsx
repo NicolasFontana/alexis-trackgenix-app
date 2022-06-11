@@ -3,10 +3,10 @@ import styles from './addMember.module.css';
 import Select from '../../../Shared/Select';
 import Input from '../../../Shared/Input';
 import Preloader from '../../../Shared/Preloader/Preloader';
+import ButtonText from '../../../Shared/Buttons/ButtonText';
 
-const AddMember = () => {
+const AddMember = ({ itemId, functionValue }) => {
   let edit;
-  const [routeid, setRouteID] = useState('');
   let [projectMembers, setProjectMembers] = useState([]);
   const [member, setMember] = useState('');
   const [role, setRole] = useState('');
@@ -14,31 +14,31 @@ const AddMember = () => {
   const [employees, setEmployees] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
+  const fetchData = async () => {
+    // setLoading(true);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
+      const data = await response.json();
+      setEmployees(data.data);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    try {
+      // const params = new URLSearchParams(window.location.search);
+      // const projectID = params.get('id');
+      // setRouteID(projectID);
+      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${itemId}`);
+      const projectData = await getProject.json();
+      setProjectMembers(projectData.data.members);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
-        const data = await response.json();
-        setEmployees(data.data);
-      } catch (error) {
-        console.error(error);
-        alert(error);
-      }
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const projectID = params.get('id');
-        setRouteID(projectID);
-        const getProject = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`
-        );
-        const projectData = await getProject.json();
-        setProjectMembers(projectData.data.members);
-      } catch (error) {
-        console.error(error);
-        alert(error);
-      }
-      setLoading(false);
-    };
     fetchData();
   }, []);
 
@@ -77,9 +77,7 @@ const AddMember = () => {
   };
 
   const handleOnSubmit = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const projectID = params.get('id');
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`;
+    let url = `${process.env.REACT_APP_API_URL}/api/projects/${itemId}`;
     const options = {
       method: 'PUT',
       headers: {
@@ -98,6 +96,7 @@ const AddMember = () => {
     } catch (error) {
       alert(error);
     }
+    fetchData();
   };
 
   const onSubmit = async (event) => {
@@ -111,7 +110,6 @@ const AddMember = () => {
     </Preloader>
   ) : (
     <div className={styles.divcontainer}>
-      <h2>Add or Edit a member</h2>
       <form onSubmit={onSubmit} className={styles.container}>
         <Select
           label="Employee"
@@ -144,7 +142,13 @@ const AddMember = () => {
         />
         <button type="submit">Submit</button>
       </form>
-      <a href={`/projects/form?id=${routeid}`}>Go back</a>
+      {/* <ListMembers projectMembers={projectMembers} itemId={itemId} isLoading={isLoading} /> */}
+      <ButtonText
+        clickAction={function () {
+          functionValue(false);
+        }}
+        label="Close"
+      ></ButtonText>
     </div>
   );
 };
