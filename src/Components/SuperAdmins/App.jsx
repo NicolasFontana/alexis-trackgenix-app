@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import List from './List/List';
 import Preloader from '../Shared/Preloader/Preloader';
+import styles from './super-admins.module.css';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 
 const App = () => {
   const [superAdmins, setSuperAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
-      const data = await response.json();
-      setSuperAdmins(data.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins/add`;
+    history.push(path);
+  };
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`)
+      .then((response) => response.json())
+      .then((response) => {
+        setSuperAdmins(response.data);
+        setLoading(false);
+      });
   }, []);
 
   const deleteSuperA = async (_id) => {
@@ -38,8 +46,9 @@ const App = () => {
       <p>Loading super admins</p>
     </Preloader>
   ) : (
-    <div>
+    <div className={styles.container}>
       <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
+      <ButtonAdd clickAction={routeChange}></ButtonAdd>
     </div>
   );
 };

@@ -1,12 +1,20 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './listItem.module.css';
+import ButtonEdit from '../../Shared/Buttons/ButtonEdit';
+import ButtonDelete from '../../Shared/Buttons/ButtonDelete';
 
 const ListItem = ({ listItem, deleteSuperA }) => {
   const handleDelete = () => {
     deleteSuperA(listItem._id);
   };
 
-  const url = `/super-admins/edit?id=${listItem._id}`;
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/super-admins/edit?id=${listItem._id}`;
+    history.push(path);
+  };
 
   return (
     <tr className={styles.tr}>
@@ -17,12 +25,10 @@ const ListItem = ({ listItem, deleteSuperA }) => {
       <td className={styles.td}>{listItem.password}</td>
       <td className={styles.td}>{listItem.active.toString()}</td>
       <td className={styles.td}>
-        <a href={url}>
-          <button>&#9998;</button>
-        </a>
+        <ButtonEdit clickAction={routeChange}></ButtonEdit>
       </td>
       <td className={styles.td}>
-        <button onClick={() => handleDelete(listItem._id)}>X</button>
+        <ButtonDelete clickAction={() => handleDelete(listItem._id)}></ButtonDelete>
       </td>
     </tr>
   );
