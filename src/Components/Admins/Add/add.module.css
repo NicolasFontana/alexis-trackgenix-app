@@ -32,20 +32,6 @@
 }
 
 .submit {
-  width: 40%;
-  height: 40%;
-  margin: 5%;
-  padding : 2px 4px 0px 4px;
-  background: #AACE9B;
-  border-radius: 5px;
-  border-color : #000000;
-  color: #000000;
-  text-align: center;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-}
-
-.cancel {
   margin: 5%;
   padding : 2px 4px 0px 4px;
   text-align: center;
@@ -62,11 +48,10 @@
   color: #000000;
 }
 
-.back {
-  position: relative;
-  left: 30px;
+.cancel {
   margin: 5%;
   padding : 2px 4px 0px 4px;
+  text-align: center;
   border-width : 2px 2px 2px 2px;
   border-radius: 5px;
   text-decoration : none;

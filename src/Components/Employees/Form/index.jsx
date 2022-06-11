@@ -121,6 +121,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder="Juan"
         value={employeeInput.firstName}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Last Name"
@@ -128,6 +129,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder="Perez"
         value={employeeInput.lastName}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Phone"
@@ -135,6 +137,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder="123456789"
         value={employeeInput.phone}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Email"
@@ -142,6 +145,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder="juanperez@gmail.com"
         value={employeeInput.email}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Password"
@@ -149,6 +153,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder="********"
         value={employeeInput.password}
         onChange={onChange}
+        type="password"
       />
       <div className={styles.select}>
         <label>Active?</label>
@@ -170,6 +175,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder=""
         value={employeeInput.projects}
         onChange={onChange}
+        type="text"
       />
       <Input
         label="Timesheets (separate IDs with a comma)"
@@ -177,12 +183,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         placeholder=""
         value={employeeInput.timeSheets}
         onChange={onChange}
-      />
-      <SuccessModal
-        show={showSuccessModal}
-        closeModal={closeSuccessModal}
-        closeModalForm={closeModalForm}
-        successResponse={successMessage}
+        type="text"
       />
       <button
         onClick={() => {
@@ -193,6 +194,12 @@ const Form = ({ closeModalForm, edit, itemId }) => {
       >
         Confirm
       </button>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={closeSuccessModal}
+        closeModalForm={closeModalForm}
+        successResponse={successMessage}
+      />
     </form>
   );
 };

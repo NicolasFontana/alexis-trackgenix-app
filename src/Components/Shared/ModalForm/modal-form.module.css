@@ -1,52 +1,68 @@
 .container {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    font-family: 'Roboto', sans-serif;
-    color: rgba(55, 56, 103, 1);
-  }
-  
-  .modal {
-    display: flex;
-    flex-direction: column;
-    max-width: 80vw;
-    max-height: 85vh;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 10px;
-    box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
-    overflow: auto;
-  }
-  
-  .header {
-    position: sticky;
-    display: flex;
-    padding: 2.5%;
-    top: 0;
-    background-color: rgba(35, 47, 62, 1);
-  }
-  
-  .header h2 {
-    flex-grow: 1;
-    margin: 0;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 38px;
-    text-align: center;
-    color: rgba(255, 255, 255, 1);
-  }
-  
-  .closeButton {
-    width: 36px;
-    height: 36px;
-    cursor: pointer;
-  }
-  
-  .form {
-    padding: 5% 10%;
-  }
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: 'Roboto', sans-serif;
+  color: rgba(55, 56, 103, 1);
+  overflow: auto;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  max-width: 90vh;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  box-shadow: 0px 10px 23px rgba(0, 0, 0, 0.12);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 2.5%;
+  background-color: rgba(35, 47, 62, 1);
+  border-radius: 10px 10px 0 0;
+}
+
+.header h2 {
+  flex-grow: 1;
+  margin: 0 0 0 33px;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 35px;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+}
+
+.closeButton {
+  width: 26px;
+  height: 26px;
+  margin-right: 7px;
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 100%;
+  padding: 5% 10%;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
