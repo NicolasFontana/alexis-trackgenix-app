@@ -2,9 +2,12 @@ import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
+import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './form.module.css';
 
 const Form = ({ closeModalForm }) => {
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -17,8 +20,13 @@ const Form = ({ closeModalForm }) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    await sendInfo();
+    setShowMessageModal(true);
+  };
+
+  const sendInfo = () => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -26,11 +34,12 @@ const Form = ({ closeModalForm }) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(response);
-        console.log(response.data);
-        console.log(response.message);
-        closeModalForm;
+        setMessage(response);
       });
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   return (
@@ -87,6 +96,12 @@ const Form = ({ closeModalForm }) => {
           <Button clickAction={onSubmit} label="Submit">
             Submit
           </Button>
+          <MessageModal
+            show={showMessageModal}
+            closeModal={closeMessageModal}
+            closeModalForm={closeModalForm}
+            successResponse={message}
+          />
         </form>
       </div>
     </div>

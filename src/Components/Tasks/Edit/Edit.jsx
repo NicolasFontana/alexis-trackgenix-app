@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
+import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './edit.module.css';
 
 const Edit = ({ taskId, closeModalForm }) => {
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -33,33 +36,26 @@ const Edit = ({ taskId, closeModalForm }) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
-      method: 'PUT',
+    await sendInfo();
+    setShowMessageModal(true);
+  };
+
+  const sendInfo = () => {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInput)
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.message == '"taskName" length must be at least 3 characters long') {
-          alert('Task name length must be at least 3 characters longs');
-        } else if (response.message == '"startDate" must be a valid date') {
-          alert('Start date must be a valid date');
-        } else if (response.message == '"workedHours" must be a number') {
-          alert('Worked Hours must be a number');
-        } else if (response.message == '"description" length must be at least 6 characters long') {
-          alert('Description length must be at least 6 characters long');
-        } else if (
-          response.message ==
-          '"status" must be one of [To do, In progress, Review, Blocked, Done, Cancelled]'
-        ) {
-          alert('Status must be: [To do, In progress, Review, Blocked, Done, Cancelled]');
-        } else {
-          alert('Task edited successfully');
-          closeModalForm;
-        }
+        setMessage(response);
       });
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   return (
@@ -116,6 +112,12 @@ const Edit = ({ taskId, closeModalForm }) => {
           <Button clickAction={onSubmit} label="Submit">
             Submit
           </Button>
+          <MessageModal
+            show={showMessageModal}
+            closeModal={closeMessageModal}
+            closeModalForm={closeModalForm}
+            successResponse={message}
+          />
         </form>
       </div>
     </div>

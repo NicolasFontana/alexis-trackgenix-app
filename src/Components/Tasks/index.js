@@ -7,6 +7,7 @@ import Form from './Form/Form';
 import EditForm from './Edit/Edit';
 import Modal from '../Shared/ModalForm/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import MessageModal from '../Shared/ErrorSuccessModal';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
@@ -14,11 +15,12 @@ function Tasks() {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [idDelete, setIdDelete] = useState(0);
   const [idToEdit, setIdToEdit] = useState();
   let modalEdit;
   let modalAdd;
-  let confirmModal;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
@@ -36,8 +38,9 @@ function Tasks() {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert('Task deleted successfully', response.msg);
+        setMessage(response);
         closeModal();
+        setShowMessageModal(true);
       });
   };
 
@@ -56,9 +59,14 @@ function Tasks() {
   };
 
   const closeModal = () => {
+    setShowMessageModal(false);
     setShowModalFormAdd(false);
     setShowModalFormEdit(false);
     setShowConfirmModal(false);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   if (showModalFormEdit) {
@@ -77,18 +85,6 @@ function Tasks() {
     );
   }
 
-  if (showConfirmModal) {
-    confirmModal = (
-      <ConfirmModal
-        isOpen={showConfirmModal}
-        handleClose={closeModal}
-        confirmDelete={delTask}
-        title="Delete Task"
-        message="¿Are you sure you want to delete the task?"
-      ></ConfirmModal>
-    );
-  }
-
   return loading ? (
     <Preloader>
       <p>Loading Tasks</p>
@@ -98,13 +94,25 @@ function Tasks() {
       <h2>TASKS</h2>
       {modalEdit}
       {modalAdd}
-      {confirmModal}
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
         titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
         delAction={openConfirmModal}
         editAction={openEditModal}
+      />
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        handleClose={closeModal}
+        confirmDelete={delTask}
+        title="Delete Task"
+        message="¿Are you sure you want to delete the task?"
+      ></ConfirmModal>
+      <MessageModal
+        show={showMessageModal}
+        closeModal={closeMessageModal}
+        closeModalForm={closeModal}
+        successResponse={message}
       />
       <AddButton clickAction={openAddModal}></AddButton>
     </section>
