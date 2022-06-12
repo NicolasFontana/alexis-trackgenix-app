@@ -163,6 +163,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         onChange={onChange}
         title="Define condition"
         data={['Active', 'Inactive']}
+        required={true}
       />
       <Select
         label="Is a Project Manager?"
@@ -171,6 +172,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         onChange={onChange}
         title="Define PM condition"
         data={['Yes', 'No']}
+        required={true}
       />
       <Input
         label="Projects (separate IDs with a comma)"

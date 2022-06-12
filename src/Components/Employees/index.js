@@ -4,20 +4,26 @@ import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idToEdit, setIdToEdit] = useState();
+  const [showModalFormDelete, setShowModalFormDelete] = useState(false);
+  const [employeeId, setEmployeeId] = useState();
 
-  const closeModalForm = () => {
+  const closeModalFormAdd = () => {
     setShowModalFormAdd(false);
   };
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
+  };
+
+  const closeModalFormDelete = () => {
+    setShowModalFormDelete(false);
   };
 
   useEffect(() => {
@@ -27,39 +33,58 @@ const Employees = () => {
         setEmployees(response.data);
         setLoading(false);
       });
-  }, [showModalFormAdd, showModalFormEdit]);
+  }, [showModalFormAdd, showModalFormEdit, showModalFormDelete]);
 
   const openModalFormEdit = (id) => {
-    setIdToEdit(id);
+    setEmployeeId(id);
     setShowModalFormEdit(true);
   };
 
-  const deleteItem = async (_id) => {
-    if (confirm(`Are you sure you want to delete this employee?`)) {
-      try {
-        await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${_id}`, {
-          method: 'DELETE'
-        });
-      } catch (error) {
-        console.error(error);
-      }
-      setEmployees([...list.filter((listItem) => listItem._id !== _id)]);
-    }
+  const openModalFormDelete = (id) => {
+    setEmployeeId(id);
+    setShowModalFormDelete(true);
   };
+
+  const deleteItem = async () => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${employeeId}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    setShowModalFormDelete(false);
+  };
+
   let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
-        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={idToEdit} />
+        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={employeeId} />
       </ModalForm>
     );
   }
+
   let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
-      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalForm} title="Add Employee">
-        <Form closeModalForm={closeModalForm} />
+      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Employee">
+        <Form closeModalForm={closeModalFormAdd} />
       </ModalForm>
+    );
+  }
+
+  let modalDelete;
+  if (showModalFormDelete) {
+    console.log(employeeId);
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showModalFormDelete}
+        handleClose={closeModalFormDelete}
+        confirmDelete={deleteItem}
+        title="Delete Employee"
+        message="Are you sure you want to delete this employee?"
+      />
     );
   }
 
@@ -94,11 +119,12 @@ const Employees = () => {
           'Projects',
           'TimeSheets'
         ]}
-        delAction={deleteItem}
+        delAction={openModalFormDelete}
         editAction={openModalFormEdit}
       />
       {modalEdit}
       {modalAdd}
+      {modalDelete}
       <button
         className={styles.addbtn}
         onClick={() => {
