@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Input from '../Input';
-import SuccessModal from '../SuccessModal';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import styles from './form.module.css';
 
 const Form = ({ closeModalForm, edit, itemId }) => {
