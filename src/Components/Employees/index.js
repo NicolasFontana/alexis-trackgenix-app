@@ -5,6 +5,7 @@ import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 
 const Employees = () => {
   const [list, setEmployees] = useState([]);
@@ -76,7 +77,6 @@ const Employees = () => {
 
   let modalDelete;
   if (showModalFormDelete) {
-    console.log(employeeId);
     modalDelete = (
       <ConfirmModal
         isOpen={showModalFormDelete}
@@ -125,14 +125,11 @@ const Employees = () => {
       {modalEdit}
       {modalAdd}
       {modalDelete}
-      <button
-        className={styles.addbtn}
-        onClick={() => {
+      <ButtonAdd
+        clickAction={() => {
           setShowModalFormAdd(true);
         }}
-      >
-        &#10010;
-      </button>
+      />
     </section>
   );
 };

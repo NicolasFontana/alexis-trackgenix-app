@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import ButtonText from '../../Shared/Buttons/ButtonText';
 import styles from './form.module.css';
 
 const Form = ({ closeModalForm, edit, itemId }) => {
@@ -53,8 +54,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
     setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     if (edit) {
       fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`, {
         method: 'PUT',
@@ -190,15 +190,13 @@ const Form = ({ closeModalForm, edit, itemId }) => {
         onChange={onChange}
         placeholder=""
       />
-      <button
-        onClick={() => {
+      <ButtonText
+        clickAction={() => {
+          onSubmit();
           setShowSuccessModal(true);
         }}
-        className={styles.submitButton}
-        type="submit"
-      >
-        Confirm
-      </button>
+        label="Confirm"
+      />
       <SuccessModal
         show={showSuccessModal}
         closeModal={closeSuccessModal}

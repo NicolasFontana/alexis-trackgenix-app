@@ -18,13 +18,8 @@
   width: 100vw;
 }
 
-.select {
-  display: flex;
-  flex-direction: column;
-}
-
-.select > select {
-  height: 21px;
+.container button {
+  margin: 5px 0 10px;
 }
 
 .submitButton {
