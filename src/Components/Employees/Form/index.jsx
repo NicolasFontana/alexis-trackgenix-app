@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
-import SuccessModal from '../SuccessModal';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import styles from './form.module.css';
 
 const Form = ({ closeModalForm, edit, itemId }) => {

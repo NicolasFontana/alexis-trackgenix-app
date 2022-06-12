@@ -98,10 +98,10 @@ const AdminsEdit = () => {
           </div>
         </div>
         <div className={styles.buttons}>
-          <button className={styles.submit} type="submit">
+          <button className={styles.buttonEditCancel} type="submit">
             Edit
           </button>
-          <a className={styles.cancel} href="/admins">
+          <a className={styles.buttonEditCancel} href="/admins">
             Cancel
           </a>
         </div>
