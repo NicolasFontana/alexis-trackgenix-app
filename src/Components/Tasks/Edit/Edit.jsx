@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import Input from '../Input/Input';
+import Input from '../../Shared/Input';
+import Select from '../../Shared/Select';
+import Button from '../../Shared/Buttons/ButtonText';
 import styles from './edit.module.css';
 
-const Edit = () => {
+const Edit = ({ taskId, closeModalForm }) => {
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -11,12 +13,9 @@ const Edit = () => {
     status: ''
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const taskID = params.get('id');
-
   useEffect(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`);
       const data = await response.json();
       setUserInput({
         taskName: data.data.taskName,
@@ -36,7 +35,7 @@ const Edit = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskID}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userInput)
@@ -58,9 +57,7 @@ const Edit = () => {
           alert('Status must be: [To do, In progress, Review, Blocked, Done, Cancelled]');
         } else {
           alert('Task edited successfully');
-          window.location.replace(
-            'https://alexis-trackgenix-app-git-feature-tg-30tasks-agustin-basp-m2022.vercel.app/tasks'
-          );
+          closeModalForm;
         }
       });
   };
@@ -68,49 +65,57 @@ const Edit = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-        <div className={styles.header}>
-          <h2>Edit New Task</h2>
-        </div>
-        <form onSubmit={onSubmit} className={styles.formInputs}>
+        <form>
           <Input
             label="Task Name"
-            name="taskName"
             type="text"
+            name="taskName"
+            placeholder="Insert task name"
             value={userInput.taskName}
             onChange={onChange}
+            required={true}
           />
           <Input
             label="Start Date"
-            name="startDate"
             type="date"
+            name="startDate"
             value={userInput.startDate}
             onChange={onChange}
+            required={true}
           />
           <Input
             label="Worked Hours"
+            type="text"
             name="workedHours"
-            type="number"
+            placeholder="Insert hours"
             value={userInput.workedHours}
             onChange={onChange}
+            required={true}
           />
           <Input
             label="Description"
-            name="description"
             type="text"
+            name="description"
+            placeholder="Insert description"
             value={userInput.description}
             onChange={onChange}
+            required={true}
           />
-          <select name="status" value={userInput.status} onChange={onChange}>
-            <option value="">Status</option>
-            <option value="To do">To do</option>
-            <option value="In progress">In progress</option>
-            <option value="Review">Review</option>
-            <option value="Blocked">Blocked</option>
-            <option value="Done">Done</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
-          <button type="submit">Submit</button>
-          <a href="/tasks">Go Back</a>
+          <Select
+            label="Status"
+            name="status"
+            value={userInput.status}
+            onChange={onChange}
+            title="Choose status"
+            data={['To do', 'In progress', 'Review', 'Bloqued', 'Done', 'Cancelled']}
+            required={true}
+          />
+          <Button clickAction={closeModalForm} label="Cancel">
+            Cancel
+          </Button>
+          <Button clickAction={onSubmit} label="Submit">
+            Submit
+          </Button>
         </form>
       </div>
     </div>

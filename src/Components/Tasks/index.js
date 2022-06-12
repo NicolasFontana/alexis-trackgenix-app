@@ -4,16 +4,20 @@ import Table from '../Shared/Table/Table';
 import Preloader from '../Shared/Preloader/Preloader';
 import AddButton from '../Shared/Buttons/ButtonAdd';
 import Form from './Form/Form';
+import EditForm from './Edit/Edit';
 import Modal from '../Shared/ModalForm/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 
 function Tasks() {
   const [tasks, saveTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
-  let modal;
+  const [idToEdit, setIdToEdit] = useState();
+  let modalEdit;
+  let modalAdd;
   let confirmModal;
 
   useEffect(() => {
@@ -32,18 +36,9 @@ function Tasks() {
     })
       .then((response) => response.json())
       .then((response) => {
-        alert('Task deleted successfully', response.msg); // aca se llamaria al succes modal
+        alert('Task deleted successfully', response.msg);
         closeModal();
       });
-  };
-
-  const addTask = () => {
-    setShowModal(true);
-    modal = (
-      <Modal isOpen={showModal} handleClose={closeModal} title="Add Tasks">
-        <Form />
-      </Modal>
-    );
   };
 
   const openConfirmModal = (id) => {
@@ -51,10 +46,36 @@ function Tasks() {
     setIdDelete(id);
   };
 
+  const openAddModal = () => {
+    setShowModalFormAdd(true);
+  };
+
+  const openEditModal = (id) => {
+    setIdToEdit(id);
+    setShowModalFormEdit(true);
+  };
+
   const closeModal = () => {
-    setShowModal(false);
+    setShowModalFormAdd(false);
+    setShowModalFormEdit(false);
     setShowConfirmModal(false);
   };
+
+  if (showModalFormEdit) {
+    modalEdit = (
+      <Modal isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
+        <EditForm closeModalForm={closeModal} taskId={idToEdit} />
+      </Modal>
+    );
+  }
+
+  if (showModalFormAdd) {
+    modalAdd = (
+      <Modal isOpen={showModalFormAdd} handleClose={closeModal} title="Add Task">
+        <Form closeModalForm={closeModal} />
+      </Modal>
+    );
+  }
 
   if (showConfirmModal) {
     confirmModal = (
@@ -75,16 +96,17 @@ function Tasks() {
   ) : (
     <section className={styles.container}>
       <h2>TASKS</h2>
-      {modal}
+      {modalEdit}
+      {modalAdd}
       {confirmModal}
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
         titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
         delAction={openConfirmModal}
-        editAction="todavia no hay"
+        editAction={openEditModal}
       />
-      <AddButton clickAction={addTask}></AddButton>
+      <AddButton clickAction={openAddModal}></AddButton>
     </section>
   );
 }
