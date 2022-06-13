@@ -84,6 +84,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
       setAlertMessage(error);
     }
     setEdited(false);
+    closeConfirmModal();
     openAlertModal();
   };
 
@@ -216,9 +217,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
         <ConfirmModal
           isOpen={showconfirmModal}
           handleClose={closeConfirmModal}
-          confirmDelete={() => {
-            console.log('confirm dentro del form');
-          }}
+          confirmDelete={closeModalForm}
           title={'Unsaved changes'}
           message={'All unsaved changes will be lost. Are you sure you want to continue?'}
         />

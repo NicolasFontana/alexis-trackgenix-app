@@ -15,6 +15,7 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
   const [memberId, setMemberId] = useState('');
 
   const deleteMember = async (id) => {
+    closeConfirmModal();
     members = members.filter((member) => member.employeeId._id !== id);
     setMembers(members);
     membersToSave = members.map((member) => ({
@@ -36,12 +37,13 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
       if (response.status !== 200 && response.status !== 201) {
         throw new Error(data.message);
       } else {
-        alert({ error: false, message: 'Member deleted successfully' });
+        setAlertMessage({ error: false, message: 'Member deleted successfully' });
       }
     } catch (error) {
       setAlertMessage(error);
     }
-    console.log('holis');
+    // setAlertMessage('holis');
+    // console.log(membersToSave);
     openAlertModal();
   };
 
@@ -65,11 +67,14 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <ButtonAdd
-      clickAction={() => {
-        functionValue(true);
-      }}
-    ></ButtonAdd>
+    <div className={styles.divcontainer}>
+      <h3>Team members</h3>
+      <ButtonAdd
+        clickAction={() => {
+          functionValue(true);
+        }}
+      ></ButtonAdd>
+    </div>
   ) : (
     <div className={styles.divcontainer}>
       <h3>Team members</h3>
@@ -106,6 +111,7 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
       <AlertModal
         show={showErrorSuccessModal}
         closeModal={closeAlertModal}
+        closeModalForm={closeAlertModal}
         successResponse={alertMessage}
       />
       <ConfirmModal

@@ -11,7 +11,7 @@ const ListItemMember = ({ member, onDelete }) => {
       <td>{member.rate}</td>
       <td>
         <ButtonDelete
-          clickAction={function () {
+          clickAction={() => {
             onDelete(member.employeeId._id);
           }}
         ></ButtonDelete>
