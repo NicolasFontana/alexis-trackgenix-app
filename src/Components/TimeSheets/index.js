@@ -65,7 +65,7 @@ function TimeSheets() {
         setShowModal={setShowModal}
         setShowTitle={setShowTitle}
       />
-      <h2>Timesheets</h2>
+      <h2 className={styles.title}>Timesheets</h2>
       <List
         timeSheets={timeSheets}
         deleteItem={deleteItem}
