@@ -6,10 +6,15 @@ import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmployees } from '../../redux/employees/thunks';
 
 const Employees = () => {
-  const [list, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.list);
+  const isLoading = useSelector((state) => state.employees.isLoading);
+  // const [list, setEmployees] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
@@ -28,12 +33,13 @@ const Employees = () => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
-      .then((response) => response.json())
-      .then((response) => {
-        setEmployees(response.data);
-        setLoading(false);
-      });
+    dispatch(getEmployees());
+    // setLoading(false);
+    // fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     setEmployees(response.data);
+    //   });
   }, [showModalFormAdd, showModalFormEdit, showModalFormDelete]);
 
   const openModalFormEdit = (id) => {
@@ -88,7 +94,7 @@ const Employees = () => {
     );
   }
 
-  return loading ? (
+  return isLoading ? (
     <Preloader>
       <p>Loading employees</p>
     </Preloader>
@@ -96,7 +102,8 @@ const Employees = () => {
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
       <Table
-        data={list}
+        // data={list}
+        data={employees}
         headers={[
           '_id',
           'firstName',

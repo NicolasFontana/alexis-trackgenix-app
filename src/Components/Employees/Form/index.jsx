@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import styles from './form.module.css';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import ButtonText from '../../Shared/Buttons/ButtonText';
-import styles from './form.module.css';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 
 const Form = ({ closeModalForm, edit, itemId }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -21,13 +21,7 @@ const Form = ({ closeModalForm, edit, itemId }) => {
   });
 
   useEffect(() => {
-    if (
-      edit &&
-      itemId &&
-      employeeInput.firstName === '' &&
-      employeeInput.lastName === '' &&
-      employeeInput.password === ''
-    ) {
+    if (edit && itemId) {
       fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`)
         .then((response) => response.json())
         .then((response) => {

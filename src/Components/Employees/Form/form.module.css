@@ -11,9 +11,10 @@
 }
 
 .container > div {
-  width: 33vh;
+  width: 45%;
 }
 
+/* Success Modal container */
 .container > div:last-child {
   width: 100vw;
 }
