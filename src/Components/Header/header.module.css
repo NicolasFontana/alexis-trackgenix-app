@@ -1,11 +1,10 @@
-
 header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: #AACE9B;
-  height: 30%;
+  height: 135px;;
 }
 
 .user {
