@@ -4,7 +4,6 @@ import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
-// import ListMembers from './Form/ListMembers/ListMembers';
 import AddMember from './Form/AddMember/AddMember';
 
 const Projects = () => {
@@ -54,7 +53,7 @@ const Projects = () => {
       <ModalForm
         isOpen={showModalFormEdit}
         handleClose={closeModalFormEdit}
-        title={value ? 'Edit team members' : 'Edit Project'}
+        title={value ? 'Add/Edit team members' : 'Edit Project'}
       >
         {value ? (
           <AddMember functionValue={functionValue} projects={projects} itemId={idToEdit} />

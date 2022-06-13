@@ -5,6 +5,8 @@ import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
 import ButtonText from '../../Shared/Buttons/ButtonText';
+import ConfirmModal from '../../Shared/confirmationModal/confirmModal';
+import AlertModal from '../../Shared/ErrorSuccessModal';
 
 const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const [userInput, setUserInput] = useState({
@@ -18,6 +20,9 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const [project, saveProjects] = useState([]);
   const [edited, setEdited] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [showconfirmModal, setShowconfirmModal] = useState(false);
+  const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,13 +78,13 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
       if (response.status !== 200 && response.status !== 201) {
         throw new Error(data.message);
       } else {
-        alert(data.message);
+        setAlertMessage(data);
       }
     } catch (error) {
-      alert(error);
+      setAlertMessage(error);
     }
     setEdited(false);
-    closeModalForm();
+    openAlertModal();
   };
 
   const onSubmit = () => {
@@ -99,11 +104,23 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   };
 
   const handleOnClick = () => {
-    edited
-      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-        ? closeModalForm()
-        : null
-      : closeModalForm();
+    edited ? openConfirmModal() : closeModalForm();
+  };
+
+  const closeConfirmModal = () => {
+    setShowconfirmModal(false);
+  };
+
+  const openConfirmModal = () => {
+    setShowconfirmModal(true);
+  };
+
+  const closeAlertModal = () => {
+    setShowErrorSuccessModal(false);
+  };
+
+  const openAlertModal = () => {
+    setShowErrorSuccessModal(true);
   };
 
   return isLoading ? (
@@ -112,7 +129,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
     </Preloader>
   ) : (
     <>
-      <form onSubmit={onSubmit} className={styles.container}>
+      <form className={styles.container}>
         <div className={!edit ? styles.maincontainer.add : styles.maincontainer}>
           <div className={styles.divcontainer}>
             <Input
@@ -179,17 +196,32 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
       </form>
       <div>
         <ButtonText
-          clickAction={function () {
+          clickAction={() => {
             onSubmit();
           }}
           label="Submit"
         ></ButtonText>
         <ButtonText
-          clickAction={function () {
+          clickAction={() => {
             handleOnClick();
           }}
           label="Close"
         ></ButtonText>
+        <AlertModal
+          show={showErrorSuccessModal}
+          closeModal={closeAlertModal}
+          closeModalForm={closeModalForm}
+          successResponse={alertMessage}
+        />
+        <ConfirmModal
+          isOpen={showconfirmModal}
+          handleClose={closeConfirmModal}
+          confirmDelete={() => {
+            console.log('confirm dentro del form');
+          }}
+          title={'Unsaved changes'}
+          message={'All unsaved changes will be lost. Are you sure you want to continue?'}
+        />
       </div>
     </>
   );

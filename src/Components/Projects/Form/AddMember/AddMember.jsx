@@ -4,6 +4,8 @@ import Select from '../../../Shared/Select';
 import Input from '../../../Shared/Input';
 import Preloader from '../../../Shared/Preloader/Preloader';
 import ButtonText from '../../../Shared/Buttons/ButtonText';
+import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
+import AlertModal from '../../../Shared/ErrorSuccessModal';
 
 const AddMember = ({ itemId, functionValue }) => {
   let edit;
@@ -15,6 +17,9 @@ const AddMember = ({ itemId, functionValue }) => {
   const [employees, setEmployees] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [edited, setEdited] = useState(false);
+  const [showconfirmModal, setShowconfirmModal] = useState(false);
+  const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const fetchData = async () => {
     try {
@@ -23,7 +28,6 @@ const AddMember = ({ itemId, functionValue }) => {
       setEmployees(data.data);
     } catch (error) {
       console.error(error);
-      alert(error);
     }
     try {
       const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`);
@@ -31,7 +35,6 @@ const AddMember = ({ itemId, functionValue }) => {
       setProjectMembers(projectData.data.members);
     } catch (error) {
       console.error(error);
-      alert(error);
     }
     setLoading(false);
   };
@@ -92,20 +95,39 @@ const AddMember = ({ itemId, functionValue }) => {
       if (response.status !== 200 && response.status !== 201) {
         throw new Error(data.message);
       } else {
-        alert(data.message);
-        functionValue(false);
+        setAlertMessage({ error: false, message: 'Member added successfully' });
       }
     } catch (error) {
-      alert(error);
+      setAlertMessage(error);
     }
+    openAlertModal();
     fetchData();
   };
 
   const onSubmit = () => {
-    console.log(edited);
     edited
       ? handleOnSubmit()
       : (setEdited(false), alert('No input changed. The project stayed the same'));
+  };
+
+  const handleOnClick = () => {
+    edited ? openConfirmModal() : functionValue(false);
+  };
+
+  const closeConfirmModal = () => {
+    setShowconfirmModal(false);
+  };
+
+  const openConfirmModal = () => {
+    setShowconfirmModal(true);
+  };
+
+  const closeAlertModal = () => {
+    setShowErrorSuccessModal(false);
+  };
+
+  const openAlertModal = () => {
+    setShowErrorSuccessModal(true);
   };
 
   return isLoading ? (
@@ -153,10 +175,27 @@ const AddMember = ({ itemId, functionValue }) => {
       </form>
       <ButtonText
         clickAction={function () {
-          functionValue(false);
+          handleOnClick();
         }}
         label="Go Back"
       ></ButtonText>
+      <AlertModal
+        show={showErrorSuccessModal}
+        closeModal={closeAlertModal}
+        closeModalForm={function () {
+          functionValue(false);
+        }}
+        successResponse={alertMessage}
+      />
+      <ConfirmModal
+        isOpen={showconfirmModal}
+        handleClose={closeConfirmModal}
+        confirmDelete={function () {
+          functionValue(false);
+        }}
+        title={'Unsaved changes'}
+        message={'All unsaved changes will be lost. Are you sure you want to continue?'}
+      />
     </div>
   );
 };
