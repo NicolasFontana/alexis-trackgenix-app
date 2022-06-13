@@ -7,57 +7,27 @@ import Textarea from '../../Shared/Textarea';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import ConfirmModal from '../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../Shared/ErrorSuccessModal';
+import { getProjectById } from '../../../redux/projects/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
-  const [userInput, setUserInput] = useState({
-    name: '',
-    startDate: '',
-    endDate: '',
-    clientName: '',
-    active: true,
-    description: ''
-  });
-  const [project, saveProjects] = useState([]);
   const [edited, setEdited] = useState(false);
-  const [isLoading, setLoading] = useState(true);
   const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.projectById.isLoading);
+  const project = useSelector((state) => state.projectById.project);
+  const [userInput, setUserInput] = useState(project);
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      if (edit) {
-        try {
-          const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${itemId}`);
-          const projectData = await getProject.json();
-          saveProjects([projectData.data]);
-          setUserInput({
-            name: projectData.data.name,
-            startDate: projectData.data.startDate,
-            endDate: projectData.data.endDate,
-            clientName: projectData.data.clientName,
-            active: projectData.data.active,
-            description: projectData.data.description
-          });
-          setLoading(false);
-        } catch (error) {
-          console.error(error);
-          alert(error);
-        }
-      } else {
-        try {
-          const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-          const projectData = await getProject.json();
-          saveProjects(projectData.data);
-          setLoading(false);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-    fetchData();
+    dispatch(getProjectById(itemId));
   }, []);
+
+  // console.log(project);
+  // console.log(userInput);
+  // console.log(isLoading);
 
   const handleOnSubmit = async () => {
     let url = `${process.env.REACT_APP_API_URL}/api/projects`;

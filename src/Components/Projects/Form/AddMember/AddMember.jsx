@@ -101,7 +101,6 @@ const AddMember = ({ itemId, functionValue }) => {
       setAlertMessage(error);
     }
     openAlertModal();
-    fetchData();
   };
 
   const onSubmit = () => {

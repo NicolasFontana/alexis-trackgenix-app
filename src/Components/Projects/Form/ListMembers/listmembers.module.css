@@ -35,9 +35,7 @@ text-align: justify;
 }
 
 .container table {
-box-sizing: unset;
-margin: 0 10px;
-border-spacing: 5px;
+border-collapse: collapse;
 }
 
 .container tr {

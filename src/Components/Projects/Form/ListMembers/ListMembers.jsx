@@ -6,7 +6,7 @@ import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 
 const ListMembers = ({ project, onAdd, functionValue }) => {
-  let [members, setMembers] = onAdd ? useState([]) : useState(project[0].members);
+  let [members, setMembers] = onAdd ? useState([]) : useState(project.members);
   let membersToSave;
   members = members.filter((member) => member.employeeId !== null);
   const [showconfirmModal, setShowconfirmModal] = useState(false);
@@ -23,7 +23,7 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
       role: member.role,
       rate: member.rate
     }));
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${project[0]._id}`;
+    let url = `${process.env.REACT_APP_API_URL}/api/projects/${project._id}`;
     const options = {
       method: 'PUT',
       headers: {
@@ -42,8 +42,6 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
     } catch (error) {
       setAlertMessage(error);
     }
-    // setAlertMessage('holis');
-    // console.log(membersToSave);
     openAlertModal();
   };
 
