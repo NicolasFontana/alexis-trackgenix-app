@@ -65,14 +65,16 @@ function TimeSheets() {
         setShowModal={setShowModal}
         setShowTitle={setShowTitle}
       />
-      <h2>Timesheets</h2>
+      <h2 className={styles.title}>Timesheets</h2>
       <List
         timeSheets={timeSheets}
         deleteItem={deleteItem}
         setShowModal={setShowModal}
         setShowTitle={setShowTitle}
       />
-      <button onClick={onClick}>Add Time-sheet</button>
+      <button className={styles.addButton} onClick={onClick}>
+        ✚
+      </button>
       <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );

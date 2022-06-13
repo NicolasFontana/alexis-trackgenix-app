@@ -54,3 +54,18 @@
     padding: 10px;
     color: #373867;
   }
+
+  div .closeButton {
+    padding: 10px 18px;
+    background-color: #AACE9B;
+    border: black solid 1px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #373867;
+  }
+
+  div .closeButton:hover {
+    background-color: rgb(55, 120, 28);
+    color: rgb(255,255,255);
+    transition-duration: 0,4s;
+  }
