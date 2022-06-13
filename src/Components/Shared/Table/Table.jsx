@@ -1,4 +1,6 @@
 import React from 'react';
+import ButtonDelete from '../../Shared/Buttons/ButtonDelete';
+import ButtonEdit from '../../Shared/Buttons/ButtonEdit';
 import styles from './table.module.css';
 
 const Table = (props) => {
@@ -7,7 +9,7 @@ const Table = (props) => {
   return (
     <div>
       <table className={styles.table}>
-        <thead className={styles.tableHead}>
+        <thead className={styles.th}>
           <tr>
             {headers.map((header, index) => {
               return (
@@ -16,16 +18,17 @@ const Table = (props) => {
                 </th>
               );
             })}
-            <th></th>
+            <th className={styles.th}></th>
+            <th className={styles.th}></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {data.map((row) => {
             return (
-              <tr key={row._id}>
+              <tr key={row._id} className={styles.tr}>
                 {headers.map((header, index) => {
                   return (
-                    <td key={`${row._id}-${index}`} className={styles.tableCell}>
+                    <td key={`${row._id}-${index}`} className={styles.td}>
                       {Array.isArray(row[header])
                         ? row[header].length
                         : row[header] === false || row[header] === true
@@ -34,9 +37,19 @@ const Table = (props) => {
                     </td>
                   );
                 })}
-                <td>
-                  <button onClick={() => editAction(row._id)}>&#9998;</button>
-                  <button onClick={() => delAction(row._id)}>&#10006;</button>
+                <td className={styles.tdButton}>
+                  <ButtonEdit
+                    clickAction={() => {
+                      editAction(row._id);
+                    }}
+                  ></ButtonEdit>
+                </td>
+                <td className={styles.tdButton}>
+                  <ButtonDelete
+                    clickAction={() => {
+                      delAction(row._id);
+                    }}
+                  ></ButtonDelete>
                 </td>
               </tr>
             );
