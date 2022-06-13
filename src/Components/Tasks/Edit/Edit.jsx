@@ -59,68 +59,64 @@ const Edit = ({ taskId, closeModalForm }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.form}>
-        <form>
-          <Input
-            label="Task Name"
-            type="text"
-            name="taskName"
-            placeholder="Insert task name"
-            value={userInput.taskName}
-            onChange={onChange}
-            required={true}
-          />
-          <Input
-            label="Start Date"
-            type="date"
-            name="startDate"
-            value={userInput.startDate}
-            onChange={onChange}
-            required={true}
-          />
-          <Input
-            label="Worked Hours"
-            type="text"
-            name="workedHours"
-            placeholder="Insert hours"
-            value={userInput.workedHours}
-            onChange={onChange}
-            required={true}
-          />
-          <Input
-            label="Description"
-            type="text"
-            name="description"
-            placeholder="Insert description"
-            value={userInput.description}
-            onChange={onChange}
-            required={true}
-          />
-          <Select
-            label="Status"
-            name="status"
-            value={userInput.status}
-            onChange={onChange}
-            title="Choose status"
-            data={['To do', 'In progress', 'Review', 'Bloqued', 'Done', 'Cancelled']}
-            required={true}
-          />
-          <Button clickAction={closeModalForm} label="Cancel">
-            Cancel
-          </Button>
-          <Button clickAction={onSubmit} label="Submit">
-            Submit
-          </Button>
-          <MessageModal
-            show={showMessageModal}
-            closeModal={closeMessageModal}
-            closeModalForm={closeModalForm}
-            successResponse={message}
-          />
-        </form>
-      </div>
-    </div>
+    <form className={styles.form}>
+      <Input
+        label="Task Name"
+        type="text"
+        name="taskName"
+        placeholder="Insert task name"
+        value={userInput.taskName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Start Date"
+        type="date"
+        name="startDate"
+        value={userInput.startDate}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Worked Hours"
+        type="text"
+        name="workedHours"
+        placeholder="Insert hours"
+        value={userInput.workedHours}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Description"
+        type="text"
+        name="description"
+        placeholder="Insert description"
+        value={userInput.description}
+        onChange={onChange}
+        required={true}
+      />
+      <Select
+        label="Status"
+        name="status"
+        value={userInput.status}
+        onChange={onChange}
+        title="Choose status"
+        data={['To do', 'In progress', 'Review', 'Bloqued', 'Done', 'Cancelled']}
+        required={true}
+      />
+      <Button clickAction={closeModalForm} label="Cancel">
+        Cancel
+      </Button>
+      <Button clickAction={onSubmit} label="Submit">
+        Submit
+      </Button>
+      <MessageModal
+        show={showMessageModal}
+        closeModal={closeMessageModal}
+        closeModalForm={closeModalForm}
+        successResponse={message}
+      />
+    </form>
   );
 };
 

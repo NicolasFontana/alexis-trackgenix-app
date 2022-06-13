@@ -21,6 +21,7 @@ function Tasks() {
   const [idToEdit, setIdToEdit] = useState();
   let modalEdit;
   let modalAdd;
+  let modalMessage;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
@@ -85,6 +86,18 @@ function Tasks() {
     );
   }
 
+  if (showConfirmModal) {
+    modalMessage = (
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        handleClose={closeModal}
+        confirmDelete={delTask}
+        title="Delete Task"
+        message="¿Are you sure you want to delete the task?"
+      />
+    );
+  }
+
   return loading ? (
     <Preloader>
       <p>Loading Tasks</p>
@@ -94,6 +107,7 @@ function Tasks() {
       <h2>TASKS</h2>
       {modalEdit}
       {modalAdd}
+      {modalMessage}
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
@@ -101,13 +115,6 @@ function Tasks() {
         delAction={openConfirmModal}
         editAction={openEditModal}
       />
-      <ConfirmModal
-        isOpen={showConfirmModal}
-        handleClose={closeModal}
-        confirmDelete={delTask}
-        title="Delete Task"
-        message="¿Are you sure you want to delete the task?"
-      ></ConfirmModal>
       <MessageModal
         show={showMessageModal}
         closeModal={closeMessageModal}
