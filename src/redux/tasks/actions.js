@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASK_BY_ID_PENDIGN,
+  GET_TASK_BY_ID_SUCCESS,
+  GET_TASK_BY_ID_ERROR,
   ADD_TASK_PENDING,
   ADD_TASK_SUCCESS,
   ADD_TASK_ERROR,
@@ -24,6 +27,20 @@ export const getTasksSuccess = (data) => ({
 
 export const getTasksError = (error) => ({
   type: GET_TASKS_ERROR,
+  payload: error
+});
+
+export const getTaskByIdPending = () => ({
+  type: GET_TASK_BY_ID_PENDIGN
+});
+
+export const getTaskByIdSucces = (id) => ({
+  type: GET_TASK_BY_ID_SUCCESS,
+  payload: id
+});
+
+export const getTaskByIdError = (error) => ({
+  type: GET_TASK_BY_ID_ERROR,
   payload: error
 });
 

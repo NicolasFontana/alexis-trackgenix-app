@@ -1,61 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
-import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './edit.module.css';
+import { useDispatch } from 'react-redux';
+import { editTask } from '../../../redux/tasks/thunks';
 
-const Edit = ({ taskId, closeModalForm }) => {
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+const Edit = ({ task, closeModalForm }) => {
+  const dispatch = useDispatch();
+  console.log(task);
+
   const [userInput, setUserInput] = useState({
-    taskName: '',
-    startDate: '',
-    workedHours: '',
-    description: '',
-    status: ''
+    taskName: task.taskName,
+    startDate: task.startDate,
+    workedHours: task.workedHours,
+    description: task.description,
+    status: task.status
   });
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${taskId}`);
-      const data = await response.json();
-      setUserInput({
-        taskName: data.data.taskName,
-        startDate: data.data.startDate,
-        workedHours: data.data.workedHours,
-        description: data.data.description,
-        status: data.data.description
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
   const onChange = (e) => {
+    console.log({ [e.target.name]: e.target.value });
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await sendInfo();
-    setShowMessageModal(true);
-  };
-
-  const sendInfo = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userInput)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-      });
-  };
-
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
+  const onSubmit = () => {
+    console.log(userInput);
+    dispatch(editTask(userInput, task._id));
+    closeModalForm();
   };
 
   return (
@@ -101,7 +72,7 @@ const Edit = ({ taskId, closeModalForm }) => {
         value={userInput.status}
         onChange={onChange}
         title="Choose status"
-        data={['To do', 'In progress', 'Review', 'Bloqued', 'Done', 'Cancelled']}
+        data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
         required={true}
       />
       <Button clickAction={closeModalForm} label="Cancel">
@@ -110,12 +81,6 @@ const Edit = ({ taskId, closeModalForm }) => {
       <Button clickAction={onSubmit} label="Submit">
         Submit
       </Button>
-      <MessageModal
-        show={showMessageModal}
-        closeModal={closeMessageModal}
-        closeModalForm={closeModalForm}
-        successResponse={message}
-      />
     </form>
   );
 };

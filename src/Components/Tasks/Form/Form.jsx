@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
-// import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './form.module.css';
 import { useDispatch } from 'react-redux';
 import { addTask } from '../../../redux/tasks/thunks';
@@ -10,8 +9,6 @@ import { addTask } from '../../../redux/tasks/thunks';
 const Form = ({ closeModalForm }) => {
   const dispatch = useDispatch();
 
-  // const [showMessageModal, setShowMessageModal] = useState(false);
-  // const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -25,19 +22,10 @@ const Form = ({ closeModalForm }) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async () => {
-    await sendInfo();
-    // setShowMessageModal(true);
-  };
-
-  const sendInfo = () => {
+  const onSubmit = () => {
     dispatch(addTask(userInput));
-    // setMessage(response); No se que mandarle a ese modal :(
+    closeModalForm();
   };
-
-  // const closeMessageModal = () => {
-  //   setShowMessageModal(false);
-  // };
 
   return (
     <form className={styles.form}>
@@ -82,7 +70,7 @@ const Form = ({ closeModalForm }) => {
         value={userInput.status}
         onChange={onChange}
         title="Choose status"
-        data={['To do', 'In progress', 'Review', 'Bloqued', 'Done', 'Cancelled']}
+        data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
         required={true}
       />
       <Button
@@ -101,12 +89,6 @@ const Form = ({ closeModalForm }) => {
       >
         Submit
       </Button>
-      {/* <MessageModal
-        show={showMessageModal}
-        closeModal={closeMessageModal}
-        closeModalForm={closeModalForm}
-        successResponse={message}
-      /> */}
     </form>
   );
 };

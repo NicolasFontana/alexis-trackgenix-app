@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASK_BY_ID_PENDIGN,
+  GET_TASK_BY_ID_SUCCESS,
+  GET_TASK_BY_ID_ERROR,
   ADD_TASK_PENDING,
   ADD_TASK_SUCCESS,
   ADD_TASK_ERROR,
@@ -16,7 +19,7 @@ import {
 const initialState = {
   list: [],
   isLoading: false,
-  error: ''
+  error: false
 };
 
 export const tasksReducer = (state = initialState, action) => {
@@ -34,6 +37,24 @@ export const tasksReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_TASKS_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    //GET TASK BY ID
+    case GET_TASK_BY_ID_PENDIGN:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_TASK_BY_ID_SUCCESS:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case GET_TASK_BY_ID_ERROR:
       return {
         ...state,
         list: action.payload,

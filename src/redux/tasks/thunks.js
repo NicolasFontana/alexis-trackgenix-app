@@ -2,6 +2,9 @@ import {
   getTasksPending,
   getTasksSuccess,
   getTasksError,
+  getTaskByIdPending,
+  getTaskByIdSucces,
+  getTaskByIdError,
   addTaskPending,
   addTaskSucces,
   addTaskError,
@@ -27,6 +30,20 @@ export const getTasks = () => {
   };
 };
 
+export const getTaskById = (id) => {
+  return (dispatch) => {
+    dispatch(getTaskByIdPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`)
+      .then((response) => response.JSON())
+      .then((response) => {
+        dispatch(getTaskByIdSucces(response.data));
+      })
+      .catch((error) => {
+        dispatch(getTaskByIdError(error.toString()));
+      });
+  };
+};
+
 export const addTask = (task) => {
   return async (dispatch) => {
     dispatch(addTaskPending());
@@ -46,11 +63,11 @@ export const addTask = (task) => {
   };
 };
 
-export const editTask = (task) => {
+export const editTask = (task, id) => {
   return async (dispatch) => {
     dispatch(editTaskPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${task._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json'
@@ -58,6 +75,7 @@ export const editTask = (task) => {
         body: JSON.stringify(task)
       });
       const data = await response.json();
+      console.log(data);
       dispatch(editTaskSucces(data.data));
     } catch (error) {
       dispatch(editTaskError());

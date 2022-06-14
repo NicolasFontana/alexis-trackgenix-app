@@ -7,7 +7,7 @@ import Form from './Form/Form';
 import EditForm from './Edit/Edit';
 import Modal from '../Shared/ModalForm/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-// import MessageModal from '../Shared/ErrorSuccessModal';
+import MessageModal from '../Shared/ErrorSuccessModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { delTask, getTasks } from '../../redux/tasks/thunks';
 
@@ -21,8 +21,8 @@ function Tasks() {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  // const [showMessageModal, setShowMessageModal] = useState(false);
-  // const [message, setMessage] = useState('');
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [idDelete, setIdDelete] = useState(0);
   const [idToEdit, setIdToEdit] = useState();
   let modalEdit;
@@ -32,8 +32,10 @@ function Tasks() {
   const isLoading = useSelector((state) => state.tasks.isLoading);
 
   const handleConfirm = () => {
-    dispatch(delTask(idDelete));
+    dispatch(delTask(idDelete, (alertMessage) => setMessage(alertMessage)));
+    console.log(message);
     closeModal();
+    setShowMessageModal(true);
   };
 
   const openConfirmModal = (id) => {
@@ -51,20 +53,20 @@ function Tasks() {
   };
 
   const closeModal = () => {
-    // setShowMessageModal(false);
+    setShowMessageModal(false);
     setShowModalFormAdd(false);
     setShowModalFormEdit(false);
     setShowConfirmModal(false);
   };
 
-  // const closeMessageModal = () => {
-  //   setShowMessageModal(false);
-  // };
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
   if (showModalFormEdit) {
     modalEdit = (
       <Modal isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
-        <EditForm closeModalForm={closeModal} taskId={idToEdit} />
+        <EditForm closeModalForm={closeModal} task={tasks.find((item) => item._id === idToEdit)} />
       </Modal>
     );
   }
@@ -106,12 +108,12 @@ function Tasks() {
         delAction={openConfirmModal}
         editAction={openEditModal}
       />
-      {/* <MessageModal
+      <MessageModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModal}
         successResponse={message}
-      /> */}
+      />
       <AddButton clickAction={openAddModal}></AddButton>
     </section>
   );
