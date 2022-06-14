@@ -13,8 +13,6 @@ const Employees = () => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
   const isLoading = useSelector((state) => state.employees.isLoading);
-  // const [list, setEmployees] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
@@ -36,7 +34,11 @@ const Employees = () => {
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
-        <Form closeModalForm={closeModalFormEdit} edit={true} itemId={employeeId} />
+        <Form
+          closeModalForm={closeModalFormEdit}
+          edit={true}
+          item={employees.find((item) => item._id === employeeId)}
+        />
       </ModalForm>
     );
   }
