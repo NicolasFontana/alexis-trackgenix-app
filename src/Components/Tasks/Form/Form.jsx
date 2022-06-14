@@ -2,12 +2,16 @@ import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
-import MessageModal from '../../Shared/ErrorSuccessModal';
+// import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './form.module.css';
+import { useDispatch } from 'react-redux';
+import { addTask } from '../../../redux/tasks/thunks';
 
 const Form = ({ closeModalForm }) => {
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
+
+  // const [showMessageModal, setShowMessageModal] = useState(false);
+  // const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -17,30 +21,23 @@ const Form = ({ closeModalForm }) => {
   });
 
   const onChange = (e) => {
+    console.log({ [e.target.name]: e.target.value });
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     await sendInfo();
-    setShowMessageModal(true);
+    // setShowMessageModal(true);
   };
 
   const sendInfo = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userInput)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-      });
+    dispatch(addTask(userInput));
+    // setMessage(response); No se que mandarle a ese modal :(
   };
 
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
-  };
+  // const closeMessageModal = () => {
+  //   setShowMessageModal(false);
+  // };
 
   return (
     <form className={styles.form}>
@@ -104,12 +101,12 @@ const Form = ({ closeModalForm }) => {
       >
         Submit
       </Button>
-      <MessageModal
+      {/* <MessageModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModalForm}
         successResponse={message}
-      />
+      /> */}
     </form>
   );
 };

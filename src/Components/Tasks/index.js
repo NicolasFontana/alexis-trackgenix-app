@@ -7,9 +7,9 @@ import Form from './Form/Form';
 import EditForm from './Edit/Edit';
 import Modal from '../Shared/ModalForm/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import MessageModal from '../Shared/ErrorSuccessModal';
+// import MessageModal from '../Shared/ErrorSuccessModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTasks } from '../../redux/tasks/thunks';
+import { delTask, getTasks } from '../../redux/tasks/thunks';
 
 function Tasks() {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ function Tasks() {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+  // const [showMessageModal, setShowMessageModal] = useState(false);
+  // const [message, setMessage] = useState('');
   const [idDelete, setIdDelete] = useState(0);
   const [idToEdit, setIdToEdit] = useState();
   let modalEdit;
@@ -31,16 +31,9 @@ function Tasks() {
   const tasks = useSelector((state) => state.tasks.list);
   const isLoading = useSelector((state) => state.tasks.isLoading);
 
-  const delTask = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${idDelete}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-        closeModal();
-        setShowMessageModal(true);
-      });
+  const handleConfirm = () => {
+    dispatch(delTask(idDelete));
+    closeModal();
   };
 
   const openConfirmModal = (id) => {
@@ -58,15 +51,15 @@ function Tasks() {
   };
 
   const closeModal = () => {
-    setShowMessageModal(false);
+    // setShowMessageModal(false);
     setShowModalFormAdd(false);
     setShowModalFormEdit(false);
     setShowConfirmModal(false);
   };
 
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
-  };
+  // const closeMessageModal = () => {
+  //   setShowMessageModal(false);
+  // };
 
   if (showModalFormEdit) {
     modalEdit = (
@@ -89,13 +82,12 @@ function Tasks() {
       <ConfirmModal
         isOpen={showConfirmModal}
         handleClose={closeModal}
-        confirmDelete={delTask}
+        confirmDelete={handleConfirm}
         title="Delete Task"
         message="¿Are you sure you want to delete the task?"
       />
     );
   }
-  console.log('asd');
 
   return isLoading ? (
     <Preloader>
@@ -114,12 +106,12 @@ function Tasks() {
         delAction={openConfirmModal}
         editAction={openEditModal}
       />
-      <MessageModal
+      {/* <MessageModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModal}
         successResponse={message}
-      />
+      /> */}
       <AddButton clickAction={openAddModal}></AddButton>
     </section>
   );
