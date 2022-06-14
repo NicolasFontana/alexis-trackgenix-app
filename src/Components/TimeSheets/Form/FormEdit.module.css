@@ -1,0 +1,47 @@
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-content: space-between;
+    row-gap: 10px;
+    overflow: auto;
+  }
+  
+  .container > div {
+    width: 45%;
+  }
+  
+  /* Success Modal container */
+  .container > div:last-child {
+    width: 100vw;
+  }
+  
+  .container button {
+    margin: 5px 0 10px;
+  }
+  
+  .submitButton {
+    width: 100%;
+    height: 45px;
+    color: #ffffff;
+    background: #aace9b;
+    border: 1px solid #373867;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+  }
+  
+  .noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
