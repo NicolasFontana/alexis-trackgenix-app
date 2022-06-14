@@ -19,6 +19,26 @@ function TimeSheets() {
   let modalAdd;
   let modalEdit;
 
+  const timeSheetTable = [];
+  const timesheetFormatted = (timeSheets) => {
+    timeSheets.forEach((timeSheet) => {
+      timeSheetTable.push({
+        _id: timeSheet._id,
+        projectName: timeSheet.projectId.name,
+        projectId: timeSheet.projectId._id,
+        taskId: timeSheet.Task[0].taskId._id,
+        taskName: timeSheet.Task[0].taskId.taskName,
+        startDate: timeSheet.Task[0].taskId.startDate,
+        workedHours: timeSheet.Task[0].taskId.workedHours,
+        description: timeSheet.Task[0].taskId.description,
+        status: timeSheet.Task[0].taskId.status,
+        approved: timeSheet.approved
+      });
+    });
+  };
+
+  timesheetFormatted(timeSheets);
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
       .then((response) => response.json())
@@ -85,29 +105,14 @@ function TimeSheets() {
   if (showModalEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalEdit} handleClose={closeModalEdit} title="Edit Timesheet">
-        <FormEdit closeModalEdit={closeModalEdit} />
+        <FormEdit
+          closeModalEdit={closeModalEdit}
+          timeSheet={timeSheetTable.find((item) => item._id === timeSheetId)}
+          timeSheetId={timeSheetId}
+        />
       </ModalForm>
     );
   }
-
-  const timeSheetTable = [];
-  const timesheetFormatted = (timeSheets) => {
-    timeSheets.forEach((timeSheet) => {
-      timeSheetTable.push({
-        _id: timeSheet._id,
-        projectName: timeSheet.projectId.name,
-        taskId: timeSheet.Task[0].taskId._id,
-        taskName: timeSheet.Task[0].taskId.taskName,
-        startDate: timeSheet.Task[0].taskId.startDate,
-        workedHours: timeSheet.Task[0].taskId.workedHours,
-        description: timeSheet.Task[0].taskId.description,
-        status: timeSheet.Task[0].taskId.status,
-        approved: timeSheet.approved
-      });
-    });
-  };
-
-  timesheetFormatted(timeSheets);
 
   return loading ? (
     <Preloader>
