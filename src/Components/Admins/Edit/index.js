@@ -1,8 +1,13 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
+import Input from '../../Shared/Input';
+import Select from '../../Shared/Select';
+import Button from '../../Shared/Buttons/ButtonText';
+import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './edit.module.css';
 
-const AdminsEdit = () => {
+const AdminsEdit = ({ adminId, closeModalForm }) => {
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -11,11 +16,9 @@ const AdminsEdit = () => {
     active: ''
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const adminID = params.get('id');
   useEffect(async () => {
     try {
-      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${adminID}`);
+      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${adminId}`);
       const adminData = await getAdmin.json();
       setadminInput({
         firstName: adminData.data.firstName,
@@ -30,80 +33,100 @@ const AdminsEdit = () => {
     }
   }, []);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
+  const onChange = (e) => {
+    setadminInput({ ...adminInput, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await sendInfo();
+    setShowMessageModal(true);
+  };
+
+  const sendInfo = () => {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
       method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         firstName: adminInput.firstName,
         lastName: adminInput.lastName,
         email: adminInput.email,
         password: adminInput.password,
         active: adminInput.active
-      }),
-      headers: {
-        'content-type': 'application/json'
-      }
+      })
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.message == 'Admin updated') {
-          alert('Admin updated');
-          window.location.replace(
-            'https://alexis-trackgenix-app-git-feature-tg-28admin-basp-m2022.vercel.app/admins'
-          );
-        } else if (response.message) {
-          alert(response.message);
-        }
+        setMessage(response);
       });
   };
 
-  const onChange = (e) => {
-    setadminInput({ ...adminInput, [e.target.name]: e.target.value });
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   return (
     <section className={styles.container}>
       <h2>Edit Admin</h2>
-      <form onSubmit={onSubmit}>
-        <div className={styles.formBody}>
-          <div className={styles.formRow}>
-            <label className={styles.label}>First Name:</label>
-            <input type="text" name="firstName" value={adminInput.firstName} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Last Name:</label>
-            <input type="text" name="lastName" value={adminInput.lastName} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Email:</label>
-            <input type="email" name="email" value={adminInput.email} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={adminInput.password}
-              onChange={onChange}
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Active:</label>
-            <select name="active" value={adminInput.active} onChange={onChange}>
-              <option value=""></option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-        </div>
+      <form className={styles.form}>
+        <Input
+          label="Admin Name"
+          type="text"
+          name="firstName"
+          placeholder="Insert admin name"
+          value={adminInput.firstName}
+          onChange={onChange}
+          required={true}
+        />
+        <Input
+          label="Admin lastName"
+          type="text"
+          name="lastName"
+          placeholder="Insert admin lastName"
+          value={adminInput.lastName}
+          onChange={onChange}
+          required={true}
+        />
+        <Input
+          label="Email"
+          type="email"
+          name="email"
+          placeholder="Insert email"
+          value={adminInput.email}
+          onChange={onChange}
+          required={true}
+        />
+        <Input
+          label="Password"
+          type="pasword"
+          name="password"
+          placeholder="Insert Password"
+          value={adminInput.password}
+          onChange={onChange}
+          required={true}
+        />
+        <Select
+          label="Active?"
+          name="active"
+          value={adminInput.active}
+          onChange={onChange}
+          title="Define condition"
+          data={['Active', 'Inactive']}
+          required={true}
+        />
         <div className={styles.buttons}>
-          <button className={styles.buttonEditCancel} type="submit">
-            Edit
-          </button>
-          <a className={styles.buttonEditCancel} href="/admins">
+          <Button clickAction={closeModalForm} label="Cancel">
             Cancel
-          </a>
+          </Button>
+          <Button clickAction={onSubmit} label="Submit">
+            Submit
+          </Button>
+          <MessageModal
+            show={showMessageModal}
+            closeModal={closeMessageModal}
+            closeModalForm={closeModalForm}
+            successResponse={message}
+          />
         </div>
       </form>
     </section>

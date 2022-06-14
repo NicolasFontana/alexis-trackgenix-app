@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import List from './List/List';
+import { useHistory } from 'react-router-dom';
 import Preloader from '../Shared/Preloader/Preloader';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import Table from '../Shared/Table/Table';
+import styles from '../Admins/admins.module.css';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import EditForm from './Edit/index';
+import Modal from '../Shared/ModalForm/index';
 
 const App = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModalConfirm, setShowModalConfirm] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [idDelete, setIdDelete] = useState(0);
+  const [idToEdit, setIdToEdit] = useState();
+  let modalEdit;
+
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/admins/Add`;
+    history.push(path);
+  };
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/admins`)
@@ -20,12 +35,26 @@ const App = () => {
 
   const closeConfirmModal = () => {
     setShowModalConfirm(false);
+    setShowModalFormEdit(false);
   };
 
   const openConfirmModal = (id) => {
     setShowModalConfirm(true);
     setIdDelete(id);
   };
+
+  const openEditModal = (id) => {
+    setIdToEdit(id);
+    setShowModalFormEdit(true);
+  };
+
+  if (showModalFormEdit) {
+    modalEdit = (
+      <Modal isOpen={showModalFormEdit} handleClose={closeConfirmModal} title="Edit Admin">
+        <EditForm closeModalForm={closeConfirmModal} adminId={idToEdit} />
+      </Modal>
+    );
+  }
 
   const confirmDeleteAdmin = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
@@ -59,9 +88,17 @@ const App = () => {
       <p>Loading admins</p>
     </Preloader>
   ) : (
-    <div className="App">
-      <List admins={admins} setAdmins={setAdmins} deleteAction={openConfirmModal} />
+    <div className={styles.container}>
       {modalConfirm}
+      {modalEdit}
+      <Table
+        data={admins}
+        headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
+        titles={['ID', 'Name', 'lastName', 'Email', 'Password', 'Active']}
+        delAction={openConfirmModal}
+        editAction={openEditModal}
+      />
+      <ButtonAdd clickAction={routeChange}></ButtonAdd>
     </div>
   );
 };

@@ -12,15 +12,3 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
 }
-
-.button {
-  width: 80px;
-  height: 80px;
-  background-color: #aace9b;
-  border-radius: 50%;
-  border-color: #aace9b;
-  box-shadow: 2px 2px 2px grey;
-  text-align: center;
-  font-size: 60px;
-  color: #fff;
-}
