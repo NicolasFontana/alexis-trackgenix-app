@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import FormEdit from './Form/FormEdit';
 import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
+import FormAdd from './FormAdd';
+import FormEdit from './FormEdit';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
@@ -13,26 +14,19 @@ function TimeSheets() {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
-  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
-      const responseJSON = await response.json();
-      setTimeSheets(responseJSON.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const [showModalEdit, setShowModalEdit] = useState();
+  let modalDelete;
+  let modalAdd;
+  let modalEdit;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
       .then((response) => response.json())
       .then((response) => {
         setTimeSheets(response.data);
+        setLoading(false);
       });
-  }, [showModalDelete]);
+  }, [showModalAdd]);
 
   const deleteItem = async () => {
     try {
@@ -42,6 +36,7 @@ function TimeSheets() {
     } catch (error) {
       console.error(error);
     }
+    setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== timeSheetId)]);
     setShowModalDelete(false);
   };
 
@@ -54,16 +49,19 @@ function TimeSheets() {
     setShowModalDelete(false);
   };
 
-  const openModalFormEdit = (id) => {
+  const closeModalAdd = () => {
+    setShowModalAdd(false);
+  };
+
+  const openModalEdit = (id) => {
     setTimeSheetId(id);
-    setShowModalFormEdit(true);
+    setShowModalEdit(true);
   };
 
-  const closeModalFormEdit = () => {
-    setShowModalFormEdit(false);
+  const closeModalEdit = () => {
+    setShowModalEdit(false);
   };
 
-  let modalDelete;
   if (showModalDelete) {
     modalDelete = (
       <ConfirmModal
@@ -76,25 +74,18 @@ function TimeSheets() {
     );
   }
 
-  const closeModalAdd = () => {
-    setShowModalAdd(false);
-  };
-
-  let modalAdd;
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
-        <div>asd</div>
+        <FormAdd closeModalAdd={closeModalAdd} />
       </ModalForm>
     );
   }
 
-  let modalEdit;
-  if (showModalFormEdit) {
+  if (showModalEdit) {
     modalEdit = (
-      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Timesheet">
-        {/* <div>asd</div> */}
-        <FormEdit closeModalForm={closeModalFormEdit} edit={true} itemId={timeSheetId} />
+      <ModalForm isOpen={showModalEdit} handleClose={closeModalEdit} title="Edit Timesheet">
+        <FormEdit closeModalEdit={closeModalEdit} />
       </ModalForm>
     );
   }
@@ -115,6 +106,7 @@ function TimeSheets() {
       });
     });
   };
+
   timesheetFormatted(timeSheets);
 
   return loading ? (
@@ -147,11 +139,11 @@ function TimeSheets() {
           'PMs approval'
         ]}
         delAction={openModalDelete}
-        editAction={openModalFormEdit}
+        editAction={openModalEdit}
       />
       {modalDelete}
-      {modalEdit}
       {modalAdd}
+      {modalEdit}
       <ButtonAdd
         clickAction={() => {
           setShowModalAdd(true);
