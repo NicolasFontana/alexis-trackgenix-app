@@ -5,6 +5,7 @@ import Table from '../Shared/Table/Table';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
+import FormAdd from './FormAdd';
 
 function TimeSheets() {
   const [timeSheets, setTimeSheets] = useState([]);
@@ -12,25 +13,17 @@ function TimeSheets() {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
-
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
-      const responseJSON = await response.json();
-      setTimeSheets(responseJSON.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  let modalDelete;
+  let modalAdd;
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
       .then((response) => response.json())
       .then((response) => {
         setTimeSheets(response.data);
+        setLoading(false);
       });
-  }, [showModalDelete]);
+  }, [showModalAdd]);
 
   const deleteItem = async () => {
     try {
@@ -40,6 +33,7 @@ function TimeSheets() {
     } catch (error) {
       console.error(error);
     }
+    setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== timeSheetId)]);
     setShowModalDelete(false);
   };
 
@@ -52,7 +46,10 @@ function TimeSheets() {
     setShowModalDelete(false);
   };
 
-  let modalDelete;
+  const closeModalAdd = () => {
+    setShowModalAdd(false);
+  };
+
   if (showModalDelete) {
     modalDelete = (
       <ConfirmModal
@@ -65,15 +62,10 @@ function TimeSheets() {
     );
   }
 
-  const closeModalAdd = () => {
-    setShowModalAdd(false);
-  };
-
-  let modalAdd;
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
-        <div>asd</div>
+        <FormAdd closeModalAdd={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -94,6 +86,7 @@ function TimeSheets() {
       });
     });
   };
+
   timesheetFormatted(timeSheets);
 
   return loading ? (
