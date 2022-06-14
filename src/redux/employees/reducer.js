@@ -1,4 +1,11 @@
-import { GET_EMPLOYEES_PENDING, GET_EMPLOYEES_SUCCESS, GET_EMPLOYEES_ERROR } from './constants';
+import {
+  GET_EMPLOYEES_PENDING,
+  GET_EMPLOYEES_SUCCESS,
+  GET_EMPLOYEES_ERROR,
+  DELETE_EMPLOYEES_PENDING,
+  DELETE_EMPLOYEES_SUCCESS,
+  DELETE_EMPLOYEES_ERROR
+} from './constants';
 
 const initialState = {
   list: [],
@@ -20,6 +27,23 @@ export const employeesReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case DELETE_EMPLOYEES_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DELETE_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((employee) => employee.id !== action.payload),
+        isLoading: false
+      };
+    case DELETE_EMPLOYEES_ERROR:
       return {
         ...state,
         isLoading: false,

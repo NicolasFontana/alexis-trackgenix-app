@@ -7,7 +7,7 @@ import Form from './Form';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees } from '../../redux/employees/thunks';
+import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -20,47 +20,16 @@ const Employees = () => {
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [employeeId, setEmployeeId] = useState();
 
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, []);
+
   const closeModalFormAdd = () => {
     setShowModalFormAdd(false);
   };
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
-  };
-
-  const closeModalFormDelete = () => {
-    setShowModalFormDelete(false);
-  };
-
-  useEffect(() => {
-    dispatch(getEmployees());
-    // setLoading(false);
-    // fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     setEmployees(response.data);
-    //   });
-  }, [showModalFormAdd, showModalFormEdit, showModalFormDelete]);
-
-  const openModalFormEdit = (id) => {
-    setEmployeeId(id);
-    setShowModalFormEdit(true);
-  };
-
-  const openModalFormDelete = (id) => {
-    setEmployeeId(id);
-    setShowModalFormDelete(true);
-  };
-
-  const deleteItem = async () => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/employees/${employeeId}`, {
-        method: 'DELETE'
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    setShowModalFormDelete(false);
   };
 
   let modalEdit;
@@ -86,8 +55,13 @@ const Employees = () => {
     modalDelete = (
       <ConfirmModal
         isOpen={showModalFormDelete}
-        handleClose={closeModalFormDelete}
-        confirmDelete={deleteItem}
+        handleClose={() => {
+          setShowModalFormDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(deleteEmployee(employeeId));
+          setShowModalFormDelete(false);
+        }}
         title="Delete Employee"
         message="Are you sure you want to delete this employee?"
       />
@@ -95,14 +69,11 @@ const Employees = () => {
   }
 
   return isLoading ? (
-    <Preloader>
-      <p>Loading employees</p>
-    </Preloader>
+    <Preloader />
   ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
       <Table
-        // data={list}
         data={employees}
         headers={[
           '_id',
@@ -126,8 +97,14 @@ const Employees = () => {
           'Projects',
           'TimeSheets'
         ]}
-        delAction={openModalFormDelete}
-        editAction={openModalFormEdit}
+        delAction={(id) => {
+          setEmployeeId(id);
+          setShowModalFormDelete(true);
+        }}
+        editAction={(id) => {
+          setEmployeeId(id);
+          setShowModalFormEdit(true);
+        }}
       />
       {modalEdit}
       {modalAdd}
