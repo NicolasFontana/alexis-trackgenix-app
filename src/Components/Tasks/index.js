@@ -8,10 +8,16 @@ import EditForm from './Edit/Edit';
 import Modal from '../Shared/ModalForm/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import MessageModal from '../Shared/ErrorSuccessModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTasks } from '../../redux/tasks/thunks';
 
 function Tasks() {
-  const [tasks, saveTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, []);
+
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -22,18 +28,10 @@ function Tasks() {
   let modalEdit;
   let modalAdd;
   let modalMessage;
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveTasks(response.data);
-        setLoading(false);
-      });
-  }, []);
+  const tasks = useSelector((state) => state.tasks.list);
+  const isLoading = useSelector((state) => state.tasks.isLoading);
 
   const delTask = () => {
-    saveTasks([...tasks.filter((task) => task._id !== idDelete)]);
     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${idDelete}`, {
       method: 'DELETE'
     })
@@ -97,8 +95,9 @@ function Tasks() {
       />
     );
   }
+  console.log('asd');
 
-  return loading ? (
+  return isLoading ? (
     <Preloader>
       <p>Loading Tasks</p>
     </Preloader>
