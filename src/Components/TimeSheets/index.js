@@ -6,35 +6,51 @@ import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
 import FormAdd from './FormAdd';
+import ErrorSuccessModal from '../Shared/ErrorSuccessModal/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTimesheets } from '../../redux/time-sheets/thunks';
 
 function TimeSheets() {
-  const [timeSheets, setTimeSheets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [timeSheets, setTimeSheets] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const timeSheets = useSelector((state) => state.timesheets.listTimesheet);
+  const loading = useSelector((state) => state.timesheets.loading);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   let modalDelete;
   let modalAdd;
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTimeSheets(response.data);
-        setLoading(false);
-      });
+    dispatch(getAllTimesheets());
   }, [showModalAdd]);
 
   const deleteItem = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${timeSheetId}`;
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${timeSheetId}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(url, options);
+      const data = await response.json();
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error(data.message);
+      } else {
+        setMessage(data);
+      }
     } catch (error) {
       console.error(error);
+      setMessage(error);
     }
-    setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== timeSheetId)]);
+    // setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== timeSheetId)]);
     setShowModalDelete(false);
+    setShowMessageModal(true);
   };
 
   const openModalDelete = (id) => {
@@ -48,6 +64,10 @@ function TimeSheets() {
 
   const closeModalAdd = () => {
     setShowModalAdd(false);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
   };
 
   if (showModalDelete) {
@@ -124,9 +144,16 @@ function TimeSheets() {
       {modalDelete}
       {modalAdd}
       <ButtonAdd
+        className={styles.buttonAdd}
         clickAction={() => {
           setShowModalAdd(true);
         }}
+      />
+      <ErrorSuccessModal
+        show={showMessageModal}
+        closeModal={closeMessageModal}
+        closeModalForm={closeMessageModal}
+        successResponse={message}
       />
     </section>
   );

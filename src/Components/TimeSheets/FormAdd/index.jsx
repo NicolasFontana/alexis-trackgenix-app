@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
-import ResponseModal from '../../Shared/ErrorSuccessModal/index';
+import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
 
 const FormAdd = ({ closeModalAdd }) => {
   const [listTask, setListTask] = useState([]);
@@ -128,7 +128,7 @@ const FormAdd = ({ closeModalAdd }) => {
         }}
         label="Submit"
       />
-      <ResponseModal
+      <ErrorSuccessModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModalAdd}
