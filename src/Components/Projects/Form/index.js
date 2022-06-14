@@ -19,15 +19,29 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.projectById.isLoading);
   const project = useSelector((state) => state.projectById.project);
-  const [userInput, setUserInput] = useState(project);
+  const [userInput, setUserInput] = useState({
+    name: '',
+    startDate: '',
+    endDate: '',
+    clientName: '',
+    active: true,
+    description: ''
+  });
 
   useEffect(() => {
-    dispatch(getProjectById(itemId));
+    dispatch(
+      getProjectById(itemId, (userInput) =>
+        setUserInput({
+          name: userInput.name,
+          startDate: userInput.startDate,
+          endDate: userInput.endDate,
+          clientName: userInput.clientName,
+          active: userInput.active,
+          description: userInput.description
+        })
+      )
+    );
   }, []);
-
-  // console.log(project);
-  // console.log(userInput);
-  // console.log(isLoading);
 
   const handleOnSubmit = async () => {
     let url = `${process.env.REACT_APP_API_URL}/api/projects`;

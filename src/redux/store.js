@@ -1,10 +1,10 @@
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { projectByIdReducer } from './projects/reducer';
+import { projectsReducer } from './projects/reducer';
 
 const rootReducer = combineReducers({
-  projectById: projectByIdReducer
+  projectById: projectsReducer
 });
 
 const configureStore = () => {
