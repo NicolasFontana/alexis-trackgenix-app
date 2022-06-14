@@ -4,6 +4,8 @@ import ListItemMember from '../ListItemMember/ListItemMember';
 import ButtonAdd from '../../../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
+import { updateProject } from '../../../../redux/projects/thunks';
+import { useDispatch } from 'react-redux';
 
 const ListMembers = ({ project, onAdd, functionValue }) => {
   let [members, setMembers] = onAdd ? useState([]) : useState(project.members);
@@ -14,7 +16,9 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
   const [alertMessage, setAlertMessage] = useState('');
   const [memberId, setMemberId] = useState('');
 
-  const deleteMember = async (id) => {
+  const dispatch = useDispatch();
+
+  const deleteMember = (id) => {
     closeConfirmModal();
     members = members.filter((member) => member.employeeId._id !== id);
     setMembers(members);
@@ -23,25 +27,14 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
       role: member.role,
       rate: member.rate
     }));
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${project._id}`;
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ members: membersToSave })
-    };
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error(data.message);
-      } else {
-        setAlertMessage({ error: false, message: 'Member deleted successfully' });
-      }
-    } catch (error) {
-      setAlertMessage(error);
-    }
+    dispatch(
+      updateProject(project._id, { members: membersToSave }, (alertMessage) =>
+        setAlertMessage({
+          error: alertMessage.error,
+          message: 'Team member deleted successfully'
+        })
+      )
+    );
     openAlertModal();
   };
 
@@ -65,7 +58,7 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <div className={styles.divcontainer}>
+    <div className={styles.header}>
       <h3>Team members</h3>
       <ButtonAdd
         clickAction={() => {
@@ -75,12 +68,14 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
     </div>
   ) : (
     <div className={styles.divcontainer}>
-      <h3>Team members</h3>
-      <ButtonAdd
-        clickAction={() => {
-          functionValue(true);
-        }}
-      ></ButtonAdd>
+      <div className={styles.header}>
+        <h3>Team members</h3>
+        <ButtonAdd
+          clickAction={() => {
+            functionValue(true);
+          }}
+        ></ButtonAdd>
+      </div>
       <div className={styles.container}>
         <table>
           <thead>

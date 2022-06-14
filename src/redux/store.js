@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { projectsReducer } from './projects/reducer';
 
 const rootReducer = combineReducers({
-  projectById: projectsReducer
+  projects: projectsReducer
 });
 
 const configureStore = () => {

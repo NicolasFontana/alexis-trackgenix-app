@@ -1,4 +1,11 @@
-import { getProjectByIdPending, getProjectByIdSuccess, getProjectByIdError } from './actions';
+import {
+  getProjectByIdPending,
+  getProjectByIdSuccess,
+  getProjectByIdError,
+  updateProjectPending,
+  updateProjectSuccess,
+  updateProjectError
+} from './actions';
 
 export const getProjectById = (id, setUserInput) => {
   return (dispatch) => {
@@ -12,6 +19,38 @@ export const getProjectById = (id, setUserInput) => {
       })
       .catch((error) => {
         dispatch(getProjectByIdError(error.toString()));
+      });
+  };
+};
+
+export const updateProject = (id, body, setAlertMessage) => {
+  return async (dispatch) => {
+    dispatch(updateProjectPending());
+    let url = `${process.env.REACT_APP_API_URL}/api/projects/${id}`;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    };
+    return fetch(url, options)
+      .then((response) => {
+        if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
+          return response.json();
+        }
+        return response.json();
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch(updateProjectSuccess(response.data));
+        setAlertMessage(response);
+        dispatch(getProjectById(id));
+        return response;
+      })
+      .catch((error) => {
+        dispatch(updateProjectError(error.toString()));
+        setAlertMessage(error);
       });
   };
 };

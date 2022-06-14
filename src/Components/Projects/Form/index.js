@@ -7,7 +7,7 @@ import Textarea from '../../Shared/Textarea';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import ConfirmModal from '../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../Shared/ErrorSuccessModal';
-import { getProjectById } from '../../../redux/projects/thunks';
+import { getProjectById, updateProject } from '../../../redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
@@ -17,8 +17,8 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const [alertMessage, setAlertMessage] = useState('');
 
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.projectById.isLoading);
-  const project = useSelector((state) => state.projectById.project);
+  const isLoading = useSelector((state) => state.projects.isLoading);
+  const project = useSelector((state) => state.projects.project);
   const [userInput, setUserInput] = useState({
     name: '',
     startDate: '',
@@ -43,32 +43,9 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
     );
   }, []);
 
-  const handleOnSubmit = async () => {
-    let url = `${process.env.REACT_APP_API_URL}/api/projects`;
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userInput)
-    };
-    if (edit) {
-      options.method = 'PUT';
-      url = `${process.env.REACT_APP_API_URL}/api/projects/${itemId}`;
-    }
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error(data.message);
-      } else {
-        setAlertMessage(data);
-      }
-    } catch (error) {
-      setAlertMessage(error);
-    }
+  const handleOnSubmit = () => {
+    dispatch(updateProject(itemId, userInput, (alertMessage) => setAlertMessage(alertMessage)));
     setEdited(false);
-    closeConfirmModal();
     openAlertModal();
   };
 
