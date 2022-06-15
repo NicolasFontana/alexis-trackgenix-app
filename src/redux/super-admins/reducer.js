@@ -7,7 +7,10 @@ import {
   POST_SUPER_ADMINS_ERROR,
   DELETE_SUPER_ADMINS_PENDING,
   DELETE_SUPER_ADMINS_SUCCESS,
-  DELETE_SUPER_ADMINS_ERROR
+  DELETE_SUPER_ADMINS_ERROR,
+  PUT_SUPER_ADMINS_PENDING,
+  PUT_SUPER_ADMINS_SUCCESS,
+  PUT_SUPER_ADMINS_ERROR
 } from './constants';
 
 const initialState = {
@@ -33,6 +36,11 @@ export const superAdminsReducer = (state = initialState, action) => {
         ...state,
         isLoading: true
       };
+    case PUT_SUPER_ADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
     case GET_SUPER_ADMINS_SUCCESS:
       return {
         ...state,
@@ -51,6 +59,11 @@ export const superAdminsReducer = (state = initialState, action) => {
         list: state.list.filter((_id) => _id !== action.payload),
         isLoading: false
       };
+    case PUT_SUPER_ADMINS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      };
     case GET_SUPER_ADMINS_ERROR:
       return {
         ...state,
@@ -64,6 +77,12 @@ export const superAdminsReducer = (state = initialState, action) => {
         error: action.payload
       };
     case DELETE_SUPER_ADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case PUT_SUPER_ADMINS_ERROR:
       return {
         ...state,
         isLoading: false,

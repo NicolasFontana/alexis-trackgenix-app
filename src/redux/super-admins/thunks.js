@@ -7,7 +7,10 @@ import {
   postSuperAdminsError,
   deleteSuperAdminsPending,
   deleteSuperAdminsSuccess,
-  deleteSuperAdminsError
+  deleteSuperAdminsError,
+  putSuperAdminsPending,
+  putSuperAdminsSuccess,
+  putSuperAdminsError
 } from './actions';
 
 export const getSuperAdmins = () => {
@@ -53,9 +56,33 @@ export const deleteSuperAdmins = (_id) => {
       });
       const data = await response.json();
       dispatch(deleteSuperAdminsSuccess(data.data));
+      dispatch(getSuperAdmins());
       return data.data;
     } catch (error) {
       dispatch(deleteSuperAdminsError(error.toString()));
+    }
+  };
+};
+
+export const putSuperAdmins = (superAdminId, editedSuperAdmin) => {
+  return async (dispatch) => {
+    dispatch(putSuperAdminsPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminId}`,
+        {
+          method: 'PUT',
+          body: editedSuperAdmin,
+          headers: {
+            'content-type': 'application/json'
+          }
+        }
+      );
+      const data = await response.json();
+      dispatch(putSuperAdminsSuccess(data.data));
+      return data.data;
+    } catch (error) {
+      dispatch(putSuperAdminsError(error.toString()));
     }
   };
 };

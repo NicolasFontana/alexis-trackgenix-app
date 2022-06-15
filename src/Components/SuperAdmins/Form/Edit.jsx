@@ -3,8 +3,11 @@ import { useState } from 'react';
 import styles from './add.module.css';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import Input from '../../Shared/Input';
+import { useDispatch } from 'react-redux';
+import { putSuperAdmins } from '../../../redux/super-admins/thunks';
 
-const SuperAdminsFormEdit = ({ editClose }) => {
+const SuperAdminsFormEdit = ({ idEdit, closeModalForm }) => {
+  const dispatch = useDispatch();
   // const [edited, setEdited] = useState(false);
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
@@ -13,6 +16,18 @@ const SuperAdminsFormEdit = ({ editClose }) => {
     password: '',
     active: ''
   });
+
+  let editedSuperAdmin = JSON.stringify({
+    firstName: superAdminInput.firstName,
+    lastName: superAdminInput.lastName,
+    email: superAdminInput.email,
+    password: superAdminInput.password,
+    active: superAdminInput.active
+  });
+
+  const submitEdit = () => {
+    dispatch(putSuperAdmins(idEdit, editedSuperAdmin));
+  };
 
   const onChange = (e) => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
@@ -66,8 +81,8 @@ const SuperAdminsFormEdit = ({ editClose }) => {
         onChange={onChangeActive}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={editClose} label="Cancel"></ButtonText>
-        <ButtonText clickAction={submitAdd} label="Submit"></ButtonText>
+        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+        <ButtonText clickAction={submitEdit} label="Submit"></ButtonText>
       </div>
     </form>
   );

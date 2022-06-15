@@ -7,7 +7,10 @@ import {
   POST_SUPER_ADMINS_ERROR,
   DELETE_SUPER_ADMINS_PENDING,
   DELETE_SUPER_ADMINS_SUCCESS,
-  DELETE_SUPER_ADMINS_ERROR
+  DELETE_SUPER_ADMINS_ERROR,
+  PUT_SUPER_ADMINS_PENDING,
+  PUT_SUPER_ADMINS_SUCCESS,
+  PUT_SUPER_ADMINS_ERROR
 } from './constants';
 
 export const getSuperAdminsPending = () => {
@@ -66,6 +69,26 @@ export const deleteSuperAdminsSuccess = (dataid) => {
 export const deleteSuperAdminsError = (error) => {
   return {
     type: DELETE_SUPER_ADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const putSuperAdminsPending = () => {
+  return {
+    type: PUT_SUPER_ADMINS_PENDING
+  };
+};
+
+export const putSuperAdminsSuccess = (data) => {
+  return {
+    type: PUT_SUPER_ADMINS_SUCCESS,
+    payload: data
+  };
+};
+
+export const putSuperAdminsError = (error) => {
+  return {
+    type: PUT_SUPER_ADMINS_ERROR,
     payload: error
   };
 };
