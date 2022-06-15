@@ -1,32 +1,50 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editAdmin } from '../../../redux/admins/thunks';
+import styles from './edit.module.css';
+import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
-import Button from '../../Shared/Buttons/ButtonText';
-import styles from './edit.module.css';
-import { useDispatch } from 'react-redux';
-import { editAdmin } from '../../../redux/admins/thunks';
+import ButtonText from '../../Shared/Buttons/ButtonText';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 
-const AdminsEdit = ({ admin, closeModalForm }) => {
+const AdminsEdit = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
-
+  const isLoading = useSelector((state) => state.admins.isLoading);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [adminInput, setadminInput] = useState({
-    firstName: adminInput.firstName,
-    lastName: adminInput.lastName,
-    email: adminInput.email,
-    password: adminInput.password,
-    active: adminInput.active
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    active: ''
   });
 
-  const onChange = (e) => {
-    setadminInput({ ...adminInput, [e.target.name]: e.target.value });
+  useEffect(() => {
+    if (edit && item._id) {
+      setadminInput({
+        firstName: item.firstName,
+        lastName: item.lastName,
+        email: item.email,
+        password: item.password,
+        active: item.active === true ? 'Active' : 'Inactive'
+      });
+    }
+  }, []);
+
+  const onChange = (event) => {
+    setadminInput({ ...adminInput, [event.target.name]: event.target.value });
   };
 
   const onSubmit = () => {
-    dispatch(editAdmin(adminInput, admin._id));
-    closeModalForm();
+    setShowSuccessModal(true);
+    dispatch(editAdmin(adminInput, item.id, (response) => setResponse(response)));
   };
 
-  return (
+  return isLoading ? (
+    <Preloader />
+  ) : (
     <section className={styles.container}>
       <h2>Edit Admin</h2>
       <form className={styles.form}>
@@ -76,13 +94,21 @@ const AdminsEdit = ({ admin, closeModalForm }) => {
           required={true}
         />
         <div className={styles.buttons}>
-          <Button clickAction={closeModalForm} label="Cancel">
+          <ButtonText clickAction={closeModalForm} label="Cancel">
             Cancel
-          </Button>
-          <Button clickAction={onSubmit} label="Submit">
+          </ButtonText>
+          <ButtonText clickAction={onSubmit} label="Submit">
             Submit
-          </Button>
+          </ButtonText>
         </div>
+        <SuccessModal
+          show={showSuccessModal}
+          closeModal={() => {
+            setShowSuccessModal(false);
+          }}
+          closeModalForm={closeModalForm}
+          successResponse={response}
+        />
       </form>
     </section>
   );

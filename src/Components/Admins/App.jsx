@@ -1,122 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import Preloader from '../Shared/Preloader/Preloader';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import Table from '../Shared/Table/Table';
-import styles from '../Admins/admins.module.css';
-import ButtonAdd from '../Shared/Buttons/ButtonAdd';
-import EditForm from './Edit/index';
-import Modal from '../Shared/ModalForm/index';
-import Form from './Add/index';
-import MessageModal from '../Shared/ErrorSuccessModal';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { delAdmin, getAdmins } from '../../redux/admins/thunks';
+import { getAdmins, delAdmin } from '../../redux/admins/thunks';
+import styles from '../Admins/admins.module.css';
+import Preloader from '../Shared/Preloader/Preloader';
+import Table from '../Shared/Table/Table';
+import ModalForm from '../Shared/ModalForm';
+import Form from './Add/index';
+import EditForm from './Edit/index';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 
 const App = () => {
   const dispatch = useDispatch();
+  const admins = useSelector((state) => state.admins.list);
+  const isLoading = useSelector((state) => state.admins.isLoading);
+  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [showModalFormDelete, setShowModalFormDelete] = useState(false);
+  const [idDelete, setIdDelete] = useState();
 
   useEffect(() => {
     dispatch(getAdmins());
   }, []);
 
-  const [showModalConfirm, setShowModalConfirm] = useState(false);
-  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
-  const [idDelete, setIdDelete] = useState(0);
-  const [idToEdit, setIdToEdit] = useState();
-  let modalEdit;
-  let modalAdd;
-  let modalMessage;
-  const admins = useSelector((state) => state.admins.list);
-  const isLoading = useSelector((state) => state.admins.isLoading);
-
-  const handleConfirm = () => {
-    dispatch(delAdmin(idDelete, (alertMessage) => setMessage(alertMessage)));
-    console.log(message);
-    closeConfirmModal();
-    setShowMessageModal(true);
-  };
-
-  const openConfirmModal = (id) => {
-    setShowModalConfirm(true);
-    setIdDelete(id);
-  };
-
-  const openAddModal = () => {
-    setShowModalFormAdd(true);
-  };
-
-  const openEditModal = (id) => {
-    setIdToEdit(id);
-    setShowModalFormEdit(true);
-  };
-
-  const closeConfirmModal = () => {
-    setShowModalConfirm(false);
-    setShowModalFormEdit(false);
+  const closeModalFormAdd = () => {
     setShowModalFormAdd(false);
-    setShowMessageModal(false);
   };
 
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
+  const closeModalFormEdit = () => {
+    setShowModalFormEdit(false);
   };
 
+  let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
-      <Modal isOpen={showModalFormEdit} handleClose={closeConfirmModal} title="Edit Admin">
-        <EditForm closeModalForm={closeConfirmModal} adminId={idToEdit} />
-      </Modal>
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit admin">
+        <EditForm
+          closeModalForm={closeModalFormEdit}
+          edit={true}
+          item={admins.find((item) => item._id === idDelete)}
+        />
+      </ModalForm>
     );
   }
 
+  let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
-      <Modal isOpen={showModalFormAdd} handleClose={closeConfirmModal} title="Add Admin">
-        <Form closeModalForm={closeConfirmModal} />
-      </Modal>
+      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add admin">
+        <Form closeModalForm={closeModalFormAdd} />
+      </ModalForm>
     );
   }
 
-  let modalConfirm;
-
-  if (showModalConfirm) {
-    modalConfirm = (
+  let modalDelete;
+  if (showModalFormDelete) {
+    modalDelete = (
       <ConfirmModal
-        isOpen={showModalConfirm}
-        handleClose={closeConfirmModal}
-        confirmDelete={handleConfirm}
-        title="Delete Employee"
-        message="Are you sure you want to delete this employee?"
+        isOpen={showModalFormDelete}
+        handleClose={() => {
+          setShowModalFormDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(delAdmin(idDelete));
+          setShowModalFormDelete(false);
+        }}
+        title="Delete Admin"
+        message="Are you sure you want to delete this admin?"
       />
     );
   }
 
-  return isLoading ? (
+  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
     <Preloader>
       <p>Loading admins</p>
     </Preloader>
   ) : (
     <div className={styles.container}>
-      {modalConfirm}
-      {modalEdit}
-      {modalAdd}
-      {modalMessage}
       <Table
         data={admins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
-        titles={['ID', 'Name', 'lastName', 'Email', 'Password', 'Active']}
-        delAction={openConfirmModal}
-        editAction={openEditModal}
+        titles={['ID', 'Name', 'LastName', 'Email', 'Password', 'Active']}
+        delAction={(id) => {
+          setIdDelete(id);
+          setShowModalFormDelete(true);
+        }}
+        editAction={(id) => {
+          setIdDelete(id);
+          setShowModalFormEdit(true);
+        }}
       />
-      <MessageModal
-        show={showMessageModal}
-        closeModal={closeMessageModal}
-        closeModalForm={closeConfirmModal}
-        successResponse={message}
+      {modalEdit}
+      {modalAdd}
+      {modalDelete}
+      <ButtonAdd
+        clickAction={() => {
+          setShowModalFormAdd(true);
+        }}
       />
-      <ButtonAdd clickAction={openAddModal}></ButtonAdd>
     </div>
   );
 };

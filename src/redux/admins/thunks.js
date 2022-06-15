@@ -2,9 +2,6 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
-  getAdminByIdPending,
-  getAdminByIdSucces,
-  getAdminByIdError,
   addAdminPending,
   addAdminSucces,
   addAdminError,
@@ -23,6 +20,7 @@ export const getAdmins = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAdminsSuccess(response.data));
+        return response.data;
       })
       .catch((error) => {
         dispatch(getAdminsError(error.toString()));
@@ -30,69 +28,82 @@ export const getAdmins = () => {
   };
 };
 
-export const getAdminById = (id) => {
+export const addAdmin = (adminInput, setResponse) => {
   return (dispatch) => {
-    dispatch(getAdminByIdPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${id}`)
-      .then((response) => response.JSON())
+    dispatch(addAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName: adminInput.firstName,
+        lastName: adminInput.lastName,
+        email: adminInput.email,
+        password: adminInput.password,
+        active: adminInput.active === true
+      }),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
       .then((response) => {
-        dispatch(getAdminByIdSucces(response.data));
+        if (response.error === false) {
+          dispatch(addAdminSucces(response.data));
+        }
+        dispatch(getAdmins());
+        setResponse(response);
+        return response.data;
       })
       .catch((error) => {
-        dispatch(getAdminByIdError(error.toString()));
+        dispatch(addAdminError(error.toString()));
+        setResponse(error);
       });
   };
 };
 
-export const addAdmin = (admins) => {
-  return async (dispatch) => {
-    dispatch(addAdminPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(admins)
-      });
-      const data = await response.json();
-      dispatch(addAdminSucces(data.data));
-    } catch (error) {
-      dispatch(addAdminError(error.toString()));
-    }
-  };
-};
-
-export const editAdmin = (admin, id) => {
-  return async (dispatch) => {
+export const editAdmin = (admin, _id, setResponse) => {
+  return (dispatch) => {
     dispatch(editAdminPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(admin)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        firstName: admin.firstName,
+        lastName: admin.lastName,
+        email: admin.email,
+        password: admin.password,
+        active: admin.active === 'Active' ? true : false
+      }),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(editAdminSucces(response.data));
+        dispatch(getAdmins());
+        setResponse(response);
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(editAdminError(error.toString()));
+        setResponse(error);
       });
-      const data = await response.json();
-      console.log(data);
-      dispatch(editAdminSucces(data.data));
-    } catch (error) {
-      dispatch(editAdminError());
-    }
   };
 };
 
 export const delAdmin = (id) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(deleteAdminPending());
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/id/${id}`, {
-        method: 'DELETE'
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteAdminSucces(response.data));
+        dispatch(getAdmins());
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(deleteAdminError(error.toString()));
       });
-      dispatch(deleteAdminSucces(id));
-    } catch (error) {
-      dispatch(deleteAdminError(error.toString()));
-    }
   };
 };
