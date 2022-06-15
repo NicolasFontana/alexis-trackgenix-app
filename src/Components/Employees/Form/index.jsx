@@ -141,7 +141,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         clickAction={() => {
           onSubmit();
         }}
-        label="Confirm"
+        label={edit ? 'Edit' : 'Create'}
       />
       <SuccessModal
         show={showSuccessModal}
