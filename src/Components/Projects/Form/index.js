@@ -5,14 +5,12 @@ import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
 import ButtonText from '../../Shared/Buttons/ButtonText';
-import ConfirmModal from '../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const [edited, setEdited] = useState(false);
-  const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -66,15 +64,11 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   };
 
   const handleOnClick = () => {
-    edited ? openConfirmModal() : closeModalForm();
-  };
-
-  const closeConfirmModal = () => {
-    setShowconfirmModal(false);
-  };
-
-  const openConfirmModal = () => {
-    setShowconfirmModal(true);
+    edited
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? closeModalForm()
+        : null
+      : closeModalForm();
   };
 
   const closeAlertModal = () => {
@@ -174,13 +168,6 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
           closeModal={closeAlertModal}
           closeModalForm={closeModalForm}
           successResponse={alertMessage}
-        />
-        <ConfirmModal
-          isOpen={showconfirmModal}
-          handleClose={closeConfirmModal}
-          confirmDelete={closeModalForm}
-          title={'Unsaved changes'}
-          message={'All unsaved changes will be lost. Are you sure you want to continue?'}
         />
       </div>
     </>

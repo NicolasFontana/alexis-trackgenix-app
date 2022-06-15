@@ -32,15 +32,8 @@ const Projects = () => {
     setValue(false);
   }, [showModalFormEdit]);
 
-  const deleteItem = async (_id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
-        method: 'DELETE'
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    setProjects([...projects.filter((listItem) => listItem._id !== _id)]);
+  const deleteItem = () => {
+    console.log('delete function disabled');
   };
 
   const functionValue = (value) => {
@@ -93,7 +86,7 @@ const Projects = () => {
         editAction={openModalFormEdit}
       />
       {modalEdit}
-      <a href={'/projects/form'}>
+      <a>
         <button className={styles.addbtn}>&#10010;</button>
       </a>
     </section>

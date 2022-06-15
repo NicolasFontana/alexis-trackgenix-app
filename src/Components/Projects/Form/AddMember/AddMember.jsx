@@ -4,7 +4,6 @@ import Select from '../../../Shared/Select';
 import Input from '../../../Shared/Input';
 import Preloader from '../../../Shared/Preloader/Preloader';
 import ButtonText from '../../../Shared/Buttons/ButtonText';
-import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../../redux/projects/thunks';
 import { getEmployees } from '../../../../redux/employees/thunks';
@@ -18,7 +17,6 @@ const AddMember = ({ itemId, functionValue }) => {
   const [role, setRole] = useState('');
   const [rate, setRate] = useState('');
   const [edited, setEdited] = useState(false);
-  const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -73,7 +71,11 @@ const AddMember = ({ itemId, functionValue }) => {
       updateProject(projectId, { members: asignMember() }, (alertMessage) =>
         setAlertMessage({
           error: alertMessage.error,
-          message: edit ? 'Team member edited successfully' : 'Team member added successfully'
+          message: alertMessage.error
+            ? alertMessage.message
+            : edit
+            ? 'Team member edited successfully'
+            : 'Team member added successfully'
         })
       )
     );
@@ -85,17 +87,12 @@ const AddMember = ({ itemId, functionValue }) => {
       ? handleOnSubmit()
       : (setEdited(false), alert('No input changed. The project stayed the same'));
   };
-
   const handleOnClick = () => {
-    edited ? openConfirmModal() : functionValue(false);
-  };
-
-  const closeConfirmModal = () => {
-    setShowconfirmModal(false);
-  };
-
-  const openConfirmModal = () => {
-    setShowconfirmModal(true);
+    edited
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? functionValue(false)
+        : null
+      : functionValue(false);
   };
 
   const closeAlertModal = () => {
@@ -142,13 +139,13 @@ const AddMember = ({ itemId, functionValue }) => {
           placeholder="Insert rate"
           required={true}
         />
-        <ButtonText
-          clickAction={function () {
-            onSubmit();
-          }}
-          label="Submit"
-        ></ButtonText>
       </form>
+      <ButtonText
+        clickAction={function () {
+          onSubmit();
+        }}
+        label="Submit"
+      ></ButtonText>
       <ButtonText
         clickAction={function () {
           handleOnClick();
@@ -162,15 +159,6 @@ const AddMember = ({ itemId, functionValue }) => {
           functionValue(false);
         }}
         successResponse={alertMessage}
-      />
-      <ConfirmModal
-        isOpen={showconfirmModal}
-        handleClose={closeConfirmModal}
-        confirmDelete={function () {
-          functionValue(false);
-        }}
-        title={'Unsaved changes'}
-        message={'All unsaved changes will be lost. Are you sure you want to continue?'}
       />
     </div>
   );
