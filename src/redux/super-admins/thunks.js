@@ -27,7 +27,7 @@ export const getSuperAdmins = () => {
   };
 };
 
-export const postSuperAdmins = (newSuperAdmin) => {
+export const postSuperAdmins = (newSuperAdmin, setResponse) => {
   return async (dispatch) => {
     dispatch(postSuperAdminsPending());
     try {
@@ -39,7 +39,10 @@ export const postSuperAdmins = (newSuperAdmin) => {
         }
       });
       const data = await response.json();
-      dispatch(postSuperAdminsSuccess(data.data));
+      if (data.error === false) {
+        dispatch(postSuperAdminsSuccess(data.data));
+      }
+      setResponse(data);
       return data.data;
     } catch (error) {
       dispatch(postSuperAdminsError(error.toString()));
@@ -64,7 +67,7 @@ export const deleteSuperAdmins = (_id) => {
   };
 };
 
-export const putSuperAdmins = (superAdminId, editedSuperAdmin) => {
+export const putSuperAdmins = (superAdminId, editedSuperAdmin, setResponse) => {
   return async (dispatch) => {
     dispatch(putSuperAdminsPending());
     try {
@@ -80,6 +83,8 @@ export const putSuperAdmins = (superAdminId, editedSuperAdmin) => {
       );
       const data = await response.json();
       dispatch(putSuperAdminsSuccess(data.data));
+      dispatch(getSuperAdmins());
+      setResponse(data);
       return data.data;
     } catch (error) {
       dispatch(putSuperAdminsError(error.toString()));

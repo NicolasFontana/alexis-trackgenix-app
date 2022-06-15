@@ -1,13 +1,16 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './add.module.css';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import Input from '../../Shared/Input';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
 import { putSuperAdmins } from '../../../redux/super-admins/thunks';
 
-const SuperAdminsFormEdit = ({ idEdit, closeModalForm }) => {
+const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
   const dispatch = useDispatch();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   // const [edited, setEdited] = useState(false);
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
@@ -17,16 +20,26 @@ const SuperAdminsFormEdit = ({ idEdit, closeModalForm }) => {
     active: ''
   });
 
-  let editedSuperAdmin = JSON.stringify({
-    firstName: superAdminInput.firstName,
-    lastName: superAdminInput.lastName,
-    email: superAdminInput.email,
-    password: superAdminInput.password,
-    active: superAdminInput.active
-  });
+  useEffect(() => {
+    setsuperAdminInput({
+      firstName: superAdminEdit.firstName,
+      lastName: superAdminEdit.lastName,
+      email: superAdminEdit.email,
+      password: superAdminEdit.password,
+      active: superAdminEdit.active
+    });
+  }, []);
 
   const submitEdit = () => {
-    dispatch(putSuperAdmins(idEdit, editedSuperAdmin));
+    let editedSuperAdmin = JSON.stringify({
+      firstName: superAdminInput.firstName,
+      lastName: superAdminInput.lastName,
+      email: superAdminInput.email,
+      password: superAdminInput.password,
+      active: superAdminInput.active
+    });
+    dispatch(putSuperAdmins(superAdminEdit._id, editedSuperAdmin, setResponse));
+    setShowSuccessModal(true);
   };
 
   const onChange = (e) => {
@@ -81,9 +94,16 @@ const SuperAdminsFormEdit = ({ idEdit, closeModalForm }) => {
         onChange={onChangeActive}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-        <ButtonText clickAction={submitEdit} label="Submit"></ButtonText>
+        <ButtonText clickAction={submitEdit} label="Edit"></ButtonText>
       </div>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
     </form>
   );
 };

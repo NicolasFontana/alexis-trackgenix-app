@@ -17,7 +17,6 @@ const App = () => {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idEdit, setIdEdit] = useState();
   const [superAdminId, setSuperAdminId] = useState();
 
   const addOpen = () => {
@@ -29,7 +28,7 @@ const App = () => {
   };
 
   const editOpen = (id) => {
-    setIdEdit(id);
+    setSuperAdminId(id);
     setShowModalFormEdit(true);
   };
 
@@ -72,12 +71,15 @@ const App = () => {
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={editClose} title="Edit Super Admin">
-        <FormEdit idEdit={idEdit} closeModalForm={editClose} />
+        <FormEdit
+          superAdminEdit={superAdmins.find((item) => item._id === superAdminId)}
+          closeModalForm={editClose}
+        />
       </ModalForm>
     );
   }
 
-  return isLoading ? (
+  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
     <Preloader>
       <p>Loading super admins</p>
     </Preloader>

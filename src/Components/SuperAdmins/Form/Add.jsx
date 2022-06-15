@@ -3,17 +3,20 @@ import { useState } from 'react';
 import styles from './add.module.css';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import Input from '../../Shared/Input';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
 import { postSuperAdmins } from '../../../redux/super-admins/thunks';
 
 const SuperAdminsFormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    active: ''
+    active: false
   });
 
   let newSuperAdmin = JSON.stringify({
@@ -25,7 +28,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
   });
 
   const submitAdd = () => {
-    dispatch(postSuperAdmins(newSuperAdmin));
+    dispatch(postSuperAdmins(newSuperAdmin, setResponse));
+    setShowSuccessModal(true);
   };
 
   const onChange = (e) => {
@@ -82,9 +86,16 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
         onChange={onChangeActive}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-        <ButtonText clickAction={submitAdd} label="Submit"></ButtonText>
+        <ButtonText clickAction={submitAdd} label="Create"></ButtonText>
       </div>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
     </form>
   );
 };
