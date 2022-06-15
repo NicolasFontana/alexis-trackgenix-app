@@ -1,7 +1,10 @@
 import {
   GET_ALL_TIMESHEETS_ERROR,
   GET_ALL_TIMESHEETS_SUCCESS,
-  GET_ALL_TIMESHEETS_PENDING
+  GET_ALL_TIMESHEETS_PENDING,
+  DELETE_TIMESHEET_ERROR,
+  DELETE_TIMESHEET_SUCCESS,
+  DELETE_TIMESHEET_PENDING
 } from './constants';
 
 const initialState = {
@@ -28,6 +31,22 @@ export const timesheetsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true
+      };
+    case DELETE_TIMESHEET_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case DELETE_TIMESHEET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listTimesheet: state.listTimesheet.filter((timesheet) => timesheet._id !== action.payload)
+      };
+    case DELETE_TIMESHEET_PENDING:
+      return {
+        ...state
       };
     default:
       return state;
