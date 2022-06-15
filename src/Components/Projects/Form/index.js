@@ -50,7 +50,9 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   const onSubmit = () => {
     edited
       ? handleOnSubmit()
-      : (setEdited(false), alert('No input changed. The project stayed the same'));
+      : (setEdited(false),
+        setAlertMessage({ error: true, message: 'No input changed. The project stayed the same' }),
+        openAlertModal());
   };
 
   const onChange = (e) => {

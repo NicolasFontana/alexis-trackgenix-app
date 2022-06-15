@@ -45,47 +45,54 @@ const AddMember = ({ itemId, functionValue }) => {
 
   const asignMember = () => {
     projectMembers = projectMembers.filter((member) => member.employeeId !== null);
-    for (let i = 0; i < projectMembers.length; i++) {
-      if (projectMembers[i].employeeId._id) {
-        projectMembers[i].employeeId = projectMembers[i].employeeId._id;
+    if (member !== '') {
+      for (let i = 0; i < projectMembers.length; i++) {
+        if (projectMembers[i].employeeId._id) {
+          projectMembers[i].employeeId = projectMembers[i].employeeId._id;
+        }
+        if (projectMembers[i].employeeId == member) {
+          projectMembers[i].role = role;
+          projectMembers[i].rate = rate;
+          edit = true;
+        }
       }
-      if (projectMembers[i].employeeId == member) {
-        projectMembers[i].role = role;
-        projectMembers[i].rate = rate;
-        edit = true;
+      if (!edit) {
+        projectMembers.push({
+          employeeId: member,
+          role: role,
+          rate: rate
+        });
       }
-    }
-    if (!edit) {
-      projectMembers.push({
-        employeeId: member,
-        role: role,
-        rate: rate
-      });
     }
     setProjectMembers(projectMembers);
     return projectMembers;
   };
 
   const handleOnSubmit = async () => {
-    dispatch(
-      updateProject(projectId, { members: asignMember() }, (alertMessage) =>
-        setAlertMessage({
-          error: alertMessage.error,
-          message: alertMessage.error
-            ? alertMessage.message
-            : edit
-            ? 'Team member edited successfully'
-            : 'Team member added successfully'
-        })
-      )
-    );
+    if (member !== '' && role !== '' && rate !== '') {
+      dispatch(
+        updateProject(projectId, { members: asignMember() }, (alertMessage) =>
+          setAlertMessage({
+            error: alertMessage.error,
+            message: alertMessage.error
+              ? alertMessage.message
+              : edit
+              ? 'Team member edited successfully'
+              : 'Team member added successfully'
+          })
+        )
+      );
+    }
+    setAlertMessage({ error: true, message: 'Please complete all the fields' });
     openAlertModal();
   };
 
   const onSubmit = () => {
     edited
       ? handleOnSubmit()
-      : (setEdited(false), alert('No input changed. The project stayed the same'));
+      : (setEdited(false),
+        setAlertMessage({ error: true, message: 'No input changed. The member stayed the same' }),
+        openAlertModal());
   };
   const handleOnClick = () => {
     edited
