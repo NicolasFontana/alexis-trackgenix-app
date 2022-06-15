@@ -3,16 +3,21 @@ import styles from './FormEdit.module.css';
 import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
+import { putTimesheet } from '../../../redux/time-sheets/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import Preloader from '../../Shared/Preloader/Preloader';
 
-const FormEdit = ({ closeModalEdit, timeSheet, timeSheetId }) => {
+const FormEdit = ({ closeModalEdit, timesheetItem }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.timesheets.loading);
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [userInput, setUserInput] = useState({
-    projectId: timeSheet.projectId,
-    task: timeSheet.task,
-    approved: timeSheet.approved
+    projectId: timesheetItem.projectId._id,
+    task: timesheetItem.Task[0].taskId._id,
+    approved: timesheetItem.approved
   });
 
   const fetchTask = async () => {
@@ -44,24 +49,7 @@ const FormEdit = ({ closeModalEdit, timeSheet, timeSheetId }) => {
   }, []);
 
   const onSubmit = () => {
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        projectId: userInput.projectId,
-        Task: [{ taskId: userInput.task }],
-        approved: userInput.approved
-      })
-    };
-    const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${timeSheetId}`;
-
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-      });
+    dispatch(putTimesheet(userInput, timesheetItem._id, (message) => setMessage(message)));
     setShowMessageModal(true);
   };
 
@@ -77,7 +65,9 @@ const FormEdit = ({ closeModalEdit, timeSheet, timeSheetId }) => {
     setShowMessageModal(false);
   };
 
-  return (
+  return loading ? (
+    <Preloader />
+  ) : (
     <form className={styles.form}>
       <Select
         label="Projects"
@@ -106,7 +96,7 @@ const FormEdit = ({ closeModalEdit, timeSheet, timeSheetId }) => {
       <Select
         label="Approved"
         name="approved"
-        defaultValue={userInput.approved}
+        value={userInput.approved}
         onChange={onChangeApproved}
         title="Approve"
         data={['true', 'false']}

@@ -7,13 +7,13 @@ import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
 import FormAdd from './FormAdd';
 import FormEdit from './FormEdit';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
 
 function TimeSheets() {
-  // const dispatch = useDispatch();
-  const [timeSheets, setTimeSheets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
+  const loading = useSelector((state) => state.timesheets.loading);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
@@ -22,17 +22,24 @@ function TimeSheets() {
   let modalAdd;
   let modalEdit;
 
-  // useEffect(() => {
-  //   dispatch(getAllTimesheets());
-  // }, [showModalAdd]);
+  useEffect(() => {
+    dispatch(getAllTimesheets());
+  }, []);
+
+  const closeModalEdit = () => {
+    setShowModalEdit(false);
+  };
+
+  const closeModalAdd = () => {
+    setShowModalAdd(false);
+  };
 
   const timeSheetTable = [];
-  const timesheetFormatted = (timeSheets) => {
-    timeSheets.forEach((timeSheet) => {
+  const timesheetFormatted = (listTimesheets) => {
+    listTimesheets.forEach((timeSheet) => {
       timeSheetTable.push({
         _id: timeSheet._id,
         projectName: timeSheet.projectId.name,
-        projectId: timeSheet.projectId._id,
         taskId: timeSheet.Task[0].taskId._id,
         taskName: timeSheet.Task[0].taskId.taskName,
         startDate: timeSheet.Task[0].taskId.startDate,
@@ -44,57 +51,18 @@ function TimeSheets() {
     });
   };
 
-  timesheetFormatted(timeSheets);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTimeSheets(response.data);
-        setLoading(false);
-      });
-  }, [showModalAdd]);
-
-  const deleteItem = async () => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${timeSheetId}`, {
-        method: 'DELETE'
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== timeSheetId)]);
-    setShowModalDelete(false);
-  };
-
-  const openModalDelete = (id) => {
-    setTimeSheetId(id);
-    setShowModalDelete(true);
-  };
-
-  const closeModalDelete = () => {
-    setShowModalDelete(false);
-  };
-
-  const closeModalAdd = () => {
-    setShowModalAdd(false);
-  };
-
-  const openModalEdit = (id) => {
-    setTimeSheetId(id);
-    setShowModalEdit(true);
-  };
-
-  const closeModalEdit = () => {
-    setShowModalEdit(false);
-  };
-
+  timesheetFormatted(listTimesheets);
   if (showModalDelete) {
     modalDelete = (
       <ConfirmModal
         isOpen={showModalDelete}
-        handleClose={closeModalDelete}
-        confirmDelete={deleteItem}
+        handleClose={() => {
+          setShowModalDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(deleteTimesheet(timeSheetId));
+          setShowModalDelete(false);
+        }}
         title="Delete Timesheet"
         message="Are you sure you want to delete this timesheet?"
       />
@@ -104,7 +72,7 @@ function TimeSheets() {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
-        <FormAdd closeModalAdd={closeModalAdd} />
+        <FormAdd closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -114,14 +82,13 @@ function TimeSheets() {
       <ModalForm isOpen={showModalEdit} handleClose={closeModalEdit} title="Edit Timesheet">
         <FormEdit
           closeModalEdit={closeModalEdit}
-          timeSheet={timeSheetTable.find((item) => item._id === timeSheetId)}
-          timeSheetId={timeSheetId}
+          timesheetItem={listTimesheets.find((item) => item._id === timeSheetId)}
         />
       </ModalForm>
     );
   }
 
-  return loading ? (
+  return loading && !showModalAdd && !showModalDelete && !showModalEdit ? (
     <Preloader>
       <p>Loading timesheets</p>
     </Preloader>
@@ -150,13 +117,20 @@ function TimeSheets() {
           'Status',
           'PMs approval'
         ]}
-        delAction={openModalDelete}
-        editAction={openModalEdit}
+        delAction={(id) => {
+          setTimeSheetId(id);
+          setShowModalDelete(true);
+        }}
+        editAction={(id) => {
+          setTimeSheetId(id);
+          setShowModalEdit(true);
+        }}
       />
       {modalDelete}
       {modalAdd}
       {modalEdit}
       <ButtonAdd
+        className={styles.buttonAdd}
         clickAction={() => {
           setShowModalAdd(true);
         }}
