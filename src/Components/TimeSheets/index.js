@@ -6,77 +6,37 @@ import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
 import FormAdd from './FormAdd';
-// import ErrorSuccessModal from '../Shared/ErrorSuccessModal/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
 
 function TimeSheets() {
-  // const [timeSheets, setTimeSheets] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
   const loading = useSelector((state) => state.timesheets.loading);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
-  // const [showMessageModal, setShowMessageModal] = useState(false);
-  // const [message, setMessage] = useState('');
   let modalDelete;
   let modalAdd;
 
   useEffect(() => {
     dispatch(getAllTimesheets());
-  }, [showModalAdd]);
-
-  // const deleteItem = async () => {
-  //   const url = `${process.env.REACT_APP_API_URL}/api/time-sheets/${timeSheetId}`;
-  //   const options = {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   };
-  //   try {
-  //     const response = await fetch(url, options);
-  //     const data = await response.json();
-  //     if (response.status !== 200 && response.status !== 201) {
-  //       throw new Error(data.message);
-  //     } else {
-  //       setMessage(data);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     setMessage(error);
-  //   }
-  //   // setTimeSheets([...listTimesheets.filter((timesheet) => timeSheet._id !== timeSheetId)]);
-  //   setShowModalDelete(false);
-  //   setShowMessageModal(true);
-  // };
-
-  // const openModalDelete = (id) => {
-  //   setTimeSheetId(id);
-  //   setShowModalDelete(true);
-  // };
-
-  const closeModalDelete = () => {
-    setShowModalDelete(false);
-  };
+  }, []);
 
   const closeModalAdd = () => {
     setShowModalAdd(false);
   };
 
-  // const closeMessageModal = () => {
-  //   setShowMessageModal(false);
-  // };
-
   if (showModalDelete) {
     modalDelete = (
       <ConfirmModal
         isOpen={showModalDelete}
-        handleClose={closeModalDelete}
+        handleClose={() => {
+          setShowModalDelete(false);
+        }}
         confirmDelete={() => {
           dispatch(deleteTimesheet(timeSheetId));
+          setShowModalDelete(false);
         }}
         title="Delete Timesheet"
         message="Are you sure you want to delete this timesheet?"
@@ -87,7 +47,7 @@ function TimeSheets() {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
-        <FormAdd closeModalAdd={closeModalAdd} />
+        <FormAdd closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -111,7 +71,7 @@ function TimeSheets() {
 
   timesheetFormatted(listTimesheets);
 
-  return loading ? (
+  return loading && !showModalAdd && !showModalDelete ? (
     <Preloader>
       <p>Loading timesheets</p>
     </Preloader>
@@ -154,12 +114,6 @@ function TimeSheets() {
           setShowModalAdd(true);
         }}
       />
-      {/* <ErrorSuccessModal
-        show={showMessageModal}
-        closeModal={closeMessageModal}
-        closeModalForm={closeMessageModal}
-        successResponse={message}
-      /> */}
     </section>
   );
 }
