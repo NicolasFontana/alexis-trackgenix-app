@@ -37,6 +37,8 @@
     left: 130px;
     margin-right: 10px;
     color: #ffffff;
+    background-color: transparent;
+    border: none;
 }
 
 .title {
