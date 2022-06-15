@@ -12,7 +12,7 @@ const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.employees.isLoading);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  // const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [employeeInput, setEmployeeInput] = useState({
     firstName: '',
     lastName: '',
@@ -47,9 +47,17 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   const onSubmit = () => {
     if (edit) {
-      dispatch(updateEmployee(employeeInput, item._id));
+      setShowSuccessModal(true);
+      dispatch(
+        updateEmployee(employeeInput, item._id, (successMessage) =>
+          setSuccessMessage(successMessage)
+        )
+      );
     } else {
-      dispatch(createEmployee(employeeInput));
+      setShowSuccessModal(true);
+      dispatch(
+        createEmployee(employeeInput, (successMessage) => setSuccessMessage(successMessage))
+      );
     }
   };
 
@@ -134,7 +142,6 @@ const Form = ({ closeModalForm, edit, item }) => {
       <ButtonText
         clickAction={() => {
           onSubmit();
-          setShowSuccessModal(true);
         }}
         label="Confirm"
       />
@@ -144,7 +151,7 @@ const Form = ({ closeModalForm, edit, item }) => {
           setShowSuccessModal(false);
         }}
         closeModalForm={closeModalForm}
-        // successResponse={successMessage}
+        successResponse={successMessage}
       />
     </form>
   );

@@ -63,7 +63,6 @@ export const employeesReducer = (state = initialState, action) => {
     case UPDATE_EMPLOYEES_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
         isLoading: false
       };
     case UPDATE_EMPLOYEES_ERROR:

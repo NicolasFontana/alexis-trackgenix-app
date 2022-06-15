@@ -28,7 +28,7 @@ export const getEmployees = () => {
   };
 };
 
-export const createEmployee = (employeeInput) => {
+export const createEmployee = (employeeInput, setSuccessMessage) => {
   return (dispatch) => {
     dispatch(createEmployeesPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
@@ -58,15 +58,17 @@ export const createEmployee = (employeeInput) => {
       .then((response) => {
         dispatch(createEmployeesSuccess(response.data));
         dispatch(getEmployees());
+        setSuccessMessage(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(createEmployeesError(error.toString()));
+        setSuccessMessage(error);
       });
   };
 };
 
-export const updateEmployee = (employeeInput, id) => {
+export const updateEmployee = (employeeInput, id, setSuccessMessage) => {
   return (dispatch) => {
     dispatch(updateEmployeesPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
@@ -95,11 +97,13 @@ export const updateEmployee = (employeeInput, id) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(updateEmployeesSuccess(response.data));
-        // dispatch(getEmployees());
+        dispatch(getEmployees());
+        setSuccessMessage(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(updateEmployeesError(error.toString()));
+        setSuccessMessage(error);
       });
   };
 };

@@ -70,7 +70,7 @@ const Employees = () => {
     );
   }
 
-  return isLoading ? (
+  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
     <Preloader />
   ) : (
     <section className={styles.container}>
