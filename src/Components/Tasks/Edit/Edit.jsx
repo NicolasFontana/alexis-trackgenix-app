@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { editTask } from '../../../redux/tasks/thunks';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
+import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './edit.module.css';
-import { useDispatch } from 'react-redux';
-import { editTask } from '../../../redux/tasks/thunks';
 
 const Edit = ({ task, closeModalForm }) => {
   const dispatch = useDispatch();
-  console.log(task);
 
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: task.taskName,
     startDate: task.startDate,
@@ -19,14 +21,15 @@ const Edit = ({ task, closeModalForm }) => {
   });
 
   const onChange = (e) => {
-    console.log({ [e.target.name]: e.target.value });
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
   const onSubmit = () => {
-    console.log(userInput);
-    dispatch(editTask(userInput, task._id));
     closeModalForm();
+    dispatch(editTask(userInput, task._id, (Response) => setMessage(Response)));
+    setShowMessageModal(true);
+    console.log(`message: ${message}`);
+    console.log(`setShowMessage: ${setShowMessageModal}`);
   };
 
   return (
@@ -44,7 +47,7 @@ const Edit = ({ task, closeModalForm }) => {
         label="Start Date"
         type="date"
         name="startDate"
-        value={userInput.startDate}
+        value={userInput.startDate.substring(0, 10)}
         onChange={onChange}
         required={true}
       />
@@ -81,6 +84,14 @@ const Edit = ({ task, closeModalForm }) => {
       <Button clickAction={onSubmit} label="Submit">
         Submit
       </Button>
+      <MessageModal
+        show={showMessageModal}
+        closeModal={() => {
+          setShowMessageModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={message}
+      />
     </form>
   );
 };

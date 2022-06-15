@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import styles from './tasks.module.css';
-import Table from '../Shared/Table/Table';
-import Preloader from '../Shared/Preloader/Preloader';
-import AddButton from '../Shared/Buttons/ButtonAdd';
-import Form from './Form/Form';
-import EditForm from './Edit/Edit';
-import Modal from '../Shared/ModalForm/index';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import MessageModal from '../Shared/ErrorSuccessModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { delTask, getTasks } from '../../redux/tasks/thunks';
+import Table from '../Shared/Table/Table';
+import Preloader from '../Shared/Preloader/Preloader';
+import Modal from '../Shared/ModalForm/index';
+import Form from './Form/Form';
+import EditForm from './Edit/Edit';
+import AddButton from '../Shared/Buttons/ButtonAdd';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import MessageModal from '../Shared/ErrorSuccessModal';
+import styles from './tasks.module.css';
 
 function Tasks() {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getTasks());
-  }, []);
+  const tasks = useSelector((state) => state.tasks.list);
+  const isLoading = useSelector((state) => state.tasks.isLoading);
 
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
@@ -25,15 +23,17 @@ function Tasks() {
   const [message, setMessage] = useState('');
   const [idDelete, setIdDelete] = useState(0);
   const [idToEdit, setIdToEdit] = useState();
+
   let modalEdit;
   let modalAdd;
   let modalMessage;
-  const tasks = useSelector((state) => state.tasks.list);
-  const isLoading = useSelector((state) => state.tasks.isLoading);
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, []);
 
   const handleConfirm = () => {
-    dispatch(delTask(idDelete, (alertMessage) => setMessage(alertMessage)));
-    console.log(message);
+    dispatch(delTask(idDelete, setMessage));
     closeModal();
     setShowMessageModal(true);
   };

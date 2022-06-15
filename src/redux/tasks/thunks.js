@@ -2,9 +2,6 @@ import {
   getTasksPending,
   getTasksSuccess,
   getTasksError,
-  getTaskByIdPending,
-  getTaskByIdSucces,
-  getTaskByIdError,
   addTaskPending,
   addTaskSucces,
   addTaskError,
@@ -30,69 +27,70 @@ export const getTasks = () => {
   };
 };
 
-export const getTaskById = (id) => {
+export const addTask = (task, setMessage) => {
   return (dispatch) => {
-    dispatch(getTaskByIdPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`)
-      .then((response) => response.JSON())
+    dispatch(addTaskPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+      .then((response) => response.json())
       .then((response) => {
-        dispatch(getTaskByIdSucces(response.data));
+        dispatch(addTaskSucces(response.data));
+        dispatch(getTasks());
+        setMessage(response);
+        return response.data;
       })
       .catch((error) => {
-        dispatch(getTaskByIdError(error.toString()));
+        dispatch(addTaskError(error.toString()));
+        setMessage(error);
       });
   };
 };
 
-export const addTask = (task) => {
-  return async (dispatch) => {
-    dispatch(addTaskPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
-      dispatch(addTaskSucces(data.data));
-    } catch (error) {
-      dispatch(addTaskError(error.toString()));
-    }
-  };
-};
-
-export const editTask = (task, id) => {
-  return async (dispatch) => {
+export const editTask = (task, id, setMessage) => {
+  return (dispatch) => {
     dispatch(editTaskPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(task)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(editTaskSucces(response.data));
+        dispatch(getTasks());
+        setMessage(response);
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(editTaskError(error.toString()));
+        setMessage(error);
       });
-      const data = await response.json();
-      console.log(data);
-      dispatch(editTaskSucces(data.data));
-    } catch (error) {
-      dispatch(editTaskError());
-    }
   };
 };
 
-export const delTask = (id) => {
-  return async (dispatch) => {
+export const delTask = (id, setMessage) => {
+  return (dispatch) => {
     dispatch(deleteTaskPending());
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
-        method: 'DELETE'
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteTaskSucces(id));
+        dispatch(getTasks());
+        setMessage(response);
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(deleteTaskError(error.toString()));
+        setMessage(error);
       });
-      dispatch(deleteTaskSucces(id));
-    } catch (error) {
-      dispatch(deleteTaskError(error.toString()));
-    }
   };
 };

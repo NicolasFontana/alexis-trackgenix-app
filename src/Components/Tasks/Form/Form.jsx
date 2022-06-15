@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTask } from '../../../redux/tasks/thunks';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
+import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './form.module.css';
-import { useDispatch } from 'react-redux';
-import { addTask } from '../../../redux/tasks/thunks';
 
 const Form = ({ closeModalForm }) => {
   const dispatch = useDispatch();
 
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [userInput, setUserInput] = useState({
     taskName: '',
     startDate: '',
@@ -18,13 +21,15 @@ const Form = ({ closeModalForm }) => {
   });
 
   const onChange = (e) => {
-    console.log({ [e.target.name]: e.target.value });
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
   const onSubmit = () => {
-    dispatch(addTask(userInput));
     closeModalForm();
+    dispatch(addTask(userInput, setMessage));
+    setShowMessageModal(true);
+    console.log(`message: ${message}`);
+    console.log(`setShowMessage: ${setShowMessageModal}`);
   };
 
   return (
@@ -89,6 +94,14 @@ const Form = ({ closeModalForm }) => {
       >
         Submit
       </Button>
+      <MessageModal
+        show={showMessageModal}
+        closeModal={() => {
+          setShowMessageModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={message}
+      />
     </form>
   );
 };

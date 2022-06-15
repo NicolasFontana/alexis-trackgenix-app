@@ -2,9 +2,6 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
-  GET_TASK_BY_ID_PENDIGN,
-  GET_TASK_BY_ID_SUCCESS,
-  GET_TASK_BY_ID_ERROR,
   ADD_TASK_PENDING,
   ADD_TASK_SUCCESS,
   ADD_TASK_ERROR,
@@ -42,24 +39,6 @@ export const tasksReducer = (state = initialState, action) => {
         list: action.payload,
         isLoading: false
       };
-    //GET TASK BY ID
-    case GET_TASK_BY_ID_PENDIGN:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case GET_TASK_BY_ID_SUCCESS:
-      return {
-        ...state,
-        list: action.payload,
-        isLoading: false
-      };
-    case GET_TASK_BY_ID_ERROR:
-      return {
-        ...state,
-        list: action.payload,
-        isLoading: false
-      };
     //ADD TASK
     case ADD_TASK_PENDING:
       return {
@@ -87,11 +66,6 @@ export const tasksReducer = (state = initialState, action) => {
     case EDIT_TASK_SUCCESS:
       return {
         ...state,
-        list: state.list.map((item) => {
-          if (item._id === action.payload._id) {
-            return action.payload;
-          }
-        }),
         isLoading: false
       };
     case EDIT_TASK_ERROR:
