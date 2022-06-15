@@ -28,27 +28,27 @@ export const getEmployees = () => {
   };
 };
 
-export const createEmployee = (employeeInput, setSuccessMessage) => {
+export const createEmployee = (userInput, setResponse) => {
   return (dispatch) => {
     dispatch(createEmployeesPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
       method: 'POST',
       body: JSON.stringify({
-        firstName: employeeInput.firstName,
-        lastName: employeeInput.lastName,
-        phone: employeeInput.phone,
-        email: employeeInput.email,
-        password: employeeInput.password,
-        active: employeeInput.active === 'Active' ? true : false,
-        isProjectManager: employeeInput.isProjectManager === 'Yes' ? true : false,
+        firstName: userInput.firstName,
+        lastName: userInput.lastName,
+        phone: userInput.phone,
+        email: userInput.email,
+        password: userInput.password,
+        active: userInput.active === 'Active' ? true : false,
+        isProjectManager: userInput.isProjectManager === 'Yes' ? true : false,
         projects:
-          employeeInput.projects.length === 0
+          userInput.projects.length === 0
             ? []
-            : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+            : userInput.projects.toString().replace(/\s+/g, '').split(','),
         timeSheets:
-          employeeInput.timeSheets.length === 0
+          userInput.timeSheets.length === 0
             ? []
-            : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+            : userInput.timeSheets.toString().replace(/\s+/g, '').split(',')
       }),
       headers: {
         'Content-type': 'application/json'
@@ -60,37 +60,37 @@ export const createEmployee = (employeeInput, setSuccessMessage) => {
           dispatch(createEmployeesSuccess(response.data));
         }
         dispatch(getEmployees());
-        setSuccessMessage(response);
+        setResponse(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(createEmployeesError(error.toString()));
-        setSuccessMessage(error);
+        setResponse(error);
       });
   };
 };
 
-export const updateEmployee = (employeeInput, id, setSuccessMessage) => {
+export const updateEmployee = (userInput, id, setResponse) => {
   return (dispatch) => {
     dispatch(updateEmployeesPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        firstName: employeeInput.firstName,
-        lastName: employeeInput.lastName,
-        phone: employeeInput.phone,
-        email: employeeInput.email,
-        password: employeeInput.password,
-        active: employeeInput.active === 'Active' ? true : false,
-        isProjectManager: employeeInput.isProjectManager === 'Yes' ? true : false,
+        firstName: userInput.firstName,
+        lastName: userInput.lastName,
+        phone: userInput.phone,
+        email: userInput.email,
+        password: userInput.password,
+        active: userInput.active === 'Active' ? true : false,
+        isProjectManager: userInput.isProjectManager === 'Yes' ? true : false,
         projects:
-          employeeInput.projects.length === 0
+          userInput.projects.length === 0
             ? []
-            : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
+            : userInput.projects.toString().replace(/\s+/g, '').split(','),
         timeSheets:
-          employeeInput.timeSheets.length === 0
+          userInput.timeSheets.length === 0
             ? []
-            : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+            : userInput.timeSheets.toString().replace(/\s+/g, '').split(',')
       }),
       headers: {
         'Content-type': 'application/json'
@@ -100,12 +100,12 @@ export const updateEmployee = (employeeInput, id, setSuccessMessage) => {
       .then((response) => {
         dispatch(updateEmployeesSuccess(response.data));
         dispatch(getEmployees());
-        setSuccessMessage(response);
+        setResponse(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(updateEmployeesError(error.toString()));
-        setSuccessMessage(error);
+        setResponse(error);
       });
   };
 };

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
 import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 
 const Employees = () => {
   const dispatch = useDispatch();

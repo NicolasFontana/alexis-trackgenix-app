@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEmployee, updateEmployee } from '../../../redux/employees/thunks';
 import styles from './form.module.css';
 import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import SuccessModal from '../../Shared/ErrorSuccessModal/index';
-import { useDispatch, useSelector } from 'react-redux';
-import { createEmployee, updateEmployee } from '../../../redux/employees/thunks';
 
 const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.employees.isLoading);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [employeeInput, setEmployeeInput] = useState({
+  const [response, setResponse] = useState('');
+  const [userInput, setUserInput] = useState({
     firstName: '',
     lastName: '',
     phone: '',
@@ -27,7 +27,7 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   useEffect(() => {
     if (edit && item._id) {
-      setEmployeeInput({
+      setUserInput({
         firstName: item.firstName,
         lastName: item.lastName,
         phone: item.phone,
@@ -42,22 +42,16 @@ const Form = ({ closeModalForm, edit, item }) => {
   }, []);
 
   const onChange = (event) => {
-    setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });
+    setUserInput({ ...userInput, [event.target.name]: event.target.value });
   };
 
   const onSubmit = () => {
     if (edit) {
       setShowSuccessModal(true);
-      dispatch(
-        updateEmployee(employeeInput, item._id, (successMessage) =>
-          setSuccessMessage(successMessage)
-        )
-      );
+      dispatch(updateEmployee(userInput, item._id, (response) => setResponse(response)));
     } else {
       setShowSuccessModal(true);
-      dispatch(
-        createEmployee(employeeInput, (successMessage) => setSuccessMessage(successMessage))
-      );
+      dispatch(createEmployee(userInput, (response) => setResponse(response)));
     }
   };
 
@@ -69,7 +63,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="First Name"
         name="firstName"
         type="text"
-        value={employeeInput.firstName}
+        value={userInput.firstName}
         onChange={onChange}
         placeholder="Juan"
       />
@@ -77,7 +71,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Last Name"
         name="lastName"
         type="text"
-        value={employeeInput.lastName}
+        value={userInput.lastName}
         onChange={onChange}
         placeholder="Perez"
       />
@@ -85,7 +79,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Phone"
         name="phone"
         type="text"
-        value={employeeInput.phone}
+        value={userInput.phone}
         onChange={onChange}
         placeholder="123456789"
       />
@@ -93,7 +87,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Email"
         name="email"
         type="text"
-        value={employeeInput.email}
+        value={userInput.email}
         onChange={onChange}
         placeholder="juanperez@gmail.com"
       />
@@ -101,14 +95,14 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Password"
         name="password"
         type="password"
-        value={employeeInput.password}
+        value={userInput.password}
         onChange={onChange}
         placeholder="********"
       />
       <Select
         label="Active?"
         name="active"
-        value={employeeInput.active}
+        value={userInput.active}
         onChange={onChange}
         title="Define condition"
         data={['Active', 'Inactive']}
@@ -117,7 +111,7 @@ const Form = ({ closeModalForm, edit, item }) => {
       <Select
         label="Is a Project Manager?"
         name="isProjectManager"
-        value={employeeInput.isProjectManager}
+        value={userInput.isProjectManager}
         onChange={onChange}
         title="Define PM condition"
         data={['Yes', 'No']}
@@ -127,7 +121,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Projects (separate IDs with a comma)"
         name="projects"
         type="text"
-        value={employeeInput.projects}
+        value={userInput.projects}
         onChange={onChange}
         placeholder=""
       />
@@ -135,7 +129,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         label="Timesheets (separate IDs with a comma)"
         name="timeSheets"
         type="text"
-        value={employeeInput.timeSheets}
+        value={userInput.timeSheets}
         onChange={onChange}
         placeholder=""
       />
@@ -151,7 +145,7 @@ const Form = ({ closeModalForm, edit, item }) => {
           setShowSuccessModal(false);
         }}
         closeModalForm={closeModalForm}
-        successResponse={successMessage}
+        successResponse={response}
       />
     </form>
   );
