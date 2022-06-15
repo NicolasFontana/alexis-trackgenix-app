@@ -42,8 +42,8 @@ export const updateProject = (id, body, setAlertMessage) => {
         return response.json();
       })
       .then((response) => {
-        console.log(response);
-        dispatch(updateProjectSuccess(response.data));
+        // console.log(response);
+        dispatch(updateProjectSuccess());
         setAlertMessage(response);
         dispatch(getProjectById(id));
         return response;

@@ -40,7 +40,6 @@ export const projectsReducer = (state = initialState, action) => {
     case UPDATE_PROJECT_SUCCESS:
       return {
         ...state,
-        // project: action.payload,
         isLoading: false
       };
     case UPDATE_PROJECT_ERROR:

@@ -5,12 +5,13 @@ import ButtonAdd from '../../../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { updateProject } from '../../../../redux/projects/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ListMembers = ({ project, onAdd, functionValue }) => {
-  let [members, setMembers] = onAdd ? useState([]) : useState(project.members);
-  let membersToSave;
+const ListMembers = ({ functionValue }) => {
+  const project = useSelector((state) => state.projects.project);
+  let [members, setMembers] = useState(project.members);
   members = members.filter((member) => member.employeeId !== null);
+  let membersToSave;
   const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -55,9 +56,7 @@ const ListMembers = ({ project, onAdd, functionValue }) => {
     setShowErrorSuccessModal(true);
   };
 
-  return onAdd ? (
-    <></>
-  ) : !members.length ? (
+  return !members.length ? (
     <div className={styles.header}>
       <h3>Team members</h3>
       <ButtonAdd

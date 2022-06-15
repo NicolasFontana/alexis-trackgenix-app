@@ -6,6 +6,8 @@ import Preloader from '../../../Shared/Preloader/Preloader';
 import ButtonText from '../../../Shared/Buttons/ButtonText';
 import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
+import { getProjectById, updateProject } from '../../../../redux/projects/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AddMember = ({ itemId, functionValue }) => {
   let edit;
@@ -15,12 +17,15 @@ const AddMember = ({ itemId, functionValue }) => {
   const [role, setRole] = useState('');
   const [rate, setRate] = useState('');
   const [employees, setEmployees] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const [edited, setEdited] = useState(false);
   const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.projects.isLoading);
+
+  //hacer dispatch EMPLOYEES --> useSelector?
   const fetchData = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
@@ -29,14 +34,7 @@ const AddMember = ({ itemId, functionValue }) => {
     } catch (error) {
       console.error(error);
     }
-    try {
-      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${projectId}`);
-      const projectData = await getProject.json();
-      setProjectMembers(projectData.data.members);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
+    dispatch(getProjectById(projectId, (project) => setProjectMembers(project.members)));
   };
 
   useEffect(() => {
@@ -81,25 +79,14 @@ const AddMember = ({ itemId, functionValue }) => {
   };
 
   const handleOnSubmit = async () => {
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectId}`;
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ members: asignMember() })
-    };
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error(data.message);
-      } else {
-        setAlertMessage({ error: false, message: 'Member added successfully' });
-      }
-    } catch (error) {
-      setAlertMessage(error);
-    }
+    dispatch(
+      updateProject(projectId, { members: asignMember() }, (alertMessage) =>
+        setAlertMessage({
+          error: alertMessage.error,
+          message: edit ? 'Team member edited successfully' : 'Team member added successfully'
+        })
+      )
+    );
     openAlertModal();
   };
 
