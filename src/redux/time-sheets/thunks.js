@@ -7,7 +7,10 @@ import {
   deleteTimesheetError,
   createTimesheetPending,
   createTimesheetSuccess,
-  createTimesheetError
+  createTimesheetError,
+  putTimesheetPending,
+  putTimesheetSuccess,
+  putTimesheetError
 } from './actions';
 
 export const getAllTimesheets = () => {
@@ -45,9 +48,6 @@ export const deleteTimesheet = (id) => {
 
 export const createTimesheet = (projectId, task, approved, setMessage) => {
   return (dispatch) => {
-    console.log(projectId);
-    console.log(task);
-    console.log(approved);
     dispatch(createTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/`, {
       method: 'POST',
@@ -69,6 +69,34 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
       })
       .catch((error) => {
         dispatch(createTimesheetError(error.toString()));
+        setMessage(error);
+      });
+  };
+};
+
+export const putTimesheet = (userInput, id, setMessage) => {
+  return (dispatch) => {
+    dispatch(putTimesheetPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        projectId: userInput.projectId,
+        Task: [{ taskId: userInput.task }],
+        approved: userInput.approved
+      })
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(putTimesheetSuccess(response.data));
+        dispatch(getAllTimesheets());
+        setMessage(response);
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(putTimesheetError(error.toString()));
         setMessage(error);
       });
   };
