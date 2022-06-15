@@ -7,8 +7,11 @@ import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
 import FormAdd from './FormAdd';
 import FormEdit from './FormEdit';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
 
 function TimeSheets() {
+  // const dispatch = useDispatch();
   const [timeSheets, setTimeSheets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -18,6 +21,10 @@ function TimeSheets() {
   let modalDelete;
   let modalAdd;
   let modalEdit;
+
+  // useEffect(() => {
+  //   dispatch(getAllTimesheets());
+  // }, [showModalAdd]);
 
   const timeSheetTable = [];
   const timesheetFormatted = (timeSheets) => {
