@@ -1,13 +1,14 @@
-.container {
-    width: 500px;
-}
-
+.form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 5px;
+    overflow: auto;
+  }
+  
 .buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.input {
-    width: 20%;
 }

@@ -18,19 +18,21 @@ const Projects = () => {
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
-  const [outcome, setOutcome] = useState('');
+  const [message, setMessage] = useState('');
 
   const openModalAdd = () => {
     setModalAdd(true);
   };
 
-  const openConfirmModal = () => {
+  const openConfirmModal = (_id) => {
     setConfirmModal(true);
-    setProjectId;
+    setProjectId(_id);
   };
 
   const closeConfirmModal = () => {
     setConfirmModal(false);
+    setErrorSuccessModal(false);
+    setModalAdd(false);
   };
 
   const closeModalAdd = () => {
@@ -46,8 +48,8 @@ const Projects = () => {
   }, []);
 
   const deleteItem = () => {
-    dispatch(deleteProject(projectId, (outcomeMessage) => setOutcome(outcomeMessage)));
-    closeConfirmModal;
+    dispatch(deleteProject(projectId, (message) => setMessage(message)));
+    closeConfirmModal();
     setErrorSuccessModal(true);
   };
 
@@ -81,7 +83,7 @@ const Projects = () => {
         show={showErrorSuccessModal}
         closeModal={closeErrorSuccessModal}
         closeModalForm={closeConfirmModal}
-        successResponse={outcome}
+        successResponse={message}
       ></ModalErrorSuccess>
     );
   }

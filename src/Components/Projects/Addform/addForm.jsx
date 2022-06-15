@@ -10,8 +10,8 @@ import styles from './add.form.module.css';
 const AddForm = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
-  //const [message, setMessage] = useState('');
-  const [userInput, setUserInput] = useState({
+  const [message, setMessage] = useState('');
+  const [newProject, setNewProject] = useState({
     name: '',
     startDate: '',
     endDate: '',
@@ -21,20 +21,16 @@ const AddForm = ({ closeModalForm }) => {
   });
 
   const onChange = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
+    setNewProject({ ...newProject, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async () => {
-    dispatch(addProject(userInput));
+    dispatch(addProject(newProject, (message) => setMessage(message)));
     setModalErrorSuccess(true);
   };
 
   const onChangeCheckBox = (e) => {
-    setUserInput({ ...userInput, active: e.target.checked });
-  };
-
-  const closeModalErrorSuccess = () => {
-    setModalErrorSuccess(false);
+    setNewProject({ ...newProject, active: e.target.checked });
   };
 
   return (
@@ -46,7 +42,7 @@ const AddForm = ({ closeModalForm }) => {
           type="text"
           name="name"
           placeholder="Insert project name"
-          value={userInput.name}
+          value={newProject.name}
           onChange={onChange}
           required={true}
         />
@@ -55,7 +51,7 @@ const AddForm = ({ closeModalForm }) => {
           type="text"
           name="clientName"
           placeholder="Insert client name"
-          value={userInput.clientName}
+          value={newProject.clientName}
           onChange={onChange}
           required={true}
         />
@@ -63,14 +59,14 @@ const AddForm = ({ closeModalForm }) => {
           label="Active"
           name="active"
           type="checkbox"
-          checked={userInput.active}
+          checked={newProject.active}
           onChange={onChangeCheckBox}
         />
         <Input
           label="Start Date"
           type="date"
           name="startDate"
-          value={userInput.startDate.slice(0, 10)}
+          value={newProject.startDate.slice(0, 10)}
           onChange={onChange}
           required={true}
         />
@@ -78,7 +74,7 @@ const AddForm = ({ closeModalForm }) => {
           label="End Date"
           type="date"
           name="endDate"
-          value={userInput.endDate.slice(0, 10)}
+          value={newProject.endDate.slice(0, 10)}
           onChange={onChange}
           required={true}
         />
@@ -86,7 +82,7 @@ const AddForm = ({ closeModalForm }) => {
         <Textarea
           label="Description"
           name="description"
-          value={userInput.description}
+          value={newProject.description}
           placeholder="Add a description of the project"
           onChange={onChange}
           required={true}
@@ -103,7 +99,7 @@ const AddForm = ({ closeModalForm }) => {
           <Button
             clickAction={() => {
               onSubmit();
-              setModalErrorSuccess(true);
+              /* setModalErrorSuccess(true); */
             }}
             label="Submit"
           >
@@ -112,9 +108,11 @@ const AddForm = ({ closeModalForm }) => {
         </div>
         <ModalErrorSuccess
           show={showModalErrorSuccess}
-          closeModal={closeModalErrorSuccess}
+          closeModal={() => {
+            setModalErrorSuccess(false);
+          }}
           closeModalForm={closeModalForm}
-          successResponse={'message'}
+          successResponse={message}
         />
       </form>
     </>
