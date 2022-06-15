@@ -1,43 +1,116 @@
 import { useEffect, useState } from 'react';
-import List from './List/List';
-import styles from './projects.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProject, getProjects } from '../../redux/projects/thunks';
+import AddForm from '../Projects/Addform/addForm';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import ModalErrorSuccess from '../Shared/ErrorSuccessModal';
+import ModalForm from '../Shared/ModalForm';
 import Preloader from '../Shared/Preloader/Preloader';
+import Table from '../Shared/Table/Table';
+import styles from './projects.module.css';
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projects.list);
+  const isLoading = useSelector((state) => state.projects.isLoading);
+  const [showConfirmModal, setConfirmModal] = useState(false);
+  const [showModalAdd, setModalAdd] = useState(false);
+  const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
+  const [projectId, setProjectId] = useState(0);
+  const [outcome, setOutcome] = useState('');
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/projects`)
-      .then((response) => response.json())
-      .then((response) => {
-        setProjects(response.data);
-        setLoading(false);
-      });
-  }, []);
-
-  const deleteItem = async (_id) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
-        method: 'DELETE'
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    setProjects([...projects.filter((listItem) => listItem._id !== _id)]);
+  const openModalAdd = () => {
+    setModalAdd(true);
   };
 
-  return loading ? (
+  const openConfirmModal = () => {
+    setConfirmModal(true);
+    setProjectId;
+  };
+
+  const closeConfirmModal = () => {
+    setConfirmModal(false);
+  };
+
+  const closeModalAdd = () => {
+    setModalAdd(false);
+  };
+
+  const closeErrorSuccessModal = () => {
+    setErrorSuccessModal(false);
+  };
+
+  useEffect(() => {
+    dispatch(getProjects());
+  }, []);
+
+  const deleteItem = () => {
+    dispatch(deleteProject(projectId, (outcomeMessage) => setOutcome(outcomeMessage)));
+    closeConfirmModal;
+    setErrorSuccessModal(true);
+  };
+
+  let modalDelete;
+  let modalAdd;
+  let modalErrorSuccess;
+
+  if (showConfirmModal) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        handleClose={closeConfirmModal}
+        confirmDelete={deleteItem}
+        title="Delete Project"
+        message="Are you sure you want to delete this project?"
+      />
+    );
+  }
+
+  if (showModalAdd) {
+    modalAdd = (
+      <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
+        <AddForm closeModalForm={closeModalAdd} edit={false} />
+      </ModalForm>
+    );
+  }
+
+  if (showErrorSuccessModal) {
+    modalErrorSuccess = (
+      <ModalErrorSuccess
+        show={showErrorSuccessModal}
+        closeModal={closeErrorSuccessModal}
+        closeModalForm={closeConfirmModal}
+        successResponse={outcome}
+      ></ModalErrorSuccess>
+    );
+  }
+
+  return isLoading ? (
     <Preloader>
       <p>Loading projects</p>
     </Preloader>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>
-      <List projects={projects} setProjects={setProjects} deleteItem={deleteItem} />
-      <a href={'/projects/form'}>
-        <button className={styles.addbtn}>&#10010;</button>
-      </a>
+      {modalDelete}
+      {modalAdd}
+      {modalErrorSuccess}
+      <Table
+        data={projects}
+        headers={['name', 'description', 'startDate', 'endDate', 'clientName', 'active', 'members']}
+        titles={[
+          'Name',
+          'Description',
+          'Start Date',
+          'End Date',
+          'Client Name',
+          'Active',
+          'Members'
+        ]}
+        delAction={openConfirmModal}
+      />
+      <ButtonAdd clickAction={openModalAdd}></ButtonAdd>
     </section>
   );
 };

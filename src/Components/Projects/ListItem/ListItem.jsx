@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import styles from './list-item.module.css';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
@@ -32,3 +32,4 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
 };
 
 export default ListItem;
+ */

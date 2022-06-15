@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Input from '../../Shared/Input';
+import Preloader from '../../Shared/Preloader/Preloader';
+import Textarea from '../../Shared/Textarea';
 import styles from './form.module.css';
 import ListMembers from './ListMembers/ListMembers';
-import Preloader from '../../Shared/Preloader/Preloader';
-import Input from '../../Shared/Input';
-import Textarea from '../../Shared/Textarea';
 
 const ProjectForm = () => {
   const [userInput, setUserInput] = useState({
@@ -119,7 +119,6 @@ const ProjectForm = () => {
     <>
       <div className={styles.maincontainer}>
         <form onSubmit={onSubmit} className={styles.container}>
-          {onAdd ? <h2>Add Project</h2> : <h2>Edit Project</h2>}
           <div className={styles.maincontainer}>
             <div className={styles.divcontainer}>
               <Input

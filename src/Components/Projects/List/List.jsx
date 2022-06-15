@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/* import React, { useState } from 'react';
 import ListItem from '../ListItem/ListItem';
 import Modal from '../Modal/Modal';
 import styles from './list.module.css';
@@ -45,4 +45,4 @@ const List = ({ projects, deleteItem }) => {
   );
 };
 
-export default List;
+export default List; */
