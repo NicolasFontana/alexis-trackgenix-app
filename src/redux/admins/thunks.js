@@ -44,7 +44,7 @@ export const getAdminById = (id) => {
   };
 };
 
-export const addAdmin = (admin) => {
+export const addAdmin = (admins) => {
   return async (dispatch) => {
     dispatch(addAdminPending());
     try {
@@ -53,7 +53,7 @@ export const addAdmin = (admin) => {
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(admin)
+        body: JSON.stringify(admins)
       });
       const data = await response.json();
       dispatch(addAdminSucces(data.data));

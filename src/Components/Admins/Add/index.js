@@ -2,12 +2,13 @@ import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
-import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './add.module.css';
+import { useDispatch } from 'react-redux';
+import { addAdmin } from '../../../redux/admins/thunks';
 
 const AdminsAdd = ({ closeModalForm }) => {
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
+
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -20,33 +21,10 @@ const AdminsAdd = ({ closeModalForm }) => {
     setadminInput({ ...adminInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async () => {
-    await sendInfo();
-    setShowMessageModal(true);
+  const onSubmit = () => {
+    dispatch(addAdmin(adminInput));
+    closeModalForm();
   };
-
-  const sendInfo = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active === true
-      })
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-      });
-  };
-
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
-  };
-
   return (
     <form className={styles.form}>
       <Input
@@ -110,12 +88,6 @@ const AdminsAdd = ({ closeModalForm }) => {
       >
         Submit
       </Button>
-      <MessageModal
-        show={showMessageModal}
-        closeModal={closeMessageModal}
-        closeModalForm={closeModalForm}
-        successResponse={message}
-      />
     </form>
   );
 };

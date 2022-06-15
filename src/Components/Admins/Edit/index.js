@@ -1,68 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import Button from '../../Shared/Buttons/ButtonText';
-import MessageModal from '../../Shared/ErrorSuccessModal';
 import styles from './edit.module.css';
+import { useDispatch } from 'react-redux';
+import { editAdmin } from '../../../redux/admins/thunks';
 
-const AdminsEdit = ({ adminId, closeModalForm }) => {
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+const AdminsEdit = ({ admin, closeModalForm }) => {
+  const dispatch = useDispatch();
+
   const [adminInput, setadminInput] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    active: ''
+    firstName: adminInput.firstName,
+    lastName: adminInput.lastName,
+    email: adminInput.email,
+    password: adminInput.password,
+    active: adminInput.active
   });
-
-  useEffect(async () => {
-    try {
-      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${adminId}`);
-      const adminData = await getAdmin.json();
-      setadminInput({
-        firstName: adminData.data.firstName,
-        lastName: adminData.data.lastName,
-        email: adminData.data.email,
-        password: adminData.data.password,
-        active: adminData.data.active
-      });
-    } catch (error) {
-      console.error(error);
-      alert(error);
-    }
-  }, []);
 
   const onChange = (e) => {
     setadminInput({ ...adminInput, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await sendInfo();
-    setShowMessageModal(true);
-  };
-
-  const sendInfo = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active
-      })
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setMessage(response);
-      });
-  };
-
-  const closeMessageModal = () => {
-    setShowMessageModal(false);
+  const onSubmit = () => {
+    dispatch(editAdmin(adminInput, admin._id));
+    closeModalForm();
   };
 
   return (
@@ -121,12 +82,6 @@ const AdminsEdit = ({ adminId, closeModalForm }) => {
           <Button clickAction={onSubmit} label="Submit">
             Submit
           </Button>
-          <MessageModal
-            show={showMessageModal}
-            closeModal={closeMessageModal}
-            closeModalForm={closeModalForm}
-            successResponse={message}
-          />
         </div>
       </form>
     </section>
