@@ -56,7 +56,9 @@ export const createEmployee = (employeeInput, setSuccessMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(createEmployeesSuccess(response.data));
+        if (response.error === false) {
+          dispatch(createEmployeesSuccess(response.data));
+        }
         dispatch(getEmployees());
         setSuccessMessage(response);
         return response.data;
