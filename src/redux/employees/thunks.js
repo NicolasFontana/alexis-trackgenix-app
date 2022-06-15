@@ -110,7 +110,7 @@ export const updateEmployee = (userInput, id, setResponse) => {
   };
 };
 
-export const deleteEmployee = (id) => {
+export const deleteEmployee = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteEmployeesPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
@@ -120,10 +120,12 @@ export const deleteEmployee = (id) => {
       .then((response) => {
         dispatch(deleteEmployeesSuccess(response.data));
         dispatch(getEmployees());
+        setResponse(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(deleteEmployeesError(error.toString()));
+        setResponse(error);
       });
   };
 };

@@ -8,6 +8,7 @@ import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import SuccessModal from '../Shared/ErrorSuccessModal';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const Employees = () => {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [employeeId, setEmployeeId] = useState();
 
   useEffect(() => {
@@ -61,16 +64,28 @@ const Employees = () => {
           setShowModalFormDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(deleteEmployee(employeeId));
-          setShowModalFormDelete(false);
+          dispatch(deleteEmployee(employeeId, (response) => setResponse(response))).then(() => {
+            setShowModalFormDelete(false);
+            setShowSuccessModal(true);
+          });
         }}
         title="Delete Employee"
-        message="Are you sure you want to delete this employee?"
+        message={
+          showModalFormDelete && isLoading ? (
+            <Preloader />
+          ) : (
+            'Are you sure you want to delete this employee?'
+          )
+        }
       />
     );
   }
 
-  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
+  return isLoading &&
+    !showModalFormEdit &&
+    !showModalFormAdd &&
+    !showModalFormDelete &&
+    !showSuccessModal ? (
     <Preloader />
   ) : (
     <section className={styles.container}>
@@ -115,6 +130,16 @@ const Employees = () => {
         clickAction={() => {
           setShowModalFormAdd(true);
         }}
+      />
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={() => {
+          setShowSuccessModal(false);
+        }}
+        successResponse={response}
       />
     </section>
   );
