@@ -7,6 +7,7 @@ import ButtonText from '../../../Shared/Buttons/ButtonText';
 import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../../redux/projects/thunks';
+import { getEmployees } from '../../../../redux/employees/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AddMember = ({ itemId, functionValue }) => {
@@ -16,7 +17,6 @@ const AddMember = ({ itemId, functionValue }) => {
   const [member, setMember] = useState('');
   const [role, setRole] = useState('');
   const [rate, setRate] = useState('');
-  const [employees, setEmployees] = useState([]);
   const [edited, setEdited] = useState(false);
   const [showconfirmModal, setShowconfirmModal] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
@@ -24,21 +24,11 @@ const AddMember = ({ itemId, functionValue }) => {
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.projects.isLoading);
-
-  //hacer dispatch EMPLOYEES --> useSelector?
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
-      const data = await response.json();
-      setEmployees(data.data);
-    } catch (error) {
-      console.error(error);
-    }
-    dispatch(getProjectById(projectId, (project) => setProjectMembers(project.members)));
-  };
+  const employees = useSelector((state) => state.employees.list);
 
   useEffect(() => {
-    fetchData();
+    dispatch(getEmployees());
+    dispatch(getProjectById(projectId, (project) => setProjectMembers(project.members)));
   }, []);
 
   const onChangeMember = (event) => {

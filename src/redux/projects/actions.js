@@ -29,10 +29,9 @@ export const updateProjectPending = () => {
     type: UPDATE_PROJECT_PENDING
   };
 };
-export const updateProjectSuccess = (data) => {
+export const updateProjectSuccess = () => {
   return {
-    type: UPDATE_PROJECT_SUCCESS,
-    payload: data
+    type: UPDATE_PROJECT_SUCCESS
   };
 };
 export const updateProjectError = (error) => {
