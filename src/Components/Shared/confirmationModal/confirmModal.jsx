@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './confirmModal.module.css';
-import ButtonClose from '../Buttons/ButtonClose';
 import { useEffect } from 'react';
 
 const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) => {
@@ -20,12 +19,11 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
       <div className={styles.modalWrapper} onPointerDown={(e) => e.stopPropagation()}>
         <div className={styles.title}>
           <h2>{title}</h2>
-          <ButtonClose clickAction={handleClose} />
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
           <button onClick={confirmDelete} className={styles.Button}>
-            Delete
+            Confirm
           </button>
           <button onClick={handleClose} className={styles.Button}>
             Cancel
