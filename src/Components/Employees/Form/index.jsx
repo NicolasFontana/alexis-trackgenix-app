@@ -47,13 +47,11 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   const onSubmit = () => {
     if (edit) {
-      dispatch(updateEmployee(userInput, item._id, (response) => setResponse(response))).then(
-        () => {
-          setShowSuccessModal(true);
-        }
-      );
+      dispatch(updateEmployee(userInput, item._id, setResponse)).then(() => {
+        setShowSuccessModal(true);
+      });
     } else {
-      dispatch(createEmployee(userInput, (response) => setResponse(response))).then(() => {
+      dispatch(createEmployee(userInput, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
     }
