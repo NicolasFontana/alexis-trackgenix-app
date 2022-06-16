@@ -49,7 +49,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   }, []);
 
   const onSubmit = () => {
-    dispatch(putTimesheet(userInput, timesheetItem._id, (message) => setMessage(message)));
+    dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
     setShowMessageModal(true);
   };
 

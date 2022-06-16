@@ -47,7 +47,7 @@ const FormAdd = ({ closeModalForm }) => {
   }, []);
 
   const onSubmit = () => {
-    dispatch(createTimesheet(projectId, task, approved, (message) => setMessage(message)));
+    dispatch(createTimesheet(projectId, task, approved, setMessage));
     setShowMessageModal(true);
   };
 
