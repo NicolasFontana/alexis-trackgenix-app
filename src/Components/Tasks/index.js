@@ -91,7 +91,7 @@ function Tasks() {
     );
   }
 
-  return isLoading ? (
+  return isLoading && !showModalFormEdit && !showModalFormAdd && !showConfirmModal ? (
     <Preloader>
       <p>Loading Tasks</p>
     </Preloader>
