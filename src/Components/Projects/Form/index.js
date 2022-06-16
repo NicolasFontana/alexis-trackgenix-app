@@ -83,7 +83,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
 
   return isLoading ? (
     <Preloader>
-      <p>Loading projects</p>
+      <p>Loading project</p>
     </Preloader>
   ) : (
     <>
@@ -155,15 +155,15 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
       <div>
         <ButtonText
           clickAction={() => {
-            onSubmit();
-          }}
-          label="Submit"
-        ></ButtonText>
-        <ButtonText
-          clickAction={() => {
             handleOnClick();
           }}
           label="Close"
+        ></ButtonText>
+        <ButtonText
+          clickAction={() => {
+            onSubmit();
+          }}
+          label="Submit"
         ></ButtonText>
         <AlertModal
           show={showErrorSuccessModal}

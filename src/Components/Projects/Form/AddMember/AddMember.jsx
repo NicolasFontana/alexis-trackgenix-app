@@ -112,7 +112,7 @@ const AddMember = ({ itemId, functionValue }) => {
 
   return isLoading ? (
     <Preloader>
-      <p>Loading projects</p>
+      <p>Loading</p>
     </Preloader>
   ) : (
     <div className={styles.divcontainer}>
