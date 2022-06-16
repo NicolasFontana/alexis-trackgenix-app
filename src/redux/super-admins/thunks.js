@@ -42,6 +42,7 @@ export const postSuperAdmins = (newSuperAdmin, setResponse) => {
       if (data.error === false) {
         dispatch(postSuperAdminsSuccess(data.data));
       }
+      dispatch(getSuperAdmins());
       setResponse(data);
       return data.data;
     } catch (error) {

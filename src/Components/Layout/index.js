@@ -6,8 +6,6 @@ import Admins from '../Admins/index';
 import AdminsAdd from '../Admins/Add';
 import AdminsEdit from '../Admins/Edit';
 import SuperAdmins from '../SuperAdmins/index';
-// import SuperAdminsAdd from '../SuperAdmins/Form';
-// import SuperAdminsEdit from '../SuperAdmins/Edit';
 import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
@@ -29,8 +27,6 @@ function Layout() {
         <Route exact path="/admins/add" component={AdminsAdd} />
         <Route exact path="/admins/edit" component={AdminsEdit} />
         <Route exact path="/super-admins" component={SuperAdmins} />
-        {/* <Route exact path="/super-admins/add" component={SuperAdminsAdd} />
-        <Route exact path="/super-admins/edit" component={SuperAdminsEdit} /> */}
         <Route exact path="/employees" component={Employees} />
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/projects/form" component={ProjectsForm} />

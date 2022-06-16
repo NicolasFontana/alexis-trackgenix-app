@@ -11,7 +11,6 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
-  // const [edited, setEdited] = useState(false);
   const [superAdminInput, setsuperAdminInput] = useState({
     firstName: '',
     lastName: '',
@@ -44,12 +43,10 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
 
   const onChange = (e) => {
     setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
-    // setEdited(true);
   };
 
   const onChangeActive = (e) => {
     setsuperAdminInput({ ...superAdminInput, active: e.target.checked });
-    // setEdited(true);
   };
 
   return (
