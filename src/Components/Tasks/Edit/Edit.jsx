@@ -25,8 +25,9 @@ const Edit = ({ task, closeModalForm }) => {
   };
 
   const onSubmit = () => {
-    dispatch(editTask(userInput, task._id, (response) => setMessage(response)));
-    setShowMessageModal(true);
+    dispatch(editTask(userInput, task._id, (response) => setMessage(response))).then(() => {
+      setShowMessageModal(true);
+    });
   };
 
   return (

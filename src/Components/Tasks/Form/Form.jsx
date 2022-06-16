@@ -25,8 +25,9 @@ const Form = ({ closeModalForm }) => {
   };
 
   const onSubmit = () => {
-    dispatch(addTask(userInput, setMessage));
-    setShowMessageModal(true);
+    dispatch(addTask(userInput, (response) => setMessage(response))).then(() => {
+      setShowMessageModal(true);
+    });
   };
 
   return (

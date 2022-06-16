@@ -33,9 +33,11 @@ function Tasks() {
   }, []);
 
   const handleConfirm = () => {
-    dispatch(delTask(idDelete, setMessage));
-    closeModal();
-    setShowMessageModal(true);
+    dispatch(delTask(idDelete, (response) => setMessage(response))).then(() => {
+      closeModal();
+      setShowConfirmModal(false);
+      setShowMessageModal(true);
+    });
   };
 
   const openConfirmModal = (id) => {
