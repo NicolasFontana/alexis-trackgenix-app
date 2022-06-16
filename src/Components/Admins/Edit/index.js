@@ -11,7 +11,6 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
-  // const [edited, setEdited] = useState(false);
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -32,7 +31,6 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
 
   const onChange = (event) => {
     setadminInput({ ...adminInput, [event.target.name]: event.target.value });
-    // setEdited(true);
   };
 
   const onSubmit = () => {
@@ -49,7 +47,6 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
 
   const onChangeActive = (e) => {
     setadminInput({ ...adminInput, active: e.target.checked });
-    // setEdited(true);
   };
 
   return (
@@ -99,9 +96,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
           checked={adminInput.active}
           onChange={onChangeActive}
         />
-        <div className={styles.buttons}>
-          <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
-        </div>
+        <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
         <SuccessModal
           show={showSuccessModal}
           closeModal={() => {

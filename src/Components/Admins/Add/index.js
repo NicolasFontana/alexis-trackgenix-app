@@ -16,7 +16,7 @@ const AdminsAdd = ({ closeModalForm }) => {
     lastName: '',
     email: '',
     password: '',
-    active: ''
+    active: false
   });
 
   let newAdmin = JSON.stringify({
@@ -24,7 +24,7 @@ const AdminsAdd = ({ closeModalForm }) => {
     lastName: adminInput.lastName,
     email: adminInput.email,
     password: adminInput.password,
-    active: adminInput.active
+    active: adminInput.active === true
   });
 
   const onChange = (e) => {
