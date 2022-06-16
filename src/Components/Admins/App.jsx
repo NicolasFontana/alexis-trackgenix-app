@@ -34,11 +34,10 @@ const App = () => {
   let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
-      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit admin">
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Admin">
         <EditForm
+          edit={admins.find((item) => item._id === idDelete)}
           closeModalForm={closeModalFormEdit}
-          edit={true}
-          item={admins.find((item) => item._id === idDelete)}
         />
       </ModalForm>
     );
@@ -47,7 +46,7 @@ const App = () => {
   let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
-      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add admin">
+      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Admin">
         <Form closeModalForm={closeModalFormAdd} />
       </ModalForm>
     );

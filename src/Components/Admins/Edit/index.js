@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { editAdmin } from '../../../redux/admins/thunks';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './edit.module.css';
-import Preloader from '../../Shared/Preloader/Preloader';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
 import ButtonText from '../../Shared/Buttons/ButtonText';
+import Input from '../../Shared/Input';
 import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { useDispatch } from 'react-redux';
+import { editAdmin } from '../../../redux/admins/thunks';
 
-const AdminsEdit = ({ closeModalForm, edit, item }) => {
+const AdminsEdit = ({ edit, closeModalForm }) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.admins.isLoading);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
+  // const [edited, setEdited] = useState(false);
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -22,29 +21,38 @@ const AdminsEdit = ({ closeModalForm, edit, item }) => {
   });
 
   useEffect(() => {
-    if (edit && item._id) {
-      setadminInput({
-        firstName: item.firstName,
-        lastName: item.lastName,
-        email: item.email,
-        password: item.password,
-        active: item.active === true ? 'Active' : 'Inactive'
-      });
-    }
+    setadminInput({
+      firstName: edit.firstName,
+      lastName: edit.lastName,
+      email: edit.email,
+      password: edit.password,
+      active: edit.active
+    });
   }, []);
 
   const onChange = (event) => {
     setadminInput({ ...adminInput, [event.target.name]: event.target.value });
+    // setEdited(true);
   };
 
   const onSubmit = () => {
+    let editedAdmin = JSON.stringify({
+      firstName: adminInput.firstName,
+      lastName: adminInput.lastName,
+      email: adminInput.email,
+      password: adminInput.password,
+      active: adminInput.active
+    });
+    dispatch(editAdmin(edit._id, editedAdmin, setResponse));
     setShowSuccessModal(true);
-    dispatch(editAdmin(adminInput, item.id, (response) => setResponse(response)));
   };
 
-  return isLoading ? (
-    <Preloader />
-  ) : (
+  const onChangeActive = (e) => {
+    setadminInput({ ...adminInput, active: e.target.checked });
+    // setEdited(true);
+  };
+
+  return (
     <section className={styles.container}>
       <h2>Edit Admin</h2>
       <form className={styles.form}>
@@ -84,22 +92,15 @@ const AdminsEdit = ({ closeModalForm, edit, item }) => {
           onChange={onChange}
           required={true}
         />
-        <Select
-          label="Active?"
+        <Input
+          label="Active"
           name="active"
-          value={adminInput.active}
-          onChange={onChange}
-          title="Define condition"
-          data={['Active', 'Inactive']}
-          required={true}
+          type="checkbox"
+          checked={adminInput.active}
+          onChange={onChangeActive}
         />
         <div className={styles.buttons}>
-          <ButtonText clickAction={closeModalForm} label="Cancel">
-            Cancel
-          </ButtonText>
-          <ButtonText clickAction={onSubmit} label="Submit">
-            Submit
-          </ButtonText>
+          <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
         </div>
         <SuccessModal
           show={showSuccessModal}

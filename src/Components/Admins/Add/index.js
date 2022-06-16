@@ -1,14 +1,16 @@
+import React from 'react';
 import { useState } from 'react';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
-import Button from '../../Shared/Buttons/ButtonText';
 import styles from './add.module.css';
+import ButtonText from '../../Shared/Buttons/ButtonText';
+import Input from '../../Shared/Input';
 import { useDispatch } from 'react-redux';
 import { addAdmin } from '../../../redux/admins/thunks';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 
 const AdminsAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -17,14 +19,27 @@ const AdminsAdd = ({ closeModalForm }) => {
     active: ''
   });
 
+  let newAdmin = JSON.stringify({
+    firstName: adminInput.firstName,
+    lastName: adminInput.lastName,
+    email: adminInput.email,
+    password: adminInput.password,
+    active: adminInput.active
+  });
+
   const onChange = (e) => {
     setadminInput({ ...adminInput, [e.target.name]: e.target.value });
   };
 
   const onSubmit = () => {
-    dispatch(addAdmin(adminInput));
-    closeModalForm();
+    dispatch(addAdmin(newAdmin, setResponse));
+    setShowSuccessModal(true);
   };
+
+  const onChangeActive = (e) => {
+    setadminInput({ ...adminInput, active: e.target.checked });
+  };
+
   return (
     <form className={styles.form}>
       <Input
@@ -63,31 +78,29 @@ const AdminsAdd = ({ closeModalForm }) => {
         onChange={onChange}
         required={true}
       />
-      <Select
-        label="Active?"
+      <Input
+        label="Active"
         name="active"
-        value={adminInput.active}
-        onChange={onChange}
-        title="Define condition"
-        data={['True', 'False']}
-        required={true}
+        type="checkbox"
+        checked={adminInput.active}
+        onChange={onChangeActive}
       />
-      <Button
-        clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
-      >
-        Cancel
-      </Button>
-      <Button
+      <ButtonText
         clickAction={() => {
           onSubmit();
         }}
         label="Submit"
       >
-        Submit
-      </Button>
+        Creade
+      </ButtonText>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
     </form>
   );
 };

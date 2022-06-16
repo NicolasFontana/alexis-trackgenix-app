@@ -28,65 +28,75 @@ export const getAdmins = () => {
   };
 };
 
-export const addAdmin = (adminInput, setResponse) => {
-  return (dispatch) => {
+// export const addAdmin = (admins) => {
+//   return async (dispatch) => {
+//     dispatch(addAdminPending());
+//     try {
+//       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//           firstName: admins.firstName,
+//           lastName: admins.lastName,
+//           email: admins.email,
+//           password: admins.password,
+//           active: admins.active
+//         })
+//       });
+//       const res = await response.json();
+//       dispatch(addAdminSucces(res.data));
+//       return { error: false, message: res.message };
+//     } catch (error) {
+//       dispatch(addAdminError(error.toString()));
+//       return { error: true, message: error };
+//     }
+//   };
+// };
+
+export const addAdmin = (newAdmin, setResponse) => {
+  return async (dispatch) => {
     dispatch(addAdminPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active === true
-      }),
-      headers: {
-        'Content-type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error === false) {
-          dispatch(addAdminSucces(response.data));
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+        method: 'POST',
+        body: newAdmin,
+        headers: {
+          'content-type': 'application/json'
         }
-        dispatch(getAdmins());
-        setResponse(response);
-        return response.data;
-      })
-      .catch((error) => {
-        dispatch(addAdminError(error.toString()));
-        setResponse(error);
       });
+      const data = await response.json();
+      if (data.error === false) {
+        dispatch(addAdminSucces(data.data));
+      }
+      setResponse(data);
+      return data.data;
+    } catch (error) {
+      dispatch(addAdminError(error.toString()));
+    }
   };
 };
 
-export const editAdmin = (admin, _id, setResponse) => {
-  return (dispatch) => {
+export const editAdmin = (idDelete, editedAdmin, setResponse) => {
+  return async (dispatch) => {
     dispatch(editAdminPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${_id}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        firstName: admin.firstName,
-        lastName: admin.lastName,
-        email: admin.email,
-        password: admin.password,
-        active: admin.active === 'Active' ? true : false
-      }),
-      headers: {
-        'Content-type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch(editAdminSucces(response.data));
-        dispatch(getAdmins());
-        setResponse(response);
-        return response.data;
-      })
-      .catch((error) => {
-        dispatch(editAdminError(error.toString()));
-        setResponse(error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
+        method: 'PUT',
+        body: editedAdmin,
+        headers: {
+          'content-type': 'application/json'
+        }
       });
+      const data = await response.json();
+      dispatch(editAdminSucces(data.data));
+      dispatch(getAdmins());
+      setResponse(data);
+      return data.data;
+    } catch (error) {
+      dispatch(editAdminError(error.toString()));
+    }
   };
 };
 
