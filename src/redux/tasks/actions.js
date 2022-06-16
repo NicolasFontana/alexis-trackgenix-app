@@ -31,7 +31,7 @@ export const addTaskPending = () => ({
   type: ADD_TASK_PENDING
 });
 
-export const addTaskSucces = (data) => ({
+export const addTaskSuccess = (data) => ({
   type: ADD_TASK_SUCCESS,
   payload: data
 });
@@ -45,7 +45,7 @@ export const editTaskPending = () => ({
   type: EDIT_TASK_PENDING
 });
 
-export const editTaskSucces = (data) => ({
+export const editTaskSuccess = (data) => ({
   type: EDIT_TASK_SUCCESS,
   payload: data
 });
@@ -59,7 +59,7 @@ export const deleteTaskPending = () => ({
   type: DELETE_TASK_PENDING
 });
 
-export const deleteTaskSucces = (data) => ({
+export const deleteTaskSuccess = (data) => ({
   type: DELETE_TASK_SUCCESS,
   payload: data
 });

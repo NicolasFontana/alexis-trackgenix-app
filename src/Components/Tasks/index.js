@@ -91,7 +91,11 @@ function Tasks() {
     );
   }
 
-  return isLoading && !showModalFormEdit && !showModalFormAdd && !showConfirmModal ? (
+  return isLoading &&
+    !showModalFormEdit &&
+    !showModalFormAdd &&
+    !showMessageModal &&
+    !showConfirmModal ? (
     <Preloader>
       <p>Loading Tasks</p>
     </Preloader>

@@ -3,13 +3,13 @@ import {
   getTasksSuccess,
   getTasksError,
   addTaskPending,
-  addTaskSucces,
+  addTaskSuccess,
   addTaskError,
   editTaskPending,
-  editTaskSucces,
+  editTaskSuccess,
   editTaskError,
   deleteTaskPending,
-  deleteTaskSucces,
+  deleteTaskSuccess,
   deleteTaskError
 } from './actions';
 
@@ -39,7 +39,9 @@ export const addTask = (task, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(addTaskSucces(response.data));
+        if (response.error === false) {
+          dispatch(addTaskSuccess(response.data));
+        }
         dispatch(getTasks());
         setMessage(response);
         return response.data;
@@ -63,7 +65,7 @@ export const editTask = (task, id, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(editTaskSucces(response.data));
+        dispatch(editTaskSuccess(response.data));
         dispatch(getTasks());
         setMessage(response);
         return response.data;
@@ -83,7 +85,7 @@ export const delTask = (id, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(deleteTaskSucces(id));
+        dispatch(deleteTaskSuccess(id));
         dispatch(getTasks());
         setMessage(response);
         return response.data;
