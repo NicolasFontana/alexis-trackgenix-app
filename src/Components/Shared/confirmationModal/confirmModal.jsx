@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './confirmModal.module.css';
+import ButtonClose from '../Buttons/ButtonClose';
 import { useEffect } from 'react';
 
 const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) => {
@@ -18,10 +19,8 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
     <div className={styles.modalOvelay} onPointerDown={handleClose}>
       <div className={styles.modalWrapper} onPointerDown={(e) => e.stopPropagation()}>
         <div className={styles.title}>
-          {title}
-          <button onClick={handleClose} className={styles.closeButton}>
-            X
-          </button>
+          <h2>{title}</h2>
+          <ButtonClose clickAction={handleClose} />
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
