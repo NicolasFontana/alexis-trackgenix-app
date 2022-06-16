@@ -88,7 +88,7 @@ const Projects = () => {
     );
   }
 
-  return isLoading ? (
+  return isLoading && !showModalAdd && !showConfirmModal ? (
     <Preloader>
       <p>Loading projects</p>
     </Preloader>
