@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './addMember.module.css';
+import Select from '../../../Shared/Select';
+import Input from '../../../Shared/Input';
+import Preloader from '../../../Shared/Preloader/Preloader';
 
 const AddMember = () => {
   let edit;
@@ -11,27 +14,32 @@ const AddMember = () => {
   const [employees, setEmployees] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
-      const data = await response.json();
-      setEmployees(data.data);
-    } catch (error) {
-      console.error(error);
-      alert(error);
-    }
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const projectID = params.get('id');
-      setRouteID(projectID);
-      const getProject = await fetch(`${process.env.REACT_APP_API_URL}/api/projects/${projectID}`);
-      const projectData = await getProject.json();
-      setProjectMembers(projectData.data.members);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/employees`);
+        const data = await response.json();
+        setEmployees(data.data);
+      } catch (error) {
+        console.error(error);
+        alert(error);
+      }
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const projectID = params.get('id');
+        setRouteID(projectID);
+        const getProject = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`
+        );
+        const projectData = await getProject.json();
+        setProjectMembers(projectData.data.members);
+      } catch (error) {
+        console.error(error);
+        alert(error);
+      }
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-      alert(error);
-    }
+    };
+    fetchData();
   }, []);
 
   const onChangeMember = (event) => {
@@ -68,8 +76,7 @@ const AddMember = () => {
     return projectMembers;
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const handleOnSubmit = async () => {
     const params = new URLSearchParams(window.location.search);
     const projectID = params.get('id');
     let url = `${process.env.REACT_APP_API_URL}/api/projects/${projectID}`;
@@ -93,44 +100,47 @@ const AddMember = () => {
     }
   };
 
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    handleOnSubmit();
+  };
+
   return isLoading ? (
-    <h1 className={styles.loading}>Loading form...</h1>
+    <Preloader>
+      <p>Loading projects</p>
+    </Preloader>
   ) : (
     <div className={styles.divcontainer}>
       <h2>Add or Edit a member</h2>
       <form onSubmit={onSubmit} className={styles.container}>
-        <label>Employee</label>
-        <select value={member} onChange={onChangeMember} className={styles.inputs} required>
-          <option disabled value="">
-            Choose Member
-          </option>
-          {employees.map((employee) => {
-            return (
-              <option
-                value={employee._id}
-                key={employee._id}
-              >{`${employee.lastName}, ${employee.firstName}`}</option>
-            );
-          })}
-          ;
-        </select>
-        <label>Role</label>
-        <select required name="role" value={role} onChange={onChangeRole} className={styles.inputs}>
-          <option disabled value="">
-            Choose Role
-          </option>
-          <option value={'TL'}>TL</option>
-          <option value={'QA'}>QA</option>
-          <option value={'DEV'}>DEV</option>
-          <option value={'PM'}>PM</option>
-        </select>
-        <label>Rate</label>
-        <input
+        <Select
+          label="Employee"
+          value={member}
+          onChange={onChangeMember}
+          className={styles.inputs}
+          title="Choose Member"
+          required={true}
+          data={employees.map((employee) => ({
+            _id: employee._id,
+            optionText: `${employee.firstName} ${employee.lastName}`
+          }))}
+        />
+        <Select
+          label="Role"
+          name="role"
+          value={role}
+          onChange={onChangeRole}
+          title="Choose Role"
+          data={['TL', 'QA', 'DEV', 'PM']}
+          required={true}
+        />
+        <Input
+          label="Rate"
           type="number"
           value={rate}
-          required
           onChange={OnChangeRate}
           placeholder="Insert rate"
+          required={true}
         />
         <button type="submit">Submit</button>
       </form>

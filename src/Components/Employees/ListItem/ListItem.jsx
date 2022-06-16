@@ -1,7 +1,8 @@
 import styles from './list-item.module.css';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import FormModal from '../FormModal';
+import ModalForm from '../../Shared/ModalForm';
+import Form from '../Form';
 
 const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -39,12 +40,9 @@ const ListItem = ({ listItem, deleteItem, setShowModal, setTitleModal }) => {
       <td>{listItemState.projects.length}</td>
       <td>{listItemState.timeSheets.length}</td>
       <td>
-        <FormModal
-          show={showEditModal}
-          closeModal={closeEditModal}
-          listItemId={listItemState._id}
-          edit={true}
-        />
+        <ModalForm show={showEditModal} closeModalForm={closeEditModal}>
+          <Form employeeId={listItem._id} edit={true} closeModalForm={closeEditModal} />
+        </ModalForm>
         <button
           onClick={() => {
             setShowEditModal(true);

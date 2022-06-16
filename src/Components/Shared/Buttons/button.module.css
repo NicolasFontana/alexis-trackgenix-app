@@ -1,0 +1,70 @@
+.button {
+    height: 35px;
+    margin: 5px;
+    padding : 2px 10px 0px 10px;
+    background: #AACE9B;
+    border-radius: 5px;
+    color: #373867;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    box-shadow: 2px 2px 2px grey;
+  }
+   
+  .buttonAdd {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    padding : 2px 4px 2px 4px;
+    background: #AACE9B;
+    border-radius: 50%;
+    color: #ffffff;
+    text-align: center;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 2px grey;
+    box-shadow: 2px 2px 2px grey;
+  }
+   
+  .buttonEdit {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    padding : 2px 4px 0px 4px;
+    background: transparent;
+    border-radius: 5px;
+    color: #373867;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif; 
+    outline: none;
+  }
+   
+  .buttonDelete {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    padding : 2px 4px 0px 4px;
+    background: transparent;
+    border-radius: 5px;
+    color: #FF3E1D;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+  }
+  
+.buttonClose {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    padding : 0px 3px 4px 4px;
+    background: transparent;
+    border-radius: 5px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif; 
+    outline: none;
+  }

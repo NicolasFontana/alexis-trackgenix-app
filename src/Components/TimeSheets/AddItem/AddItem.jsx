@@ -64,7 +64,11 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
       if (response.status !== 200 && response.status !== 201) {
         return response.json().then(({ message }) => {
           setShowModal(true);
-          setShowTitle(message);
+          if (message == '"approved" must be a boolean') {
+            setShowTitle('"approved" must be true or false');
+          } else {
+            setShowTitle(message);
+          }
         });
       }
       setShowTitle('Time Sheet Created');
@@ -136,7 +140,9 @@ const AddItem = ({ show, closeForm, setShowModal, setShowTitle }) => {
           ></input>
         </div>
         <div>
-          <button onClick={closeForm}>Close</button>
+          <button className={styles.closeButton} onClick={closeForm}>
+            Close
+          </button>
         </div>
       </form>
     </div>

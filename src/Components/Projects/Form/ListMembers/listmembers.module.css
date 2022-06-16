@@ -2,10 +2,16 @@
     margin: 10px;
     display: flex;
     flex-direction: column;
+    height: 200px;
+    overflow-y: scroll;
     border: solid 0.5px;
     border-radius: 3px;
     font-size: 14px;
     align-items: center;
+}
+
+.container h3 {
+    color: #373867;
 }
 
 .container table {
@@ -19,7 +25,7 @@
 }
 .container a, .addmember{
     display: block;
-    margin: 13px auto;
+    margin: auto;
     padding: 7px;
     background: #AACE9B;
     border-radius: 5px;

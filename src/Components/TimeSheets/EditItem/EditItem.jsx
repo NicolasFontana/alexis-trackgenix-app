@@ -40,11 +40,6 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
     fetchProject();
   }, []);
 
-  const handleSelectedTask = (e) => {
-    const id = e;
-    setTask(id);
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -84,6 +79,7 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
           <label>Project</label>
           <select
             name="project"
+            value={projectId}
             onChange={(e) => {
               setProjectId(e.target.value);
             }}
@@ -99,8 +95,9 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
           <label>Task</label>
           <select
             name="Task"
+            value={task}
             onChange={(e) => {
-              handleSelectedTask(e.target.value);
+              setTask(e.target.value);
             }}
           >
             {listTask.map((task) => (
@@ -114,11 +111,11 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
           <label>Approved</label>
           <select
             name="approved"
+            value={approved}
             onChange={(e) => {
               setApproved(e.target.value);
             }}
           >
-            <option></option>
             <option value="true">True</option>
             <option value="false">False</option>
           </select>
@@ -133,7 +130,9 @@ const EditItem = ({ show, closeForm, previewTimeSheet, setShowModal, setShowTitl
           ></input>
         </div>
         <div>
-          <button onClick={closeForm}>Close</button>
+          <button className={styles.closeButton} onClick={closeForm}>
+            Close
+          </button>
         </div>
       </form>
     </div>

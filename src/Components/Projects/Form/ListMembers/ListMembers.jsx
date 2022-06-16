@@ -5,24 +5,23 @@ import ListItemMember from '../ListItemMember/ListItemMember';
 const ListMembers = ({ project, onAdd, edited }) => {
   let [members] = onAdd ? useState([]) : useState(project[0].members);
   members = members.filter((member) => member.employeeId !== null);
+  const handleOnClick = () => {
+    edited
+      ? (window.location.href = `addmembers?id=${project[0]._id}`)
+      : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+      ? (window.location.href = `addmembers?id=${project[0]._id}`)
+      : null;
+  };
   return onAdd ? (
     <></>
   ) : !members.length ? (
-    <a
-      onClick={() => {
-        edited
-          ? (window.location.href = `addmembers?id=${project[0]._id}`)
-          : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-          ? (window.location.href = `addmembers?id=${project[0]._id}`)
-          : null;
-      }}
-      className={styles.addmember}
-    >
+    <a onClick={() => handleOnClick()} className={styles.addmember}>
       Click here to add or edit members
     </a>
   ) : (
     <div className={styles.container}>
       <h3>Current team members</h3>
+      <a onClick={() => handleOnClick()}>Add or edit members</a>
       <table>
         <thead>
           <tr>
@@ -41,18 +40,6 @@ const ListMembers = ({ project, onAdd, edited }) => {
           )}
         </tbody>
       </table>
-      <a
-        onClick={() => {
-          edited
-            ? (window.location.href = `addmembers?id=${project[0]._id}`)
-            : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-            ? (window.location.href = `addmembers?id=${project[0]._id}`)
-            : null;
-        }}
-      >
-        Add or edit members
-      </a>
-      {/* <a href=>Add or edit members</a> */}
     </div>
   );
 };
