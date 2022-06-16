@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createEmployee, updateEmployee } from '../../../redux/employees/thunks';
 import styles from './form.module.css';
-import Preloader from '../../Shared/Preloader/Preloader';
+// import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Select from '../../Shared/Select';
 import ButtonText from '../../Shared/Buttons/ButtonText';
@@ -10,7 +10,7 @@ import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 
 const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.employees.isLoading);
+  // const isLoading = useSelector((state) => state.employees.isLoading);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
   const [userInput, setUserInput] = useState({
@@ -57,9 +57,7 @@ const Form = ({ closeModalForm, edit, item }) => {
     }
   };
 
-  return isLoading ? (
-    <Preloader />
-  ) : (
+  return (
     <form className={styles.container} onSubmit={onSubmit}>
       <Input
         label="First Name"

@@ -70,13 +70,7 @@ const Employees = () => {
           });
         }}
         title="Delete Employee"
-        message={
-          showModalFormDelete && isLoading ? (
-            <Preloader />
-          ) : (
-            'Are you sure you want to delete this employee?'
-          )
-        }
+        message={'Are you sure you want to delete this employee?'}
       />
     );
   }
@@ -126,6 +120,7 @@ const Employees = () => {
       {modalEdit}
       {modalAdd}
       {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <ButtonAdd
         clickAction={() => {
           setShowModalFormAdd(true);
