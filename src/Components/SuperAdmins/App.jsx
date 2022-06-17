@@ -81,7 +81,7 @@ const App = () => {
 
   return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
     <Preloader>
-      <p>Loading super admins</p>
+      <p>Loading Super Admins</p>
     </Preloader>
   ) : (
     <div className={styles.container}>
