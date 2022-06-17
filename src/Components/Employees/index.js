@@ -64,7 +64,7 @@ const Employees = () => {
           setShowModalFormDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(deleteEmployee(employeeId, (response) => setResponse(response))).then(() => {
+          dispatch(deleteEmployee(employeeId, setResponse)).then(() => {
             setShowModalFormDelete(false);
             setShowSuccessModal(true);
           });
