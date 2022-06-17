@@ -72,7 +72,7 @@ const Projects = () => {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
-        <AddForm closeModalForm={closeModalAdd} edit={false} />
+        <AddForm closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }

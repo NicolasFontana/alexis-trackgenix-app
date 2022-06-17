@@ -62,11 +62,14 @@ export const addProject = (newProject, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(addProjectSuccess(response.data));
-        dispatch(getProjects);
+        if (response.error === false) {
+          dispatch(addProjectSuccess(response.data));
+        }
+        dispatch(getProjects());
         setMessage(response);
         return response.data;
       })
+
       .catch((error) => {
         dispatch(addProjectError(error.toString()));
         setMessage(error);

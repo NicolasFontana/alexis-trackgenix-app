@@ -34,21 +34,15 @@ export const deleteProjectError = (error) => ({
   payload: error
 });
 
+export const addProjectSuccess = (data) => ({
+  type: ADD_PROJECT_SUCCESS,
+  payload: data
+});
 export const addProjectPending = () => ({
   type: ADD_PROJECT_PENDING
-});
-
-export const addProjectSuccess = (project) => ({
-  type: ADD_PROJECT_SUCCESS,
-  payload: project
 });
 
 export const addProjectError = (error) => ({
   type: ADD_PROJECT_ERROR,
   payload: error
 });
-
-/* export const cleanProjectError = () => ({
-  type: CLEAN_PROJECT_ERROR
-});
- */
