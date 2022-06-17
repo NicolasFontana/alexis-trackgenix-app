@@ -50,63 +50,62 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
   };
 
   return (
-    <section className={styles.container}>
-      <h2>Edit Admin</h2>
-      <form className={styles.form}>
-        <Input
-          label="Admin Name"
-          type="text"
-          name="firstName"
-          placeholder="Insert admin name"
-          value={adminInput.firstName}
-          onChange={onChange}
-          required={true}
-        />
-        <Input
-          label="Admin lastName"
-          type="text"
-          name="lastName"
-          placeholder="Insert admin lastName"
-          value={adminInput.lastName}
-          onChange={onChange}
-          required={true}
-        />
-        <Input
-          label="Email"
-          type="email"
-          name="email"
-          placeholder="Insert email"
-          value={adminInput.email}
-          onChange={onChange}
-          required={true}
-        />
-        <Input
-          label="Password"
-          type="pasword"
-          name="password"
-          placeholder="Insert Password"
-          value={adminInput.password}
-          onChange={onChange}
-          required={true}
-        />
-        <Input
-          label="Active"
-          name="active"
-          type="checkbox"
-          checked={adminInput.active}
-          onChange={onChangeActive}
-        />
+    <form className={styles.form}>
+      <Input
+        label="Admin Name"
+        type="text"
+        name="firstName"
+        placeholder="Insert admin name"
+        value={adminInput.firstName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Admin lastName"
+        type="text"
+        name="lastName"
+        placeholder="Insert admin lastName"
+        value={adminInput.lastName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Email"
+        type="email"
+        name="email"
+        placeholder="Insert email"
+        value={adminInput.email}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Password"
+        type="pasword"
+        name="password"
+        placeholder="Insert Password"
+        value={adminInput.password}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Active"
+        name="active"
+        type="checkbox"
+        checked={adminInput.active}
+        onChange={onChangeActive}
+      />
+      <div className={styles.buttonBox}>
         <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
-        <SuccessModal
-          show={showSuccessModal}
-          closeModal={() => {
-            setShowSuccessModal(false);
-          }}
-          closeModalForm={closeModalForm}
-          successResponse={response}
-        />
-      </form>
-    </section>
+      </div>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
+    </form>
   );
 };
 

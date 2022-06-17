@@ -85,14 +85,16 @@ const AdminsAdd = ({ closeModalForm }) => {
         checked={adminInput.active}
         onChange={onChangeActive}
       />
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Submit"
-      >
-        Creade
-      </ButtonText>
+      <div className={styles.buttonBox}>
+        <ButtonText
+          clickAction={() => {
+            onSubmit();
+          }}
+          label="Submit"
+        >
+          Creade
+        </ButtonText>
+      </div>
       <SuccessModal
         show={showSuccessModal}
         closeModal={() => {

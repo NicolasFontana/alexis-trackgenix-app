@@ -1,12 +1,14 @@
-.container {
+.form {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  width: 100%;
+  row-gap: 10px;
+  overflow: auto;
 }
 
-.form {
-  text-align: center;
+.buttonBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
