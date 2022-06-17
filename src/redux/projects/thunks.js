@@ -4,8 +4,26 @@ import {
   getProjectByIdError,
   updateProjectPending,
   updateProjectSuccess,
-  updateProjectError
+  updateProjectError,
+  getProjectsPending,
+  getProjectsSuccess,
+  getProjectsError
 } from './actions';
+
+export const getProjects = () => {
+  return (dispatch) => {
+    dispatch(getProjectsPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/projects`)
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getProjectsSuccess(response.data));
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(getProjectsError(error.toString()));
+      });
+  };
+};
 
 export const getProjectById = (id, setUserInput) => {
   return (dispatch) => {
@@ -44,7 +62,7 @@ export const updateProject = (id, body, setAlertMessage) => {
       .then((response) => {
         dispatch(updateProjectSuccess());
         setAlertMessage(response);
-        dispatch(getProjectById(id));
+        dispatch(getProjects());
         return response;
       })
       .catch((error) => {

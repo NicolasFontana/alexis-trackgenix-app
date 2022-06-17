@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import styles from './addMember.module.css';
 import Select from '../../../Shared/Select';
 import Input from '../../../Shared/Input';
-import Preloader from '../../../Shared/Preloader/Preloader';
 import ButtonText from '../../../Shared/Buttons/ButtonText';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../../redux/projects/thunks';
@@ -21,7 +20,6 @@ const AddMember = ({ itemId, functionValue }) => {
   const [alertMessage, setAlertMessage] = useState('');
 
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.projects.isLoading);
   const employees = useSelector((state) => state.employees.list);
 
   useEffect(() => {
@@ -81,10 +79,11 @@ const AddMember = ({ itemId, functionValue }) => {
               : 'Team member added successfully'
           })
         )
-      );
+      ).then(() => openAlertModal());
+    } else {
+      setAlertMessage({ error: true, message: 'Please complete all the fields' });
+      openAlertModal();
     }
-    setAlertMessage({ error: true, message: 'Please complete all the fields' });
-    openAlertModal();
   };
 
   const onSubmit = () => {
@@ -110,11 +109,7 @@ const AddMember = ({ itemId, functionValue }) => {
     setShowErrorSuccessModal(true);
   };
 
-  return isLoading ? (
-    <Preloader>
-      <p>Loading</p>
-    </Preloader>
-  ) : (
+  return (
     <div className={styles.divcontainer}>
       <form onSubmit={onSubmit} className={styles.container}>
         <Select

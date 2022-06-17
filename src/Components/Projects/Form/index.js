@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import ListMembers from './ListMembers/ListMembers';
-import Preloader from '../../Shared/Preloader/Preloader';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import AlertModal from '../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../redux/projects/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
+const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) => {
   const [edited, setEdited] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.projects.isLoading);
-  const project = useSelector((state) => state.projects.project);
   const [userInput, setUserInput] = useState({
     name: '',
     startDate: '',
@@ -42,9 +39,10 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
   }, []);
 
   const handleOnSubmit = () => {
-    dispatch(updateProject(itemId, userInput, (alertMessage) => setAlertMessage(alertMessage)));
+    dispatch(
+      updateProject(itemId, userInput, (alertMessage) => setAlertMessage(alertMessage))
+    ).then(() => openAlertModal());
     setEdited(false);
-    openAlertModal();
   };
 
   const onSubmit = () => {
@@ -81,11 +79,7 @@ const ProjectForm = ({ edit, itemId, functionValue, closeModalForm }) => {
     setShowErrorSuccessModal(true);
   };
 
-  return isLoading ? (
-    <Preloader>
-      <p>Loading project</p>
-    </Preloader>
-  ) : (
+  return (
     <>
       <form className={styles.container}>
         <div className={!edit ? styles.maincontainer.add : styles.maincontainer}>

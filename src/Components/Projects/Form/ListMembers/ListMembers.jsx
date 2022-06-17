@@ -5,10 +5,9 @@ import ButtonAdd from '../../../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
 import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { updateProject } from '../../../../redux/projects/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const ListMembers = ({ functionValue }) => {
-  const project = useSelector((state) => state.projects.project);
+const ListMembers = ({ project, functionValue }) => {
   let [members, setMembers] = useState(project.members);
   members = members.filter((member) => member.employeeId !== null);
   let membersToSave;
@@ -35,8 +34,7 @@ const ListMembers = ({ functionValue }) => {
           message: 'Team member deleted successfully'
         })
       )
-    );
-    openAlertModal();
+    ).then(() => openAlertModal());
   };
 
   const closeConfirmModal = () => {

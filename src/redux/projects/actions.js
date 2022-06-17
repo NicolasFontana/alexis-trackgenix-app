@@ -1,4 +1,7 @@
 import {
+  GET_PROJECT_ERROR,
+  GET_PROJECT_PENDING,
+  GET_PROJECT_SUCCESS,
   GET_PROJECT_BY_ID_PENDING,
   GET_PROJECT_BY_ID_SUCCESS,
   GET_PROJECT_BY_ID_ERROR,
@@ -6,6 +9,20 @@ import {
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_ERROR
 } from './constants';
+
+export const getProjectsSuccess = (projects) => ({
+  type: GET_PROJECT_SUCCESS,
+  payload: projects
+});
+
+export const getProjectsPending = () => ({
+  type: GET_PROJECT_PENDING
+});
+
+export const getProjectsError = (error) => ({
+  type: GET_PROJECT_ERROR,
+  payload: error
+});
 
 export const getProjectByIdPending = () => {
   return {
