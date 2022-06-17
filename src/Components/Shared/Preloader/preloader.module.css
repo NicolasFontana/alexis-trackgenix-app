@@ -8,7 +8,7 @@
 
 .containerLoading p {
   margin-bottom: 30px;
-  color: #232F3E;
+  color: #232f3e;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
 }
@@ -24,13 +24,13 @@
   transform-origin: 40px 40px;
 }
 .ldsRoller div:after {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #AACE9B;
+  background: #76a068;
   margin: -4px 0 0 -4px;
 }
 .ldsRoller div:nth-child(1) {
