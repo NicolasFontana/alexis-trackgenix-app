@@ -1,8 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import Header from '../Header/index';
-import Footer from '../Footer/index';
-import Admins from '../Admins/index';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import AdminsAdd from '../Admins/Add';
 import AdminsEdit from '../Admins/Edit';
 import SuperAdmins from '../SuperAdmins/index';
@@ -15,31 +12,40 @@ import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 import TasksForm from '../Tasks/Form/Form';
+import Admins from '../Admins/index';
+import Footer from '../Footer/index';
+import Header from '../Header/index';
+import SideBar from '../SideBar/index';
 import TasksEdit from '../Tasks/Edit/Edit';
 
 function Layout() {
   return (
     <div className={styles.container}>
       <Header />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/admins" component={Admins} />
-        <Route exact path="/admins/add" component={AdminsAdd} />
-        <Route exact path="/admins/edit" component={AdminsEdit} />
-        <Route exact path="/super-admins" component={SuperAdmins} />
-        <Route exact path="/employees" component={Employees} />
-        <Route exact path="/projects" component={Projects} />
-        <Route exact path="/projects/form" component={ProjectsForm} />
-        <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
-        <Route exact path="/time-sheets" component={TimeSheets} />
-        <Route exact path="/tasks" component={Tasks} />
-        <Route exact path="/tasks/add" component={TasksForm} />
-        <Route exact path="/tasks/edit" component={TasksEdit} />
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </Switch>
+      <div className={styles.currentScreen}>
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/admins" component={Admins} />
+          <Route exact path="/admins/add" component={AdminsAdd} />
+          <Route exact path="/admins/edit" component={AdminsEdit} />
+          <Route exact path="/super-admins" component={SuperAdmins} />
+          <Route exact path="/employees" component={Employees} />
+          <Route exact path="/projects" component={Projects} />
+          <Route exact path="/projects/form" component={ProjectsForm} />
+          <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
+          <Route exact path="/time-sheets" component={TimeSheets} />
+          <Route exact path="/tasks" component={Tasks} />
+          <Route exact path="/tasks/add" component={TasksForm} />
+          <Route exact path="/tasks/edit" component={TasksEdit} />
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+        </Switch>
+      </div>
       <Footer />
+      <div className={styles.sidebar}>
+        <SideBar />
+      </div>
     </div>
   );
 }

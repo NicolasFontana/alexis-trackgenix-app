@@ -1,10 +1,7 @@
 .table {
   margin: 0px auto;
   width: 100%;
-}
-
-.tableHead {
-  background-color: #f0f4f9;
+  border-collapse: collapse;
 }
 
 .tableCell {
@@ -13,6 +10,30 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.row th {
+.th {
   background-color: #e4e4e4;
+  color: #373867;
+  padding: 20px;
+}
+
+.tr {
+  border-bottom: 1px solid #37386725;
+}
+
+.tr:nth-child(even) {
+  background: #aace9b44;
+}
+
+.tbody tr:hover {
+  background-color: #aace9b;
+}
+
+.td {
+  padding: 20px;
+  text-align: center;
+  color: #232f3e;
+}
+
+.tdButton {
+  text-align: center;
 }

@@ -1,39 +1,23 @@
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
-function Header() {
+const user = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+
+const Header = () => {
+  const location = useLocation();
+
   return (
     <header>
-      <nav className={styles.navbar}>
-        <Link to="/home">
-          <div className={styles.appName}>
-            Track<span>GENIX</span>
-          </div>
-        </Link>
-        <ul className={styles.rutes}>
-          <li>
-            <Link to="/admins">admins</Link>
-          </li>
-          <li>
-            <Link to="/super-admins">super admins</Link>
-          </li>
-          <li>
-            <Link to="/employees">employees</Link>
-          </li>
-          <li>
-            <Link to="/projects">projects</Link>
-          </li>
-          <li>
-            <Link to="/time-sheets">timesheets</Link>
-          </li>
-          <li>
-            <Link to="/tasks">tasks</Link>
-          </li>
-        </ul>
-      </nav>
+      <div className={styles.pathname}>{location.pathname.slice(1)}</div>
+      <div className={styles.user}>
+        <div> {user} </div>
+        <p> Username</p>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;
