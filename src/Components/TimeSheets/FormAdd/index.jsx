@@ -28,10 +28,6 @@ const FormAdd = ({ closeModalForm }) => {
     }
   };
 
-  useEffect(() => {
-    fetchTask();
-  }, []);
-
   const fetchProject = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
@@ -43,6 +39,7 @@ const FormAdd = ({ closeModalForm }) => {
   };
 
   useEffect(() => {
+    fetchTask();
     fetchProject();
   }, []);
 
@@ -53,17 +50,14 @@ const FormAdd = ({ closeModalForm }) => {
 
   const onChangeProject = (e) => {
     setProjectId(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSelectedTask = (e) => {
     setTask(e.target.value);
-    console.log(e.target.value);
   };
 
   const onChangeApproved = (e) => {
     setApproved(e.target.value);
-    console.log(e.target.value);
   };
 
   return loading ? (
@@ -108,14 +102,12 @@ const FormAdd = ({ closeModalForm }) => {
           closeModalForm();
         }}
         label="Cancel"
-      >
-        Cancel
-      </ButtonText>
+      />
       <ButtonText
         clickAction={() => {
           onSubmit();
         }}
-        label="Submit"
+        label="Create"
       />
       <ErrorSuccessModal
         show={showMessageModal}

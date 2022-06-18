@@ -30,10 +30,6 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     }
   };
 
-  useEffect(() => {
-    fetchTask();
-  }, []);
-
   const fetchProject = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
@@ -45,6 +41,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   };
 
   useEffect(() => {
+    fetchTask();
     fetchProject();
   }, []);
 
@@ -114,7 +111,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         clickAction={() => {
           onSubmit();
         }}
-        label="Submit"
+        label="Edit"
       />
       <ResponseModal
         show={showMessageModal}
