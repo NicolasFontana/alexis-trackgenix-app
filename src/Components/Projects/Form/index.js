@@ -141,6 +141,7 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
                 onAdd={!edit}
                 edited={edited}
                 functionValue={functionValue}
+                setEdited={setEdited}
               />
             </div>
           </div>

@@ -7,7 +7,7 @@ import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { updateProject } from '../../../../redux/projects/thunks';
 import { useDispatch } from 'react-redux';
 
-const ListMembers = ({ project, functionValue }) => {
+const ListMembers = ({ edited, setEdited, project, functionValue }) => {
   let [members, setMembers] = useState(project.members);
   members = members.filter((member) => member.employeeId !== null);
   let membersToSave;
@@ -35,6 +35,7 @@ const ListMembers = ({ project, functionValue }) => {
         })
       )
     ).then(() => openAlertModal());
+    setEdited(true);
   };
 
   const closeConfirmModal = () => {
@@ -54,12 +55,20 @@ const ListMembers = ({ project, functionValue }) => {
     setShowErrorSuccessModal(true);
   };
 
+  const handleOnClick = () => {
+    edited
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? functionValue(true)
+        : null
+      : functionValue(true);
+  };
+
   return !members.length ? (
     <div className={styles.header}>
       <h3>Team members</h3>
       <ButtonAdd
         clickAction={() => {
-          functionValue(true);
+          handleOnClick();
         }}
       ></ButtonAdd>
     </div>
@@ -69,7 +78,7 @@ const ListMembers = ({ project, functionValue }) => {
         <h3>Team members</h3>
         <ButtonAdd
           clickAction={() => {
-            functionValue(true);
+            handleOnClick();
           }}
         ></ButtonAdd>
       </div>
