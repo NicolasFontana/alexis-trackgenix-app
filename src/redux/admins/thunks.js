@@ -73,7 +73,7 @@ export const editAdmin = (idDelete, editedAdmin, setResponse) => {
   };
 };
 
-export const delAdmin = (id) => {
+export const delAdmin = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
@@ -83,10 +83,12 @@ export const delAdmin = (id) => {
       .then((response) => {
         dispatch(deleteAdminSucces(response.data));
         dispatch(getAdmins());
+        setResponse(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(deleteAdminError(error.toString()));
+        setResponse(error);
       });
   };
 };

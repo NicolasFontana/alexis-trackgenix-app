@@ -9,6 +9,7 @@ import Form from './Add/index';
 import EditForm from './Edit/index';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import SuccessModal from '../Shared/ErrorSuccessModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const App = () => {
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [idDelete, setIdDelete] = useState();
 
   useEffect(() => {
@@ -61,8 +64,9 @@ const App = () => {
           setShowModalFormDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(delAdmin(idDelete));
+          dispatch(delAdmin(idDelete, setResponse));
           setShowModalFormDelete(false);
+          setShowSuccessModal(true);
         }}
         title="Delete Admin"
         message="Are you sure you want to delete this admin?"
@@ -70,7 +74,11 @@ const App = () => {
     );
   }
 
-  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
+  return isLoading &&
+    !showModalFormEdit &&
+    !showModalFormAdd &&
+    !showModalFormDelete &&
+    !showSuccessModal ? (
     <Preloader>
       <p>Loading admins</p>
     </Preloader>
@@ -92,10 +100,21 @@ const App = () => {
       {modalEdit}
       {modalAdd}
       {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <ButtonAdd
         clickAction={() => {
           setShowModalFormAdd(true);
         }}
+      />
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={() => {
+          setShowSuccessModal(false);
+        }}
+        successResponse={response}
       />
     </div>
   );
