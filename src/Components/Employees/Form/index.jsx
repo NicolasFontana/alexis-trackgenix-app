@@ -69,7 +69,6 @@ const Form = ({ closeModalForm, edit, item }) => {
       });
     }
   };
-  console.log(response);
 
   return (
     <form className={styles.container} onSubmit={onSubmit}>
