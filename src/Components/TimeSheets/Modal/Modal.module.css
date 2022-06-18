@@ -10,7 +10,7 @@
   left: 0;
   top: 0;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
@@ -27,7 +27,7 @@
 }
 
 .tittle {
-  background: #232F3E;
+  background: #232f3e;
   width: 100%;
   color: #fff;
   padding: 15px;
@@ -45,7 +45,7 @@
 }
 
 .btnClose {
-  background-color: #AACE9B;
+  background-color: #76a068;
   font-size: 16px;
   border-radius: 5px;
   padding: 10px 20px;
