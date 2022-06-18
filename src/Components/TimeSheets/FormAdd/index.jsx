@@ -3,13 +3,11 @@ import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
-import Preloader from '../../Shared/Preloader/Preloader';
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.timesheets.loading);
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
   const [task, setTask] = useState('');
@@ -60,9 +58,7 @@ const FormAdd = ({ closeModalForm }) => {
     setApproved(e.target.value);
   };
 
-  return loading ? (
-    <Preloader />
-  ) : (
+  return (
     <form className={styles.form}>
       <Select
         label="Projects"

@@ -126,6 +126,7 @@ function TimeSheets() {
           setShowModalEdit(true);
         }}
       />
+      {loading ? <Preloader /> : null}
       {modalDelete}
       {modalAdd}
       {modalEdit}

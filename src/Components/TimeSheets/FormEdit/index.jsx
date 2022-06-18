@@ -4,12 +4,10 @@ import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
-import { useDispatch, useSelector } from 'react-redux';
-import Preloader from '../../Shared/Preloader/Preloader';
+import { useDispatch } from 'react-redux';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.timesheets.loading);
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
@@ -62,9 +60,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     setShowMessageModal(false);
   };
 
-  return loading ? (
-    <Preloader />
-  ) : (
+  return (
     <form className={styles.form}>
       <Select
         label="Projects"
