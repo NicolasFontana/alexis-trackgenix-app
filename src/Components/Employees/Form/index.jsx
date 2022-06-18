@@ -45,15 +45,31 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   const onSubmit = () => {
     if (edit) {
-      dispatch(updateEmployee(userInput, item._id, setResponse)).then(() => {
+      if (
+        userInput.firstName === item.firstName &&
+        userInput.lastName === item.lastName &&
+        userInput.phone === item.phone &&
+        userInput.email === item.email &&
+        userInput.password === item.password &&
+        userInput.active === (item.active === true ? 'Active' : 'Inactive') &&
+        userInput.isProjectManager === (item.isProjectManager === true ? 'Yes' : 'No') &&
+        userInput.projects.toString() === item.projects.map((x) => x._id).toString() &&
+        userInput.timeSheets.toString() === item.timeSheets.map((x) => x._id).toString()
+      ) {
+        setResponse({ message: "There haven't been any changes", data: {}, error: true });
         setShowSuccessModal(true);
-      });
+      } else {
+        dispatch(updateEmployee(userInput, item._id, setResponse)).then(() => {
+          setShowSuccessModal(true);
+        });
+      }
     } else {
       dispatch(createEmployee(userInput, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
     }
   };
+  console.log(response);
 
   return (
     <form className={styles.container} onSubmit={onSubmit}>
