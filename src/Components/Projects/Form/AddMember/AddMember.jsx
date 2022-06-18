@@ -75,8 +75,8 @@ const AddMember = ({ itemId, functionValue }) => {
             message: alertMessage.error
               ? alertMessage.message
               : edit
-              ? 'Team member edited successfully'
-              : 'Team member added successfully'
+              ? 'Team members edited successfully'
+              : 'Team members added successfully'
           })
         )
       ).then(() => openAlertModal());
@@ -90,7 +90,7 @@ const AddMember = ({ itemId, functionValue }) => {
     edited
       ? handleOnSubmit()
       : (setEdited(false),
-        setAlertMessage({ error: true, message: 'No input changed. The member stayed the same' }),
+        setAlertMessage({ error: true, message: 'No member selected' }),
         openAlertModal());
   };
   const handleOnClick = () => {

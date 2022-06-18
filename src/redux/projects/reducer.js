@@ -13,7 +13,6 @@ import {
 const initialState = {
   project: {},
   list: [],
-  isEditing: false,
   isLoading: true,
   error: false
 };
@@ -62,8 +61,7 @@ export const projectsReducer = (state = initialState, action) => {
     case UPDATE_PROJECT_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        isEditing: true
+        isLoading: false
       };
     case UPDATE_PROJECT_ERROR:
       return {

@@ -7,7 +7,7 @@ import AlertModal from '../../../Shared/ErrorSuccessModal';
 import { updateProject } from '../../../../redux/projects/thunks';
 import { useDispatch } from 'react-redux';
 
-const ListMembers = ({ edited, setEdited, project, functionValue }) => {
+const ListMembers = ({ edited, project, functionValue }) => {
   let [members, setMembers] = useState(project.members);
   members = members.filter((member) => member.employeeId !== null);
   let membersToSave;
@@ -35,7 +35,6 @@ const ListMembers = ({ edited, setEdited, project, functionValue }) => {
         })
       )
     ).then(() => openAlertModal());
-    setEdited(true);
   };
 
   const closeConfirmModal = () => {

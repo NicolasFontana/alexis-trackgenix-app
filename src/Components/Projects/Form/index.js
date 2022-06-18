@@ -8,7 +8,7 @@ import AlertModal from '../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../redux/projects/thunks';
 import { useDispatch } from 'react-redux';
 
-const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) => {
+const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
   const [edited, setEdited] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -49,7 +49,7 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
     edited
       ? handleOnSubmit()
       : (setEdited(false),
-        setAlertMessage({ error: true, message: 'No input changed. The project stayed the same' }),
+        setAlertMessage({ error: true, message: 'No changes were made' }),
         openAlertModal());
   };
 
@@ -63,13 +63,13 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
     setEdited(true);
   };
 
-  const handleOnClick = () => {
-    edited
-      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-        ? closeModalForm()
-        : null
-      : closeModalForm();
-  };
+  // const handleOnClick = () => {
+  //   edited
+  //     ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+  //       ? closeModalForm()
+  //       : null
+  //     : closeModalForm();
+  // };
 
   const closeAlertModal = () => {
     setShowErrorSuccessModal(false);
@@ -82,7 +82,7 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
   return (
     <>
       <form className={styles.container}>
-        <div className={!edit ? styles.maincontainer.add : styles.maincontainer}>
+        <div className={styles.maincontainer}>
           <div className={styles.divcontainer}>
             <Input
               label="Project Name"
@@ -113,7 +113,7 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
               label="Start Date"
               type="date"
               name="startDate"
-              value={!edit ? userInput.startDate : userInput.startDate.slice(0, 10)}
+              value={userInput.startDate.slice(0, 10)}
               onChange={onChange}
               required={true}
             />
@@ -121,7 +121,7 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
               label="End Date"
               type="date"
               name="endDate"
-              value={!edit ? userInput.endDate : userInput.endDate.slice(0, 10)}
+              value={userInput.endDate.slice(0, 10)}
               onChange={onChange}
               required={true}
             />
@@ -136,29 +136,23 @@ const ProjectForm = ({ project, edit, itemId, functionValue, closeModalForm }) =
               required={true}
             />
             <div>
-              <ListMembers
-                project={project}
-                onAdd={!edit}
-                edited={edited}
-                functionValue={functionValue}
-                setEdited={setEdited}
-              />
+              <ListMembers project={project} edited={edited} functionValue={functionValue} />
             </div>
           </div>
         </div>
       </form>
       <div>
-        <ButtonText
+        {/* <ButtonText
           clickAction={() => {
             handleOnClick();
           }}
           label="Close"
-        ></ButtonText>
+        ></ButtonText> */}
         <ButtonText
           clickAction={() => {
             onSubmit();
           }}
-          label="Submit"
+          label="Edit"
         ></ButtonText>
         <AlertModal
           show={showErrorSuccessModal}
