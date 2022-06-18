@@ -25,9 +25,19 @@ const Edit = ({ task, closeModalForm }) => {
   };
 
   const onSubmit = () => {
-    dispatch(editTask(userInput, task._id, (response) => setMessage(response))).then(() => {
+    if (
+      userInput.taskName === task.taskName &&
+      userInput.startDate === task.startDate &&
+      userInput.workedHours === task.workedHours &&
+      userInput.description === task.description
+    ) {
+      setMessage({ message: "There haven't been any changes", data: {}, error: true });
       setShowMessageModal(true);
-    });
+    } else {
+      dispatch(editTask(userInput, task._id, (response) => setMessage(response))).then(() => {
+        setShowMessageModal(true);
+      });
+    }
   };
 
   return (
