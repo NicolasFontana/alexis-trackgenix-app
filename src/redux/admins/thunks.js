@@ -28,33 +28,6 @@ export const getAdmins = () => {
   };
 };
 
-// export const addAdmin = (admins) => {
-//   return async (dispatch) => {
-//     dispatch(addAdminPending());
-//     try {
-//       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//           firstName: admins.firstName,
-//           lastName: admins.lastName,
-//           email: admins.email,
-//           password: admins.password,
-//           active: admins.active
-//         })
-//       });
-//       const res = await response.json();
-//       dispatch(addAdminSucces(res.data));
-//       return { error: false, message: res.message };
-//     } catch (error) {
-//       dispatch(addAdminError(error.toString()));
-//       return { error: true, message: error };
-//     }
-//   };
-// };
-
 export const addAdmin = (newAdmin, setResponse) => {
   return async (dispatch) => {
     dispatch(addAdminPending());
