@@ -7,6 +7,8 @@ import Table from '../Shared/Table/Table';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import ButtonText from '../Shared/Buttons/ButtonText';
+import Select from '../Shared/Select';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import SuccessModal from '../Shared/ErrorSuccessModal';
 
@@ -115,6 +117,14 @@ const Employees = () => {
         editAction={(id) => {
           setEmployeeId(id);
           setShowModalFormEdit(true);
+        }}
+        modifiers={{
+          firstName: (x) => <ButtonText label={x}></ButtonText>,
+          active: (x) => x.toString(),
+          isProjectManager: (x) => x.toString(),
+          // projects: (x) => x.length,
+          projects: (x) => <Select data={[x.map((project) => project._id)]} />,
+          timeSheets: (x) => x.length
         }}
       />
       {modalEdit}
