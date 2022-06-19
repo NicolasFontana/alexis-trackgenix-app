@@ -13,7 +13,7 @@ import Select from './Select';
 import Table from './Table/Table';
 import Textarea from './Textarea';
 
-export default {
+export {
   ButtonAdd,
   ButtonClose,
   ButtonDelete,

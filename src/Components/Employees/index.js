@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
-import Preloader from '../Shared/Preloader/Preloader';
-import Table from '../Shared/Table/Table';
-import ModalForm from '../Shared/ModalForm';
-import Form from './Form';
-import ButtonAdd from '../Shared/Buttons/ButtonAdd';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import SuccessModal from '../Shared/ErrorSuccessModal';
+
+import {
+  Preloader,
+  Table,
+  ModalForm,
+  Form,
+  ButtonAdd,
+  ConfirmModal,
+  ErrorSuccessModal
+} from 'Components/Shared';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -126,7 +129,7 @@ const Employees = () => {
           setShowModalFormAdd(true);
         }}
       />
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);
