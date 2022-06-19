@@ -114,16 +114,16 @@ const Employees = () => {
           setEmployeeId(id);
           setShowModalFormDelete(true);
         }}
-        editAction={(id) => {
-          setEmployeeId(id);
-          setShowModalFormEdit(true);
-        }}
+        // editAction={(id) => {
+        //   setEmployeeId(id);
+        //   setShowModalFormEdit(true);
+        // }}
         modifiers={{
           firstName: (x) => <ButtonText label={x}></ButtonText>,
           active: (x) => x.toString(),
           isProjectManager: (x) => x.toString(),
           // projects: (x) => x.length,
-          projects: (x) => <Select data={[x.map((project) => project._id)]} />,
+          projects: (x) => <Select data={[...x.map((project) => project.name)]} />,
           timeSheets: (x) => x.length
         }}
       />
