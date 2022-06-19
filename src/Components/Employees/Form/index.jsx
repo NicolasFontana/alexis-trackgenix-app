@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createEmployee, updateEmployee } from '../../../redux/employees/thunks';
+import { createEmployee, updateEmployee } from 'redux/employees/thunks';
 import styles from './form.module.css';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
-import ButtonText from '../../Shared/Buttons/ButtonText';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import Input from 'Components/Shared/Input';
+import Select from 'Components/Shared/Select';
+import ButtonText from 'Components/Shared/Buttons/ButtonText';
+import SuccessModal from 'Components/Shared/ErrorSuccessModal/index';
 
 const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
