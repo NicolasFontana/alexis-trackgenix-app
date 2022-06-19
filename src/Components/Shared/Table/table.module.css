@@ -29,9 +29,11 @@
 }
 
 .td {
+  max-width: 8vw;
   padding: 20px;
   text-align: center;
   color: #232f3e;
+  word-wrap: break-word;
 }
 
 .tdButton {
