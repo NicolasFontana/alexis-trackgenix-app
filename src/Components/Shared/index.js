@@ -8,6 +8,9 @@ import ConfirmModal from './confirmationModal/confirmModal';
 import Input from './Input';
 import ModalForm from './ModalForm';
 import NavBar from './NavBar/navbar';
+import Header from './Header';
+import Footer from './Footer';
+import SideBar from './SideBar';
 import Preloader from './Preloader/Preloader';
 import Select from './Select';
 import Table from './Table/Table';
@@ -24,6 +27,9 @@ export {
   Input,
   ModalForm,
   NavBar,
+  Header,
+  Footer,
+  SideBar,
   Preloader,
   Select,
   Table,

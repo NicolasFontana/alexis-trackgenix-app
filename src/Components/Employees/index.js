@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
-
+import Form from './Form';
 import {
   Preloader,
   Table,
   ModalForm,
-  Form,
   ButtonAdd,
   ConfirmModal,
   ErrorSuccessModal
