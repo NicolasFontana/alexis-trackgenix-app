@@ -27,7 +27,6 @@ const Table = (props) => {
             return (
               <tr key={row._id} className={styles.tr}>
                 {headers.map((header, index) => {
-                  console.log(modifiers[header]);
                   return (
                     <td key={`${row._id}-${index}`} className={styles.td}>
                       {modifiers[header] ? modifiers[header](row[header]) : row[header]}
