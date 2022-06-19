@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createEmployee, updateEmployee } from '../../../redux/employees/thunks';
+import { createEmployee, updateEmployee } from 'redux/employees/thunks';
 import styles from './form.module.css';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
-import ButtonText from '../../Shared/Buttons/ButtonText';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { Input, Select, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 
 const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
@@ -152,7 +149,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         }}
         label={edit ? 'Edit' : 'Create'}
       />
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);
