@@ -4,11 +4,10 @@ import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
 import styles from './employees.module.css';
 import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
+import Select from '../Shared/Select';
 import ModalForm from '../Shared/ModalForm';
 import Form from './Form';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
-import ButtonText from '../Shared/Buttons/ButtonText';
-import Select from '../Shared/Select';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import SuccessModal from '../Shared/ErrorSuccessModal';
 
@@ -89,7 +88,6 @@ const Employees = () => {
       <Table
         data={employees}
         headers={[
-          '_id',
           'firstName',
           'lastName',
           'phone',
@@ -100,7 +98,6 @@ const Employees = () => {
           'timeSheets'
         ]}
         titles={[
-          'ID',
           'Name',
           'Surname',
           'Phone',
@@ -114,17 +111,15 @@ const Employees = () => {
           setEmployeeId(id);
           setShowModalFormDelete(true);
         }}
-        // editAction={(id) => {
-        //   setEmployeeId(id);
-        //   setShowModalFormEdit(true);
-        // }}
+        editAction={(id) => {
+          setEmployeeId(id);
+          setShowModalFormEdit(true);
+        }}
         modifiers={{
-          firstName: (x) => <ButtonText label={x}></ButtonText>,
           active: (x) => (x === true ? 'Active' : 'Inactive'),
           isProjectManager: (x) => (x === true ? 'Yes' : 'No'),
-          // projects: (x) => x.length,
           projects: (x) => <Select data={[...x.map((project) => project.name)]} />,
-          timeSheets: (x) => x.length
+          timeSheets: (x) => <Select data={[...x.map((timesheet) => timesheet._id)]} />
         }}
       />
       {modalEdit}

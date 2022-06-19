@@ -30,11 +30,6 @@ const Table = (props) => {
                   return (
                     <td key={`${row._id}-${index}`} className={styles.td}>
                       {modifiers[header] ? modifiers[header](row[header]) : row[header]}
-                      {/* {Array.isArray(row[header])
-                        ? row[header].length
-                        : row[header] === false || row[header] === true
-                        ? row[header].toString()
-                        : row[header]} */}
                     </td>
                   );
                 })}
