@@ -120,8 +120,8 @@ const Employees = () => {
         // }}
         modifiers={{
           firstName: (x) => <ButtonText label={x}></ButtonText>,
-          active: (x) => x.toString(),
-          isProjectManager: (x) => x.toString(),
+          active: (x) => (x === true ? 'Active' : 'Inactive'),
+          isProjectManager: (x) => (x === true ? 'Yes' : 'No'),
           // projects: (x) => x.length,
           projects: (x) => <Select data={[...x.map((project) => project.name)]} />,
           timeSheets: (x) => x.length
