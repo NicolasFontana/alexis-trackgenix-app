@@ -12,7 +12,7 @@
 }
 .navbar li {
   display: table-cell;
-  padding-top: 30px ;
+  padding-top: 30px;
   list-style: none;
 }
 
@@ -33,29 +33,18 @@
   text-decoration: none;
 }
 
-.link *, .homepage *{
+.link *,
+.homepage * {
   color: #ffffff;
   margin-right: 2px;
 }
 
-
-.link, .homepage{
+.link,
+.homepage {
   color: #ffffff;
 }
 
-.link:hover, .homepage:hover{
-  color: #AACE9B;
-} 
-
-.link:active, .homepage:active{
-  font-weight: 700;
-  color: #AACE9B;
-  text-shadow: 1px 1px 1px grey;
+.link:hover,
+.homepage:hover {
+  color: #76a068;
 }
-
-.link:focus, .homepage:focus{
-  font-weight: 700;
-  color: #AACE9B;
-  text-shadow: 1px 1px 1px grey;
-}
-

@@ -1,10 +1,16 @@
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { adminsReducer } from './admins/reducer';
+import { employeesReducer } from './employees/reducer';
+import { projectReducer } from './projects/reducer';
+import { tasksReducer } from './tasks/reducer';
 
 const rootReducer = combineReducers({
-  admins: adminsReducer
+  admins: adminsReducer,
+  employees: employeesReducer,
+  tasks: tasksReducer,
+  projects: projectReducer
 });
 
 const configureStore = () => {

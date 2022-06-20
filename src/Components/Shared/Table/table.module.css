@@ -21,11 +21,11 @@
 }
 
 .tr:nth-child(even) {
-  background: #aace9b44;
+  background: #76a06844;
 }
 
 .tbody tr:hover {
-  background-color: #aace9b;
+  background-color: #76a068;
 }
 
 .td {

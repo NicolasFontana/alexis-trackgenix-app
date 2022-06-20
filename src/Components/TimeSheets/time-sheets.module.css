@@ -14,10 +14,9 @@
   flex-direction: column;
 }
 
-
 .loader {
   border: 10px solid #f3f3f3;
-  border-top: 10px solid #aace9b;
+  border-top: 10px solid #76a068;
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -28,9 +27,9 @@
   margin-bottom: 20px;
   width: 80px;
   height: 80px;
-  background-color: #aace9b;
+  background-color: #76a068;
   border-radius: 50%;
-  border-color: #aace9b;
+  border-color: #76a068;
   box-shadow: 2px 2px 2px grey;
   text-transform: uppercase;
   text-align: center;
