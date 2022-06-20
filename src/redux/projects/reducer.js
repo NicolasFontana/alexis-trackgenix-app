@@ -7,17 +7,24 @@ import {
   GET_PROJECT_BY_ID_ERROR,
   UPDATE_PROJECT_PENDING,
   UPDATE_PROJECT_SUCCESS,
-  UPDATE_PROJECT_ERROR
+  UPDATE_PROJECT_ERROR,
+  ADD_PROJECT_ERROR,
+  ADD_PROJECT_PENDING,
+  ADD_PROJECT_SUCCESS,
+  DELETE_PROJECT_ERROR,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_SUCCESS
 } from './constants';
 
 const initialState = {
   project: {},
   list: [],
   isLoading: true,
-  error: false
+  error: false,
+  message: ''
 };
 
-export const projectsReducer = (state = initialState, action) => {
+export const projectReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROJECT_SUCCESS:
       return {
@@ -31,6 +38,23 @@ export const projectsReducer = (state = initialState, action) => {
         isLoading: true
       };
     case GET_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case DELETE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((t) => t._id !== action.payload),
+        isLoading: false
+      };
+    case DELETE_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DELETE_PROJECT_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -68,6 +92,24 @@ export const projectsReducer = (state = initialState, action) => {
         ...state,
         error: action.payload,
         isLoading: false
+      };
+    case ADD_PROJECT_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        isLoading: false
+      };
+    case ADD_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+    case ADD_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
       };
     default:
       return state;

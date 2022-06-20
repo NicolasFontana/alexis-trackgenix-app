@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import styles from './form.module.css';
-import ListMembers from './ListMembers/ListMembers';
+import { useEffect, useState } from 'react';
 import Input from '../../Shared/Input';
 import Textarea from '../../Shared/Textarea';
+import styles from './form.module.css';
+import ListMembers from './ListMembers/ListMembers';
 import ButtonText from '../../Shared/Buttons/ButtonText';
 import AlertModal from '../../Shared/ErrorSuccessModal';
 import { getProjectById, updateProject } from '../../../redux/projects/thunks';

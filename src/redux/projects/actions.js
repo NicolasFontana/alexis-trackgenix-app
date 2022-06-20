@@ -7,7 +7,13 @@ import {
   GET_PROJECT_BY_ID_ERROR,
   UPDATE_PROJECT_PENDING,
   UPDATE_PROJECT_SUCCESS,
-  UPDATE_PROJECT_ERROR
+  UPDATE_PROJECT_ERROR,
+  ADD_PROJECT_ERROR,
+  ADD_PROJECT_PENDING,
+  ADD_PROJECT_SUCCESS,
+  DELETE_PROJECT_ERROR,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_SUCCESS
 } from './constants';
 
 export const getProjectsSuccess = (projects) => ({
@@ -57,3 +63,27 @@ export const updateProjectError = (error) => {
     payload: error
   };
 };
+export const deleteProjectSuccess = (projectsId) => ({
+  type: DELETE_PROJECT_SUCCESS,
+  payload: projectsId
+});
+export const deleteProjectPending = () => ({
+  type: DELETE_PROJECT_PENDING
+});
+export const deleteProjectError = (error) => ({
+  type: DELETE_PROJECT_ERROR,
+  payload: error
+});
+
+export const addProjectSuccess = (data) => ({
+  type: ADD_PROJECT_SUCCESS,
+  payload: data
+});
+export const addProjectPending = () => ({
+  type: ADD_PROJECT_PENDING
+});
+
+export const addProjectError = (error) => ({
+  type: ADD_PROJECT_ERROR,
+  payload: error
+});
