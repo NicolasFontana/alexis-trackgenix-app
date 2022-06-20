@@ -1,115 +1,69 @@
 import { useEffect, useState } from 'react';
-import Input from '../Input';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { useDispatch } from 'react-redux';
+import { createEmployee, updateEmployee } from 'redux/employees/thunks';
 import styles from './form.module.css';
+import { Input, Select, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 
-const Form = ({ closeModalForm, edit, itemId }) => {
+const Form = ({ closeModalForm, edit, item }) => {
+  const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [employeeInput, setEmployeeInput] = useState({
+  const [response, setResponse] = useState('');
+  const [userInput, setUserInput] = useState({
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     password: '',
-    active: true,
-    isProjectManager: false,
+    active: '',
+    isProjectManager: '',
     projects: [],
     timeSheets: []
   });
 
   useEffect(() => {
-    if (
-      edit &&
-      itemId &&
-      employeeInput.firstName === '' &&
-      employeeInput.lastName === '' &&
-      employeeInput.password === ''
-    ) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`)
-        .then((response) => response.json())
-        .then((response) => {
-          setEmployeeInput({
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            phone: response.data.phone,
-            email: response.data.email,
-            password: response.data.password,
-            active: response.data.active,
-            isProjectManager: response.data.isProjectManager,
-            projects: response.data.projects.map((x) => x._id),
-            timeSheets: response.data.timeSheets.map((x) => x._id)
-          });
-        });
+    if (edit && item._id) {
+      setUserInput({
+        firstName: item.firstName,
+        lastName: item.lastName,
+        phone: item.phone,
+        email: item.email,
+        password: item.password,
+        active: item.active === true ? 'Active' : 'Inactive',
+        isProjectManager: item.isProjectManager === true ? 'Yes' : 'No',
+        projects: item.projects.map((x) => x._id),
+        timeSheets: item.timeSheets.map((x) => x._id)
+      });
     }
   }, []);
 
-  const closeSuccessModal = () => {
-    setShowSuccessModal(false);
-  };
-
   const onChange = (event) => {
-    setEmployeeInput({ ...employeeInput, [event.target.name]: event.target.value });
+    setUserInput({ ...userInput, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     if (edit) {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/${itemId}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          firstName: employeeInput.firstName,
-          lastName: employeeInput.lastName,
-          phone: employeeInput.phone,
-          email: employeeInput.email,
-          password: employeeInput.password,
-          active: employeeInput.active,
-          isProjectManager: employeeInput.isProjectManager,
-          projects:
-            employeeInput.projects.length === 0
-              ? []
-              : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
-          timeSheets:
-            employeeInput.timeSheets.length === 0
-              ? []
-              : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
-        }),
-        headers: {
-          'Content-type': 'application/json'
-        }
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          setSuccessMessage(response);
+      if (
+        userInput.firstName === item.firstName &&
+        userInput.lastName === item.lastName &&
+        userInput.phone === item.phone &&
+        userInput.email === item.email &&
+        userInput.password === item.password &&
+        userInput.active === (item.active === true ? 'Active' : 'Inactive') &&
+        userInput.isProjectManager === (item.isProjectManager === true ? 'Yes' : 'No') &&
+        userInput.projects.toString() === item.projects.map((x) => x._id).toString() &&
+        userInput.timeSheets.toString() === item.timeSheets.map((x) => x._id).toString()
+      ) {
+        setResponse({ message: "There haven't been any changes", data: {}, error: true });
+        setShowSuccessModal(true);
+      } else {
+        dispatch(updateEmployee(userInput, item._id, setResponse)).then(() => {
+          setShowSuccessModal(true);
         });
+      }
     } else {
-      fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
-        method: 'POST',
-        body: JSON.stringify({
-          firstName: employeeInput.firstName,
-          lastName: employeeInput.lastName,
-          phone: employeeInput.phone,
-          email: employeeInput.email,
-          password: employeeInput.password,
-          active: employeeInput.active,
-          isProjectManager: employeeInput.isProjectManager,
-          projects:
-            employeeInput.projects.length === 0
-              ? []
-              : employeeInput.projects.toString().replace(/\s+/g, '').split(','),
-          timeSheets:
-            employeeInput.timeSheets.length === 0
-              ? []
-              : employeeInput.timeSheets.toString().replace(/\s+/g, '').split(',')
-        }),
-        headers: {
-          'Content-type': 'application/json'
-        }
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          setSuccessMessage(response);
-        });
+      dispatch(createEmployee(userInput, setResponse)).then(() => {
+        setShowSuccessModal(true);
+      });
     }
   };
 
@@ -118,87 +72,90 @@ const Form = ({ closeModalForm, edit, itemId }) => {
       <Input
         label="First Name"
         name="firstName"
-        placeholder="Juan"
-        value={employeeInput.firstName}
-        onChange={onChange}
         type="text"
+        value={userInput.firstName}
+        onChange={onChange}
+        placeholder="Juan"
       />
       <Input
         label="Last Name"
         name="lastName"
-        placeholder="Perez"
-        value={employeeInput.lastName}
-        onChange={onChange}
         type="text"
+        value={userInput.lastName}
+        onChange={onChange}
+        placeholder="Perez"
       />
       <Input
         label="Phone"
         name="phone"
-        placeholder="123456789"
-        value={employeeInput.phone}
-        onChange={onChange}
         type="text"
+        value={userInput.phone}
+        onChange={onChange}
+        placeholder="123456789"
       />
       <Input
         label="Email"
         name="email"
-        placeholder="juanperez@gmail.com"
-        value={employeeInput.email}
-        onChange={onChange}
         type="text"
+        value={userInput.email}
+        onChange={onChange}
+        placeholder="juanperez@gmail.com"
       />
       <Input
         label="Password"
         name="password"
-        placeholder="********"
-        value={employeeInput.password}
-        onChange={onChange}
         type="password"
+        value={userInput.password}
+        onChange={onChange}
+        placeholder="********"
       />
-      <div className={styles.select}>
-        <label>Active?</label>
-        <select name="active" value={employeeInput.active} onChange={onChange}>
-          <option value={true}>Active</option>
-          <option value={false}>Inactive</option>
-        </select>
-      </div>
-      <div className={styles.select}>
-        <label>Is Project Manager?</label>
-        <select name="isProjectManager" value={employeeInput.isProjectManager} onChange={onChange}>
-          <option value={true}>Yes</option>
-          <option value={false}>No</option>
-        </select>
-      </div>
+      <Select
+        label="Active?"
+        name="active"
+        value={userInput.active}
+        onChange={onChange}
+        title="Define condition"
+        data={['Active', 'Inactive']}
+        required={true}
+      />
+      <Select
+        label="Is a Project Manager?"
+        name="isProjectManager"
+        value={userInput.isProjectManager}
+        onChange={onChange}
+        title="Define PM condition"
+        data={['Yes', 'No']}
+        required={true}
+      />
       <Input
         label="Projects (separate IDs with a comma)"
         name="projects"
-        placeholder=""
-        value={employeeInput.projects}
-        onChange={onChange}
         type="text"
+        value={userInput.projects}
+        onChange={onChange}
+        placeholder=""
       />
       <Input
         label="Timesheets (separate IDs with a comma)"
         name="timeSheets"
-        placeholder=""
-        value={employeeInput.timeSheets}
-        onChange={onChange}
         type="text"
+        value={userInput.timeSheets}
+        onChange={onChange}
+        placeholder=""
       />
-      <button
-        onClick={() => {
-          setShowSuccessModal(true);
+      <ButtonText
+        clickAction={() => {
+          onSubmit();
         }}
-        className={styles.submitButton}
-        type="submit"
-      >
-        Confirm
-      </button>
-      <SuccessModal
+        label={edit ? 'Edit' : 'Create'}
+      />
+      <ErrorSuccessModal
         show={showSuccessModal}
-        closeModal={closeSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
         closeModalForm={closeModalForm}
-        successResponse={successMessage}
+        successResponse={response}
       />
     </form>
   );

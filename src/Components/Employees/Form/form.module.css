@@ -6,32 +6,28 @@
   justify-content: space-between;
   align-items: flex-end;
   align-content: space-between;
-  row-gap: 15px;
+  row-gap: 10px;
   overflow: auto;
 }
 
 .container > div {
-  width: 33vh;
+  width: 45%;
 }
 
+/* Success Modal container */
 .container > div:last-child {
   width: 100vw;
 }
 
-.select {
-  display: flex;
-  flex-direction: column;
-}
-
-.select > select {
-  height: 21px;
+.container button {
+  margin: 5px 0 10px;
 }
 
 .submitButton {
   width: 100%;
   height: 45px;
   color: #ffffff;
-  background: #aace9b;
+  background: #76a068;
   border: 1px solid #373867;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;

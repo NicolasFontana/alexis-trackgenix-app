@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #AACE9B;
-  min-height: 100px;
+  background-color: #76a068;
+  height: 80px;
   justify-content: center;
   padding: 20px;
+  margin-left: 15%;
 }
 
 .socialContainer {
@@ -14,8 +15,9 @@
   width: 180px;
 }
 
-.socialIcon {
-  width: 40px;
+.socialContainer * {
+  color: #373867;
+  font-size: 30px;
 }
 
 .license {
@@ -24,16 +26,18 @@
   justify-content: center;
   align-items: center;
   width: 90%;
+  height: 100px;
   padding: 0 20px;
-  background-color: #AACE9B;
+  background-color: #76a068;
 }
 
 .location {
   padding: 10px;
+  color: #373867;
 }
 
 .copyright {
   font-size: 0.8rem;
   font-style: italic;
+  color: #373867;
 }
-

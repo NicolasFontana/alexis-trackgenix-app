@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
+import Input from '../../Shared/Input/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
@@ -12,7 +13,7 @@ const FormAdd = ({ closeModalForm }) => {
   const [listProject, setListProject] = useState([]);
   const [task, setTask] = useState('');
   const [projectId, setProjectId] = useState('');
-  const [approved, setApproved] = useState('');
+  const [approved, setApproved] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -55,7 +56,7 @@ const FormAdd = ({ closeModalForm }) => {
   };
 
   const onChangeApproved = (e) => {
-    setApproved(e.target.value);
+    setApproved(e.target.checked);
   };
 
   return (
@@ -84,14 +85,12 @@ const FormAdd = ({ closeModalForm }) => {
         }))}
         required={true}
       />
-      <Select
+      <Input
         label="Approved"
         name="approved"
-        value={approved}
+        type="checkbox"
+        checked={approved}
         onChange={onChangeApproved}
-        title="Approve"
-        data={['true', 'false']}
-        required={true}
       />
       <ButtonText
         clickAction={() => {

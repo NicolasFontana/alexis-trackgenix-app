@@ -57,7 +57,7 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
       body: JSON.stringify({
         projectId: projectId,
         Task: [{ taskId: task }],
-        approved: approved == 'true' ? true : approved == 'false' ? false : ''
+        approved: approved
       })
     })
       .then((response) => response.json())
