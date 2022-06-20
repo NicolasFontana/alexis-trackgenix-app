@@ -67,7 +67,7 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
         }
         dispatch(getAllTimesheets());
         setMessage(response);
-        return response.data;
+        return response;
       })
       .catch((error) => {
         dispatch(createTimesheetError(error.toString()));
