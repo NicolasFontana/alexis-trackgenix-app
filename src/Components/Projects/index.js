@@ -7,6 +7,7 @@ import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ModalErrorSuccess from '../Shared/ErrorSuccessModal';
 import ModalForm from '../Shared/ModalForm';
 import Preloader from '../Shared/Preloader/Preloader';
+import Select from '../Shared/Select';
 import Table from '../Shared/Table/Table';
 import styles from './projects.module.css';
 
@@ -111,6 +112,12 @@ const Projects = () => {
           'Active',
           'Members'
         ]}
+        modifiers={{
+          startDate: (x) => x.slice(0, 10),
+          endDate: (x) => x.slice(0, 10),
+          active: (x) => (x === true ? 'Active' : 'Inactive'),
+          members: (x) => <Select data={[...x.map((member) => member.role)]} />
+        }}
         delAction={openConfirmModal}
       />
       <ButtonAdd clickAction={openModalAdd}></ButtonAdd>
