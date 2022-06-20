@@ -120,8 +120,16 @@ const Employees = () => {
         modifiers={{
           active: (x) => (x === true ? 'Active' : 'Inactive'),
           isProjectManager: (x) => (x === true ? 'Yes' : 'No'),
-          projects: (x) => <Select data={[...x.map((project) => project.name)]} />,
-          timeSheets: (x) => <Select data={[...x.map((timesheet) => timesheet._id)]} />
+          projects: (x) => (
+            <Select title="Projects" defaultValue="" data={[...x.map((project) => project.name)]} />
+          ),
+          timeSheets: (x) => (
+            <Select
+              title="Timesheets"
+              defaultValue=""
+              data={[...x.map((timesheet) => timesheet._id)]}
+            />
+          )
         }}
       />
       {modalEdit}
