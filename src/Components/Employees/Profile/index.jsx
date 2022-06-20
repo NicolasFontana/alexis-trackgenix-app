@@ -7,13 +7,10 @@ import ButtonText from '../../Shared/Buttons/ButtonText';
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees.list);
-  // const employee1 = employees.find((employee) => employee._id === '62996ab1b89dc4b653576647');
+  const employee = useSelector((state) => state.employees.list).find(
+    (employee) => employee._id === '62996ab1b89dc4b653576647'
+  );
   const isLoading = useSelector((state) => state.employees.isLoading);
-  console.log(employees);
-
-  // const status = employee1.active ? 'Active' : 'Inactive';
-  // const isPM = employee1.isProjectManager ? 'Yes' : 'No';
 
   const edit = () => {
     console.log('Edit Profile');
@@ -23,19 +20,39 @@ const EmployeeProfile = () => {
     dispatch(getEmployees());
   }, []);
 
+  const status = employee?.active ? 'Active' : 'Inactive';
+  const isPM = employee?.isProjectManager ? 'Yes' : 'No';
+
   return isLoading ? (
     <Preloader />
   ) : (
     <section className={styles.container}>
       <h2 className={styles.title}>Profile</h2>
       <div>
-        {/* <h3>Name: {`${employee1.firstName} ${employee1.lastName}`}</h3>
-        <h3>Phone: {`${employee1.phone}`}</h3>
-        <h3>Email: {`${employee1.email}`}</h3>
-        <h3>Status: {`${status}`}</h3>
-        <h3>Is Project Manager: {`${isPM}`}</h3> */}
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Name:</h3>
+          <p className={styles.rowText}>{`${employee?.firstName} ${employee?.lastName}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Phone:</h3>
+          <p className={styles.rowText}>{`${employee?.phone}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Email:</h3>
+          <p className={styles.rowText}>{`${employee?.email}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Status:</h3>
+          <p className={styles.rowText}>{`${status}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Is Project Manager:</h3>
+          <p className={styles.rowText}>{`${isPM}`}</p>
+        </div>
       </div>
-      <ButtonText clickAction={edit} label="Edit profile"></ButtonText>
+      <div className={styles.buttonContainer}>
+        <ButtonText clickAction={edit} label="Edit profile"></ButtonText>
+      </div>
     </section>
   );
 };
