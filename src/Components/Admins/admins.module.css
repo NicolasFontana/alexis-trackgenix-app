@@ -1,4 +1,5 @@
-.container {
+.container,
+.containerApp {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -13,7 +14,7 @@
   text-transform: uppercase;
 }
 
-.container > section {
+.containerApp > section {
   position: fixed;
   display: flex;
   justify-content: center;

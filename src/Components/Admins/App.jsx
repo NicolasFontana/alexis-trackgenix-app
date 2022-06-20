@@ -81,7 +81,7 @@ const App = () => {
     !showSuccessModal ? (
     <Preloader />
   ) : (
-    <div className={styles.container}>
+    <div className={styles.containerApp}>
       <Table
         data={admins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
