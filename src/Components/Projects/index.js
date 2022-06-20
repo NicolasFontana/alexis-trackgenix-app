@@ -162,7 +162,15 @@ const Projects = () => {
           startDate: (x) => x.slice(0, 10),
           endDate: (x) => x.slice(0, 10),
           active: (x) => (x === true ? 'Active' : 'Inactive'),
-          members: (x) => <Select data={[...x.map((member) => member.role)]} />
+          members: (x) => (
+            <Select
+              title="Members"
+              defaultValue=""
+              data={[
+                ...x.map((member) => `${member.employeeId.firstName} ${member.employeeId.lastName}`)
+              ]}
+            />
+          )
         }}
         delAction={openConfirmModal}
         editAction={openModalFormEdit}
