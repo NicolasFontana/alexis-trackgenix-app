@@ -1,45 +1,126 @@
 import { useState } from 'react';
 import styles from './listmembers.module.css';
 import ListItemMember from '../ListItemMember/ListItemMember';
+import ButtonAdd from '../../../Shared/Buttons/ButtonAdd';
+import ConfirmModal from '../../../Shared/confirmationModal/confirmModal';
+import AlertModal from '../../../Shared/ErrorSuccessModal';
+import { updateProject } from '../../../../redux/projects/thunks';
+import { useDispatch } from 'react-redux';
 
-const ListMembers = ({ project, onAdd, edited }) => {
-  let [members] = onAdd ? useState([]) : useState(project[0].members);
+const ListMembers = ({ edited, project, functionValue }) => {
+  let [members, setMembers] = useState(project.members);
   members = members.filter((member) => member.employeeId !== null);
+  let membersToSave;
+  const [showconfirmModal, setShowconfirmModal] = useState(false);
+  const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [memberId, setMemberId] = useState('');
+
+  const dispatch = useDispatch();
+
+  const deleteMember = (id) => {
+    closeConfirmModal();
+    members = members.filter((member) => member.employeeId._id !== id);
+    setMembers(members);
+    membersToSave = members.map((member) => ({
+      employeeId: member.employeeId._id,
+      role: member.role,
+      rate: member.rate
+    }));
+    dispatch(
+      updateProject(project._id, { members: membersToSave }, (alertMessage) =>
+        setAlertMessage({
+          error: alertMessage.error,
+          message: 'Team member deleted successfully'
+        })
+      )
+    ).then(() => openAlertModal());
+  };
+
+  const closeConfirmModal = () => {
+    setShowconfirmModal(false);
+  };
+
+  const openConfirmModal = (id) => {
+    setMemberId(id);
+    setShowconfirmModal(true);
+  };
+
+  const closeAlertModal = () => {
+    setShowErrorSuccessModal(false);
+  };
+
+  const openAlertModal = () => {
+    setShowErrorSuccessModal(true);
+  };
+
   const handleOnClick = () => {
     edited
-      ? (window.location.href = `addmembers?id=${project[0]._id}`)
-      : confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-      ? (window.location.href = `addmembers?id=${project[0]._id}`)
-      : null;
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? functionValue(true)
+        : null
+      : functionValue(true);
   };
-  return onAdd ? (
-    <></>
-  ) : !members.length ? (
-    <a onClick={() => handleOnClick()} className={styles.addmember}>
-      Click here to add or edit members
-    </a>
+
+  return !members.length ? (
+    <div className={styles.header}>
+      <h3>Team members</h3>
+      <ButtonAdd
+        clickAction={() => {
+          handleOnClick();
+        }}
+      ></ButtonAdd>
+    </div>
   ) : (
-    <div className={styles.container}>
-      <h3>Current team members</h3>
-      <a onClick={() => handleOnClick()}>Add or edit members</a>
-      <table>
-        <thead>
-          <tr>
-            <th id="name">Member</th>
-            <th id="role">Role</th>
-            <th id="rate">Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {members.map((member) =>
-            member.employeeId == null ? (
-              <></>
-            ) : (
-              <ListItemMember key={member.employeeId._id} member={member} onAdd={onAdd} />
-            )
-          )}
-        </tbody>
-      </table>
+    <div className={styles.divcontainer}>
+      <div className={styles.header}>
+        <h3>Team members</h3>
+        <ButtonAdd
+          clickAction={() => {
+            handleOnClick();
+          }}
+        ></ButtonAdd>
+      </div>
+      <div className={styles.container}>
+        <table>
+          <thead>
+            <tr>
+              <th id="name">Member</th>
+              <th id="role">Role</th>
+              <th id="rate">Rate</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map((member) =>
+              member.employeeId == null ? (
+                <></>
+              ) : (
+                <ListItemMember
+                  key={member.employeeId._id}
+                  member={member}
+                  onDelete={openConfirmModal}
+                />
+              )
+            )}
+          </tbody>
+        </table>
+      </div>
+      <AlertModal
+        show={showErrorSuccessModal}
+        closeModal={closeAlertModal}
+        closeModalForm={closeAlertModal}
+        successResponse={alertMessage}
+      />
+      <ConfirmModal
+        isOpen={showconfirmModal}
+        handleClose={closeConfirmModal}
+        confirmDelete={() => {
+          deleteMember(memberId);
+        }}
+        title={'Delete team member'}
+        message={'Are you sure you want to delete this member?'}
+      />
     </div>
   );
 };
