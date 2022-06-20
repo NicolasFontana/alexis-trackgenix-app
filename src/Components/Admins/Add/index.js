@@ -71,7 +71,7 @@ const AdminsAdd = ({ closeModalForm }) => {
       />
       <Input
         label="Password"
-        type="pasword"
+        type="password"
         name="password"
         placeholder="Insert Password"
         value={adminInput.password}

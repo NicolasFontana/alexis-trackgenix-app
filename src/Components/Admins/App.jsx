@@ -100,7 +100,6 @@ const App = () => {
       {modalEdit}
       {modalAdd}
       {modalDelete}
-      {isLoading ? <Preloader /> : null}
       <ButtonAdd
         clickAction={() => {
           setShowModalFormAdd(true);

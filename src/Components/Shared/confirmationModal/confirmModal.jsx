@@ -18,10 +18,12 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
     <div className={styles.modalOvelay} onPointerDown={handleClose}>
       <div className={styles.modalWrapper} onPointerDown={(e) => e.stopPropagation()}>
         <div className={styles.title}>
-          {title}
-          <button onClick={handleClose} className={styles.closeButton}>
-            X
-          </button>
+          <div className={styles.delete}>{title}</div>
+          <button
+            onClick={handleClose}
+            className={styles.closeButton}
+            src={`${process.env.PUBLIC_URL}/assets/images/close-icon.svg`}
+          ></button>
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
