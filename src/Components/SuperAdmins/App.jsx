@@ -84,6 +84,7 @@ const App = () => {
     </Preloader>
   ) : (
     <div className={styles.container}>
+      <h2 className={styles.title}>Super Admins</h2>
       <Table
         data={superAdmins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
