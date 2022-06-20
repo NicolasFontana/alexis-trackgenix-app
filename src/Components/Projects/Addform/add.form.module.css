@@ -1,0 +1,19 @@
+.form {
+    width: 100%;
+  } 
+  
+.formContainer {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    row-gap: 10px;
+    overflow: auto;
+  }
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25%;
+}
