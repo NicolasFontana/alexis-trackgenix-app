@@ -45,6 +45,7 @@ const AddForm = ({ closeModalForm }) => {
             value={newProject.name}
             onChange={onChange}
             required={true}
+            register={console.log}
           />
           <Input
             label="Client"
@@ -54,6 +55,7 @@ const AddForm = ({ closeModalForm }) => {
             value={newProject.clientName}
             onChange={onChange}
             required={true}
+            register={console.log}
           />
           <Input
             label="Start Date"
@@ -62,6 +64,7 @@ const AddForm = ({ closeModalForm }) => {
             value={newProject.startDate.slice(0, 10)}
             onChange={onChange}
             required={true}
+            register={console.log}
           />
           <Input
             label="End Date"
@@ -70,8 +73,8 @@ const AddForm = ({ closeModalForm }) => {
             value={newProject.endDate.slice(0, 10)}
             onChange={onChange}
             required={true}
+            register={console.log}
           />
-
           <Textarea
             label="Description"
             name="description"
@@ -79,6 +82,7 @@ const AddForm = ({ closeModalForm }) => {
             placeholder="Add a description of the project"
             onChange={onChange}
             required={true}
+            register={console.log}
           />
           <Input
             label="Active"
@@ -86,6 +90,7 @@ const AddForm = ({ closeModalForm }) => {
             type="checkbox"
             checked={newProject.active}
             onChange={onChangeCheckBox}
+            register={console.log}
           />
         </form>
         <div className={styles.buttons}>

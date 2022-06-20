@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './listItem.module.css';
 
-const ListItem = ({props}) => {
+const ListItem = (props) => {
   const { admins, delAdmin } = props;
 
   return (

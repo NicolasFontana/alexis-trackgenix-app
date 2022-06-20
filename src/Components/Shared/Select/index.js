@@ -1,6 +1,6 @@
 import styles from './select.module.css';
 
-const Select = ({ label, name, title, data, register, error }) => {
+const Select = ({ label, name, title, data, register, error, disabled }) => {
   return (
     <div className={styles.selectContainer}>
       <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
@@ -14,11 +14,11 @@ const Select = ({ label, name, title, data, register, error }) => {
         </option>
         {data.map((item, index) => {
           return item._id ? (
-            <option value={item._id} key={item._id} className={styles.options}>
+            <option value={item._id} key={item._id} className={styles.options} disabled={disabled}>
               {item.optionText}
             </option>
           ) : (
-            <option value={item} key={index} className={styles.options}>
+            <option value={item} key={index} className={styles.options} disabled={disabled}>
               {item}
             </option>
           );

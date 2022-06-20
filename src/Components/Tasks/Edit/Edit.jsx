@@ -50,6 +50,7 @@ const Edit = ({ task, closeModalForm }) => {
         value={userInput.taskName}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Start Date"
@@ -58,6 +59,7 @@ const Edit = ({ task, closeModalForm }) => {
         value={userInput.startDate.substring(0, 10)}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Worked Hours"
@@ -67,6 +69,7 @@ const Edit = ({ task, closeModalForm }) => {
         value={userInput.workedHours}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Description"
@@ -76,6 +79,7 @@ const Edit = ({ task, closeModalForm }) => {
         value={userInput.description}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Select
         label="Status"
@@ -85,6 +89,7 @@ const Edit = ({ task, closeModalForm }) => {
         title="Choose status"
         data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
         required={true}
+        register={console.log}
       />
       <Button clickAction={closeModalForm} label="Cancel">
         Cancel
