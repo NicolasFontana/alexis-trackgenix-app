@@ -48,9 +48,10 @@ const Projects = () => {
   }, []);
 
   const deleteItem = () => {
-    dispatch(deleteProject(projectId, (message) => setMessage(message)));
-    closeConfirmModal();
-    setErrorSuccessModal(true);
+    dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
+      closeConfirmModal();
+      setErrorSuccessModal(true);
+    });
   };
 
   let modalDelete;

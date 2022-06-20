@@ -21,8 +21,9 @@ const AddForm = ({ closeModalForm }) => {
   });
 
   const onSubmit = async () => {
-    dispatch(addProject(newProject, (message) => setMessage(message)));
-    setModalErrorSuccess(true);
+    dispatch(addProject(newProject, (message) => setMessage(message))).then(() => {
+      setModalErrorSuccess(true);
+    });
   };
 
   const onChangeCheckBox = (e) => {
