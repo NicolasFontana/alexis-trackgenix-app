@@ -11,10 +11,22 @@ const Footer = () => {
   return (
     <footer className={styles.container}>
       <div className={styles.socialContainer}>
-        <a href="https://twitter.com/">{twitter}</a>
-        <a href="https://www.facebook.com/">{facebook}</a>
-        <a href="https://www.instagram.com/">{instagram}</a>
-        <a href="https://github.com/BaSP-m2022/alexis-trackgenix-app">{github}</a>
+        <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+          {twitter}
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+          {facebook}
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+          {instagram}
+        </a>
+        <a
+          href="https://github.com/BaSP-m2022/alexis-trackgenix-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {github}
+        </a>
       </div>
       <div className={styles.license}>
         <div className={styles.location}>Rosario, Argentina</div>

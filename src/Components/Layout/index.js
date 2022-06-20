@@ -4,13 +4,10 @@ import AdminsAdd from '../Admins/Add';
 import AdminsEdit from '../Admins/Edit';
 import Admins from '../Admins/index';
 import Employees from '../Employees/index';
-import Footer from '../Footer/index';
-import Header from '../Header/index';
 import Home from '../Home/index';
 import Projects from '../Projects';
 import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
 import ProjectsForm from '../Projects/Form/index';
-import SideBar from '../SideBar/index';
 import SuperAdminsAdd from '../SuperAdmins/Add';
 import SuperAdminsEdit from '../SuperAdmins/Edit';
 import SuperAdmins from '../SuperAdmins/index';
@@ -19,6 +16,7 @@ import TasksForm from '../Tasks/Form/Form';
 import Tasks from '../Tasks/index';
 import TimeSheets from '../TimeSheets';
 import styles from './layout.module.css';
+import { SideBar, Header, Footer } from 'Components/Shared';
 
 function Layout() {
   return (
