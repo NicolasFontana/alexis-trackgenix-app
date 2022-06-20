@@ -1,22 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import AdminsAdd from '../Admins/Add';
-import AdminsEdit from '../Admins/Edit';
-import Admins from '../Admins/index';
-import Employees from '../Employees/index';
-import Home from '../Home/index';
-import Projects from '../Projects';
-import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
-import ProjectsForm from '../Projects/Form/index';
-import SuperAdminsAdd from '../SuperAdmins/Add';
-import SuperAdminsEdit from '../SuperAdmins/Edit';
-import SuperAdmins from '../SuperAdmins/index';
-import TasksEdit from '../Tasks/Edit/Edit';
-import TasksForm from '../Tasks/Form/Form';
-import Tasks from '../Tasks/index';
-import TimeSheets from '../TimeSheets';
 import styles from './layout.module.css';
-import { SideBar, Header, Footer } from 'Components/Shared';
+import { SideBar, Header, Footer, Preloader } from 'Components/Shared';
+
+const Home = lazy(() => import('Components/Home'));
+const Admins = lazy(() => import('Components/Admins'));
+const SuperAdmins = lazy(() => import('Components/SuperAdmins'));
+const Employees = lazy(() => import('Components/Employees'));
+const Projects = lazy(() => import('Components/Projects'));
+const TimeSheets = lazy(() => import('Components/TimeSheets'));
+const Tasks = lazy(() => import('Components/Tasks'));
 
 function Layout() {
   return (
@@ -26,21 +19,15 @@ function Layout() {
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/admins" component={Admins} />
-          <Route exact path="/admins/add" component={AdminsAdd} />
-          <Route exact path="/admins/edit" component={AdminsEdit} />
           <Route exact path="/super-admins" component={SuperAdmins} />
-          <Route exact path="/super-admins/add" component={SuperAdminsAdd} />
-          <Route exact path="/super-admins/edit" component={SuperAdminsEdit} />
-          <Route exact path="/employees" component={Employees} />
+          <Suspense fallback={Preloader}>
+            <Route path="/employee" component={Employees} />
+          </Suspense>
           <Route exact path="/projects" component={Projects} />
-          <Route exact path="/projects/form" component={ProjectsForm} />
-          <Route exact path="/projects/addmembers" component={ProjectsAddMember} />
           <Route exact path="/time-sheets" component={TimeSheets} />
           <Route exact path="/tasks" component={Tasks} />
-          <Route exact path="/tasks/add" component={TasksForm} />
-          <Route exact path="/tasks/edit" component={TasksEdit} />
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to="/employee" />
           </Route>
         </Switch>
       </div>
