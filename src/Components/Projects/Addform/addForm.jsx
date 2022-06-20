@@ -56,13 +56,6 @@ const AddForm = ({ closeModalForm }) => {
             required={true}
           />
           <Input
-            label="Active"
-            name="active"
-            type="checkbox"
-            checked={newProject.active}
-            onChange={onChangeCheckBox}
-          />
-          <Input
             label="Start Date"
             type="date"
             name="startDate"
@@ -86,6 +79,13 @@ const AddForm = ({ closeModalForm }) => {
             placeholder="Add a description of the project"
             onChange={onChange}
             required={true}
+          />
+          <Input
+            label="Active"
+            name="active"
+            type="checkbox"
+            checked={newProject.active}
+            onChange={onChangeCheckBox}
           />
         </form>
         <div className={styles.buttons}>
