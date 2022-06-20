@@ -6,6 +6,7 @@ import SuperAdmins from '../SuperAdmins/index';
 import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
+import EmployeeProfile from '../Employees/Profile';
 import Projects from '../Projects';
 import ProjectsForm from '../Projects/Form/index';
 import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
@@ -30,6 +31,7 @@ function Layout() {
           <Route exact path="/admins/edit" component={AdminsEdit} />
           <Route exact path="/super-admins" component={SuperAdmins} />
           <Route exact path="/employees" component={Employees} />
+          <Route exact path="/employee/profile" component={EmployeeProfile} />
           <Route exact path="/projects" component={Projects} />
           <Route exact path="/projects/form" component={ProjectsForm} />
           <Route exact path="/projects/addmembers" component={ProjectsAddMember} />

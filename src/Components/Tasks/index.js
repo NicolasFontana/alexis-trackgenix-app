@@ -1,50 +1,126 @@
 import React, { useEffect, useState } from 'react';
-import styles from './tasks.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { delTask, getTasks } from '../../redux/tasks/thunks';
 import Table from '../Shared/Table/Table';
 import Preloader from '../Shared/Preloader/Preloader';
+import Modal from '../Shared/ModalForm/index';
+import Form from './Form/Form';
+import EditForm from './Edit/Edit';
+import AddButton from '../Shared/Buttons/ButtonAdd';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import MessageModal from '../Shared/ErrorSuccessModal';
+import styles from './tasks.module.css';
 
 function Tasks() {
-  const [tasks, saveTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.list);
+  const isLoading = useSelector((state) => state.tasks.isLoading);
+
+  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
+  const [idDelete, setIdDelete] = useState(0);
+  const [idToEdit, setIdToEdit] = useState();
+
+  let modalEdit;
+  let modalAdd;
+  let modalMessage;
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveTasks(response.data);
-        setLoading(false);
-      });
+    dispatch(getTasks());
   }, []);
 
-  const delTask = (id) => {
-    const confirmation = confirm('Are you sure you want to delete this task?');
-    if (confirmation) {
-      saveTasks([...tasks.filter((task) => task._id !== id)]);
-      return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
-        method: 'DELETE'
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          alert('Task deleted successfully', response.msg);
-        });
-    }
+  const handleConfirm = () => {
+    dispatch(delTask(idDelete, (response) => setMessage(response))).then(() => {
+      closeModal();
+      setShowConfirmModal(false);
+      setShowMessageModal(true);
+    });
   };
 
-  return loading ? (
+  const openConfirmModal = (id) => {
+    setShowConfirmModal(true);
+    setIdDelete(id);
+  };
+
+  const openAddModal = () => {
+    setShowModalFormAdd(true);
+  };
+
+  const openEditModal = (id) => {
+    setIdToEdit(id);
+    setShowModalFormEdit(true);
+  };
+
+  const closeModal = () => {
+    setShowMessageModal(false);
+    setShowModalFormAdd(false);
+    setShowModalFormEdit(false);
+    setShowConfirmModal(false);
+  };
+
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
+
+  if (showModalFormEdit) {
+    modalEdit = (
+      <Modal isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
+        <EditForm closeModalForm={closeModal} task={tasks.find((item) => item._id === idToEdit)} />
+      </Modal>
+    );
+  }
+
+  if (showModalFormAdd) {
+    modalAdd = (
+      <Modal isOpen={showModalFormAdd} handleClose={closeModal} title="Add Task">
+        <Form closeModalForm={closeModal} />
+      </Modal>
+    );
+  }
+
+  if (showConfirmModal) {
+    modalMessage = (
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        handleClose={closeModal}
+        confirmDelete={handleConfirm}
+        title="Delete Task"
+        message="¿Are you sure you want to delete the task?"
+      />
+    );
+  }
+
+  return isLoading &&
+    !showModalFormEdit &&
+    !showModalFormAdd &&
+    !showMessageModal &&
+    !showConfirmModal ? (
     <Preloader>
       <p>Loading Tasks</p>
     </Preloader>
   ) : (
     <section className={styles.container}>
       <h2>TASKS</h2>
+      {modalEdit}
+      {modalAdd}
+      {modalMessage}
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
         titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
-        delAction={delTask}
-        editAction="todavia no hay"
+        delAction={openConfirmModal}
+        editAction={openEditModal}
       />
-      <a className={styles.anchor}>Add New Task</a>
+      <MessageModal
+        show={showMessageModal}
+        closeModal={closeMessageModal}
+        closeModalForm={closeModal}
+        successResponse={message}
+      />
+      <AddButton clickAction={openAddModal}></AddButton>
     </section>
   );
 }
