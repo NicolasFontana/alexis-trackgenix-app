@@ -27,3 +27,14 @@
   text-shadow: 1px 1px 1px #373867;
   text-decoration: none;
 }
+
+.ul {
+  font-size: 20px;
+  margin-top: 20%;
+  padding: 0;
+  color: #ffffff;
+}
+.li {
+  text-decoration: none;
+  color: #ffffff;
+}

@@ -26,8 +26,7 @@ function Routes() {
       </div>
       <Footer />
       <div className={styles.sidebar}>
-        <SideBarRoutes />
-        {/* we need to pass props to it, those props are the ones that will be shown */}
+        <SideBarRoutes titles={['Admin', 'Employee']} directions={['/admin', '/employee']} />
       </div>
     </div>
   );
