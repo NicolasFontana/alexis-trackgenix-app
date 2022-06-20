@@ -1,20 +1,12 @@
-.maincontainer h2 {
-  width: 700px;
-  margin-bottom: 20px;
-  padding: 15px 0;
-  background-color: #373867;
-  border-radius: 15px 15px 0 0;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 35px;
-  color: #ffffff;
-  text-transform: uppercase;
-  text-align: center;
+.maincontainer {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  color: #373867;
+  width: 571px;
 }
 
-.maincontainer {
-  margin: 0 60px;
-  display: flex;
+.maincontainer .add {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   color: #373867;
@@ -25,25 +17,22 @@
 }
 
 .divcontainer {
-  flex: 48;
+  width: 30%;
   display: flex;
   flex-direction: column;
-  margin: 0 30px;
+  justify-content: space-around;
+  margin-right: 30px;
 }
 
-.container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.larger {
+  width: 45%;
 }
 
 .buttons input {
   display: block;
   margin: 15px auto;
   padding: 10px 56px;
-  background: #76a068;
+  background: #AACE9B;
   border-radius: 3.7px;
   border: none;
   font-weight: 700;
