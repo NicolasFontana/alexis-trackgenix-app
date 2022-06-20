@@ -1,16 +1,13 @@
 import styles from './select.module.css';
 
-const Select = ({ label, name, value, defaultValue, onChange, required, title, data }) => {
+const Select = ({ label, name, title, data, register, error }) => {
   return (
     <div className={styles.selectContainer}>
       <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
       <select
-        className={styles.select}
+        className={error ? `${styles.select} ${styles.selectError}` : styles.select}
         name={name}
-        value={value}
-        defaultValue={defaultValue}
-        onChange={onChange}
-        required={required}
+        {...register(name)}
       >
         <option value="" disabled hidden>
           {title}
@@ -27,6 +24,7 @@ const Select = ({ label, name, value, defaultValue, onChange, required, title, d
           );
         })}
       </select>
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };
