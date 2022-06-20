@@ -1,24 +1,25 @@
 import React from 'react';
 import styles from './listItem.module.css';
 
-const ListItem = ({ listItem, deleteAction }) => {
-  const url = `/admins/Edit?id=${listItem._id}`;
+const ListItem = ({props}) => {
+  const { admins, delAdmin } = props;
 
   return (
     <tr className={styles.tr}>
-      <td className={styles.td}>{listItem._id}</td>
-      <td className={styles.td}>{listItem.firstName}</td>
-      <td className={styles.td}>{listItem.lastName}</td>
-      <td className={styles.td}>{listItem.email}</td>
-      <td className={styles.td}>{listItem.password}</td>
-      <td className={styles.td}>{listItem.active.toString()}</td>
+      <td className={styles.td}>{admins.firstName}</td>
+      <td className={styles.td}>{admins.lastName}</td>
+      <td className={styles.td}>{admins.email}</td>
+      <td className={styles.td}>{admins.password}</td>
+      <td className={styles.td}>{admins.active.toString()}</td>
       <td className={styles.td}>
-        <a href={url}>
+        <a className={styles.button} href={`/admins/edit?id=${admins._id}`}>
           <button>&#9998;</button>
         </a>
       </td>
       <td className={styles.td}>
-        <button onClick={() => deleteAction(listItem._id)}>X</button>
+        <button className={styles.button} onClick={() => delAdmin(props.admins._id)}>
+          X
+        </button>
       </td>
     </tr>
   );
