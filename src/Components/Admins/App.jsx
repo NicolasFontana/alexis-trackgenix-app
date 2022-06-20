@@ -79,9 +79,7 @@ const App = () => {
     !showModalFormAdd &&
     !showModalFormDelete &&
     !showSuccessModal ? (
-    <Preloader>
-      <p>Loading admins</p>
-    </Preloader>
+    <Preloader />
   ) : (
     <div className={styles.container}>
       <Table

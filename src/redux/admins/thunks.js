@@ -43,6 +43,7 @@ export const addAdmin = (newAdmin, setResponse) => {
       if (data.error === false) {
         dispatch(addAdminSucces(data.data));
       }
+      dispatch(getAdmins());
       setResponse(data);
       return data.data;
     } catch (error) {

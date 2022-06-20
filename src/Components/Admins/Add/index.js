@@ -32,8 +32,9 @@ const AdminsAdd = ({ closeModalForm }) => {
   };
 
   const onSubmit = () => {
-    dispatch(addAdmin(newAdmin, setResponse));
-    setShowSuccessModal(true);
+    dispatch(addAdmin(newAdmin, setResponse)).then(() => {
+      setShowSuccessModal(true);
+    });
   };
 
   const onChangeActive = (e) => {
@@ -90,10 +91,8 @@ const AdminsAdd = ({ closeModalForm }) => {
           clickAction={() => {
             onSubmit();
           }}
-          label="Submit"
-        >
-          Creade
-        </ButtonText>
+          label="Creade"
+        ></ButtonText>
       </div>
       <SuccessModal
         show={showSuccessModal}
