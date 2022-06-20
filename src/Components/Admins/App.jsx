@@ -103,6 +103,7 @@ const App = () => {
           setShowModalFormAdd(true);
         }}
       />
+      {isLoading ? <Preloader /> : null}
       <SuccessModal
         show={showSuccessModal}
         closeModal={() => {

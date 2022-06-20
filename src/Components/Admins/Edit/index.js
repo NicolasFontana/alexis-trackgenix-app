@@ -41,8 +41,19 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       password: adminInput.password,
       active: adminInput.active
     });
-    dispatch(editAdmin(edit._id, editedAdmin, setResponse));
-    setShowSuccessModal(true);
+    if (
+      adminInput.firstName === edit.firstName &&
+      adminInput.lastName === edit.lastName &&
+      adminInput.email === edit.email &&
+      adminInput.password === edit.password &&
+      adminInput.active === edit.active
+    ) {
+      setResponse({ message: "There haven't been any changes", data: {}, error: true });
+      setShowSuccessModal(true);
+    } else {
+      dispatch(editAdmin(edit._id, editedAdmin, setResponse));
+      setShowSuccessModal(true);
+    }
   };
 
   const onChangeActive = (e) => {
