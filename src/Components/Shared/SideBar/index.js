@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../Shared/NavBar/navbar';
+import NavBar from '../NavBar/navbar';
 import styles from './sidebar.module.css';
 
 const SideBar = ({ routes }) => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import Admins from '../Admins';
 import AdminsAdd from '../Admins/Add';
 import AdminsEdit from '../Admins/Edit';
 import SuperAdmins from '../SuperAdmins/index';
@@ -7,16 +8,13 @@ import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
-import ProjectsForm from '../Projects/Form/index';
 import ProjectsAddMember from '../Projects/Form/AddMember/AddMember';
-import TimeSheets from '../TimeSheets';
-import Tasks from '../Tasks/index';
-import TasksForm from '../Tasks/Form/Form';
-import Admins from '../Admins/index';
-import Footer from '../Footer/index';
-import Header from '../Header/index';
-import SideBar from '../SideBar/index';
+import ProjectsForm from '../Projects/Form/index';
 import TasksEdit from '../Tasks/Edit/Edit';
+import TasksForm from '../Tasks/Form/Form';
+import Tasks from '../Tasks/index';
+import TimeSheets from '../TimeSheets';
+import { SideBar, Header, Footer } from 'Components/Shared';
 
 function Layout() {
   return (
