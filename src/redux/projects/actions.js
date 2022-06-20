@@ -35,10 +35,10 @@ export const getProjectByIdPending = () => {
     type: GET_PROJECT_BY_ID_PENDING
   };
 };
-export const getProjectByIdSuccess = (data) => {
+export const getProjectByIdSuccess = (projects) => {
   return {
     type: GET_PROJECT_BY_ID_SUCCESS,
-    payload: data
+    payload: projects
   };
 };
 export const getProjectByIdError = (error) => {
@@ -75,9 +75,9 @@ export const deleteProjectError = (error) => ({
   payload: error
 });
 
-export const addProjectSuccess = (data) => ({
+export const addProjectSuccess = (projects) => ({
   type: ADD_PROJECT_SUCCESS,
-  payload: data
+  payload: projects
 });
 export const addProjectPending = () => ({
   type: ADD_PROJECT_PENDING

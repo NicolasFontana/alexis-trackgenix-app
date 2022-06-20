@@ -24,7 +24,7 @@ const initialState = {
   message: ''
 };
 
-export const projectReducer = (state = initialState, action) => {
+export const projectsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PROJECT_SUCCESS:
       return {

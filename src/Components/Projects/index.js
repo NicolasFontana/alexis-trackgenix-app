@@ -133,7 +133,7 @@ const Projects = () => {
     );
   }
 
-  return isLoading && !showModalAdd && !showConfirmModal ? (
+  return isLoading && !showModalAdd && !showConfirmModal && !showModalFormEdit ? (
     <Preloader>
       <p>Loading projects</p>
     </Preloader>
