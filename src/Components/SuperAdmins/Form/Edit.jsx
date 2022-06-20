@@ -29,7 +29,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
     });
   }, []);
 
-  const submitEdit = () => {
+  const submitEdit = async () => {
     let editedSuperAdmin = JSON.stringify({
       firstName: superAdminInput.firstName,
       lastName: superAdminInput.lastName,
@@ -37,8 +37,20 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
       password: superAdminInput.password,
       active: superAdminInput.active
     });
-    dispatch(putSuperAdmins(superAdminEdit._id, editedSuperAdmin, setResponse));
-    setShowSuccessModal(true);
+    if (
+      superAdminInput.firstName === superAdminEdit.firstName &&
+      superAdminInput.lastName === superAdminEdit.lastName &&
+      superAdminInput.email === superAdminEdit.email &&
+      superAdminInput.password === superAdminEdit.password &&
+      superAdminInput.active === superAdminEdit.active
+    ) {
+      setResponse({ message: "There haven't been any changes", data: {}, error: true });
+      setShowSuccessModal(true);
+    } else {
+      dispatch(putSuperAdmins(superAdminEdit._id, editedSuperAdmin, setResponse)).then(() =>
+        setShowSuccessModal(true)
+      );
+    }
   };
 
   const onChange = (e) => {
@@ -50,58 +62,61 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
   };
 
   return (
-    <form className={styles.formBody}>
-      <Input
-        label="First Name"
-        type="text"
-        name="firstName"
-        placeholder="Insert first name"
-        value={superAdminInput.firstName}
-        onChange={onChange}
-      />
-      <Input
-        label="Last Name"
-        type="text"
-        name="lastName"
-        placeholder="Insert last name"
-        value={superAdminInput.lastName}
-        onChange={onChange}
-      />
-      <Input
-        label="Email"
-        type="text"
-        name="email"
-        placeholder="Insert email"
-        value={superAdminInput.email}
-        onChange={onChange}
-      />
-      <Input
-        label="Password"
-        type="text"
-        name="password"
-        placeholder="Insert password"
-        value={superAdminInput.password}
-        onChange={onChange}
-      />
-      <Input
-        label="Active"
-        name="active"
-        type="checkbox"
-        checked={superAdminInput.active}
-        onChange={onChangeActive}
-      />
-      <div className={styles.buttonBox}>
-        <ButtonText clickAction={submitEdit} label="Edit"></ButtonText>
-      </div>
-      <SuccessModal
-        show={showSuccessModal}
-        closeModal={() => {
-          setShowSuccessModal(false);
-        }}
-        closeModalForm={closeModalForm}
-        successResponse={response}
-      />
-    </form>
+    <div className={styles.container}>
+      <form className={styles.formBody}>
+        <Input
+          label="First Name"
+          type="text"
+          name="firstName"
+          placeholder="Insert first name"
+          value={superAdminInput.firstName}
+          onChange={onChange}
+        />
+        <Input
+          label="Last Name"
+          type="text"
+          name="lastName"
+          placeholder="Insert last name"
+          value={superAdminInput.lastName}
+          onChange={onChange}
+        />
+        <Input
+          label="Email"
+          type="text"
+          name="email"
+          placeholder="Insert email"
+          value={superAdminInput.email}
+          onChange={onChange}
+        />
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          placeholder="Insert password"
+          value={superAdminInput.password}
+          onChange={onChange}
+        />
+        <Input
+          label="Active"
+          name="active"
+          type="checkbox"
+          checked={superAdminInput.active}
+          onChange={onChangeActive}
+        />
+        <div className={styles.buttonBox}>
+          <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+          <ButtonText clickAction={submitEdit} label="Edit"></ButtonText>
+        </div>
+        <SuccessModal
+          show={showSuccessModal}
+          closeModal={() => {
+            setShowSuccessModal(false);
+          }}
+          closeModalForm={closeModalForm}
+          successResponse={response}
+        />
+      </form>
+    </div>
   );
 };
 

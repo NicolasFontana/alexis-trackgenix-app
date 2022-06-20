@@ -49,8 +49,7 @@ const App = () => {
           setShowModalFormDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(deleteSuperAdmins(superAdminId));
-          setShowModalFormDelete(false);
+          dispatch(deleteSuperAdmins(superAdminId)).then(() => setShowModalFormDelete(false));
         }}
         title="Delete Super Admin"
         message="Are you sure you want to delete this Super Admin?"
@@ -98,6 +97,7 @@ const App = () => {
       {modalAdd}
       {modalEdit}
       {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <ButtonAdd clickAction={addOpen}></ButtonAdd>
     </div>
   );
