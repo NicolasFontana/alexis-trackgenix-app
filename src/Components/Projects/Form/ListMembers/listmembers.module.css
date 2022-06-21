@@ -1,36 +1,64 @@
-.container {
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    height: 200px;
-    overflow-y: scroll;
-    border: solid 0.5px;
-    border-radius: 3px;
-    font-size: 14px;
-    align-items: center;
+.header .divcontainer {
+margin-top: 15px;
 }
 
-.container h3 {
-    color: #373867;
+.container {
+margin: 15px 0;
+overflow-y: scroll;
+border: 1px solid #373867;
+border-radius: 4px;
+font-size: 14px;
+height: 200px;
+overflow-y: scroll;
+overflow-x: hidden;
+}
+
+.header h3 {
+display: inline;
+margin-right: 11px;
+color: #373867;
+font-size: 16px;
+text-align: justify;
+}
+
+.container tr:nth-child(even) {
+    background: #aace9b44;
+}
+
+.container tbody tr:hover {
+    background-color: #aace9b;
+}
+.container td {
+    padding: 20px;
+    text-align: center;
+    color: #232F3E;
 }
 
 .container table {
-    margin: 0 10px;
-    border-spacing: 5px;
+border-collapse: collapse;
 }
 
-.container th {
-    margin: 0 5px;
-    text-align: left;
+.container tr {
+height: 20px;
+border-bottom: 1px solid #37386725;
 }
-.container a, .addmember{
-    display: block;
-    margin: auto;
-    padding: 7px;
-    background: #AACE9B;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 12px;
-    text-decoration: none;
-    color: #373867;
+
+.container th,
+.container td {
+padding: 9px;
+margin: 0 5px;
+text-align: left;
+}
+
+.addmember {
+margin-left: 80px;
+}
+
+.header button {
+height: 25px;
+width: 25px;
+font-size: 20px;
+margin: auto;
+border: 0;
+cursor: pointer;
 }

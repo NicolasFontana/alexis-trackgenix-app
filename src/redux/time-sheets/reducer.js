@@ -9,7 +9,8 @@ import {
   CREATE_TIMESHEET_SUCCESS,
   CREATE_TIMESHEET_PENDING,
   PUT_TIMESHEET_ERROR,
-  PUT_TIMESHEET_SUCCESS
+  PUT_TIMESHEET_SUCCESS,
+  PUT_TIMESHEET_PENDING
 } from './constants';
 
 const initialState = {
@@ -81,6 +82,11 @@ export const timesheetsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false
+      };
+    case PUT_TIMESHEET_PENDING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

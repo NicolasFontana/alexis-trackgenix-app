@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import styles from './FormEdit.module.css';
+import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
-import { useDispatch, useSelector } from 'react-redux';
-import Preloader from '../../Shared/Preloader/Preloader';
+import { useDispatch } from 'react-redux';
+import { Input } from 'Components/Shared';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.timesheets.loading);
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
@@ -17,7 +16,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const [userInput, setUserInput] = useState({
     projectId: timesheetItem.projectId._id,
     task: timesheetItem.Task[0].taskId._id,
-    approved: timesheetItem.approved
+    approved: true
   });
 
   const fetchTask = async () => {
@@ -30,10 +29,6 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     }
   };
 
-  useEffect(() => {
-    fetchTask();
-  }, []);
-
   const fetchProject = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
@@ -45,11 +40,12 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   };
 
   useEffect(() => {
+    fetchTask();
     fetchProject();
   }, []);
 
   const onSubmit = () => {
-    dispatch(putTimesheet(userInput, timesheetItem._id, (message) => setMessage(message)));
+    dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
     setShowMessageModal(true);
   };
 
@@ -58,16 +54,14 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   };
 
   const onChangeApproved = (e) => {
-    setUserInput({ ...userInput, approved: e.target.value == 'true' ? true : false });
+    setUserInput({ ...userInput, active: e.target.checked });
   };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
   };
 
-  return loading ? (
-    <Preloader />
-  ) : (
+  return (
     <form className={styles.form}>
       <Select
         label="Projects"
@@ -93,13 +87,13 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         }))}
         required={true}
       />
-      <Select
+      <Input
         label="Approved"
         name="approved"
-        value={userInput.approved}
+        checked={userInput.active}
         onChange={onChangeApproved}
         title="Approve"
-        data={['true', 'false']}
+        type="checkbox"
         required={true}
       />
       <ButtonText
@@ -114,7 +108,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         clickAction={() => {
           onSubmit();
         }}
-        label="Submit"
+        label="Edit"
       />
       <ResponseModal
         show={showMessageModal}

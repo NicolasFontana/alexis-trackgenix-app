@@ -1,54 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import List from './List/List';
 import Preloader from '../Shared/Preloader/Preloader';
 import styles from './super-admins.module.css';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd';
+import Table from '../Shared/Table/Table';
+import FormAdd from './Form/Add';
+import FormEdit from './Form/Edit';
+import ModalForm from '../Shared/ModalForm';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSuperAdmins, deleteSuperAdmins } from '../../redux/super-admins/thunks';
 
 const App = () => {
-  const [superAdmins, setSuperAdmins] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const superAdmins = useSelector((state) => state.superAdmins.list);
+  const isLoading = useSelector((state) => state.superAdmins.isLoading);
+  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
+  const [showModalFormDelete, setShowModalFormDelete] = useState(false);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [superAdminId, setSuperAdminId] = useState();
 
-  const history = useHistory();
+  const addOpen = () => {
+    setShowModalFormAdd(true);
+  };
 
-  const routeChange = () => {
-    let path = `/super-admins/add`;
-    history.push(path);
+  const addClose = () => {
+    setShowModalFormAdd(false);
+  };
+
+  const editOpen = (id) => {
+    setSuperAdminId(id);
+    setShowModalFormEdit(true);
+  };
+
+  const editClose = () => {
+    setShowModalFormEdit(false);
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        setSuperAdmins(response.data);
-        setLoading(false);
-      });
+    dispatch(getSuperAdmins());
   }, []);
 
-  const deleteSuperA = async (_id) => {
-    if (confirm(`WARNING!\n Are you sure you want to delete this super admin?`)) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${_id}`, {
-          method: 'DELETE'
-        });
-        const data = await response.json();
-        alert(`${data.message}\nID: ${_id}`);
-        setSuperAdmins([...superAdmins.filter((listItem) => listItem._id !== _id)]);
-      } catch (error) {
-        alert(`Error\n${error}`);
-        console.error(error);
-      }
-    }
-  };
+  let modalDelete;
+  if (showModalFormDelete) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showModalFormDelete}
+        handleClose={() => {
+          setShowModalFormDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(deleteSuperAdmins(superAdminId)).then(() => setShowModalFormDelete(false));
+        }}
+        title="Delete Super Admin"
+        message="Are you sure you want to delete this Super Admin?"
+      />
+    );
+  }
 
-  return loading ? (
+  let modalAdd;
+  if (showModalFormAdd) {
+    modalAdd = (
+      <ModalForm isOpen={showModalFormAdd} handleClose={addClose} title="Add Super Admin">
+        <FormAdd closeModalForm={addClose} />
+      </ModalForm>
+    );
+  }
+
+  let modalEdit;
+  if (showModalFormEdit) {
+    modalEdit = (
+      <ModalForm isOpen={showModalFormEdit} handleClose={editClose} title="Edit Super Admin">
+        <FormEdit
+          superAdminEdit={superAdmins.find((item) => item._id === superAdminId)}
+          closeModalForm={editClose}
+        />
+      </ModalForm>
+    );
+  }
+
+  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
     <Preloader>
-      <p>Loading super admins</p>
+      <p>Loading Super Admins</p>
     </Preloader>
   ) : (
     <div className={styles.container}>
-      <List superAdmins={superAdmins} setSuperAdmins={setSuperAdmins} deleteSuperA={deleteSuperA} />
-      <ButtonAdd clickAction={routeChange}></ButtonAdd>
+      <h2 className={styles.title}>Super Admins</h2>
+      <Table
+        data={superAdmins}
+        headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
+        titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
+        delAction={(id) => {
+          setSuperAdminId(id);
+          setShowModalFormDelete(true);
+        }}
+        editAction={editOpen}
+      />
+      {modalAdd}
+      {modalEdit}
+      {modalDelete}
+      {isLoading ? <Preloader /> : null}
+      <ButtonAdd clickAction={addOpen}></ButtonAdd>
     </div>
   );
 };

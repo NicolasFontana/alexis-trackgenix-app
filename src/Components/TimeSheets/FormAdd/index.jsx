@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
-import styles from './form-add.module.css';
+import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
+import Input from '../../Shared/Input/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
-import Preloader from '../../Shared/Preloader/Preloader';
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.timesheets.loading);
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
   const [task, setTask] = useState('');
   const [projectId, setProjectId] = useState('');
-  const [approved, setApproved] = useState('');
+  const [approved, setApproved] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -28,10 +27,6 @@ const FormAdd = ({ closeModalForm }) => {
     }
   };
 
-  useEffect(() => {
-    fetchTask();
-  }, []);
-
   const fetchProject = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
@@ -43,32 +38,29 @@ const FormAdd = ({ closeModalForm }) => {
   };
 
   useEffect(() => {
+    fetchTask();
     fetchProject();
   }, []);
 
   const onSubmit = () => {
-    dispatch(createTimesheet(projectId, task, approved, (message) => setMessage(message)));
-    setShowMessageModal(true);
+    dispatch(createTimesheet(projectId, task, approved, setMessage)).then(() => {
+      setShowMessageModal(true);
+    });
   };
 
   const onChangeProject = (e) => {
     setProjectId(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSelectedTask = (e) => {
     setTask(e.target.value);
-    console.log(e.target.value);
   };
 
   const onChangeApproved = (e) => {
-    setApproved(e.target.value);
-    console.log(e.target.value);
+    setApproved(e.target.checked);
   };
 
-  return loading ? (
-    <Preloader />
-  ) : (
+  return (
     <form className={styles.form}>
       <Select
         label="Projects"
@@ -94,28 +86,24 @@ const FormAdd = ({ closeModalForm }) => {
         }))}
         required={true}
       />
-      <Select
+      <Input
         label="Approved"
         name="approved"
-        value={approved}
+        type="checkbox"
+        checked={approved}
         onChange={onChangeApproved}
-        title="Approve"
-        data={['true', 'false']}
-        required={true}
       />
       <ButtonText
         clickAction={() => {
           closeModalForm();
         }}
         label="Cancel"
-      >
-        Cancel
-      </ButtonText>
+      />
       <ButtonText
         clickAction={() => {
           onSubmit();
         }}
-        label="Submit"
+        label="Create"
       />
       <ErrorSuccessModal
         show={showMessageModal}
