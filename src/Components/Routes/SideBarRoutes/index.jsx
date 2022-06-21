@@ -3,8 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
 const SideBar = ({ titles, directions }) => {
-  console.log(titles);
-  console.log(directions);
   return (
     <aside className={styles.sidebar}>
       <div className={styles.headerContainer}>
