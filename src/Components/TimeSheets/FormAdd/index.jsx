@@ -15,16 +15,14 @@ const timesheetValidation = Joi.object({
     .alphanum()
     .length(24)
     .messages({
-      'string.alphanum': 'Invalid project id, it must contain both letters and numbers',
-      'string.length': 'Invalid project id, it must contain 24 characters'
+      'string.empty': 'This field is required'
     })
     .required(),
   task: Joi.string()
     .alphanum()
     .length(24)
     .messages({
-      'string.alphanum': 'Invalid task id, it must contain both letters and numbers',
-      'string.length': 'Invalid task id, it must contain 24 characters'
+      'string.empty': 'This field is required'
     })
     .required(),
   approved: Joi.boolean().required()
@@ -34,9 +32,6 @@ const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [listTask, setListTask] = useState([]);
   const [listProject, setListProject] = useState([]);
-  const [task, setTask] = useState('');
-  const [projectId, setProjectId] = useState('');
-  const [approved, setApproved] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -65,22 +60,10 @@ const FormAdd = ({ closeModalForm }) => {
     fetchProject();
   }, []);
 
-  const onSubmit = () => {
-    dispatch(createTimesheet(projectId, task, approved, setMessage)).then(() => {
+  const onSubmit = (data) => {
+    dispatch(createTimesheet(data.project, data.task, data.approved, setMessage)).then(() => {
       setShowMessageModal(true);
     });
-  };
-
-  const onChangeProject = (e) => {
-    setProjectId(e.target.value);
-  };
-
-  const handleSelectedTask = (e) => {
-    setTask(e.target.value);
-  };
-
-  const onChangeApproved = (e) => {
-    setApproved(e.target.checked);
   };
 
   const {
@@ -102,8 +85,6 @@ const FormAdd = ({ closeModalForm }) => {
       <Select
         label="Projects"
         name="project"
-        value={projectId}
-        onChange={onChangeProject}
         title="Choose project"
         data={listProject.map((project) => ({
           _id: project._id,
@@ -116,8 +97,6 @@ const FormAdd = ({ closeModalForm }) => {
       <Select
         label="Tasks"
         name="task"
-        value={task}
-        onChange={handleSelectedTask}
         title="Choose task"
         data={listTask.map((task) => ({
           _id: task._id,
@@ -131,8 +110,6 @@ const FormAdd = ({ closeModalForm }) => {
         label="Approved"
         name="approved"
         type="checkbox"
-        checked={approved}
-        onChange={onChangeApproved}
         register={register}
         error={errors.approved?.message}
       />
