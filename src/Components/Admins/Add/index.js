@@ -1,109 +1,108 @@
 import React from 'react';
 import { useState } from 'react';
 import styles from './add.module.css';
+import ButtonText from '../../Shared/Buttons/ButtonText';
+import Input from '../../Shared/Input';
+import { useDispatch } from 'react-redux';
+import { addAdmin } from '../../../redux/admins/thunks';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 
-const AdminsAdd = () => {
+const AdminsAdd = ({ closeModalForm }) => {
+  const dispatch = useDispatch();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    active: ''
+    active: false
   });
-  const onSubmit = (event) => {
-    event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}/api/admins/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active === 'true'
-      }),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.message == 'Admin created') {
-          alert('Admin created');
-          window.location.replace('https://alexis-trackgenix-app.vercel.app/admins');
-        } else if (response.message) {
-          alert(response.message);
-        }
-      });
-  };
+
+  let newAdmin = JSON.stringify({
+    firstName: adminInput.firstName,
+    lastName: adminInput.lastName,
+    email: adminInput.email,
+    password: adminInput.password,
+    active: adminInput.active === true
+  });
 
   const onChange = (e) => {
     setadminInput({ ...adminInput, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = () => {
+    dispatch(addAdmin(newAdmin, setResponse)).then(() => {
+      setShowSuccessModal(true);
+    });
+  };
+
+  const onChangeActive = (e) => {
+    setadminInput({ ...adminInput, active: e.target.checked });
+  };
+
   return (
-    <section className={styles.container}>
-      <h2>Create Admin</h2>
-      <form onSubmit={onSubmit}>
-        <div className={styles.formBody}>
-          <div className={styles.formRow}>
-            <label className={styles.label}>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={adminInput.firstName}
-              onChange={onChange}
-              required
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Last Name:</label>
-            <input
-              type="text"
-              name="lastName"
-              value={adminInput.lastName}
-              onChange={onChange}
-              required
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={adminInput.email}
-              onChange={onChange}
-              required
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={adminInput.password}
-              onChange={onChange}
-              required
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Active:</label>
-            <select name="active" value={adminInput.active} onChange={onChange} required>
-              <option value=""></option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-        </div>
-        <div className={styles.buttons}>
-          <button className={styles.submit} type="submit">
-            Create
-          </button>
-          <a className={styles.cancel} href="/admins">
-            Cancel
-          </a>
-        </div>
-      </form>
-    </section>
+    <form className={styles.form}>
+      <Input
+        label="Admin Name"
+        type="text"
+        name="firstName"
+        placeholder="Insert admin name"
+        value={adminInput.firstName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Admin lastName"
+        type="text"
+        name="lastName"
+        placeholder="Insert admin lastName"
+        value={adminInput.lastName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Email"
+        type="email"
+        name="email"
+        placeholder="Insert email"
+        value={adminInput.email}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        placeholder="Insert Password"
+        value={adminInput.password}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Active"
+        name="active"
+        type="checkbox"
+        checked={adminInput.active}
+        onChange={onChangeActive}
+      />
+      <div className={styles.buttonBox}>
+        <ButtonText
+          clickAction={() => {
+            onSubmit();
+          }}
+          label="Creade"
+        ></ButtonText>
+      </div>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
+    </form>
   );
 };
 

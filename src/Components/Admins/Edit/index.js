@@ -1,8 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './edit.module.css';
+import ButtonText from '../../Shared/Buttons/ButtonText';
+import Input from '../../Shared/Input';
+import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { useDispatch } from 'react-redux';
+import { editAdmin } from '../../../redux/admins/thunks';
 
-const AdminsEdit = () => {
+const AdminsEdit = ({ edit, closeModalForm }) => {
+  const dispatch = useDispatch();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
   const [adminInput, setadminInput] = useState({
     firstName: '',
     lastName: '',
@@ -11,102 +19,104 @@ const AdminsEdit = () => {
     active: ''
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const adminID = params.get('id');
-  useEffect(async () => {
-    try {
-      const getAdmin = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/id/${adminID}`);
-      const adminData = await getAdmin.json();
-      setadminInput({
-        firstName: adminData.data.firstName,
-        lastName: adminData.data.lastName,
-        email: adminData.data.email,
-        password: adminData.data.password,
-        active: adminData.data.active
-      });
-    } catch (error) {
-      console.error(error);
-      alert(error);
-    }
+  useEffect(() => {
+    setadminInput({
+      firstName: edit.firstName,
+      lastName: edit.lastName,
+      email: edit.email,
+      password: edit.password,
+      active: edit.active
+    });
   }, []);
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    fetch(`${process.env.REACT_APP_API_URL}/api/admins/${adminID}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        firstName: adminInput.firstName,
-        lastName: adminInput.lastName,
-        email: adminInput.email,
-        password: adminInput.password,
-        active: adminInput.active
-      }),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.message == 'Admin updated') {
-          alert('Admin updated');
-          window.location.replace(
-            'https://alexis-trackgenix-app-git-feature-tg-28admin-basp-m2022.vercel.app/admins'
-          );
-        } else if (response.message) {
-          alert(response.message);
-        }
-      });
+  const onChange = (event) => {
+    setadminInput({ ...adminInput, [event.target.name]: event.target.value });
   };
 
-  const onChange = (e) => {
-    setadminInput({ ...adminInput, [e.target.name]: e.target.value });
+  const onSubmit = () => {
+    let editedAdmin = JSON.stringify({
+      firstName: adminInput.firstName,
+      lastName: adminInput.lastName,
+      email: adminInput.email,
+      password: adminInput.password,
+      active: adminInput.active
+    });
+    if (
+      adminInput.firstName === edit.firstName &&
+      adminInput.lastName === edit.lastName &&
+      adminInput.email === edit.email &&
+      adminInput.password === edit.password &&
+      adminInput.active === edit.active
+    ) {
+      setResponse({ message: "There haven't been any changes", data: {}, error: true });
+      setShowSuccessModal(true);
+    } else {
+      dispatch(editAdmin(edit._id, editedAdmin, setResponse));
+      setShowSuccessModal(true);
+    }
+  };
+
+  const onChangeActive = (e) => {
+    setadminInput({ ...adminInput, active: e.target.checked });
   };
 
   return (
-    <section className={styles.container}>
-      <h2>Edit Admin</h2>
-      <form onSubmit={onSubmit}>
-        <div className={styles.formBody}>
-          <div className={styles.formRow}>
-            <label className={styles.label}>First Name:</label>
-            <input type="text" name="firstName" value={adminInput.firstName} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Last Name:</label>
-            <input type="text" name="lastName" value={adminInput.lastName} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Email:</label>
-            <input type="email" name="email" value={adminInput.email} onChange={onChange} />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={adminInput.password}
-              onChange={onChange}
-            />
-          </div>
-          <div className={styles.formRow}>
-            <label className={styles.label}>Active:</label>
-            <select name="active" value={adminInput.active} onChange={onChange}>
-              <option value=""></option>
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-        </div>
-        <div className={styles.buttons}>
-          <button className={styles.buttonEditCancel} type="submit">
-            Edit
-          </button>
-          <a className={styles.buttonEditCancel} href="/admins">
-            Cancel
-          </a>
-        </div>
-      </form>
-    </section>
+    <form className={styles.form}>
+      <Input
+        label="Admin Name"
+        type="text"
+        name="firstName"
+        placeholder="Insert admin name"
+        value={adminInput.firstName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Admin lastName"
+        type="text"
+        name="lastName"
+        placeholder="Insert admin lastName"
+        value={adminInput.lastName}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Email"
+        type="email"
+        name="email"
+        placeholder="Insert email"
+        value={adminInput.email}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        placeholder="Insert Password"
+        value={adminInput.password}
+        onChange={onChange}
+        required={true}
+      />
+      <Input
+        label="Active"
+        name="active"
+        type="checkbox"
+        checked={adminInput.active}
+        onChange={onChangeActive}
+      />
+      <div className={styles.buttonBox}>
+        <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
+      </div>
+      <SuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={closeModalForm}
+        successResponse={response}
+      />
+    </form>
   );
 };
 
