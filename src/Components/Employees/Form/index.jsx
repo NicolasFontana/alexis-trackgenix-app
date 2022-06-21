@@ -4,6 +4,65 @@ import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import { Input, Select, ButtonText, ErrorSuccessModal, Textarea } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
+
+const schema = Joi.object({
+  firstName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[a-zA-Z\s]*$/)
+    .required()
+    .messages({
+      'string.min': 'It must contain more than 3 letters',
+      'string.max': 'It must not contain more than 50 letters',
+      'string.pattern.base': 'It must contain only letters',
+      'string.empty': 'First Name is required'
+    }),
+  lastName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[a-zA-Z\s]*$/)
+    .required()
+    .messages({
+      'string.min': 'It must contain more than 3 letters',
+      'string.max': 'It must not contain more than 50 letters',
+      'string.pattern.base': 'It must contain only letters',
+      'string.empty': 'Last Name is a required field'
+    }),
+  phone: Joi.string().pattern(/^\d+$/).length(10).required().messages({
+    'string.pattern.base': 'It must contain only numbers',
+    'string.length': 'It must contain 10 numbers',
+    'string.empty': 'Phone number is a required field'
+  }),
+  email: Joi.string().required().messages({
+    // 'string.email': 'invalid email format',
+    'string.empty': 'Email is a required field'
+  }),
+  password: Joi.string()
+    .min(8)
+    .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?!.*[^a-zA-Z0-9])/)
+    .required()
+    .messages({
+      'string.min': 'It must contain at least 8 characters',
+      'string.pattern.base': 'It must contain both letters and numbers',
+      'string.empty': 'Password is a required field'
+    }),
+  active: Joi.boolean().required(),
+  isProjectManager: Joi.string().required().messages({ 'string.empty': 'This field is required' }),
+  projects: Joi.array().items(
+    Joi.string().alphanum().length(24).messages({
+      'string.alphanum': 'Invalid project id, it must contain both letters and numbers',
+      'string.length': 'Invalid project id, it must contain 24 characters'
+    })
+  ),
+  timeSheets: Joi.array().items(
+    Joi.string().alphanum().length(24).messages({
+      'string.alphanum': 'Invalid time sheet id, it must contain both letters and numbers',
+      'string.length': 'Invalid time sheet id, it must contain 24 characters'
+    })
+  )
+});
 
 const Form = ({ closeModalForm, edit, item }) => {
   // const dispatch = useDispatch();
@@ -72,6 +131,7 @@ const Form = ({ closeModalForm, edit, item }) => {
     formState: { errors }
   } = useForm({
     mode: 'onChange',
+    resolver: joiResolver(schema),
     defaultValues: {
       firstName: edit ? item.firstName : '',
       lastName: edit ? item.lastName : '',
