@@ -1,81 +1,141 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import List from './List/List';
-import AddItem from './AddItem/AddItem';
-import Modal from './Modal/Modal';
 import Preloader from '../Shared/Preloader/Preloader';
+import Table from '../Shared/Table/Table';
+import ConfirmModal from '../Shared/confirmationModal/confirmModal';
+import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
+import ModalForm from '../Shared/ModalForm';
+import FormAdd from './FormAdd';
+import FormEdit from './FormEdit';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
 
 function TimeSheets() {
-  const [timeSheets, setTimeSheets] = useState([]);
-  const [showFormAdd, setShowFormAdd] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [showTitle, setShowTitle] = useState('');
-
-  useEffect(async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`);
-      const responseJSON = await response.json();
-      setTimeSheets(responseJSON.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const dispatch = useDispatch();
+  const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
+  const loading = useSelector((state) => state.timesheets.loading);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [timeSheetId, setTimeSheetId] = useState();
+  const [showModalAdd, setShowModalAdd] = useState();
+  const [showModalEdit, setShowModalEdit] = useState();
+  let modalDelete;
+  let modalAdd;
+  let modalEdit;
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTimeSheets(response.data);
+    dispatch(getAllTimesheets());
+  }, []);
+
+  const closeModalEdit = () => {
+    setShowModalEdit(false);
+  };
+
+  const closeModalAdd = () => {
+    setShowModalAdd(false);
+  };
+
+  const timeSheetTable = [];
+  const timesheetFormatted = (listTimesheets) => {
+    listTimesheets.forEach((timeSheet) => {
+      timeSheetTable.push({
+        _id: timeSheet._id,
+        projectName: timeSheet.projectId.name,
+        taskId: timeSheet.Task[0].taskId._id,
+        taskName: timeSheet.Task[0].taskId.taskName,
+        startDate: timeSheet.Task[0].taskId.startDate,
+        workedHours: timeSheet.Task[0].taskId.workedHours,
+        description: timeSheet.Task[0].taskId.description,
+        status: timeSheet.Task[0].taskId.status,
+        approved: timeSheet.approved
       });
-  }, [showModal]);
-
-  const deleteItem = async (_id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${_id}`, {
-        method: 'DELETE'
-      });
-      const responseJSON = await response.json();
-      if (responseJSON.error === false) {
-        setShowTitle(responseJSON.message);
-      }
-      setTimeSheets([...timeSheets.filter((timeSheet) => timeSheet._id !== _id)]);
-    } catch (error) {
-      console.error(error);
-    }
+    });
   };
 
-  const closeForm = () => {
-    setShowFormAdd(false);
-  };
-  const onClick = () => {
-    setShowFormAdd(true);
-  };
+  timesheetFormatted(listTimesheets);
+  if (showModalDelete) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showModalDelete}
+        handleClose={() => {
+          setShowModalDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(deleteTimesheet(timeSheetId));
+          setShowModalDelete(false);
+        }}
+        title="Delete Timesheet"
+        message="Are you sure you want to delete this timesheet?"
+      />
+    );
+  }
 
-  return loading ? (
+  if (showModalAdd) {
+    modalAdd = (
+      <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
+        <FormAdd closeModalForm={closeModalAdd} />
+      </ModalForm>
+    );
+  }
+
+  if (showModalEdit) {
+    modalEdit = (
+      <ModalForm isOpen={showModalEdit} handleClose={closeModalEdit} title="Edit Timesheet">
+        <FormEdit
+          closeModalEdit={closeModalEdit}
+          timesheetItem={listTimesheets.find((item) => item._id === timeSheetId)}
+        />
+      </ModalForm>
+    );
+  }
+
+  return loading && !showModalAdd && !showModalDelete && !showModalEdit ? (
     <Preloader>
       <p>Loading timesheets</p>
     </Preloader>
   ) : (
     <section className={styles.container}>
-      <AddItem
-        show={showFormAdd}
-        closeForm={closeForm}
-        setShowModal={setShowModal}
-        setShowTitle={setShowTitle}
+      <h2>TIMESHEETS</h2>
+      <Table
+        data={timeSheetTable}
+        headers={[
+          'projectName',
+          'taskId',
+          'taskName',
+          'startDate',
+          'workedHours',
+          'description',
+          'status',
+          'approved'
+        ]}
+        titles={[
+          'Project',
+          'Task ID',
+          'Task name',
+          'Start date',
+          'Worked hours',
+          'Description',
+          'Status',
+          'PMs approval'
+        ]}
+        delAction={(id) => {
+          setTimeSheetId(id);
+          setShowModalDelete(true);
+        }}
+        editAction={(id) => {
+          setTimeSheetId(id);
+          setShowModalEdit(true);
+        }}
       />
-      <h2 className={styles.title}>Timesheets</h2>
-      <List
-        timeSheets={timeSheets}
-        deleteItem={deleteItem}
-        setShowModal={setShowModal}
-        setShowTitle={setShowTitle}
+      {loading ? <Preloader /> : null}
+      {modalDelete}
+      {modalAdd}
+      {modalEdit}
+      <ButtonAdd
+        className={styles.buttonAdd}
+        clickAction={() => {
+          setShowModalAdd(true);
+        }}
       />
-      <button className={styles.addButton} onClick={onClick}>
-        ✚
-      </button>
-      <Modal showTitle={showTitle} showModal={showModal} setShowModal={setShowModal} />
     </section>
   );
 }

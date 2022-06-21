@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import { timesheetsReducer } from './time-sheets/reducer';
 import { adminsReducer } from './admins/reducer';
 import { projectsReducer } from './projects/reducer';
 import { employeesReducer } from './employees/reducer';
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
   admins: adminsReducer,
   projects: projectsReducer,
   employees: employeesReducer,
-  tasks: tasksReducer
+  tasks: tasksReducer,
+  timesheets: timesheetsReducer
 });
 
 const configureStore = () => {
