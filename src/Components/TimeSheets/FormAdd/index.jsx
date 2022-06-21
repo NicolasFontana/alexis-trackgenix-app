@@ -12,15 +12,11 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 const timesheetValidation = Joi.object({
   project: Joi.string()
-    .alphanum()
-    .length(24)
     .messages({
       'string.empty': 'This field is required'
     })
     .required(),
   task: Joi.string()
-    .alphanum()
-    .length(24)
     .messages({
       'string.empty': 'This field is required'
     })
