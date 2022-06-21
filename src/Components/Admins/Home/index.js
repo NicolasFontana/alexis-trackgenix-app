@@ -1,7 +1,8 @@
 import styles from 'Components/Home/home.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 function Home() {
+  const { url } = useRouteMatch();
   return (
     <section className={styles.container}>
       <h2>Admin Home</h2>
@@ -12,32 +13,32 @@ function Home() {
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/admins" className={styles.link}>
+          <Link to={`${url}/admins`} className={styles.link}>
             Admins
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/super-admins" className={styles.link}>
+          <Link to={`${url}/super-admins`} className={styles.link}>
             Super Admins
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/employees" className={styles.link}>
+          <Link to={`${url}/employees`} className={styles.link}>
             Employees
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/projects" className={styles.link}>
+          <Link to={`${url}/projects`} className={styles.link}>
             Projects
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/time-sheets" className={styles.link}>
+          <Link to={`${url}/time-sheets`} className={styles.link}>
             TimeSheets
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/admin/tasks" className={styles.link}>
+          <Link to={`${url}/tasks`} className={styles.link}>
             Tasks
           </Link>
         </button>

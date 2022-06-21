@@ -1,24 +1,25 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Admins/Home';
-import Admins from 'Components/Admins';
-import SuperAdmins from 'Components/SuperAdmins';
-import Employees from 'Components/Employees';
-import Projects from 'Components/Projects';
-import Timesheets from 'Components/TimeSheets';
-import Tasks from 'Components/Tasks';
+import Admins from 'Components/Admins/index';
+import SuperAdmins from 'Components/SuperAdmins/index';
+import Employees from 'Components/Employees/index';
+import Projects from 'Components/Projects/index';
+import Timesheets from 'Components/TimeSheets/index';
+import Tasks from 'Components/Tasks/index';
 
 const Admin = () => {
+  const { url } = useRouteMatch();
   return (
     <Switch>
-      <Route path="/admin/home" component={Home} />
-      <Route path="/admin/admins" component={Admins} />
-      <Route path="/admin/super-admins" component={SuperAdmins} />
-      <Route path="/admin/employees" component={Employees} />
-      <Route path="/admin/projects" component={Projects} />
-      <Route path="/admin/time-sheets" component={Timesheets} />
-      <Route path="/admin/tasks" component={Tasks} />
-      <Redirect to="/admin/home" />
+      <Route path={`${url}/`} component={Home} />
+      <Route path={`${url}/admins`} component={Admins} />
+      <Route path={`${url}/super-admins`} component={SuperAdmins} />
+      <Route path={`${url}/employees`} component={Employees} />
+      <Route path={`${url}/projects`} component={Projects} />
+      <Route path={`${url}/time-sheets`} component={Timesheets} />
+      <Route path={`${url}/tasks`} component={Tasks} />
+      <Redirect to={`${url}/`} />
     </Switch>
   );
 };
