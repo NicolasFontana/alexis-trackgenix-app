@@ -6,6 +6,45 @@ import Input from '../../Shared/Input';
 import SuccessModal from '../../Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
 import { postSuperAdmins } from '../../../redux/super-admins/thunks';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
+
+const schema = Joi.object({
+  firstName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[a-zA-Z\s]*$/)
+    .messages({
+      'string.min': 'Invalid name, it must contain more than 3 letters',
+      'string.max': 'Invalid name, it must not contain more than 50 letters',
+      'string.pattern.base': 'Invalid name, it must contain only letters'
+    })
+    .required(),
+  lastName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[a-zA-Z\s]*$/)
+    .messages({
+      'string.min': 'Invalid last name, it must contain more than 3 letters',
+      'string.max': 'Invalid last name, it must not contain more than 50 letters',
+      'string.pattern.base': 'Invalid last name, it must contain only letters'
+    })
+    .required(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .message('Invalid email format')
+    .required(),
+  password: Joi.string()
+    .min(8)
+    .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])/)
+    .messages({
+      'string.min': 'Invalid password, it must contain at least 8 characters',
+      'string.pattern.base': 'Invalid password, it must contain both letters and numbers'
+    })
+    .required(),
+  active: Joi.boolean().required()
+});
 
 const SuperAdminsFormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
@@ -28,6 +67,13 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
   });
 
   const submitAdd = () => {
+    console.log(errors);
+    if (errors) {
+      console.log('hay error');
+    }
+    if (!errors) {
+      console.log('no hay error');
+    }
     dispatch(postSuperAdmins(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
   };
 
@@ -39,9 +85,25 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
     setsuperAdminInput({ ...superAdminInput, active: e.target.checked });
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      active: ''
+    }
+  });
+
   return (
     <div className={styles.container}>
-      <form className={styles.formBody}>
+      <form className={styles.formBody} onSubmit={handleSubmit(submitAdd)}>
         <Input
           label="First Name"
           type="text"
@@ -50,6 +112,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.firstName}
           onChange={onChange}
           required={true}
+          register={register}
+          error={errors.firstName?.message}
         />
         <Input
           label="Last Name"
@@ -59,6 +123,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.lastName}
           onChange={onChange}
           required={true}
+          register={register}
+          error={errors.lastName?.message}
         />
         <Input
           label="Email"
@@ -68,6 +134,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.email}
           onChange={onChange}
           required={true}
+          register={register}
+          error={errors.email?.message}
         />
         <Input
           label="Password"
@@ -77,6 +145,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.password}
           onChange={onChange}
           required={true}
+          register={register}
+          error={errors.password?.message}
         />
         <Input
           label="Active"
@@ -84,10 +154,12 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="checkbox"
           checked={superAdminInput.active}
           onChange={onChangeActive}
+          register={register}
+          error={errors.active?.message}
         />
         <div className={styles.buttonBox}>
           <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-          <ButtonText clickAction={submitAdd} label="Create"></ButtonText>
+          <ButtonText clickAction={() => handleSubmit(submitAdd)} label="Create"></ButtonText>
         </div>
         <SuccessModal
           show={showSuccessModal}

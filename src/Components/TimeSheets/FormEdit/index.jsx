@@ -5,6 +5,29 @@ import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
 import { useDispatch } from 'react-redux';
+import * as Joi from 'joi';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+
+const timesheetValidation = Joi.object({
+  projectId: Joi.string()
+    .alphanum()
+    .length(24)
+    .messages({
+      'string.alphanum': 'Invalid project id, it must contain both letters and numbers',
+      'string.length': 'Invalid project id, it must contain 24 characters'
+    })
+    .required(),
+  task: Joi.string()
+    .alphanum()
+    .length(24)
+    .messages({
+      'string.alphanum': 'Invalid task id, it must contain both letters and numbers',
+      'string.length': 'Invalid task id, it must contain 24 characters'
+    })
+    .required(),
+  approved: Joi.boolean().required()
+});
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
@@ -60,8 +83,22 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     setShowMessageModal(false);
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(timesheetValidation),
+    defaultValues: {
+      projectId: '',
+      task: '',
+      approved: false
+    }
+  });
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Select
         label="Projects"
         name="projectId"
@@ -73,6 +110,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           optionText: project.name
         }))}
         required={true}
+        register={register}
+        error={errors.projectId?.message}
       />
       <Select
         label="Tasks"
@@ -85,6 +124,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           optionText: task.taskName
         }))}
         required={true}
+        register={register}
+        error={errors.task?.message}
       />
       <Select
         label="Approved"
@@ -94,6 +135,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         title="Approve"
         data={['true', 'false']}
         required={true}
+        register={register}
+        error={errors.approved?.message}
       />
       <ButtonText
         clickAction={() => {
@@ -103,12 +146,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
       >
         Cancel
       </ButtonText>
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Edit"
-      />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit" />
       <ResponseModal
         show={showMessageModal}
         closeModal={closeMessageModal}

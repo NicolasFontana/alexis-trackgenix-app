@@ -8,10 +8,10 @@ import { useDispatch } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
 import * as Joi from 'joi';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const timesheetValidation = Joi.object({
-  projectId: Joi.string()
+  project: Joi.string()
     .alphanum()
     .length(24)
     .messages({
@@ -19,16 +19,14 @@ const timesheetValidation = Joi.object({
       'string.length': 'Invalid project id, it must contain 24 characters'
     })
     .required(),
-  Task: Joi.array().items({
-    taskId: Joi.string()
-      .alphanum()
-      .length(24)
-      .messages({
-        'string.alphanum': 'Invalid task id, it must contain both letters and numbers',
-        'string.length': 'Invalid task id, it must contain 24 characters'
-      })
-      .required()
-  }),
+  task: Joi.string()
+    .alphanum()
+    .length(24)
+    .messages({
+      'string.alphanum': 'Invalid task id, it must contain both letters and numbers',
+      'string.length': 'Invalid task id, it must contain 24 characters'
+    })
+    .required(),
   approved: Joi.boolean().required()
 });
 
@@ -89,10 +87,18 @@ const FormAdd = ({ closeModalForm }) => {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm();
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(timesheetValidation),
+    defaultValues: {
+      project: '',
+      task: '',
+      approved: false
+    }
+  });
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Select
         label="Projects"
         name="project"
@@ -104,6 +110,8 @@ const FormAdd = ({ closeModalForm }) => {
           optionText: project.name
         }))}
         required={true}
+        register={register}
+        error={errors.project?.message}
       />
       <Select
         label="Tasks"
@@ -116,6 +124,8 @@ const FormAdd = ({ closeModalForm }) => {
           optionText: task.taskName
         }))}
         required={true}
+        register={register}
+        error={errors.task?.message}
       />
       <Input
         label="Approved"
@@ -123,6 +133,8 @@ const FormAdd = ({ closeModalForm }) => {
         type="checkbox"
         checked={approved}
         onChange={onChangeApproved}
+        register={register}
+        error={errors.approved?.message}
       />
       <ButtonText
         clickAction={() => {
@@ -130,12 +142,7 @@ const FormAdd = ({ closeModalForm }) => {
         }}
         label="Cancel"
       />
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Create"
-      />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create" />
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
