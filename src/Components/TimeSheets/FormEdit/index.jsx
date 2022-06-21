@@ -5,6 +5,7 @@ import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
 import { useDispatch } from 'react-redux';
+import { Input } from 'Components/Shared';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const [userInput, setUserInput] = useState({
     projectId: timesheetItem.projectId._id,
     task: timesheetItem.Task[0].taskId._id,
-    approved: timesheetItem.approved
+    approved: true
   });
 
   const fetchTask = async () => {
@@ -53,7 +54,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   };
 
   const onChangeApproved = (e) => {
-    setUserInput({ ...userInput, approved: e.target.value == 'true' ? true : false });
+    setUserInput({ ...userInput, active: e.target.checked });
   };
 
   const closeMessageModal = () => {
@@ -86,13 +87,13 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         }))}
         required={true}
       />
-      <Select
+      <Input
         label="Approved"
         name="approved"
-        value={userInput.approved}
+        checked={userInput.active}
         onChange={onChangeApproved}
         title="Approve"
-        data={['true', 'false']}
+        type="checkbox"
         required={true}
       />
       <ButtonText

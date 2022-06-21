@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import Preloader from '../Shared/Preloader/Preloader';
 import Table from '../Shared/Table/Table';
+import ErrorSuccessModal from '../Shared/ErrorSuccessModal/index';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import ButtonAdd from '../Shared/Buttons/ButtonAdd/index';
 import ModalForm from '../Shared/ModalForm';
@@ -14,6 +15,8 @@ function TimeSheets() {
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
   const loading = useSelector((state) => state.timesheets.loading);
+  const [response, setResponse] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
@@ -60,8 +63,10 @@ function TimeSheets() {
           setShowModalDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(deleteTimesheet(timeSheetId));
-          setShowModalDelete(false);
+          dispatch(deleteTimesheet(timeSheetId, setResponse)).then(() => {
+            setShowModalDelete(false);
+            setShowSuccessModal(true);
+          });
         }}
         title="Delete Timesheet"
         message="Are you sure you want to delete this timesheet?"
@@ -88,7 +93,7 @@ function TimeSheets() {
     );
   }
 
-  return loading && !showModalAdd && !showModalDelete && !showModalEdit ? (
+  return loading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
     <Preloader>
       <p>Loading timesheets</p>
     </Preloader>
@@ -135,6 +140,16 @@ function TimeSheets() {
         clickAction={() => {
           setShowModalAdd(true);
         }}
+      />
+      <ErrorSuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={() => {
+          setShowSuccessModal(false);
+        }}
+        successResponse={response}
       />
     </section>
   );
