@@ -50,39 +50,16 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
-  const [superAdminInput, setsuperAdminInput] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    active: false
-  });
 
-  let newSuperAdmin = JSON.stringify({
-    firstName: superAdminInput.firstName,
-    lastName: superAdminInput.lastName,
-    email: superAdminInput.email,
-    password: superAdminInput.password,
-    active: superAdminInput.active
-  });
-
-  const submitAdd = () => {
-    console.log(errors);
-    if (errors) {
-      console.log('hay error');
-    }
-    if (!errors) {
-      console.log('no hay error');
-    }
+  const submitAdd = (data) => {
+    let newSuperAdmin = JSON.stringify({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      active: data.active
+    });
     dispatch(postSuperAdmins(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
-  };
-
-  const onChange = (e) => {
-    setsuperAdminInput({ ...superAdminInput, [e.target.name]: e.target.value });
-  };
-
-  const onChangeActive = (e) => {
-    setsuperAdminInput({ ...superAdminInput, active: e.target.checked });
   };
 
   const {
@@ -97,7 +74,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
       lastName: '',
       email: '',
       password: '',
-      active: ''
+      active: false
     }
   });
 
@@ -109,8 +86,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="firstName"
           placeholder="Insert first name"
-          value={superAdminInput.firstName}
-          onChange={onChange}
           required={true}
           register={register}
           error={errors.firstName?.message}
@@ -120,8 +95,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="lastName"
           placeholder="Insert last name"
-          value={superAdminInput.lastName}
-          onChange={onChange}
           required={true}
           register={register}
           error={errors.lastName?.message}
@@ -131,8 +104,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="email"
           placeholder="Insert email"
-          value={superAdminInput.email}
-          onChange={onChange}
           required={true}
           register={register}
           error={errors.email?.message}
@@ -142,8 +113,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="password"
           name="password"
           placeholder="Insert password"
-          value={superAdminInput.password}
-          onChange={onChange}
           required={true}
           register={register}
           error={errors.password?.message}
@@ -152,14 +121,12 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           label="Active"
           name="active"
           type="checkbox"
-          checked={superAdminInput.active}
-          onChange={onChangeActive}
           register={register}
           error={errors.active?.message}
         />
         <div className={styles.buttonBox}>
-          <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-          <ButtonText clickAction={() => handleSubmit(submitAdd)} label="Create"></ButtonText>
+          <ButtonText clickAction={closeModalForm} label="Cancel" />
+          <ButtonText clickAction={handleSubmit(submitAdd)} label="Create" />
         </div>
         <SuccessModal
           show={showSuccessModal}
