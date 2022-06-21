@@ -5,8 +5,8 @@ import { Header, Footer, Preloader } from 'Components/Shared';
 import SideBarRoutes from 'Components/Routes/SideBarRoutes';
 
 const Home = lazy(() => import('Components/Home'));
-const Admin = lazy(() => import('Components/Admins'));
-const Employee = lazy(() => import('Components/Employees'));
+const adminRoutes = lazy(() => import('./admin'));
+const employeeRoutes = lazy(() => import('./employee'));
 
 function Routes() {
   return (
@@ -16,8 +16,8 @@ function Routes() {
         <Switch>
           <Suspense fallback={Preloader}>
             <Route exact path="/home" component={Home} />
-            <Route exact path="/admin" component={Admin} />
-            <Route path="/employee" component={Employee} />
+            <Route exact path="/admin" component={adminRoutes} />
+            <Route exact path="/employee" component={employeeRoutes} />
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
