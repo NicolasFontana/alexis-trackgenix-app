@@ -6,6 +6,31 @@ import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
+import * as Joi from 'joi';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers';
+
+const timesheetValidation = Joi.object({
+  projectId: Joi.string()
+    .alphanum()
+    .length(24)
+    .messages({
+      'string.alphanum': 'Invalid project id, it must contain both letters and numbers',
+      'string.length': 'Invalid project id, it must contain 24 characters'
+    })
+    .required(),
+  Task: Joi.array().items({
+    taskId: Joi.string()
+      .alphanum()
+      .length(24)
+      .messages({
+        'string.alphanum': 'Invalid task id, it must contain both letters and numbers',
+        'string.length': 'Invalid task id, it must contain 24 characters'
+      })
+      .required()
+  }),
+  approved: Joi.boolean().required()
+});
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
@@ -59,6 +84,12 @@ const FormAdd = ({ closeModalForm }) => {
   const onChangeApproved = (e) => {
     setApproved(e.target.checked);
   };
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm();
 
   return (
     <form className={styles.form}>
