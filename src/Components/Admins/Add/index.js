@@ -44,7 +44,7 @@ const AdminsAdd = ({ closeModalForm }) => {
   return (
     <form className={styles.form}>
       <Input
-        label="Admin Name"
+        label="First Name"
         type="text"
         name="firstName"
         placeholder="Insert admin name"
@@ -53,7 +53,7 @@ const AdminsAdd = ({ closeModalForm }) => {
         required={true}
       />
       <Input
-        label="Admin lastName"
+        label="Last Name"
         type="text"
         name="lastName"
         placeholder="Insert admin lastName"
@@ -91,7 +91,7 @@ const AdminsAdd = ({ closeModalForm }) => {
           clickAction={() => {
             onSubmit();
           }}
-          label="Creade"
+          label="Create"
         ></ButtonText>
       </div>
       <SuccessModal

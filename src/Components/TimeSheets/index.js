@@ -95,11 +95,11 @@ function TimeSheets() {
 
   return loading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
     <Preloader>
-      <p>Loading timesheets</p>
+      <p>Loading Timesheets</p>
     </Preloader>
   ) : (
     <section className={styles.container}>
-      <h2>TIMESHEETS</h2>
+      <h2 className={styles.timesheets}>Timesheets</h2>
       <Table
         data={timeSheetTable}
         headers={[

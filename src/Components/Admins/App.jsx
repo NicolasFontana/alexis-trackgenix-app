@@ -79,13 +79,16 @@ const App = () => {
     !showModalFormAdd &&
     !showModalFormDelete &&
     !showSuccessModal ? (
-    <Preloader />
+    <Preloader>
+      <p>Loading Admins</p>
+    </Preloader>
   ) : (
-    <div className={styles.container}>
+    <div className={styles.containerApp}>
+      <h2 className={styles.title}>Admins</h2>
       <Table
         data={admins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
-        titles={['ID', 'Name', 'LastName', 'Email', 'Password', 'Active']}
+        titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
         delAction={(id) => {
           setIdDelete(id);
           setShowModalFormDelete(true);
