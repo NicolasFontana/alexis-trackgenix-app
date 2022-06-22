@@ -41,7 +41,7 @@ const schema = Joi.object({
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': 'invalid email format',
+      'string.email': 'Invalid email format',
       'string.empty': 'Email is a required field'
     }),
   password: Joi.string()
@@ -125,8 +125,8 @@ const Form = ({ closeModalForm, edit, item }) => {
       password: edit ? item.password : '',
       active: edit ? (item.active ? 'Active' : 'Inactive') : '',
       isProjectManager: edit ? (item.isProjectManager ? 'Yes' : 'No') : '',
-      projects: edit ? item.projects[0]._id : '',
-      timeSheets: edit ? item.timeSheets[0]._id : ''
+      projects: edit ? (item.projects[0] ? item.projects[0]._id : '') : '',
+      timeSheets: edit ? (item.timeSheets[0] ? item.timeSheets[0]?._id : '') : ''
     }
   });
 
