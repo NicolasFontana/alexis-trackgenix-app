@@ -14,8 +14,8 @@ const Form = ({ closeModalForm, edit, item }) => {
     phone: '',
     email: '',
     password: '',
-    active: '',
-    isProjectManager: '',
+    active: false,
+    isProjectManager: false,
     projects: [],
     timeSheets: []
   });
