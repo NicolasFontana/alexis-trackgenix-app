@@ -6,6 +6,7 @@ import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
 import { useDispatch } from 'react-redux';
 import { Input } from 'Components/Shared';
+import { useForm } from 'react-hook-form';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
@@ -13,11 +14,11 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [userInput, setUserInput] = useState({
-    projectId: timesheetItem.projectId._id,
-    task: timesheetItem.Task[0].taskId._id,
-    approved: true
-  });
+  // const [userInput, setUserInput] = useState({
+  //   projectId: timesheetItem.projectId._id,
+  //   task: timesheetItem.Task[0].taskId._id,
+  //   approved: true
+  // });
 
   const fetchTask = async () => {
     try {
@@ -44,75 +45,83 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     fetchProject();
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    let userInput = {
+      projectId: data.projectId,
+      task: data.task,
+      approved: data.approved
+    };
     dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
     setShowMessageModal(true);
   };
 
-  const onChange = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
-  };
+  // const onChange = (e) => {
+  //   setUserInput({ ...userInput, [e.target.name]: e.target.value });
+  // };
 
-  const onChangeApproved = (e) => {
-    setUserInput({ ...userInput, active: e.target.checked });
-  };
+  // const onChangeApproved = (e) => {
+  //   setUserInput({ ...userInput, active: e.target.checked });
+  // };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      projectId: timesheetItem.projectId._id,
+      task: timesheetItem.Task[0].taskId._id,
+      approved: timesheetItem.approved
+    }
+  });
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Select
         label="Projects"
         name="projectId"
-        value={userInput.projectId}
-        onChange={onChange}
         title="Choose project"
         data={listProject.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
         required={true}
-        register={console.log}
+        register={register}
+        error={errors.projectId?.message}
       />
       <Select
         label="Tasks"
         name="task"
-        value={userInput.task}
-        onChange={onChange}
         title="Choose task"
         data={listTask.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}
         required={true}
-        register={console.log}
+        register={register}
+        error={errors.task?.message}
       />
       <Input
         label="Approved"
         name="approved"
-        checked={userInput.active}
-        onChange={onChangeApproved}
         title="Approve"
         type="checkbox"
         required={true}
-        register={console.log}
+        register={register}
+        error={errors.approved?.message}
       />
       <ButtonText
         clickAction={() => {
           closeModalEdit();
         }}
         label="Cancel"
-      >
-        Cancel
-      </ButtonText>
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Edit"
       />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit" />
       <ResponseModal
         show={showMessageModal}
         closeModal={closeMessageModal}
