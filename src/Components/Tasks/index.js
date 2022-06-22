@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { delTask, getTasks } from '../../redux/tasks/thunks';
-import Table from '../Shared/Table/Table';
-import Preloader from '../Shared/Preloader/Preloader';
-import Modal from '../Shared/ModalForm/index';
-import Form from './Form/Form';
-import EditForm from './Edit/Edit';
 import AddButton from '../Shared/Buttons/ButtonAdd';
 import ConfirmModal from '../Shared/confirmationModal/confirmModal';
 import MessageModal from '../Shared/ErrorSuccessModal';
+import Modal from '../Shared/ModalForm/index';
+import Preloader from '../Shared/Preloader/Preloader';
+import Table from '../Shared/Table/Table';
+import EditForm from './Edit/Edit';
+import Form from './Form/Form';
 import styles from './tasks.module.css';
 
 function Tasks() {
@@ -72,6 +72,7 @@ function Tasks() {
       </Modal>
     );
   }
+  console.log('task', tasks);
 
   if (showModalFormAdd) {
     modalAdd = (

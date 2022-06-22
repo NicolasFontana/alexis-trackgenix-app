@@ -53,13 +53,6 @@ const Edit = ({ task, closeModalForm }) => {
   const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    let editedTask = JSON.stringify({
-      taskName: task.taskName,
-      startDate: task.startDate,
-      workedHours: task.workedHours,
-      description: task.description,
-      status: task.status
-    });
     if (
       data.taskName === task.taskName &&
       data.startDate === task.startDate &&
@@ -67,10 +60,10 @@ const Edit = ({ task, closeModalForm }) => {
       data.description === task.description &&
       data.status === task.status
     ) {
-      setMessage({ message: "There hasnt't been any changes", data: {}, error: true });
+      setMessage({ message: "There hasn't been any changes", error: true });
       setShowMessageModal(true);
     } else {
-      dispatch(editTask(editedTask, task._id, setMessage)).then(() => {
+      dispatch(editTask(task._id, data, setMessage)).then(() => {
         setShowMessageModal(true);
       });
     }
@@ -133,12 +126,8 @@ const Edit = ({ task, closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <Button clickAction={closeModalForm} label="Cancel">
-        Cancel
-      </Button>
-      <Button clickAction={handleSubmit(onSubmit)} label="Submit">
-        Submit
-      </Button>
+      <Button clickAction={closeModalForm} label="Cancel"></Button>
+      <Button clickAction={handleSubmit(onSubmit)} label="Submit"></Button>
       <MessageModal
         show={showMessageModal}
         closeModal={() => {

@@ -60,7 +60,7 @@ const Form = ({ closeModalForm }) => {
       description: data.description,
       status: data.status
     });
-    dispatch(addTask(newTask, setMessage)).then(() => {
+    dispatch(addTask(newTask, (response) => setMessage(response))).then(() => {
       setShowMessageModal(true);
     });
   };
@@ -127,12 +127,8 @@ const Form = ({ closeModalForm }) => {
           closeModalForm();
         }}
         label="Cancel"
-      >
-        Cancel
-      </Button>
-      <Button clickAction={handleSubmit(onSubmit)} label="Submit">
-        Create
-      </Button>
+      ></Button>
+      <Button clickAction={handleSubmit(onSubmit)} label="Create"></Button>
       <MessageModal
         show={showMessageModal}
         closeModal={() => {
