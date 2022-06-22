@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createEmployee, updateEmployee } from 'redux/employees/thunks';
 import styles from './form.module.css';
-import { Input, Select, ButtonText, ErrorSuccessModal } from 'Components/Shared';
+import { Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 
 const Form = ({ closeModalForm, edit, item }) => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const Form = ({ closeModalForm, edit, item }) => {
     phone: '',
     email: '',
     password: '',
-    active: '',
-    isProjectManager: '',
+    active: false,
+    isProjectManager: false,
     projects: [],
     timeSheets: []
   });
@@ -28,8 +28,8 @@ const Form = ({ closeModalForm, edit, item }) => {
         phone: item.phone,
         email: item.email,
         password: item.password,
-        active: item.active === true ? 'Active' : 'Inactive',
-        isProjectManager: item.isProjectManager === true ? 'Yes' : 'No',
+        active: item.active,
+        isProjectManager: item.isProjectManager,
         projects: item.projects.map((x) => x._id),
         timeSheets: item.timeSheets.map((x) => x._id)
       });
@@ -40,16 +40,26 @@ const Form = ({ closeModalForm, edit, item }) => {
     setUserInput({ ...userInput, [event.target.name]: event.target.value });
   };
 
+  const onChangeActive = (e) => {
+    setUserInput({ ...userInput, active: e.target.checked });
+  };
+
+  const onChangePM = (e) => {
+    setUserInput({ ...userInput, isProjectManager: e.target.checked });
+  };
+
   const onSubmit = () => {
     if (edit) {
+      console.log(item.active);
+      console.log(userInput.active);
       if (
         userInput.firstName === item.firstName &&
         userInput.lastName === item.lastName &&
         userInput.phone === item.phone &&
         userInput.email === item.email &&
         userInput.password === item.password &&
-        userInput.active === (item.active === true ? 'Active' : 'Inactive') &&
-        userInput.isProjectManager === (item.isProjectManager === true ? 'Yes' : 'No') &&
+        userInput.active === item.active &&
+        userInput.isProjectManager === item.isProjectManager &&
         userInput.projects.toString() === item.projects.map((x) => x._id).toString() &&
         userInput.timeSheets.toString() === item.timeSheets.map((x) => x._id).toString()
       ) {
@@ -109,24 +119,6 @@ const Form = ({ closeModalForm, edit, item }) => {
         onChange={onChange}
         placeholder="********"
       />
-      <Select
-        label="Active?"
-        name="active"
-        value={userInput.active}
-        onChange={onChange}
-        title="Define condition"
-        data={['Active', 'Inactive']}
-        required={true}
-      />
-      <Select
-        label="Is a Project Manager?"
-        name="isProjectManager"
-        value={userInput.isProjectManager}
-        onChange={onChange}
-        title="Define PM condition"
-        data={['Yes', 'No']}
-        required={true}
-      />
       <Input
         label="Projects (separate IDs with a comma)"
         name="projects"
@@ -142,6 +134,20 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.timeSheets}
         onChange={onChange}
         placeholder=""
+      />
+      <Input
+        label="Is a Project Manager?"
+        name="isProjectManager"
+        type="checkbox"
+        checked={userInput.isProjectManager}
+        onChange={onChangePM}
+      />
+      <Input
+        label="Active"
+        name="active"
+        type="checkbox"
+        checked={userInput.active}
+        onChange={onChangeActive}
       />
       <ButtonText
         clickAction={() => {

@@ -103,7 +103,7 @@ function Tasks() {
     </Preloader>
   ) : (
     <section className={styles.container}>
-      <h2>TASKS</h2>
+      <h2 className={styles.tasks}>Tasks</h2>
       {modalEdit}
       {modalAdd}
       {modalMessage}

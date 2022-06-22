@@ -83,7 +83,7 @@ const App = () => {
       <p>Loading Super Admins</p>
     </Preloader>
   ) : (
-    <div className={styles.container}>
+    <div className={styles.containerApp}>
       <h2 className={styles.title}>Super Admins</h2>
       <Table
         data={superAdmins}

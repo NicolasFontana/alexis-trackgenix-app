@@ -63,7 +63,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
   return (
     <form className={styles.form}>
       <Input
-        label="Admin Name"
+        label="First Name"
         type="text"
         name="firstName"
         placeholder="Insert admin name"
@@ -72,7 +72,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         required={true}
       />
       <Input
-        label="Admin lastName"
+        label="Last Name"
         type="text"
         name="lastName"
         placeholder="Insert admin lastName"
