@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import Home from 'Components/Employees/Home/index';
-import Profile from 'Components/Employees/EditProfile';
-import Timesheet from 'Components/Employees/Timesheet';
-import Projects from 'Components/Employees/Projects';
+import Home from 'Components/Employee/Home';
+import Profile from 'Components/Employee/EditProfile';
+import Timesheet from 'Components/Employee/Timesheet';
+import Projects from 'Components/Employee/Projects';
 
 const Employee = () => {
   const { url } = useRouteMatch();

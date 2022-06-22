@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import styles from './routes.module.css';
 import { Header, Footer, Preloader } from 'Components/Shared';
-import SideBarRoutes from './SideBarRoutes';
+import SideBarRoutes from './TemporarySidebar';
 
 const Home = lazy(() => import('Components/Home'));
 const AdminRoutes = lazy(() => import('./admin'));

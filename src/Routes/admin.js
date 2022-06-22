@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import Home from 'Components/Admins/Home';
-import Admins from 'Components/Admins/index';
-import SuperAdmins from 'Components/SuperAdmins/index';
-import Employees from 'Components/Employees/index';
-import Projects from 'Components/Projects/index';
-import Timesheets from 'Components/TimeSheets/index';
-import Tasks from 'Components/Tasks/index';
+import Home from 'Components/Admin/Admins/Home';
+import Admins from 'Components/Admin/Admins';
+import SuperAdmins from 'Components/Admin/SuperAdmins';
+import Employees from 'Components/Admin/Employees';
+import Projects from 'Components/Admin/Projects';
+import Timesheets from 'Components/Admin/TimeSheets';
+import Tasks from 'Components/Admin/Tasks';
 
 const Admin = () => {
   const { url } = useRouteMatch();
