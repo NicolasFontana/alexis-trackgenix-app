@@ -96,8 +96,8 @@ const Employees = () => {
           'lastName',
           'phone',
           'email',
-          'active',
           'isProjectManager',
+          'active',
           'projects',
           'timeSheets'
         ]}
@@ -107,8 +107,8 @@ const Employees = () => {
           'Last Name',
           'Phone',
           'Email',
-          'Active',
           'PM',
+          'Active',
           'Projects',
           'Timesheets'
         ]}
