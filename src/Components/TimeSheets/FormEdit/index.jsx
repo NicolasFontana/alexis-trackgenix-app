@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
@@ -7,8 +7,6 @@ import { putTimesheet } from '../../../redux/time-sheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
-import { getProjects } from 'redux/projects/thunks';
-import { getTasks } from 'redux/tasks/thunks';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
@@ -17,19 +15,23 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const listProject = useSelector((state) => state.projects.list);
   const listTask = useSelector((state) => state.tasks.list);
 
-  useEffect(() => {
-    dispatch(getProjects());
-    dispatch(getTasks());
-  }, []);
-
   const onSubmit = (data) => {
     let userInput = {
       projectId: data.projectId,
       task: data.task,
       approved: data.approved
     };
-    dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
-    setShowMessageModal(true);
+    if (
+      userInput.projectId == timesheetItem.projectId._id &&
+      userInput.task == timesheetItem.Task[0].taskId._id &&
+      userInput.approved == timesheetItem.approved
+    ) {
+      setMessage({ message: "There haven't been any changes", data: {}, error: true });
+      setShowMessageModal(true);
+    } else {
+      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
+      setShowMessageModal(true);
+    }
   };
 
   const closeMessageModal = () => {

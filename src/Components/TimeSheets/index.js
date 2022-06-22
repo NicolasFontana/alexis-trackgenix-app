@@ -10,6 +10,8 @@ import FormAdd from './FormAdd';
 import FormEdit from './FormEdit';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTimesheets, deleteTimesheet } from '../../redux/time-sheets/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
 
 function TimeSheets() {
   const dispatch = useDispatch();
@@ -24,6 +26,11 @@ function TimeSheets() {
   let modalDelete;
   let modalAdd;
   let modalEdit;
+
+  useEffect(() => {
+    dispatch(getProjects());
+    dispatch(getTasks());
+  }, []);
 
   useEffect(() => {
     dispatch(getAllTimesheets());
