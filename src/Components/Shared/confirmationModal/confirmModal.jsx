@@ -18,15 +18,12 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
     <div className={styles.modalOvelay} onPointerDown={handleClose}>
       <div className={styles.modalWrapper} onPointerDown={(e) => e.stopPropagation()}>
         <div className={styles.title}>
-          {title}
-          <button onClick={handleClose} className={styles.closeButton}>
-            X
-          </button>
+          <h2>{title}</h2>
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
           <button onClick={confirmDelete} className={styles.Button}>
-            Delete
+            Confirm
           </button>
           <button onClick={handleClose} className={styles.Button}>
             Cancel

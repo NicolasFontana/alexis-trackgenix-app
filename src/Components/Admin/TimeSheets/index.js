@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTimesheets, deleteTimesheet } from 'redux/time-sheets/thunks';
-import { Preloader, Table, ConfirmModal, ButtonAdd, ModalForm } from 'Components/Shared';
+import {
+  Preloader,
+  Table,
+  ConfirmModal,
+  ButtonAdd,
+  ModalForm,
+  ErrorSuccessModal
+} from 'Components/Shared';
 import FormAdd from './FormAdd';
 import FormEdit from './FormEdit';
 import styles from './time-sheets.module.css';
@@ -10,6 +17,8 @@ function TimeSheets() {
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
   const loading = useSelector((state) => state.timesheets.loading);
+  const [response, setResponse] = useState('');
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
@@ -56,8 +65,10 @@ function TimeSheets() {
           setShowModalDelete(false);
         }}
         confirmDelete={() => {
-          dispatch(deleteTimesheet(timeSheetId));
-          setShowModalDelete(false);
+          dispatch(deleteTimesheet(timeSheetId, setResponse)).then(() => {
+            setShowModalDelete(false);
+            setShowSuccessModal(true);
+          });
         }}
         title="Delete Timesheet"
         message="Are you sure you want to delete this timesheet?"
@@ -84,13 +95,13 @@ function TimeSheets() {
     );
   }
 
-  return loading && !showModalAdd && !showModalDelete && !showModalEdit ? (
+  return loading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
     <Preloader>
-      <p>Loading timesheets</p>
+      <p>Loading Timesheets</p>
     </Preloader>
   ) : (
     <section className={styles.container}>
-      <h2>TIMESHEETS</h2>
+      <h2 className={styles.timesheets}>Timesheets</h2>
       <Table
         data={timeSheetTable}
         headers={[
@@ -131,6 +142,16 @@ function TimeSheets() {
         clickAction={() => {
           setShowModalAdd(true);
         }}
+      />
+      <ErrorSuccessModal
+        show={showSuccessModal}
+        closeModal={() => {
+          setShowSuccessModal(false);
+        }}
+        closeModalForm={() => {
+          setShowSuccessModal(false);
+        }}
+        successResponse={response}
       />
     </section>
   );
