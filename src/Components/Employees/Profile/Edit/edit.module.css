@@ -1,0 +1,28 @@
+.container {
+    height: 60vh;
+    width: 600px;
+}
+
+.formBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 10px;
+    width: 200px;
+    height: 60vh;
+}
+
+/* .formBody > div {
+    width: 200px;
+  }
+
+.formBody > div:last-child {
+    width: 100vw;
+  } */
+
+  .buttonBox {
+    display: flex;
+    flex-direction: row;
+  }

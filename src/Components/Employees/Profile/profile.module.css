@@ -1,0 +1,42 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title {
+  margin-left: 45%;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #76a068;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rowTitle {
+  margin-right: 50px;
+}
+
+.buttonContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 150px;
+  margin-left: 50%;
+}
