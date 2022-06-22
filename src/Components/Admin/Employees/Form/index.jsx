@@ -50,8 +50,6 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   const onSubmit = () => {
     if (edit) {
-      console.log(item.active);
-      console.log(userInput.active);
       if (
         userInput.firstName === item.firstName &&
         userInput.lastName === item.lastName &&

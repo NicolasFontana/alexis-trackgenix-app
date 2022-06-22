@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import Home from 'Components/Admin/Admins/Home';
+import Home from 'Components/Admin/Home';
 import Admins from 'Components/Admin/Admins';
 import SuperAdmins from 'Components/Admin/SuperAdmins';
 import Employees from 'Components/Admin/Employees';
@@ -10,7 +10,6 @@ import Tasks from 'Components/Admin/Tasks';
 
 const Admin = () => {
   const { url } = useRouteMatch();
-  console.log('ASD', url);
   return (
     <Switch>
       <Route path={`${url}/admins`} component={Admins} />
