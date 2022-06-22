@@ -130,6 +130,10 @@ function TimeSheets() {
           setTimeSheetId(id);
           setShowModalEdit(true);
         }}
+        modifiers={{
+          startDate: (x) => x.slice(0, 10),
+          approved: (x) => (x === true ? 'Yes' : 'No')
+        }}
       />
       {loading ? <Preloader /> : null}
       {modalDelete}
