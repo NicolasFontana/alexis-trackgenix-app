@@ -67,6 +67,7 @@ const AddForm = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [response, setResponse] = useState('');
+
   const submitAdd = (data) => {
     let newProject = JSON.stringify({
       name: data.name,
