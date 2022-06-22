@@ -28,12 +28,9 @@ function TimeSheets() {
   let modalEdit;
 
   useEffect(() => {
+    dispatch(getAllTimesheets());
     dispatch(getProjects());
     dispatch(getTasks());
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAllTimesheets());
   }, []);
 
   const closeModalEdit = () => {

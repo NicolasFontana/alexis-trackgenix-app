@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './form.module.css';
 import Select from '../../Shared/Select/index';
 import Input from '../../Shared/Input/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
 import * as Joi from 'joi';
 import { useForm } from 'react-hook-form';
@@ -26,35 +26,10 @@ const timesheetValidation = Joi.object({
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-  const [listTask, setListTask] = useState([]);
-  const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-
-  const fetchTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      setListTask(...listTask, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchProject = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const data = await response.json();
-      setListProject(...listProject, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTask();
-    fetchProject();
-  }, []);
+  const listProject = useSelector((state) => state.projects.list);
+  const listTask = useSelector((state) => state.tasks.list);
 
   const onSubmit = (data) => {
     dispatch(createTimesheet(data.project, data.task, data.approved, setMessage)).then(() => {
