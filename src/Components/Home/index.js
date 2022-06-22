@@ -7,12 +7,12 @@ function Home() {
       <h2>Home</h2>
       <div className={styles.buttonsContainer}>
         <button className={styles.linkButton}>
-          <Link to="/admin" className={styles.link}>
+          <Link to="admin" className={styles.link}>
             Admin
           </Link>
         </button>
         <button className={styles.linkButton}>
-          <Link to="/employee" className={styles.link}>
+          <Link to="employee" className={styles.link}>
             Employee
           </Link>
         </button>
