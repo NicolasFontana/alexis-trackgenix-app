@@ -4,45 +4,22 @@ import Select from '../../Shared/Select/index';
 import ButtonText from '../../Shared/Buttons/ButtonText/index';
 import ResponseModal from '../../Shared/ErrorSuccessModal/index';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
-  const [listTask, setListTask] = useState([]);
-  const [listProject, setListProject] = useState([]);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  // const [userInput, setUserInput] = useState({
-  //   projectId: timesheetItem.projectId._id,
-  //   task: timesheetItem.Task[0].taskId._id,
-  //   approved: true
-  // });
-
-  const fetchTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      setListTask(...listTask, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchProject = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const data = await response.json();
-      setListProject(...listProject, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const listProject = useSelector((state) => state.projects.list);
+  const listTask = useSelector((state) => state.tasks.list);
 
   useEffect(() => {
-    fetchTask();
-    fetchProject();
+    dispatch(getProjects());
+    dispatch(getTasks());
   }, []);
 
   const onSubmit = (data) => {
@@ -54,14 +31,6 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
     setShowMessageModal(true);
   };
-
-  // const onChange = (e) => {
-  //   setUserInput({ ...userInput, [e.target.name]: e.target.value });
-  // };
-
-  // const onChangeApproved = (e) => {
-  //   setUserInput({ ...userInput, active: e.target.checked });
-  // };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
