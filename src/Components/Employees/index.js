@@ -82,7 +82,9 @@ const Employees = () => {
     !showModalFormAdd &&
     !showModalFormDelete &&
     !showSuccessModal ? (
-    <Preloader />
+    <Preloader>
+      <p>Loading Employees</p>
+    </Preloader>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.employees}> Employees </h2>
@@ -101,14 +103,14 @@ const Employees = () => {
         ]}
         titles={[
           'ID',
-          'Name',
-          'Surname',
+          'First Name',
+          'Last Name',
           'Phone',
           'Email',
           'Active',
-          'Project Manager',
+          'PM',
           'Projects',
-          'TimeSheets'
+          'Timesheets'
         ]}
         delAction={(id) => {
           setEmployeeId(id);
