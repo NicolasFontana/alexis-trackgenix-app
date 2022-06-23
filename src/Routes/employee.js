@@ -1,19 +1,18 @@
 import React from 'react';
-import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Employee/Home';
-import Profile from 'Components/Employee/EditProfile';
 import Timesheet from 'Components/Employee/Timesheet';
-import Projects from 'Components/Employee/Projects';
+// import Projects from 'Components/Employee/Projects';
+// import Profile from 'Components/Employee/EditProfile';
 
 const Employee = () => {
   const { url } = useRouteMatch();
   return (
     <Switch>
-      <Route path={`${url}/`} component={Home} />
       <Route path={`${url}/time-sheet`} component={Timesheet} />
-      <Route path={`${url}/projects`} component={Projects} />
-      <Route path={`${url}/profile`} component={Profile} />
-      <Redirect to={`${url}/`} />
+      {/* <Route path={`${url}/projects`} component={Projects} />
+      <Route path={`${url}/profile`} component={Profile} /> */}
+      <Route exact path={`${url}/`} component={Home} />
     </Switch>
   );
 };
