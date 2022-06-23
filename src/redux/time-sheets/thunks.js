@@ -28,7 +28,7 @@ export const getAllTimesheets = () => {
   };
 };
 
-export const deleteTimesheet = (id) => {
+export const deleteTimesheet = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
@@ -38,10 +38,12 @@ export const deleteTimesheet = (id) => {
       .then((response) => {
         dispatch(deleteTimesheetSuccess(response.data));
         dispatch(getAllTimesheets());
+        setResponse(response);
         return response.data;
       })
       .catch((error) => {
         dispatch(deleteTimesheetError(error.toString()));
+        setResponse(error);
       });
   };
 };

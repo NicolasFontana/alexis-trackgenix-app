@@ -6,10 +6,12 @@ import { adminsReducer } from './admins/reducer';
 import { projectsReducer } from './projects/reducer';
 import { employeesReducer } from './employees/reducer';
 import { tasksReducer } from './tasks/reducer';
+import { superAdminsReducer } from './super-admins/reducer';
 
 const rootReducer = combineReducers({
   admins: adminsReducer,
   projects: projectsReducer,
+  superAdmins: superAdminsReducer,
   employees: employeesReducer,
   tasks: tasksReducer,
   timesheets: timesheetsReducer
