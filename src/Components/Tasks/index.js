@@ -1,12 +1,14 @@
+import {
+  ButtonAdd,
+  ConfirmModal,
+  ErrorSuccessModal,
+  ModalForm,
+  Preloader,
+  Table
+} from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { delTask, getTasks } from '../../redux/tasks/thunks';
-import AddButton from '../Shared/Buttons/ButtonAdd';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import MessageModal from '../Shared/ErrorSuccessModal';
-import Modal from '../Shared/ModalForm/index';
-import Preloader from '../Shared/Preloader/Preloader';
-import Table from '../Shared/Table/Table';
 import EditForm from './Edit/Edit';
 import Form from './Form/Form';
 import styles from './tasks.module.css';
@@ -67,17 +69,17 @@ function Tasks() {
 
   if (showModalFormEdit) {
     modalEdit = (
-      <Modal isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
         <EditForm closeModalForm={closeModal} task={tasks.find((item) => item._id === idToEdit)} />
-      </Modal>
+      </ModalForm>
     );
   }
 
   if (showModalFormAdd) {
     modalAdd = (
-      <Modal isOpen={showModalFormAdd} handleClose={closeModal} title="Add Task">
+      <ModalForm isOpen={showModalFormAdd} handleClose={closeModal} title="Add Task">
         <Form closeModalForm={closeModal} />
-      </Modal>
+      </ModalForm>
     );
   }
 
@@ -114,13 +116,13 @@ function Tasks() {
         delAction={openConfirmModal}
         editAction={openEditModal}
       />
-      <MessageModal
+      <ErrorSuccessModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModal}
         successResponse={message}
       />
-      <AddButton clickAction={openAddModal}></AddButton>
+      <ButtonAdd clickAction={openAddModal}></ButtonAdd>
     </section>
   );
 }
