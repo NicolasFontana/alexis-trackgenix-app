@@ -25,7 +25,7 @@ const schema = Joi.object({
     'string.min': 'Invalid description, it must contain more than 4 letters',
     'string.empty': 'Description is a required field'
   }),
-  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a rquired field' }),
+  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a required field' }),
   endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
     'date.greater': 'Invalid end date, it must be after the start date',
     'string.empty': 'End date is a required field'
@@ -42,20 +42,7 @@ const schema = Joi.object({
         'Invalid client name, it must contain only letters and start with a capital letter',
       'string.empty': 'Client name is a required field'
     }),
-  active: Joi.boolean().required(),
-  members: Joi.array().items({
-    employeeId: Joi.string().alphanum().length(24).required().messages({
-      'string.alphanum': 'Invalid employee id, it must contain both letters and numbers',
-      'string.length': 'Invalid employee id, it must contain 24 characters',
-      'string.empty': 'Employee id is a required field'
-    }),
-    role: Joi.string().valid('QA', 'DEV', 'TL', 'PM').required(),
-    rate: Joi.number().min(0).max(999999).required().messages({
-      'number.min': 'Invalid rate, it must be positive',
-      'number.max': 'Invalid rate, it must be between 0 and 999999',
-      'string.empty': 'Rate is a required field'
-    })
-  })
+  active: Joi.boolean().required()
 });
 
 const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
@@ -70,10 +57,22 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
   }, []);
 
   const handleOnSubmit = (data) => {
-    dispatch(updateProject(itemId, data, (alertMessage) => setAlertMessage(alertMessage))).then(
-      () => openAlertModal()
-    );
-    setEdited(false);
+    if (
+      data.name === project.name &&
+      data.startDate.toString() == new Date(project.startDate) &&
+      data.endDate.toString() == new Date(project.endDate) &&
+      data.clientName === project.clientName &&
+      data.active === project.active &&
+      data.description === project.description
+    ) {
+      setAlertMessage({ message: "There haven't been string changes", data: {}, error: true });
+      setShowErrorSuccessModal(true);
+    } else {
+      dispatch(updateProject(itemId, data, (alertMessage) => setAlertMessage(alertMessage))).then(
+        () => openAlertModal()
+      );
+      setEdited(false);
+    }
   };
 
   const closeAlertModal = () => {

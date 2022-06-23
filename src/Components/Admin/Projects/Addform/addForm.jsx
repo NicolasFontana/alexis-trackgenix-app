@@ -41,20 +41,7 @@ const schema = Joi.object({
         'Invalid client name, it must contain only letters and start with a capital letter',
       'string.empty': 'Client name is a required field'
     }),
-  active: Joi.boolean().required(),
-  members: Joi.array().items({
-    employeeId: Joi.string().alphanum().length(24).required().messages({
-      'string.alphanum': 'Invalid employee id, it must contain both letters and numbers',
-      'string.length': 'Invalid employee id, it must contain 24 characters',
-      'string.empty': 'Employee id is a required field'
-    }),
-    role: Joi.string().valid('QA', 'DEV', 'TL', 'PM').required(),
-    rate: Joi.number().min(0).max(999999).required().messages({
-      'number.min': 'Invalid rate, it must be positive',
-      'number.max': 'Invalid rate, it must be between 0 and 999999',
-      'string.empty': 'Rate is a required field'
-    })
-  })
+  active: Joi.boolean().required()
 });
 
 const AddForm = ({ closeModalForm }) => {

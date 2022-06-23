@@ -4,15 +4,28 @@ import { getEmployees } from 'redux/employees/thunks';
 import { getProjectById, updateProject } from 'redux/projects/thunks';
 import { Select, Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 import styles from './addMember.module.css';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
+
+const schema = Joi.object({
+  member: Joi.string().required().messages({
+    'string.empty': 'Employee is a required field'
+  }),
+  role: Joi.string().required().messages({
+    'string.empty': 'Role is a required field'
+  }),
+  rate: Joi.number().min(0).max(999999).required().messages({
+    'number.min': 'Invalid rate, it must be positive',
+    'number.max': 'Invalid rate, it must be between 0 and 999999',
+    'number.base': 'Rate is a required field'
+  })
+});
 
 const AddMember = ({ itemId, functionValue }) => {
   let edit;
   let projectId = itemId;
   let [projectMembers, setProjectMembers] = useState([]);
-  const [member, setMember] = useState('');
-  const [role, setRole] = useState('');
-  const [rate, setRate] = useState('');
-  const [edited, setEdited] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -24,38 +37,24 @@ const AddMember = ({ itemId, functionValue }) => {
     dispatch(getProjectById(projectId, (project) => setProjectMembers(project.members)));
   }, []);
 
-  const onChangeMember = (event) => {
-    setMember(event.target.value);
-    setEdited(true);
-  };
-  const onChangeRole = (event) => {
-    setRole(event.target.value);
-    setEdited(true);
-  };
-
-  const OnChangeRate = (event) => {
-    setRate(event.target.value);
-    setEdited(true);
-  };
-
-  const asignMember = () => {
+  const asignMember = (data) => {
     projectMembers = projectMembers.filter((member) => member.employeeId !== null);
-    if (member !== '') {
+    if (data.member !== '') {
       for (let i = 0; i < projectMembers.length; i++) {
         if (projectMembers[i].employeeId._id) {
           projectMembers[i].employeeId = projectMembers[i].employeeId._id;
         }
-        if (projectMembers[i].employeeId == member) {
-          projectMembers[i].role = role;
-          projectMembers[i].rate = rate;
+        if (projectMembers[i].employeeId == data.member) {
+          projectMembers[i].role = data.role;
+          projectMembers[i].rate = data.rate;
           edit = true;
         }
       }
       if (!edit) {
         projectMembers.push({
-          employeeId: member,
-          role: role,
-          rate: rate
+          employeeId: data.member,
+          role: data.role,
+          rate: data.rate
         });
       }
     }
@@ -63,10 +62,11 @@ const AddMember = ({ itemId, functionValue }) => {
     return projectMembers;
   };
 
-  const handleOnSubmit = async () => {
-    if (member !== '' && role !== '' && rate !== '') {
+  const handleOnSubmit = (data) => {
+    console.log('data', data);
+    if (data.member !== '' && data.role !== '' && data.rate !== '') {
       dispatch(
-        updateProject(projectId, { members: asignMember() }, (alertMessage) =>
+        updateProject(projectId, { members: asignMember(data) }, (alertMessage) =>
           setAlertMessage({
             error: alertMessage.error,
             message: alertMessage.error
@@ -83,19 +83,12 @@ const AddMember = ({ itemId, functionValue }) => {
     }
   };
 
-  const onSubmit = () => {
-    edited
-      ? handleOnSubmit()
-      : (setEdited(false),
-        setAlertMessage({ error: true, message: 'No member selected' }),
-        openAlertModal());
-  };
   const handleOnClick = () => {
-    edited
-      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-        ? functionValue(false)
-        : null
-      : functionValue(false);
+    // edited
+    //   ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+    //     ? functionValue(false)
+    // : null
+    functionValue(false);
   };
 
   const closeAlertModal = () => {
@@ -106,48 +99,53 @@ const AddMember = ({ itemId, functionValue }) => {
     setShowErrorSuccessModal(true);
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      member: '',
+      role: ''
+    }
+  });
+  console.log('error', errors);
+
   return (
     <div className={styles.divcontainer}>
-      <form onSubmit={onSubmit} className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.container}>
         <Select
           label="Employee"
-          value={member}
-          onChange={onChangeMember}
           className={styles.inputs}
           title="Choose Member"
-          required={true}
+          name="member"
           data={employees.map((employee) => ({
             _id: employee._id,
             optionText: `${employee.firstName} ${employee.lastName}`
           }))}
-          register={console.log}
+          register={register}
+          error={errors.member?.message}
         />
         <Select
           label="Role"
           name="role"
-          value={role}
-          onChange={onChangeRole}
           title="Choose Role"
           data={['TL', 'QA', 'DEV', 'PM']}
-          required={true}
-          register={console.log}
+          register={register}
+          error={errors.role?.message}
         />
         <Input
           label="Rate"
           type="number"
-          value={rate}
-          onChange={OnChangeRate}
+          name="rate"
           placeholder="Insert rate"
-          required={true}
-          register={console.log}
+          register={register}
+          error={errors.rate?.message}
         />
       </form>
-      <ButtonText
-        clickAction={function () {
-          onSubmit();
-        }}
-        label="Submit"
-      ></ButtonText>
+      <ButtonText clickAction={handleSubmit(handleOnSubmit)} label="Submit"></ButtonText>
       <ButtonText
         clickAction={function () {
           handleOnClick();
