@@ -20,7 +20,6 @@ export const getEmployees = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getEmployeesSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getEmployeesError(error.toString()));
@@ -59,9 +58,7 @@ export const createEmployee = (userInput, setResponse) => {
         if (response.error === false) {
           dispatch(createEmployeesSuccess(response.data));
         }
-        dispatch(getEmployees());
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(createEmployeesError(error.toString()));
@@ -99,9 +96,7 @@ export const updateEmployee = (userInput, id, setResponse) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(updateEmployeesSuccess(response.data));
-        dispatch(getEmployees());
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(updateEmployeesError(error.toString()));
@@ -119,9 +114,7 @@ export const deleteEmployee = (id, setResponse) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(deleteEmployeesSuccess(response.data));
-        dispatch(getEmployees());
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(deleteEmployeesError(error.toString()));

@@ -20,7 +20,6 @@ export const getAdmins = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAdminsSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getAdminsError(error.toString()));
@@ -43,9 +42,7 @@ export const addAdmin = (newAdmin, setResponse) => {
       if (data.error === false) {
         dispatch(addAdminSucces(data.data));
       }
-      dispatch(getAdmins());
       setResponse(data);
-      return data.data;
     } catch (error) {
       dispatch(addAdminError(error.toString()));
     }
@@ -65,9 +62,7 @@ export const editAdmin = (idDelete, editedAdmin, setResponse) => {
       });
       const data = await response.json();
       dispatch(editAdminSucces(data.data));
-      dispatch(getAdmins());
       setResponse(data);
-      return data.data;
     } catch (error) {
       dispatch(editAdminError(error.toString()));
     }
@@ -83,9 +78,7 @@ export const delAdmin = (id, setResponse) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(deleteAdminSucces(response.data));
-        dispatch(getAdmins());
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(deleteAdminError(error.toString()));

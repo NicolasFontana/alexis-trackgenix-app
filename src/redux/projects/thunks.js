@@ -23,7 +23,6 @@ export const getProjects = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getProjectsSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getProjectsError(error.toString()));
@@ -39,7 +38,6 @@ export const getProjectById = (id, setUserInput) => {
       .then((response) => {
         dispatch(getProjectByIdSuccess(response.data));
         setUserInput(response.data);
-        return response.data;
       })
       .catch((error) => {
         dispatch(getProjectByIdError(error.toString()));
@@ -57,7 +55,6 @@ export const deleteProject = (_id, setMessage) => {
       .then((response) => {
         dispatch(deleteProjectSuccess(_id));
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(deleteProjectError(error.toString()));
@@ -86,8 +83,6 @@ export const updateProject = (id, body, setAlertMessage) => {
       .then((response) => {
         dispatch(updateProjectSuccess());
         setAlertMessage(response);
-        dispatch(getProjects());
-        return response;
       })
       .catch((error) => {
         dispatch(updateProjectError(error.toString()));
@@ -118,9 +113,7 @@ export const addProject = (newProject, setMessage) => {
         if (response.error === false) {
           dispatch(addProjectSuccess(response.data));
         }
-        dispatch(getProjects());
         setMessage(response);
-        return response.data;
       })
 
       .catch((error) => {

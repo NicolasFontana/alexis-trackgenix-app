@@ -20,7 +20,6 @@ export const getAllTimesheets = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAllTimesheetsSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getAllTimesheetsError(error.toString()));
@@ -37,9 +36,7 @@ export const deleteTimesheet = (id, setResponse) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(deleteTimesheetSuccess(response.data));
-        dispatch(getAllTimesheets());
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(deleteTimesheetError(error.toString()));
@@ -67,9 +64,7 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
         if (!response.error) {
           dispatch(createTimesheetSuccess(response.data));
         }
-        dispatch(getAllTimesheets());
         setMessage(response);
-        return response;
       })
       .catch((error) => {
         dispatch(createTimesheetError(error.toString()));
@@ -95,9 +90,7 @@ export const putTimesheet = (userInput, id, setMessage) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(putTimesheetSuccess(response.data));
-        dispatch(getAllTimesheets());
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(putTimesheetError(error.toString()));

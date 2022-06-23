@@ -62,6 +62,12 @@ export const superAdminsReducer = (state = initialState, action) => {
     case PUT_SUPER_ADMINS_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
     case GET_SUPER_ADMINS_ERROR:

@@ -85,6 +85,12 @@ export const projectsReducer = (state = initialState, action) => {
     case UPDATE_PROJECT_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
     case UPDATE_PROJECT_ERROR:

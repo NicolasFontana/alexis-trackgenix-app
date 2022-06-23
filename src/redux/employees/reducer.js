@@ -63,6 +63,12 @@ export const employeesReducer = (state = initialState, action) => {
     case UPDATE_EMPLOYEES_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
     case UPDATE_EMPLOYEES_ERROR:
