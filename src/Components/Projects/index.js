@@ -82,7 +82,7 @@ const Projects = () => {
           <Form
             closeModalForm={closeModalFormEdit}
             edit={true}
-            project={projects.find((project) => project._id == idToEdit)}
+            projectEdit={projects.find((project) => project._id == idToEdit)}
             itemId={idToEdit}
             functionValue={functionValue}
           />
