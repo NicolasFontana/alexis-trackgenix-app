@@ -49,6 +49,7 @@ const taskSchema = Joi.object({
 
 const Edit = ({ task, closeModalForm }) => {
   const dispatch = useDispatch();
+
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -58,12 +59,12 @@ const Edit = ({ task, closeModalForm }) => {
       data.startDate === task.startDate &&
       data.workedHours === task.workedHours &&
       data.description === task.description &&
-      data.status === task.status
+      data.status == task.status
     ) {
-      setMessage({ message: "There hasn't been any changes", error: true });
+      setMessage({ message: "There haven't been any changes", data: {}, error: true });
       setShowMessageModal(true);
     } else {
-      dispatch(editTask(task._id, data, setMessage)).then(() => {
+      dispatch(editTask(data, task._id, setMessage)).then(() => {
         setShowMessageModal(true);
       });
     }
@@ -126,8 +127,12 @@ const Edit = ({ task, closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <Button clickAction={closeModalForm} label="Cancel"></Button>
-      <Button clickAction={handleSubmit(onSubmit)} label="Submit"></Button>
+      <Button clickAction={closeModalForm} label="Cancel">
+        Cancel
+      </Button>
+      <Button clickAction={handleSubmit(onSubmit)} label="Submit">
+        Submit
+      </Button>
       <MessageModal
         show={showMessageModal}
         closeModal={() => {

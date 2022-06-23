@@ -53,14 +53,15 @@ const Form = ({ closeModalForm }) => {
   const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    let newTask = JSON.stringify({
+    let newTask = {
       taskName: data.taskName,
       startDate: data.startDate,
       workedHours: data.workedHours,
       description: data.description,
       status: data.status
-    });
-    dispatch(addTask(newTask, (response) => setMessage(response))).then(() => {
+    };
+
+    dispatch(addTask(newTask, setMessage)).then(() => {
       setShowMessageModal(true);
     });
   };
