@@ -116,7 +116,7 @@ function Tasks() {
         delAction={openConfirmModal}
         editAction={openEditModal}
         modifiers={{
-          startDate: (x) => x.slice(0, 10)
+          startDate: (x) => x?.slice(0, 10)
         }}
       />
       <ErrorSuccessModal

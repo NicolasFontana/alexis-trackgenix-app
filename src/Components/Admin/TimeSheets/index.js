@@ -133,7 +133,7 @@ function TimeSheets() {
           setShowModalEdit(true);
         }}
         modifiers={{
-          startDate: (x) => x.slice(0, 10),
+          startDate: (x) => x?.slice(0, 10),
           approved: (x) => (x === true ? 'Yes' : 'No')
         }}
       />
