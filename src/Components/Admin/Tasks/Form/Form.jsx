@@ -37,6 +37,7 @@ const Form = ({ closeModalForm }) => {
         value={userInput.taskName}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Start Date"
@@ -45,6 +46,7 @@ const Form = ({ closeModalForm }) => {
         value={userInput.startDate}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Worked Hours"
@@ -54,6 +56,7 @@ const Form = ({ closeModalForm }) => {
         value={userInput.workedHours}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Description"
@@ -63,6 +66,7 @@ const Form = ({ closeModalForm }) => {
         value={userInput.description}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Select
         label="Status"
@@ -72,6 +76,7 @@ const Form = ({ closeModalForm }) => {
         title="Choose status"
         data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
         required={true}
+        register={console.log}
       />
       <ButtonText
         clickAction={() => {

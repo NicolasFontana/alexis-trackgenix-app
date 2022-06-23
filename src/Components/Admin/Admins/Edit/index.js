@@ -70,6 +70,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         value={adminInput.firstName}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Last Name"
@@ -79,6 +80,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         value={adminInput.lastName}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Email"
@@ -88,6 +90,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         value={adminInput.email}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Password"
@@ -97,6 +100,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         value={adminInput.password}
         onChange={onChange}
         required={true}
+        register={console.log}
       />
       <Input
         label="Active"
@@ -104,6 +108,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         type="checkbox"
         checked={adminInput.active}
         onChange={onChangeActive}
+        register={console.log}
       />
       <div className={styles.buttonBox}>
         <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>

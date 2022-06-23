@@ -89,6 +89,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               value={userInput.name}
               onChange={onChange}
               required={true}
+              register={console.log}
             />
             <Input
               label="Client"
@@ -98,6 +99,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               value={userInput.clientName}
               onChange={onChange}
               required={true}
+              register={console.log}
             />
             <Input
               label="Active"
@@ -105,6 +107,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               type="checkbox"
               checked={userInput.active}
               onChange={onChangeActive}
+              register={console.log}
             />
             <Input
               label="Start Date"
@@ -113,6 +116,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               value={userInput.startDate.slice(0, 10)}
               onChange={onChange}
               required={true}
+              register={console.log}
             />
             <Input
               label="End Date"
@@ -121,6 +125,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               value={userInput.endDate.slice(0, 10)}
               onChange={onChange}
               required={true}
+              register={console.log}
             />
           </div>
           <div className={styles.larger}>
@@ -131,6 +136,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               placeholder="Add a description of the project"
               onChange={onChange}
               required={true}
+              register={console.log}
             />
             <div>
               <ListMembers project={project} edited={edited} functionValue={functionValue} />
