@@ -1,13 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input, Select } from 'Components/Shared';
 import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { editTask } from '../../../redux/tasks/thunks';
-import Button from '../../Shared/Buttons/ButtonText';
-import MessageModal from '../../Shared/ErrorSuccessModal';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
 import styles from './edit.module.css';
 
 const taskSchema = Joi.object({
@@ -127,13 +124,9 @@ const Edit = ({ task, closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <Button clickAction={closeModalForm} label="Cancel">
-        Cancel
-      </Button>
-      <Button clickAction={handleSubmit(onSubmit)} label="Submit">
-        Submit
-      </Button>
-      <MessageModal
+      <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Submit"></ButtonText>
+      <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
           setShowMessageModal(false);

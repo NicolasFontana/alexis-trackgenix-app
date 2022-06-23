@@ -72,7 +72,6 @@ function Tasks() {
       </Modal>
     );
   }
-  console.log('task', tasks);
 
   if (showModalFormAdd) {
     modalAdd = (
