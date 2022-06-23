@@ -48,6 +48,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.firstName}
           onChange={onChange}
           required={true}
+          register={console.log}
         />
         <Input
           label="Last Name"
@@ -57,6 +58,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.lastName}
           onChange={onChange}
           required={true}
+          register={console.log}
         />
         <Input
           label="Email"
@@ -66,6 +68,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.email}
           onChange={onChange}
           required={true}
+          register={console.log}
         />
         <Input
           label="Password"
@@ -75,6 +78,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           value={superAdminInput.password}
           onChange={onChange}
           required={true}
+          register={console.log}
         />
         <Input
           label="Active"
@@ -82,6 +86,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="checkbox"
           checked={superAdminInput.active}
           onChange={onChangeActive}
+          register={console.log}
         />
         <div className={styles.buttonBox}>
           <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>

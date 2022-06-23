@@ -68,6 +68,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           placeholder="Insert first name"
           value={superAdminInput.firstName}
           onChange={onChange}
+          register={console.log}
         />
         <Input
           label="Last Name"
@@ -76,6 +77,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           placeholder="Insert last name"
           value={superAdminInput.lastName}
           onChange={onChange}
+          register={console.log}
         />
         <Input
           label="Email"
@@ -84,6 +86,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           placeholder="Insert email"
           value={superAdminInput.email}
           onChange={onChange}
+          register={console.log}
         />
         <Input
           label="Password"
@@ -92,6 +95,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           placeholder="Insert password"
           value={superAdminInput.password}
           onChange={onChange}
+          register={console.log}
         />
         <Input
           label="Active"
@@ -99,6 +103,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           type="checkbox"
           checked={superAdminInput.active}
           onChange={onChangeActive}
+          register={console.log}
         />
         <div className={styles.buttonBox}>
           <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
