@@ -1,20 +1,18 @@
 import styles from './textarea.module.css';
 
-const Textarea = ({ label, name, value, onChange, placeholder, required }) => {
+const Textarea = ({ label, name, placeholder, error, register }) => {
   return (
     <div className={styles.textareaContainer}>
       <label className={`${styles.label} ${styles.noselect}`}>{label}</label>
       <textarea
         cols="30"
-        rows="5"
-        maxLength={150}
-        className={styles.textarea}
+        rows="3"
+        className={error ? `${styles.textarea} ${styles.textareaError}` : styles.textarea}
         name={name}
-        value={value}
-        onChange={onChange}
         placeholder={placeholder}
-        required={required}
+        {...register(name)}
       ></textarea>
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 };

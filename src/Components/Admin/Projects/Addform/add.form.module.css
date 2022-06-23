@@ -1,0 +1,20 @@
+.form {
+    width: 100%;
+    min-width: 500px;
+    margin-right: 50px;
+  }
+
+.formContainer {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    row-gap: 10px;
+    overflow: auto;
+  }
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
