@@ -1,12 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addAdmin } from '../../../redux/admins/thunks';
-import ButtonText from '../../Shared/Buttons/ButtonText';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
-import Input from '../../Shared/Input';
 import styles from './add.module.css';
 
 const adminSchema = Joi.object({
@@ -99,7 +97,7 @@ const AdminsAdd = ({ closeModalForm }) => {
         label="Admin Last Name"
         type="text"
         name="lastName"
-        placeholder="Insert admin lastName"
+        placeholder="Insert admin last name"
         register={register}
         error={errors.lastName?.message}
       />
@@ -115,7 +113,7 @@ const AdminsAdd = ({ closeModalForm }) => {
         label="Password"
         type="password"
         name="password"
-        placeholder="Insert Password"
+        placeholder="Insert password"
         register={register}
         error={errors.password?.message}
       />
@@ -129,7 +127,7 @@ const AdminsAdd = ({ closeModalForm }) => {
       <div className={styles.buttonBox}>
         <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
       </div>
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);

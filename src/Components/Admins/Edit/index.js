@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { editAdmin } from '../../../redux/admins/thunks';
-import ButtonText from '../../Shared/Buttons/ButtonText';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
-import Input from '../../Shared/Input';
+
+import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import styles from './edit.module.css';
 
 const adminSchema = Joi.object({
@@ -74,8 +73,9 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       setResponse({ message: "There hasn't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(editAdmin(edit._id, editedAdmin, setResponse));
-      setShowSuccessModal(true);
+      dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
+        setShowSuccessModal(true);
+      });
     }
   };
 
@@ -139,7 +139,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       <div className={styles.buttonBox}>
         <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
       </div>
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);
