@@ -61,7 +61,6 @@ const FormAdd = ({ closeModalForm }) => {
           _id: project._id,
           optionText: project.name
         }))}
-        required={true}
         register={register}
         error={errors.project?.message}
       />
@@ -73,7 +72,6 @@ const FormAdd = ({ closeModalForm }) => {
           _id: task._id,
           optionText: task.taskName
         }))}
-        required={true}
         register={register}
         error={errors.task?.message}
       />
@@ -83,12 +81,6 @@ const FormAdd = ({ closeModalForm }) => {
         type="checkbox"
         register={register}
         error={errors.approved?.message}
-      />
-      <ButtonText
-        clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
       />
       <ButtonText clickAction={handleSubmit(onSubmit)} label="Create" />
       <ErrorSuccessModal

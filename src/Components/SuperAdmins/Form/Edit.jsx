@@ -140,7 +140,6 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
           error={errors.active?.message}
         />
         <div className={styles.buttonBox}>
-          <ButtonText clickAction={closeModalForm} label="Cancel" />
           <ButtonText clickAction={handleSubmit(submitEdit)} label="Edit" />
         </div>
         <SuccessModal

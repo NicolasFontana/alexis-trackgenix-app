@@ -92,7 +92,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="firstName"
           placeholder="Insert first name"
-          required={true}
           register={register}
           error={errors.firstName?.message}
         />
@@ -101,7 +100,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="lastName"
           placeholder="Insert last name"
-          required={true}
           register={register}
           error={errors.lastName?.message}
         />
@@ -110,7 +108,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="text"
           name="email"
           placeholder="Insert email"
-          required={true}
           register={register}
           error={errors.email?.message}
         />
@@ -119,7 +116,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           type="password"
           name="password"
           placeholder="Insert password"
-          required={true}
           register={register}
           error={errors.password?.message}
         />
@@ -131,7 +127,6 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
           error={errors.active?.message}
         />
         <div className={styles.buttonBox}>
-          <ButtonText clickAction={closeModalForm} label="Cancel" />
           <ButtonText clickAction={handleSubmit(submitAdd)} label="Create" />
         </div>
         <SuccessModal

@@ -61,7 +61,6 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           _id: project._id,
           optionText: project.name
         }))}
-        required={true}
         register={register}
         error={errors.projectId?.message}
       />
@@ -73,7 +72,6 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           _id: task._id,
           optionText: task.taskName
         }))}
-        required={true}
         register={register}
         error={errors.task?.message}
       />
@@ -82,15 +80,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         name="approved"
         title="Approve"
         type="checkbox"
-        required={true}
         register={register}
         error={errors.approved?.message}
-      />
-      <ButtonText
-        clickAction={() => {
-          closeModalEdit();
-        }}
-        label="Cancel"
       />
       <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit" />
       <ResponseModal
