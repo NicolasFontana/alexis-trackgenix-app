@@ -13,7 +13,7 @@ const schema = Joi.object({
   firstName: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/(?:\p{L}\p{M}*)+/u)
+    .pattern(/^[A-zÀ-ú\s]*$/)
     .required()
     .messages({
       'string.min': 'First name must contain more than 3 letters',
@@ -24,7 +24,7 @@ const schema = Joi.object({
   lastName: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/(?:\p{L}\p{M}*)+/u)
+    .pattern(/^[A-zÀ-ú\s]*$/)
     .required()
     .messages({
       'string.min': 'Last name must contain more than 3 letters',
@@ -53,14 +53,8 @@ const schema = Joi.object({
       'string.pattern.base': 'Password must contain both letters and numbers',
       'string.empty': 'Password is a required field'
     }),
-  active: Joi.string()
-    .valid('Active', 'Inactive')
-    .required()
-    .messages({ 'any.only': 'This is a required field' }),
-  isProjectManager: Joi.string()
-    .valid('Yes', 'No')
-    .required()
-    .messages({ 'any.only': 'This is a required field' }),
+  active: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
+  isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
   projects: Joi.string().allow('').alphanum().length(24).messages({
     'string.alphanum': 'Project id must contain both letters and numbers',
     'string.length': 'Project id must contain 24 characters'
@@ -91,8 +85,8 @@ const Form = ({ closeModalForm, edit, item }) => {
         data.phone === item.phone &&
         data.email === item.email &&
         data.password === item.password &&
-        data.active === (item.active === true ? 'Active' : 'Inactive') &&
-        data.isProjectManager === (item.isProjectManager === true ? 'Yes' : 'No') &&
+        data.active === item.active &&
+        data.isProjectManager === item.isProjectManager &&
         data.projects === item.projects.map((x) => x._id).toString() &&
         data.timeSheets === item.timeSheets.map((x) => x._id).toString()
       ) {
@@ -123,8 +117,8 @@ const Form = ({ closeModalForm, edit, item }) => {
       phone: edit ? item.phone : '',
       email: edit ? item.email : '',
       password: edit ? item.password : '',
-      active: edit ? (item.active ? 'Active' : 'Inactive') : '',
-      isProjectManager: edit ? (item.isProjectManager ? 'Yes' : 'No') : '',
+      active: edit ? (item.active ? true : false) : true,
+      isProjectManager: edit ? (item.isProjectManager ? true : false) : false,
       projects: edit ? (item.projects[0] ? item.projects[0]._id : '') : '',
       timeSheets: edit ? (item.timeSheets[0] ? item.timeSheets[0]?._id : '') : ''
     }
@@ -172,22 +166,6 @@ const Form = ({ closeModalForm, edit, item }) => {
         register={register}
         error={errors.password?.message}
       />
-      {/* <Select
-        label="Active?"
-        name="active"
-        title="Define condition"
-        data={['Active', 'Inactive']}
-        register={register}
-        error={errors.active?.message}
-      />
-      <Select
-        label="Is a Project Manager?"
-        name="isProjectManager"
-        title="Define PM condition"
-        data={['Yes', 'No']}
-        register={register}
-        error={errors.isProjectManager?.message}
-      /> */}
       <Select
         label="Timesheets"
         name="timeSheets"
