@@ -1,15 +1,17 @@
+import {
+  ButtonAdd,
+  ConfirmModal,
+  ErrorSuccessModal,
+  ModalForm,
+  Preloader,
+  Table
+} from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins, delAdmin } from '../../redux/admins/thunks';
+import { delAdmin, getAdmins } from '../../redux/admins/thunks';
 import styles from '../Admins/admins.module.css';
-import Preloader from '../Shared/Preloader/Preloader';
-import Table from '../Shared/Table/Table';
-import ModalForm from '../Shared/ModalForm';
 import Form from './Add/index';
 import EditForm from './Edit/index';
-import ButtonAdd from '../Shared/Buttons/ButtonAdd';
-import ConfirmModal from '../Shared/confirmationModal/confirmModal';
-import SuccessModal from '../Shared/ErrorSuccessModal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -104,7 +106,7 @@ const App = () => {
         }}
       />
       {isLoading ? <Preloader /> : null}
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);

@@ -1,11 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { editAdmin } from '../../../redux/admins/thunks';
-
-import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import styles from './edit.module.css';
 
 const adminSchema = Joi.object({
