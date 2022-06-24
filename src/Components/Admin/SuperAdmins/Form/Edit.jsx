@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { putSuperAdmins } from 'redux/super-admins/thunks';
+import { putSuperAdmin } from 'redux/super-admins/thunks';
 import { ButtonText, Input, ErrorSuccessModal } from 'Components/Shared';
 import styles from './add.module.css';
 
@@ -44,7 +44,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(putSuperAdmins(superAdminEdit._id, editedSuperAdmin, setResponse)).then(() =>
+      dispatch(putSuperAdmin(superAdminEdit._id, editedSuperAdmin, setResponse)).then(() =>
         setShowSuccessModal(true)
       );
     }

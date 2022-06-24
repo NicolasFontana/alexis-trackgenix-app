@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postSuperAdmins } from 'redux/super-admins/thunks';
+import { postSuperAdmin } from 'redux/super-admins/thunks';
 import { ButtonText, Input, ErrorSuccessModal } from 'Components/Shared';
 import styles from './add.module.css';
 
@@ -26,7 +26,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
   });
 
   const submitAdd = () => {
-    dispatch(postSuperAdmins(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
+    dispatch(postSuperAdmin(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
   };
 
   const onChange = (e) => {

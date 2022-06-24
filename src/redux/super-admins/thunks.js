@@ -2,86 +2,87 @@ import {
   getSuperAdminsPending,
   getSuperAdminsSuccess,
   getSuperAdminsError,
-  postSuperAdminsPending,
-  postSuperAdminsSuccess,
-  postSuperAdminsError,
-  deleteSuperAdminsPending,
-  deleteSuperAdminsSuccess,
-  deleteSuperAdminsError,
-  putSuperAdminsPending,
-  putSuperAdminsSuccess,
-  putSuperAdminsError
+  postSuperAdminPending,
+  postSuperAdminSuccess,
+  postSuperAdminError,
+  putSuperAdminPending,
+  putSuperAdminSuccess,
+  putSuperAdminError,
+  deleteSuperAdminPending,
+  deleteSuperAdminSuccess,
+  deleteSuperAdminError
 } from './actions';
 
 export const getSuperAdmins = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(getSuperAdminsPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
-      const data = await response.json();
-      dispatch(getSuperAdminsSuccess(data.data));
-    } catch (error) {
-      dispatch(getSuperAdminsError(error.toString()));
-    }
-  };
-};
-
-export const postSuperAdmins = (newSuperAdmin, setResponse) => {
-  return async (dispatch) => {
-    dispatch(postSuperAdminsPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
-        method: 'POST',
-        body: newSuperAdmin,
-        headers: {
-          'content-type': 'application/json'
-        }
+    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`)
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getSuperAdminsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getSuperAdminsError(error.toString()));
       });
-      const data = await response.json();
-      if (data.error === false) {
-        dispatch(postSuperAdminsSuccess(data.data));
-      }
-      setResponse(data);
-    } catch (error) {
-      dispatch(postSuperAdminsError(error.toString()));
-    }
   };
 };
 
-export const deleteSuperAdmins = (_id) => {
-  return async (dispatch) => {
-    dispatch(deleteSuperAdminsPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${_id}`, {
-        method: 'DELETE'
-      });
-      const data = await response.json();
-      dispatch(deleteSuperAdminsSuccess(data.data));
-    } catch (error) {
-      dispatch(deleteSuperAdminsError(error.toString()));
-    }
-  };
-};
-
-export const putSuperAdmins = (superAdminId, editedSuperAdmin, setResponse) => {
-  return async (dispatch) => {
-    dispatch(putSuperAdminsPending());
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminId}`,
-        {
-          method: 'PUT',
-          body: editedSuperAdmin,
-          headers: {
-            'content-type': 'application/json'
-          }
+export const postSuperAdmin = (newSuperAdmin, setResponse) => {
+  return (dispatch) => {
+    dispatch(postSuperAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newSuperAdmin)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error === false) {
+          dispatch(postSuperAdminSuccess(response.data));
         }
-      );
-      const data = await response.json();
-      dispatch(putSuperAdminsSuccess(data.data));
-      setResponse(data);
-    } catch (error) {
-      dispatch(putSuperAdminsError(error.toString()));
-    }
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(postSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const putSuperAdmin = (superAdminId, editedSuperAdmin, setResponse) => {
+  return (dispatch) => {
+    dispatch(putSuperAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(editedSuperAdmin)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(putSuperAdminSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(putSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const deleteSuperAdmin = (id) => {
+  return (dispatch) => {
+    dispatch(deleteSuperAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteSuperAdminSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(deleteSuperAdminError(error.toString()));
+      });
   };
 };
