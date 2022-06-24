@@ -3,17 +3,19 @@ import { Table } from 'Components/Shared';
 import styles from './time-sheet.module.css';
 
 function Timesheet() {
+  const employeeId = '62996ab1b89dc4b653576647';
+
   const employee = useSelector((state) => state.employees.list).find(
-    (employee) => employee._id === '62996ab1b89dc4b653576647'
+    (employee) => employee._id === employeeId
   );
-  // const projects = useSelector((state) => state.projects.list);
-  const timesheets = useSelector((state) => state.timesheets.listTimesheet).filter((timesheet) =>
-    employee.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === timesheet._id)
+  const timesheets = useSelector((state) => state.timesheets.listTimesheet).filter(
+    (listTimesheet) =>
+      employee.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
   );
-  console.log(timesheets);
+
   return (
     <section className={styles.container}>
-      <h2 className={styles.timesheets}>Employee Timesheets</h2>
+      <h2 className={styles.title}>Employee Timesheets</h2>
       <Table
         data={timesheets}
         headers={['projectId', 'approved', 'Task']}
