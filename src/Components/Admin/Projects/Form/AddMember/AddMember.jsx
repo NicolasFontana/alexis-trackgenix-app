@@ -84,11 +84,11 @@ const AddMember = ({ itemId, functionValue }) => {
   };
 
   const handleOnClick = () => {
-    // edited
-    //   ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
-    //     ? functionValue(false)
-    // : null
-    functionValue(false);
+    isDirty
+      ? confirm('All unsaved changes will be lost. Are you sure you want to continue?')
+        ? functionValue(false)
+        : null
+      : functionValue(false);
   };
 
   const closeAlertModal = () => {
@@ -102,7 +102,7 @@ const AddMember = ({ itemId, functionValue }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors, isDirty }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),

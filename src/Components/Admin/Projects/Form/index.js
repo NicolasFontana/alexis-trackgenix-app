@@ -46,7 +46,6 @@ const schema = Joi.object({
 });
 
 const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
-  const [edited, setEdited] = useState(false);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -71,7 +70,6 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
       dispatch(updateProject(itemId, data, (alertMessage) => setAlertMessage(alertMessage))).then(
         () => openAlertModal()
       );
-      setEdited(false);
     }
   };
 
@@ -86,7 +84,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors, isDirty }
   } = useForm({
     mode: 'onChange',
     resolver: joiResolver(schema),
@@ -152,7 +150,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               error={errors.description?.message}
             />
             <div>
-              <ListMembers project={project} edited={edited} functionValue={functionValue} />
+              <ListMembers project={project} edited={isDirty} functionValue={functionValue} />
             </div>
           </div>
         </div>
