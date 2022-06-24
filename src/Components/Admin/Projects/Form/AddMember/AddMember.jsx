@@ -16,8 +16,8 @@ const schema = Joi.object({
     'string.empty': 'Role is a required field'
   }),
   rate: Joi.number().min(0).max(999999).required().messages({
-    'number.min': 'Invalid rate, it must be positive',
-    'number.max': 'Invalid rate, it must be between 0 and 999999',
+    'number.min': 'Rate must be positive',
+    'number.max': 'Rate must be between 0 and 999999',
     'number.base': 'Rate is a required field'
   })
 });
@@ -63,7 +63,6 @@ const AddMember = ({ itemId, functionValue }) => {
   };
 
   const handleOnSubmit = (data) => {
-    console.log('data', data);
     if (data.member !== '' && data.role !== '' && data.rate !== '') {
       dispatch(
         updateProject(projectId, { members: asignMember(data) }, (alertMessage) =>
@@ -111,7 +110,6 @@ const AddMember = ({ itemId, functionValue }) => {
       role: ''
     }
   });
-  console.log('error', errors);
 
   return (
     <div className={styles.divcontainer}>

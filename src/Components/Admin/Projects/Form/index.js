@@ -15,20 +15,20 @@ const schema = Joi.object({
     .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
     .required()
     .messages({
-      'string.min': 'Project name it must contain more than 3 letters',
-      'string.max': 'Project name it must not contain more than 50 letters',
+      'string.min': 'Project name must contain more than 3 letters',
+      'string.max': 'Project name must not contain more than 50 letters',
       'string.pattern.base':
-        'Invalid project name, it must contain only letters and start with a capital letter',
+        'Project name must contain only letters and start with a capital letter',
       'string.empty': 'Name is a required field'
     }),
   description: Joi.string().min(4).required().messages({
-    'string.min': 'Invalid description, it must contain more than 4 letters',
+    'string.min': 'Description must contain more than 4 letters',
     'string.empty': 'Description is a required field'
   }),
-  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a required field' }),
+  startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
-    'date.greater': 'Invalid end date, it must be after the start date',
-    'string.empty': 'End date is a required field'
+    'date.greater': 'End Date must be after the start date',
+    'date.base': 'End date is a required field'
   }),
   clientName: Joi.string()
     .min(3)
@@ -36,10 +36,10 @@ const schema = Joi.object({
     .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
     .required()
     .messages({
-      'string.min': 'Client name it must contain more than 3 letters',
-      'string.max': 'Client name it must not contain more than 50 letters',
+      'string.min': 'Client name must contain more than 3 letters',
+      'string.max': 'Client name must not contain more than 50 letters',
       'string.pattern.base':
-        'Invalid client name, it must contain only letters and start with a capital letter',
+        'Client name must contain only letters and start with a capital letter',
       'string.empty': 'Client name is a required field'
     }),
   active: Joi.boolean().required()
@@ -64,7 +64,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
       data.active === project.active &&
       data.description === project.description
     ) {
-      setAlertMessage({ message: "There haven't been string changes", data: {}, error: true });
+      setAlertMessage({ message: "There hasn't been any changes", data: {}, error: true });
       setShowErrorSuccessModal(true);
     } else {
       dispatch(updateProject(itemId, data, (alertMessage) => setAlertMessage(alertMessage))).then(
