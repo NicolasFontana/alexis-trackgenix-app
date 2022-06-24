@@ -67,8 +67,10 @@ const App = () => {
         }}
         confirmDelete={() => {
           dispatch(delAdmin(idDelete, setResponse));
-          setShowModalFormDelete(false);
-          setShowSuccessModal(true);
+          dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
+            setShowModalFormDelete(false);
+            setShowSuccessModal(true);
+          });
         }}
         title="Delete Admin"
         message="Are you sure you want to delete this admin?"

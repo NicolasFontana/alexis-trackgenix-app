@@ -51,8 +51,9 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(editAdmin(edit._id, editedAdmin, setResponse));
-      setShowSuccessModal(true);
+      dispatch(editAdmin(edit._id, editedAdmin, (response) => setResponse(response))).then(() => {
+        setShowSuccessModal(true);
+      });
     }
   };
 
