@@ -1,0 +1,40 @@
+.sidebar {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  width: 15%;
+  height: 100%;
+  background-color: #373867;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 135px;
+  width: 100%;
+  background-color: #dddee5;
+}
+
+.header {
+  font-size: 28px;
+  font-weight: 700;
+  font-style: oblique;
+  color: #373867;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 1px #373867;
+  text-decoration: none;
+}
+
+.ul {
+  font-size: 20px;
+  margin-top: 20%;
+  padding: 0;
+  color: #ffffff;
+}
+.li {
+  text-decoration: none;
+  color: #ffffff;
+}
