@@ -8,18 +8,13 @@ import { editTask } from '../../../redux/tasks/thunks';
 import styles from './edit.module.css';
 
 const taskSchema = Joi.object({
-  taskName: Joi.string()
-    .regex(/^([a-zA-Z]+\s)*[a-zA-Z]+$/)
-    .min(3)
-    .max(50)
-    .required()
-    .messages({
-      'string.min': 'Invalid task name, it must contain more than 3 letters',
-      'string.max': 'Invalid task name, it must not contain more than 50 letters',
-      'string.empty': 'Task name is a required field',
-      'string.pattern.base':
-        'Must contain only letters and words can only be separated by a single white space'
-    }),
+  taskName: Joi.string().min(3).max(50).required().messages({
+    'string.min': 'Invalid task name, it must contain more than 3 letters',
+    'string.max': 'Invalid task name, it must not contain more than 50 letters',
+    'string.empty': 'Task name is a required field',
+    'string.pattern.base':
+      'Must contain only letters and words can only be separated by a single white space'
+  }),
   startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   workedHours: Joi.number().integer().min(0).required().messages({
     'number.integer': 'Invalid number, it must be an integer',
@@ -57,7 +52,7 @@ const Edit = ({ task, closeModalForm }) => {
       data.description === task.description &&
       data.status == task.status
     ) {
-      setMessage({ message: "There haven't been any changes", data: {}, error: true });
+      setMessage({ message: "There hasn't been any changes", data: {}, error: true });
       setShowMessageModal(true);
     } else {
       dispatch(editTask(data, task._id, setMessage)).then(() => {
