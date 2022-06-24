@@ -9,9 +9,13 @@
 }
 
 .title {
-  margin-left: 45%;
+  align-self: center;
   font-weight: bold;
   font-size: 40px;
+}
+
+.pictureFrame{
+  align-self: center;
 }
 
 .profilePicture {
@@ -19,6 +23,17 @@
   height: 150px;
   border-radius: 50%;
   border: 5px solid #76a068;
+}
+
+.data {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 150%;
+  width: 200px;
+  height: 60vh;
 }
 
 .row {

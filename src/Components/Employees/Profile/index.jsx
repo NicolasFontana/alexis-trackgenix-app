@@ -51,7 +51,7 @@ const EmployeeProfile = () => {
           className={styles.profilePicture}
         ></img>
       </div>
-      <div>
+      <div className={styles.data}>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Name:</h3>
           <p className={styles.rowText}>{`${employee?.firstName} ${employee?.lastName}`}</p>
@@ -65,16 +65,24 @@ const EmployeeProfile = () => {
           <p className={styles.rowText}>{`${employee?.email}`}</p>
         </div>
         <div className={styles.row}>
-          <h3 className={styles.rowTitle}>Address:</h3>
-          <p className={styles.rowText}>{`${employee?.address}`}</p>
-        </div>
-        <div className={styles.row}>
           <h3 className={styles.rowTitle}>Status:</h3>
           <p className={styles.rowText}>{`${status}`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Is Project Manager:</h3>
           <p className={styles.rowText}>{`${isPM}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Address:</h3>
+          <p className={styles.rowText}>{`${employee?.address}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>DNI:</h3>
+          <p className={styles.rowText}>{`${employee?.dni}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Date of Birth:</h3>
+          <p className={styles.rowText}>{`${employee?.dateBirth}`}</p>
         </div>
       </div>
       <div className={styles.buttonContainer}>
