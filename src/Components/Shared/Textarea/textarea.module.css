@@ -56,6 +56,25 @@
     margin: 3px 0 0;
 }
 
+.textareaError {
+border: solid 1px #f33413;
+background: rgba(243, 52, 19, 0.19);
+color: #F33413;
+}
+
+.textareaError:focus {
+outline: #F33413 solid 0.5px;
+}
+
+.error {
+visibility: visible;
+color: #F33413;
+text-align: justify;
+font-weight: 500;
+font-size: 12px;
+margin: 3px 0 0;
+}
+
 .noselect {
     -webkit-touch-callout: none !important;
     -webkit-user-select: none !important;
