@@ -4,17 +4,27 @@ import Home from 'Components/Employee/Home';
 import Profile from 'Components/Employee/EditProfile';
 import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
+import Layout from '../Components/Layout';
+
+const employeesRoutes = [
+  { name: 'Employees', path: '/employee/employees' },
+  { name: 'Projects', path: '/employee/projects' },
+  { name: 'Time-Sheet', path: '/employee/time-sheets' },
+  { name: 'Profile', path: '/employee/profile' }
+];
 
 const Employee = () => {
   const { url } = useRouteMatch();
   return (
-    <Switch>
-      <Route path={`${url}/`} component={Home} />
-      <Route path={`${url}/time-sheet`} component={Timesheet} />
-      <Route path={`${url}/projects`} component={Projects} />
-      <Route path={`${url}/profile`} component={Profile} />
-      <Redirect to={`${url}/`} />
-    </Switch>
+    <Layout routes={employeesRoutes}>
+      <Switch>
+        <Route path={`${url}/`} component={Home} />
+        <Route path={`${url}/time-sheet`} component={Timesheet} />
+        <Route path={`${url}/projects`} component={Projects} />
+        <Route path={`${url}/profile`} component={Profile} />
+        <Redirect to={`${url}/`} />
+      </Switch>
+    </Layout>
   );
 };
 

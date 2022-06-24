@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
-const SideBar = ({ titles, directions }) => {
+const SideBar = ({ routes }) => {
+  console.log(routes);
   return (
     <aside className={styles.sidebar}>
       <div className={styles.headerContainer}>
@@ -11,17 +12,13 @@ const SideBar = ({ titles, directions }) => {
         </Link>
       </div>
       <nav>
-        {titles.map((title, index) => {
-          return (
-            <ul key={title} className={styles.ul}>
-              <li>
-                <NavLink to={directions[index]} className={styles.li}>
-                  {title}
-                </NavLink>
-              </li>
-            </ul>
-          );
-        })}
+        <ul className={styles.ul}>
+          {routes?.map((route) => (
+            <li key={route.name} className={styles.li}>
+              <Link to={route.path}>{route.name}</Link>
+            </li>
+          ))}
+        </ul>
       </nav>
     </aside>
   );
