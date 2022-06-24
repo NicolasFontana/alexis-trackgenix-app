@@ -20,7 +20,7 @@ const taskSchema = Joi.object({
       'string.pattern.base':
         'Must contain only letters and words can only be separated by a single white space'
     }),
-  startDate: Joi.date().required().messages({ 'any.required': 'Start date is a required field' }),
+  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a required field' }),
   workedHours: Joi.number().integer().min(0).required().messages({
     'number.integer': 'Invalid number, it must be an integer',
     'number.min': 'Invalid number, it must be positive',
@@ -52,7 +52,7 @@ const Edit = ({ task, closeModalForm }) => {
   const onSubmit = (data) => {
     if (
       data.taskName === task.taskName &&
-      data.startDate === task.startDate &&
+      data.startDate.toString() == new Date(task.startDate) &&
       data.workedHours === task.workedHours &&
       data.description === task.description &&
       data.status == task.status
@@ -75,7 +75,7 @@ const Edit = ({ task, closeModalForm }) => {
     resolver: joiResolver(taskSchema),
     defaultValues: {
       taskName: task.taskName,
-      startDate: task.startDate,
+      startDate: task.startDate.slice(0, 10),
       workedHours: task.workedHours,
       description: task.description,
       status: task.status

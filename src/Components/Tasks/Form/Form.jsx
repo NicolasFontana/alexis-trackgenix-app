@@ -20,7 +20,7 @@ const taskSchema = Joi.object({
       'string.pattern.base':
         'Must contain only letters and words can only be separated by a single white space'
     }),
-  startDate: Joi.date().required().messages({ 'any.required': 'Start date is a required field' }),
+  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a required field' }),
   workedHours: Joi.number().integer().min(0).required().messages({
     'number.integer': 'Invalid number, it must be an integer',
     'number.min': 'Invalid number, it must be positive',
