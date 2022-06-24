@@ -17,7 +17,7 @@ const adminSchema = Joi.object({
       'string.min': 'Invalid name, it must contain more than 3 letters',
       'string.max': 'Invalid name, it must not contain more than 50 letters',
       'string.pattern.base': 'Invalid name, it must contain only letters',
-      'any.required': 'First Name is a required field'
+      'string.empty': 'First name is a required field'
     }),
   lastName: Joi.string()
     .min(3)
@@ -28,14 +28,14 @@ const adminSchema = Joi.object({
       'string.min': 'Invalid last name, it must contain more than 3 letters',
       'string.max': 'Invalid last name, it must not contain more than 50 letters',
       'string.pattern.base': 'Invalid last name, it must contain only letters',
-      'any.required': 'Last Name is a required field'
+      'string.empty': 'Last name is a required field'
     }),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required()
     .messages({
       'string.email': 'Invalid email format',
-      'any.required': 'Email is a required field'
+      'string.empty': 'Email is a required field'
     }),
   password: Joi.string()
     .min(8)
@@ -44,7 +44,7 @@ const adminSchema = Joi.object({
     .messages({
       'string.min': 'Invalid password, it must contain at least 8 characters',
       'string.pattern.base': 'Invalid password, it must contain both letters and numbers',
-      'any.required': 'Password is a required field'
+      'string.empty': 'Password is a required field'
     }),
   active: Joi.boolean().required()
 });
