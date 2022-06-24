@@ -19,7 +19,7 @@ const schema = Joi.object({
       'string.min': 'First name must contain more than 3 letters',
       'string.max': 'First name must not contain more than 50 letters',
       'string.pattern.base': 'First name must contain only letters',
-      'string.empty': 'First Name is a required field'
+      'string.empty': 'First name is a required field'
     }),
   lastName: Joi.string()
     .min(3)
@@ -30,7 +30,7 @@ const schema = Joi.object({
       'string.min': 'Last name must contain more than 3 letters',
       'string.max': 'Last name must not contain more than 50 letters',
       'string.pattern.base': 'Last name must contain only letters',
-      'string.empty': 'Last Name is a required field'
+      'string.empty': 'Last name is a required field'
     }),
   phone: Joi.string().pattern(/^\d+$/).length(10).required().messages({
     'string.pattern.base': 'Phone number must contain only numbers',
@@ -78,7 +78,6 @@ const Form = ({ closeModalForm, edit, item }) => {
 
   const onSubmit = (data) => {
     if (edit) {
-      console.log(data);
       if (
         data.firstName === item.firstName &&
         data.lastName === item.lastName &&
@@ -90,7 +89,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         data.projects === item.projects.map((x) => x._id).toString() &&
         data.timeSheets === item.timeSheets.map((x) => x._id).toString()
       ) {
-        setResponse({ message: "There haven't been string changes", data: {}, error: true });
+        setResponse({ message: "There haven't been any changes", data: {}, error: true });
         setShowSuccessModal(true);
       } else {
         dispatch(updateEmployee(data, item._id, setResponse)).then(() => {
