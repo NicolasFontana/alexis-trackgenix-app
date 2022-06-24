@@ -46,21 +46,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   }, []);
 
   const submitEdit = async () => {
-    // let editedEmployee = JSON.stringify({
-    //   firstName: employeeInput.firstName,
-    //   lastName: employeeInput.lastName,
-    //   phone: employeeInput.phone,
-    //   email: employeeInput.email,
-    //   password: employeeInput.password,
-    //   active: employeeInput.active,
-    //   isProjectManager: employeeInput.isProjectManager,
-    //   projects: employeeInput.projects,
-    //   timeSheets: employeeInput.timeSheets,
-    //   address: employeeInput.address,
-    //   picture: employeeInput.picture,
-    //   dni: employeeInput.dni,
-    //   dateBirth: employeeInput.dateBirth
-    // });
     if (
       employeeInput.firstName === employeeEdit.firstName &&
       employeeInput.lastName === employeeEdit.lastName &&
@@ -75,7 +60,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      // console.log(editedEmployee);
       dispatch(updateEmployee(employeeInput, employeeEdit._id, setResponse)).then(() =>
         setShowSuccessModal(true)
       );
