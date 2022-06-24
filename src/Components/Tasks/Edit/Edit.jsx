@@ -20,7 +20,7 @@ const taskSchema = Joi.object({
       'string.pattern.base':
         'Must contain only letters and words can only be separated by a single white space'
     }),
-  startDate: Joi.date().required().messages({ 'string.empty': 'Start date is a required field' }),
+  startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   workedHours: Joi.number().integer().min(0).required().messages({
     'number.integer': 'Invalid number, it must be an integer',
     'number.min': 'Invalid number, it must be positive',
@@ -37,7 +37,7 @@ const taskSchema = Joi.object({
     .required()
     .messages({
       'string.min': 'Invalid status, it must contain more than 2 letters',
-      'any.valid':
+      'any.only':
         'Invalid status, it must be one of the following: To do, In progress, Review, Blocked, Done, Cancelled',
       'string.empty': 'Status is a required field'
     })
