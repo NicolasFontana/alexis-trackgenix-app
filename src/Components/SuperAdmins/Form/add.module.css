@@ -2,21 +2,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 100px;
+  padding: 20px;
 }
 
 .formBody {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: flex-end;
   align-content: space-between;
-  width: 400px;
-  column-gap: 15px;
+  row-gap: 10px;
+  overflow: auto;
+  max-width: 400px;
 }
 
 .buttonBox {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
 }
