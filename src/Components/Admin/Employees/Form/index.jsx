@@ -84,6 +84,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.firstName}
         onChange={onChange}
         placeholder="Juan"
+        register={console.log}
       />
       <Input
         label="Last Name"
@@ -92,6 +93,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.lastName}
         onChange={onChange}
         placeholder="Perez"
+        register={console.log}
       />
       <Input
         label="Phone"
@@ -100,6 +102,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.phone}
         onChange={onChange}
         placeholder="123456789"
+        register={console.log}
       />
       <Input
         label="Email"
@@ -108,6 +111,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.email}
         onChange={onChange}
         placeholder="juanperez@gmail.com"
+        register={console.log}
       />
       <Input
         label="Password"
@@ -116,6 +120,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.password}
         onChange={onChange}
         placeholder="********"
+        register={console.log}
       />
       <Input
         label="Projects (separate IDs with a comma)"
@@ -124,6 +129,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.projects}
         onChange={onChange}
         placeholder=""
+        register={console.log}
       />
       <Input
         label="Timesheets (separate IDs with a comma)"
@@ -132,6 +138,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         value={userInput.timeSheets}
         onChange={onChange}
         placeholder=""
+        register={console.log}
       />
       <Input
         label="Is a Project Manager?"
@@ -139,6 +146,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         type="checkbox"
         checked={userInput.isProjectManager}
         onChange={onChangePM}
+        register={console.log}
       />
       <Input
         label="Active"
@@ -146,6 +154,7 @@ const Form = ({ closeModalForm, edit, item }) => {
         type="checkbox"
         checked={userInput.active}
         onChange={onChangeActive}
+        register={console.log}
       />
       <ButtonText
         clickAction={() => {

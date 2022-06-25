@@ -120,6 +120,7 @@ const AddMember = ({ itemId, functionValue }) => {
             _id: employee._id,
             optionText: `${employee.firstName} ${employee.lastName}`
           }))}
+          register={console.log}
         />
         <Select
           label="Role"
@@ -129,6 +130,7 @@ const AddMember = ({ itemId, functionValue }) => {
           title="Choose Role"
           data={['TL', 'QA', 'DEV', 'PM']}
           required={true}
+          register={console.log}
         />
         <Input
           label="Rate"
@@ -137,6 +139,7 @@ const AddMember = ({ itemId, functionValue }) => {
           onChange={OnChangeRate}
           placeholder="Insert rate"
           required={true}
+          register={console.log}
         />
       </form>
       <ButtonText

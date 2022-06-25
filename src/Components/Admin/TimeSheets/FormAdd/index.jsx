@@ -70,6 +70,7 @@ const FormAdd = ({ closeModalForm }) => {
           optionText: project.name
         }))}
         required={true}
+        register={console.log}
       />
       <Select
         label="Tasks"
@@ -82,6 +83,7 @@ const FormAdd = ({ closeModalForm }) => {
           optionText: task.taskName
         }))}
         required={true}
+        register={console.log}
       />
       <Input
         label="Approved"
@@ -89,6 +91,7 @@ const FormAdd = ({ closeModalForm }) => {
         type="checkbox"
         checked={approved}
         onChange={onChangeApproved}
+        register={console.log}
       />
       <ButtonText
         clickAction={() => {

@@ -71,6 +71,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           optionText: project.name
         }))}
         required={true}
+        register={console.log}
       />
       <Select
         label="Tasks"
@@ -83,6 +84,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
           optionText: task.taskName
         }))}
         required={true}
+        register={console.log}
       />
       <Input
         label="Approved"
@@ -92,6 +94,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         title="Approve"
         type="checkbox"
         required={true}
+        register={console.log}
       />
       <ButtonText
         clickAction={() => {
