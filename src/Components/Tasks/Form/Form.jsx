@@ -15,13 +15,23 @@ const taskSchema = Joi.object({
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
-  startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
+  startDate: Joi.date()
+    .min(1950 - 1 - 1)
+    .max('now')
+    .required()
+    .messages({
+      'date.base': 'Start date is a required field',
+      'date.min': 'Invalid start date',
+      'date.max': 'Invalid start date, it must not be over the current date'
+    }),
   workedHours: Joi.string()
     .regex(/^[0-9]*$/)
     .min(1)
+    .max(3)
     .required()
     .messages({
       'string.min': 'Invalid number, it must be positive',
+      'string.max': 'Invalid number, it exceeds the number of posible worked hours',
       'string.pattern.base': 'Invalid, it must contain only interger numbers',
       'string.empty': 'Worked hours is a required field'
     }),
