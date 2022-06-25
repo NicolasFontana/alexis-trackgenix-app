@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
-import Layout from 'Routes/Layout';
+import Layout from 'Components/LayoutSideBar';
 import Admins from 'Components/Admin/Admins';
 import SuperAdmins from 'Components/Admin/SuperAdmins';
 import Employees from 'Components/Admin/Employees';

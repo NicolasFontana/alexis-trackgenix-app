@@ -6,14 +6,6 @@
     align-items: center;
   }
   
-  .container h2 {
-    margin-left: 15%;
-  }
-  
-  .currentScreen {
-    margin-left: 15%;
-  }
-  
   .buttonsContainer {
     display: flex;
     justify-content: space-around;
@@ -39,4 +31,3 @@
   .link {
     text-decoration: none;
   }
-  
