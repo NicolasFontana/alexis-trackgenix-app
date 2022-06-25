@@ -4,7 +4,7 @@ import ButtonEdit from '../../Shared/Buttons/ButtonEdit';
 import styles from './table.module.css';
 
 const Table = (props) => {
-  const { data, titles, headers, delAction, editAction } = props;
+  const { data, titles, headers, delAction, editAction, modifiers } = props;
 
   return (
     <div>
@@ -18,8 +18,8 @@ const Table = (props) => {
                 </th>
               );
             })}
-            <th className={styles.th}></th>
-            <th className={styles.th}></th>
+            {editAction ? <th className={styles.th}></th> : null}
+            {delAction ? <th className={styles.th}></th> : null}
           </tr>
         </thead>
         <tbody className={styles.tbody}>
@@ -29,28 +29,28 @@ const Table = (props) => {
                 {headers.map((header, index) => {
                   return (
                     <td key={`${row._id}-${index}`} className={styles.td}>
-                      {Array.isArray(row[header])
-                        ? row[header].length
-                        : row[header] === false || row[header] === true
-                        ? row[header].toString()
-                        : row[header]}
+                      {modifiers[header] ? modifiers[header](row[header]) : row[header]}
                     </td>
                   );
                 })}
-                <td className={styles.tdButton}>
-                  <ButtonEdit
-                    clickAction={() => {
-                      editAction(row._id);
-                    }}
-                  ></ButtonEdit>
-                </td>
-                <td className={styles.tdButton}>
-                  <ButtonDelete
-                    clickAction={() => {
-                      delAction(row._id);
-                    }}
-                  ></ButtonDelete>
-                </td>
+                {editAction ? (
+                  <td className={styles.tdButton}>
+                    <ButtonEdit
+                      clickAction={() => {
+                        editAction(row._id);
+                      }}
+                    ></ButtonEdit>
+                  </td>
+                ) : null}
+                {delAction ? (
+                  <td className={styles.tdButton}>
+                    <ButtonDelete
+                      clickAction={() => {
+                        delAction(row._id);
+                      }}
+                    ></ButtonDelete>
+                  </td>
+                ) : null}
               </tr>
             );
           })}
