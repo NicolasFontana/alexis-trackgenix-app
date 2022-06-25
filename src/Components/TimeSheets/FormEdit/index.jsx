@@ -1,11 +1,8 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import styles from './form.module.css';
-import Select from '../../Shared/Select/index';
-import ButtonText from '../../Shared/Buttons/ButtonText/index';
-import ResponseModal from '../../Shared/ErrorSuccessModal/index';
+import { Select, ButtonText, ErrorSuccessModal, Input } from '../../Shared';
 import { putTimesheet } from '../../../redux/time-sheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
@@ -43,7 +40,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     defaultValues: {
       projectId: timesheetItem.projectId._id,
       task: timesheetItem.Task[0].taskId._id,
@@ -84,7 +81,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         error={errors.approved?.message}
       />
       <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit" />
-      <ResponseModal
+      <ErrorSuccessModal
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModalEdit}

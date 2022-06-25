@@ -1,9 +1,6 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import styles from './form.module.css';
-import Select from '../../Shared/Select/index';
-import Input from '../../Shared/Input/index';
-import ButtonText from '../../Shared/Buttons/ButtonText/index';
-import ErrorSuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { Select, Input, ButtonText, ErrorSuccessModal } from '../../Shared/';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTimesheet } from '../../../redux/time-sheets/thunks';
 import * as Joi from 'joi';
@@ -42,7 +39,7 @@ const FormAdd = ({ closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(timesheetValidation),
     defaultValues: {
       project: '',

@@ -1,9 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
+import { React, useState } from 'react';
 import styles from './add.module.css';
-import ButtonText from '../../Shared/Buttons/ButtonText';
-import Input from '../../Shared/Input';
-import SuccessModal from '../../Shared/ErrorSuccessModal/index';
+import { ButtonText, Input, ErrorSuccessModal } from '../../Shared';
 import { useDispatch } from 'react-redux';
 import { postSuperAdmins } from '../../../redux/super-admins/thunks';
 import { useForm } from 'react-hook-form';
@@ -73,7 +70,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
       firstName: '',
@@ -129,7 +126,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
         <div className={styles.buttonBox}>
           <ButtonText clickAction={handleSubmit(submitAdd)} label="Create" />
         </div>
-        <SuccessModal
+        <ErrorSuccessModal
           show={showSuccessModal}
           closeModal={() => {
             setShowSuccessModal(false);
