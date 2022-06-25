@@ -12,17 +12,13 @@
     column-gap: 10px;
     width: 200px;
     height: 60vh;
+    margin-left: 5%;
 }
 
-/* .formBody > div {
-    width: 200px;
-  }
-
-.formBody > div:last-child {
-    width: 100vw;
-  } */
-
   .buttonBox {
+    margin-top: 9%;
+    margin-bottom: 3%;
     display: flex;
     flex-direction: row;
+    align-self: flex-end;
   }
