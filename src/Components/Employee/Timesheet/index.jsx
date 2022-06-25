@@ -22,7 +22,7 @@ function Timesheet() {
         titles={['Project', 'PMs approval', 'Worked hours']}
         modifiers={{
           projectId: (x) => x.name,
-          approved: (x) => (x === true ? 'Approved' : 'Not approved'),
+          approved: (x) => (x ? 'Approved' : 'Not approved'),
           Task: (x) =>
             x.reduce((previous, current) => {
               return previous + current.taskId.workedHours;

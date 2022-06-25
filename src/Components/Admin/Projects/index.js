@@ -163,7 +163,7 @@ const Projects = () => {
         modifiers={{
           startDate: (x) => x.slice(0, 10),
           endDate: (x) => x.slice(0, 10),
-          active: (x) => (x === true ? 'Active' : 'Inactive'),
+          active: (x) => (x ? 'Active' : 'Inactive'),
           members: (x) => (
             <Select
               title="Members"

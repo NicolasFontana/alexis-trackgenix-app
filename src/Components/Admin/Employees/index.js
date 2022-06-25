@@ -120,8 +120,8 @@ const Employees = () => {
           setShowModalFormEdit(true);
         }}
         modifiers={{
-          active: (x) => (x === true ? 'Active' : 'Inactive'),
-          isProjectManager: (x) => (x === true ? 'Yes' : 'No'),
+          active: (x) => (x ? 'Active' : 'Inactive'),
+          isProjectManager: (x) => (x ? 'Yes' : 'No'),
           projects: (x) => (
             <Select title="Projects" defaultValue="" data={[...x.map((project) => project.name)]} />
           ),

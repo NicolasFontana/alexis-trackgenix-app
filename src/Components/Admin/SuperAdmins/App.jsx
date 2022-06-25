@@ -91,7 +91,7 @@ const App = () => {
         }}
         editAction={editOpen}
         modifiers={{
-          active: (x) => (x === true ? 'Active' : 'Inactive')
+          active: (x) => (x ? 'Active' : 'Inactive')
         }}
       />
       {modalAdd}

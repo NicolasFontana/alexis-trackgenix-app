@@ -134,7 +134,7 @@ function TimeSheets() {
         }}
         modifiers={{
           startDate: (x) => x?.slice(0, 10),
-          approved: (x) => (x === true ? 'Yes' : 'No')
+          approved: (x) => (x ? 'Yes' : 'No')
         }}
       />
       {loading ? <Preloader /> : null}

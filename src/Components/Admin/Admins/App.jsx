@@ -100,7 +100,7 @@ const App = () => {
           setShowModalFormEdit(true);
         }}
         modifiers={{
-          active: (x) => (x === true ? 'Active' : 'Inactive')
+          active: (x) => (x ? 'Active' : 'Inactive')
         }}
       />
       {modalEdit}
