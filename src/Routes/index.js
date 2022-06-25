@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import styles from './routes.module.css';
 import { Header, Footer, Preloader } from 'Components/Shared';
 import SideBarRoutes from './TemporarySidebar';
@@ -18,9 +18,7 @@ function Routes() {
             <Route path="/home" component={Home} />
             <Route path="/admin" component={AdminRoutes} />
             <Route path="/employee" component={EmployeeRoutes} />
-            <Route path="/">
-              <Redirect to="/home" />
-            </Route>
+            <Route exact path="/" />
           </Suspense>
         </Switch>
       </div>
