@@ -166,11 +166,11 @@ const Projects = () => {
           active: (x) => (x ? 'Active' : 'Inactive'),
           members: (x) => (
             <Select
-              title="Members"
-              defaultValue=""
               data={[
                 ...x.map((member) => `${member.employeeId.firstName} ${member.employeeId.lastName}`)
               ]}
+              disabled
+              register={console.log}
             />
           )
         }}

@@ -123,13 +123,13 @@ const Employees = () => {
           active: (x) => (x ? 'Active' : 'Inactive'),
           isProjectManager: (x) => (x ? 'Yes' : 'No'),
           projects: (x) => (
-            <Select title="Projects" defaultValue="" data={[...x.map((project) => project.name)]} />
+            <Select data={[...x.map((project) => project.name)]} disabled register={console.log} />
           ),
           timeSheets: (x) => (
             <Select
-              title="Timesheets"
-              defaultValue=""
               data={[...x.map((timesheet) => timesheet._id)]}
+              disabled
+              register={console.log}
             />
           )
         }}
