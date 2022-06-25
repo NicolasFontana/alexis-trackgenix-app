@@ -4,7 +4,7 @@ import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { addAdmin } from '../../../redux/admins/thunks';
+import { addAdmin } from '../../../../redux/admins/thunks';
 import styles from './add.module.css';
 
 const adminSchema = Joi.object({

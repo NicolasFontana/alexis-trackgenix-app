@@ -8,7 +8,7 @@ import {
 } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { delAdmin, getAdmins } from '../../redux/admins/thunks';
+import { delAdmin, getAdmins } from '../../../redux/admins/thunks';
 import styles from '../Admins/admins.module.css';
 import Form from './Add/index';
 import EditForm from './Edit/index';
