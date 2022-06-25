@@ -14,7 +14,7 @@ function Routes() {
       <Header />
       <div className={styles.currentScreen}>
         <Switch>
-          <Suspense fallback={Preloader}>
+          <Suspense fallback={<Preloader />}>
             <Route path="/home" component={Home} />
             <Route path="/admin" component={AdminRoutes} />
             <Route path="/employee" component={EmployeeRoutes} />
