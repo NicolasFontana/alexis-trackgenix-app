@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins, delAdmin } from 'redux/admins/thunks';
-import styles from './admins.module.css';
 import {
-  Preloader,
-  Table,
-  ModalForm,
   ButtonAdd,
   ConfirmModal,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  ModalForm,
+  Preloader,
+  Table
 } from 'Components/Shared';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { delAdmin, getAdmins } from '../../../redux/admins/thunks';
+import styles from '../Admins/admins.module.css';
 import Form from './Add/index';
 import EditForm from './Edit/index';
 
@@ -98,6 +98,9 @@ const App = () => {
         editAction={(id) => {
           setIdDelete(id);
           setShowModalFormEdit(true);
+        }}
+        modifiers={{
+          active: (x) => (x ? 'Active' : 'Inactive')
         }}
       />
       {modalEdit}

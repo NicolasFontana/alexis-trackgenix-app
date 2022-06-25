@@ -90,6 +90,9 @@ const App = () => {
           setShowModalFormDelete(true);
         }}
         editAction={editOpen}
+        modifiers={{
+          active: (x) => (x ? 'Active' : 'Inactive')
+        }}
       />
       {modalAdd}
       {modalEdit}
