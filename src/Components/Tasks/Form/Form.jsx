@@ -18,15 +18,12 @@ const taskSchema = Joi.object({
   startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   workedHours: Joi.string()
     .regex(/^[0-9]*$/)
-    /* .integer() */
     .min(1)
     .required()
     .messages({
-      //'number.integer': 'Invalid number, it must be an integer',
       'string.min': 'Invalid number, it must be positive',
       'string.pattern.base': 'Invalid, it must contain only interger numbers',
       'string.empty': 'Worked hours is a required field'
-      //'number.base': 'Worked hours is a required field'
     }),
   description: Joi.string().min(6).max(150).required().messages({
     'string.min': 'Invalid description, it must contain more than 6 letters',
@@ -69,7 +66,7 @@ const Form = ({ closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(taskSchema),
     defaultValues: {
       taskName: '',

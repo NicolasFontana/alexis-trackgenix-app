@@ -9,18 +9,22 @@ import styles from './edit.module.css';
 
 const taskSchema = Joi.object({
   taskName: Joi.string().min(3).max(50).required().messages({
-    'string.min': 'Invalid task name, it must contain more than 3 letters',
-    'string.max': 'Invalid task name, it must not contain more than 50 letters',
+    'string.min': 'Invalid task name, it must contain more than 3 characters',
+    'string.max': 'Invalid task name, it must not contain more than 50 characters',
     'string.empty': 'Task name is a required field',
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
   startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
-  workedHours: Joi.number().integer().min(0).required().messages({
-    'number.integer': 'Invalid number, it must be an integer',
-    'number.min': 'Invalid number, it must be positive',
-    'number.base': 'Worked hours is a required field'
-  }),
+  workedHours: Joi.string()
+    .regex(/^[0-9]*$/)
+    .min(1)
+    .required()
+    .messages({
+      'string.min': 'Invalid number, it must be positive',
+      'string.pattern.base': 'Invalid, it must contain only interger numbers',
+      'string.empty': 'Worked hours is a required field'
+    }),
   description: Joi.string().min(6).max(150).required().messages({
     'string.min': 'Invalid description, it must contain more than 6 letters',
     'string.max': 'Invalid description, it must not contain more than 150 letters',
@@ -66,7 +70,7 @@ const Edit = ({ task, closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(taskSchema),
     defaultValues: {
       taskName: task.taskName,
