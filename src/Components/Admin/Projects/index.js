@@ -7,7 +7,8 @@ import {
   ModalForm,
   ButtonAdd,
   ConfirmModal,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  Select
 } from 'Components/Shared';
 import Form from './Form';
 import AddMember from './Form/AddMember/AddMember';
@@ -159,6 +160,20 @@ const Projects = () => {
           'Active',
           'Members'
         ]}
+        modifiers={{
+          startDate: (x) => x.slice(0, 10),
+          endDate: (x) => x.slice(0, 10),
+          active: (x) => (x ? 'Active' : 'Inactive'),
+          members: (x) => (
+            <Select
+              data={[
+                ...x.map((member) => `${member.employeeId.firstName} ${member.employeeId.lastName}`)
+              ]}
+              disabled
+              register={console.log}
+            />
+          )
+        }}
         delAction={openConfirmModal}
         editAction={openModalFormEdit}
       />

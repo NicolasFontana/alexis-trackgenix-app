@@ -99,6 +99,9 @@ const App = () => {
           setIdDelete(id);
           setShowModalFormEdit(true);
         }}
+        modifiers={{
+          active: (x) => (x ? 'Active' : 'Inactive')
+        }}
       />
       {modalEdit}
       {modalAdd}
