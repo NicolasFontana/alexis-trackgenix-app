@@ -25,7 +25,7 @@ const tasks = <FontAwesomeIcon icon={faListCheck}></FontAwesomeIcon>;
 const timesheets = <FontAwesomeIcon icon={faClock}></FontAwesomeIcon>;
 
 const adminsRoutes = [
-  { icon: home, name: 'Home', path: '/Home' },
+  { icon: home, name: 'Home', path: '/admin' },
   { icon: users, name: 'Admins', path: '/admin/admins' },
   { icon: users, name: 'Super-Admins', path: '/admin/super-admins' },
   { icon: users, name: 'Employees', path: '/admin/employees' },

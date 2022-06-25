@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
 const SideBar = ({ routes }) => {
-  console.log(routes);
   return (
     <aside className={styles.sidebar}>
       <div className={styles.headerContainer}>
