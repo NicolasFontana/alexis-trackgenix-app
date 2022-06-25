@@ -1,7 +1,7 @@
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
 import styles from './layout.module.css';
-import SideBar from '../../Routes/TemporarySidebar';
+import SideBar from '../Sidebar/index';
 
 function Layout(props) {
   const { routes } = props;

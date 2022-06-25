@@ -15,7 +15,10 @@ const SideBar = ({ routes }) => {
         <ul className={styles.ul}>
           {routes?.map((route) => (
             <li key={route.name} className={styles.li}>
-              <Link to={route.path}>{route.name}</Link>
+              <Link to={route.path}>
+                {route.icon}
+                {route.name}
+              </Link>
             </li>
           ))}
         </ul>

@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Preloader } from 'Components/Shared';
 
-const Home = lazy(() => import('Components/Home'));
+const Home = lazy(() => import('./Home'));
 const AdminRoutes = lazy(() => import('./admin'));
 const EmployeeRoutes = lazy(() => import('./employee'));
 

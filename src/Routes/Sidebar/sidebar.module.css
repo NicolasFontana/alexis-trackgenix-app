@@ -33,8 +33,17 @@
   margin-top: 20%;
   padding: 0;
   color: #ffffff;
+  list-style: none;
 }
+
 .li a {
+  display: table-cell;
+  padding-top: 30px;
+  list-style: none;
   text-decoration: none;
   color: #ffffff;
+}
+
+.li a svg {
+  margin-right: 5px;
 }
