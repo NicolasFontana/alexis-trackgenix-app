@@ -39,8 +39,8 @@ export const createEmployee = (userInput, setResponse) => {
         phone: userInput.phone,
         email: userInput.email,
         password: userInput.password,
-        active: userInput.active === 'Active' ? true : false,
-        isProjectManager: userInput.isProjectManager === 'Yes' ? true : false,
+        active: userInput.active,
+        isProjectManager: userInput.isProjectManager,
         projects:
           userInput.projects.length === 0
             ? []
@@ -81,8 +81,8 @@ export const updateEmployee = (userInput, id, setResponse) => {
         phone: userInput.phone,
         email: userInput.email,
         password: userInput.password,
-        active: userInput.active === 'Active' ? true : false,
-        isProjectManager: userInput.isProjectManager === 'Yes' ? true : false,
+        active: userInput.active,
+        isProjectManager: userInput.isProjectManager,
         projects:
           userInput.projects.length === 0
             ? []
