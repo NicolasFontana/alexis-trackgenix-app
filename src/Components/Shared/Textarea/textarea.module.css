@@ -35,6 +35,9 @@ opacity: 0.5;
 
 .textarea:focus {
 outline: #373867 solid 0.5px;
+border: 1px solid #373867;
+background: none;
+color: #373867;
 }
 
 .textareaError {
@@ -43,8 +46,8 @@ background: rgba(243, 52, 19, 0.19);
 color: #F33413;
 }
 
-.textareaError:focus {
-outline: #F33413 solid 0.5px;
+.textareaError:focus ~ p {
+visibility: hidden;
 }
 
 .error {
