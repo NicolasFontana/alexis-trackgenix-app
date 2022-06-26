@@ -1,110 +1,85 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createTimesheet } from 'redux/time-sheets/thunks';
-import { Input, Select, ButtonText, ErrorSuccessModal } from 'Components/Shared';
+import { React, useState } from 'react';
 import styles from './form.module.css';
+import { Select, Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTimesheet } from 'redux/time-sheets/thunks';
+import * as Joi from 'joi';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+
+const timesheetValidation = Joi.object({
+  project: Joi.string()
+    .messages({
+      'string.empty': 'Project is a required field'
+    })
+    .required(),
+  task: Joi.string()
+    .messages({
+      'string.empty': 'Task is a required field'
+    })
+    .required(),
+  approved: Joi.boolean().required()
+});
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-  const [listTask, setListTask] = useState([]);
-  const [listProject, setListProject] = useState([]);
-  const [task, setTask] = useState('');
-  const [projectId, setProjectId] = useState('');
-  const [approved, setApproved] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
+  const listProject = useSelector((state) => state.projects.list);
+  const listTask = useSelector((state) => state.tasks.list);
 
-  const fetchTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      setListTask(...listTask, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchProject = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const data = await response.json();
-      setListProject(...listProject, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTask();
-    fetchProject();
-  }, []);
-
-  const onSubmit = () => {
-    dispatch(createTimesheet(projectId, task, approved, setMessage)).then(() => {
+  const onSubmit = (data) => {
+    dispatch(createTimesheet(data.project, data.task, data.approved, setMessage)).then(() => {
       setShowMessageModal(true);
     });
   };
 
-  const onChangeProject = (e) => {
-    setProjectId(e.target.value);
-  };
-
-  const handleSelectedTask = (e) => {
-    setTask(e.target.value);
-  };
-
-  const onChangeApproved = (e) => {
-    setApproved(e.target.checked);
-  };
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(timesheetValidation),
+    defaultValues: {
+      project: '',
+      task: '',
+      approved: false
+    }
+  });
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Select
         label="Projects"
         name="project"
-        value={projectId}
-        onChange={onChangeProject}
         title="Choose project"
         data={listProject.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
-        required={true}
-        register={console.log}
+        register={register}
+        error={errors.project?.message}
       />
       <Select
         label="Tasks"
         name="task"
-        value={task}
-        onChange={handleSelectedTask}
         title="Choose task"
         data={listTask.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}
-        required={true}
-        register={console.log}
+        register={register}
+        error={errors.task?.message}
       />
       <Input
         label="Approved"
         name="approved"
         type="checkbox"
-        checked={approved}
-        onChange={onChangeApproved}
-        register={console.log}
+        register={register}
+        error={errors.approved?.message}
       />
-      <ButtonText
-        clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
-      />
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Create"
-      />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create" />
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
