@@ -52,16 +52,6 @@ const schema = Joi.object({
       'string.pattern.base': 'Password must contain both letters and numbers',
       'string.empty': 'Password is a required field'
     }),
-  active: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
-  isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
-  projects: Joi.string().allow('').alphanum().length(24).messages({
-    'string.alphanum': 'Project id must contain both letters and numbers',
-    'string.length': 'Project id must contain 24 characters'
-  }),
-  timeSheets: Joi.string().allow('').alphanum().length(24).messages({
-    'string.alphanum': 'Timesheet id must contain both letters and numbers',
-    'string.length': 'Timesheet id must contain 24 characters'
-  }),
   address: Joi.string().min(4).messages({
     'string.min': 'Invalid address, it must contain more than 4 letters'
   }),
@@ -81,6 +71,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const [response, setResponse] = useState('');
 
   const onSubmit = (data) => {
+    console.log('Submit');
     if (
       data.firstName === employeeEdit.firstName &&
       data.lastName === employeeEdit.lastName &&
@@ -95,9 +86,9 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(updateEmployee(data, employeeEdit._id, setResponse)).then(() =>
-        setShowSuccessModal(true)
-      );
+      dispatch(updateEmployee(data, employeeEdit._id, setResponse)).then(() => {
+        setShowSuccessModal(true);
+      });
     }
   };
 
