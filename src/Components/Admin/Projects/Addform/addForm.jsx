@@ -60,7 +60,7 @@ const AddForm = ({ closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
       name: '',

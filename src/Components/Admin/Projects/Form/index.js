@@ -86,7 +86,7 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
     register,
     formState: { errors, isDirty }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
       name: project.name,

@@ -18,6 +18,7 @@ const schema = Joi.object({
   rate: Joi.number().min(0).max(999999).required().messages({
     'number.min': 'Rate must be positive',
     'number.max': 'Rate must be between 0 and 999999',
+    'number.unsafe': 'Rate must be a safe number',
     'number.base': 'Rate is a required field'
   })
 });
@@ -103,7 +104,7 @@ const AddMember = ({ itemId, functionValue }) => {
     register,
     formState: { errors, isDirty }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
       member: '',

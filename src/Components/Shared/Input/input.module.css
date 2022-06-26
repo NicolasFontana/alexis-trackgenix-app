@@ -41,6 +41,9 @@
 
 .input:focus {
   outline: #373867 solid 0.5px;
+  border: 1px solid #373867;
+  background: none;
+  color: #373867;
 }
 
 .input[type=checkbox] {
@@ -63,8 +66,8 @@
   color: #F33413;
 }
 
-.inputError:focus {
-  outline: #F33413 solid 0.5px;
+.input:focus ~ p {
+  visibility: hidden;
 }
 
 .error {
@@ -73,7 +76,7 @@
   text-align: justify;
   font-weight: 500;
   font-size: 12px;
-  margin: 3px 0 0;
+  margin: 3px 0 10px;
 }
 
 .noselect {
