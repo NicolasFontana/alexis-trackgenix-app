@@ -17,6 +17,7 @@ const App = () => {
   const dispatch = useDispatch();
   const admins = useSelector((state) => state.admins.list);
   const isLoading = useSelector((state) => state.admins.isLoading);
+
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
@@ -24,9 +25,34 @@ const App = () => {
   const [response, setResponse] = useState('');
   const [idDelete, setIdDelete] = useState();
 
+  let modalEdit;
+  let modalAdd;
+  let modalDelete;
+
   useEffect(() => {
     dispatch(getAdmins());
   }, []);
+
+  const handleConfirm = () => {
+    dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
+      setShowModalFormDelete(false);
+      setShowSuccessModal(true);
+    });
+  };
+
+  const openConfirmModal = (id) => {
+    setIdDelete(id);
+    setShowModalFormDelete(true);
+  };
+
+  const openAddModal = () => {
+    setShowModalFormAdd(true);
+  };
+
+  const openEditModal = (id) => {
+    setIdDelete(id);
+    setShowModalFormEdit(true);
+  };
 
   const closeModalFormAdd = () => {
     setShowModalFormAdd(false);
@@ -36,7 +62,6 @@ const App = () => {
     setShowModalFormEdit(false);
   };
 
-  let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Admin">
@@ -48,7 +73,6 @@ const App = () => {
     );
   }
 
-  let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Admin">
@@ -57,7 +81,6 @@ const App = () => {
     );
   }
 
-  let modalDelete;
   if (showModalFormDelete) {
     modalDelete = (
       <ConfirmModal
@@ -65,13 +88,7 @@ const App = () => {
         handleClose={() => {
           setShowModalFormDelete(false);
         }}
-        confirmDelete={() => {
-          dispatch(delAdmin(idDelete, setResponse));
-          dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
-            setShowModalFormDelete(false);
-            setShowSuccessModal(true);
-          });
-        }}
+        confirmDelete={handleConfirm}
         title="Delete Admin"
         message="Are you sure you want to delete this admin?"
       />
@@ -93,23 +110,13 @@ const App = () => {
         data={admins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
         titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
-        delAction={(id) => {
-          setIdDelete(id);
-          setShowModalFormDelete(true);
-        }}
-        editAction={(id) => {
-          setIdDelete(id);
-          setShowModalFormEdit(true);
-        }}
+        delAction={openConfirmModal}
+        editAction={openEditModal}
       />
       {modalEdit}
       {modalAdd}
       {modalDelete}
-      <ButtonAdd
-        clickAction={() => {
-          setShowModalFormAdd(true);
-        }}
-      />
+      <ButtonAdd clickAction={openAddModal} />
       {isLoading ? <Preloader /> : null}
       <ErrorSuccessModal
         show={showSuccessModal}

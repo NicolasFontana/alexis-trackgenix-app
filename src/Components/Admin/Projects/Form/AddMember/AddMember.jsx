@@ -6,8 +6,9 @@ import { Select, Input, ButtonText, ErrorSuccessModal } from 'Components/Shared'
 import styles from './addMember.module.css';
 
 const AddMember = ({ itemId, functionValue }) => {
-  let edit;
-  let projectId = itemId;
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.list);
+
   let [projectMembers, setProjectMembers] = useState([]);
   const [member, setMember] = useState('');
   const [role, setRole] = useState('');
@@ -16,8 +17,8 @@ const AddMember = ({ itemId, functionValue }) => {
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees.list);
+  let edit;
+  let projectId = itemId;
 
   useEffect(() => {
     dispatch(getEmployees());

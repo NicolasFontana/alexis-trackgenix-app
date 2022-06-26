@@ -75,14 +75,6 @@ const Form = ({ closeModalForm }) => {
       />
       <ButtonText
         clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
-      >
-        Cancel
-      </ButtonText>
-      <ButtonText
-        clickAction={() => {
           onSubmit();
         }}
         label="Submit"

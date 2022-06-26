@@ -28,44 +28,48 @@ export const getAdmins = () => {
 };
 
 export const addAdmin = (newAdmin, setResponse) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(addAdminPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
-        method: 'POST',
-        body: newAdmin,
-        headers: {
-          'content-type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      if (data.error === false) {
-        dispatch(addAdminSucces(data.data));
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      method: 'POST',
+      body: newAdmin,
+      headers: {
+        'content-type': 'application/json'
       }
-      setResponse(data);
-    } catch (error) {
-      dispatch(addAdminError(error.toString()));
-    }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error === false) {
+          dispatch(addAdminSucces(response.data));
+        }
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(addAdminError(error.toString()));
+        setResponse(error);
+      });
   };
 };
 
-export const editAdmin = (idDelete, editedAdmin, setResponse) => {
-  return async (dispatch) => {
+export const editAdmin = (id, admin, setResponse) => {
+  return (dispatch) => {
     dispatch(editAdminPending());
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admins/${idDelete}`, {
-        method: 'PUT',
-        body: editedAdmin,
-        headers: {
-          'content-type': 'application/json'
-        }
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
+      method: 'PUT',
+      body: admin,
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(editAdminSucces(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(editAdminError(error.toString()));
+        setResponse(error);
       });
-      const data = await response.json();
-      dispatch(editAdminSucces(data.data));
-      setResponse(data);
-    } catch (error) {
-      dispatch(editAdminError(error.toString()));
-    }
   };
 };
 

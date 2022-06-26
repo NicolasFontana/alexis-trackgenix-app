@@ -32,10 +32,10 @@ export const postSuperAdmin = (newSuperAdmin, setResponse) => {
     dispatch(postSuperAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
       method: 'POST',
+      body: newSuperAdmin,
       headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(newSuperAdmin)
+        'content-type': 'application/json'
+      }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -46,6 +46,7 @@ export const postSuperAdmin = (newSuperAdmin, setResponse) => {
       })
       .catch((error) => {
         dispatch(postSuperAdminError(error.toString()));
+        setResponse(error);
       });
   };
 };
@@ -55,10 +56,10 @@ export const putSuperAdmin = (superAdminId, editedSuperAdmin, setResponse) => {
     dispatch(putSuperAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${superAdminId}`, {
       method: 'PUT',
+      body: editedSuperAdmin,
       headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(editedSuperAdmin)
+        'content-type': 'application/json'
+      }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -67,6 +68,7 @@ export const putSuperAdmin = (superAdminId, editedSuperAdmin, setResponse) => {
       })
       .catch((error) => {
         dispatch(putSuperAdminError(error.toString()));
+        setResponse(error);
       });
   };
 };

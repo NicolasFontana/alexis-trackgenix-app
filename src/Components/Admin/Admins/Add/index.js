@@ -6,6 +6,7 @@ import styles from './add.module.css';
 
 const AdminsAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
   const [adminInput, setadminInput] = useState({

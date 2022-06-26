@@ -1,19 +1,19 @@
 import {
+  getProjectsPending,
+  getProjectsSuccess,
+  getProjectsError,
   getProjectByIdPending,
   getProjectByIdSuccess,
   getProjectByIdError,
   updateProjectPending,
   updateProjectSuccess,
   updateProjectError,
-  getProjectsPending,
-  getProjectsSuccess,
-  getProjectsError,
-  addProjectError,
   addProjectPending,
   addProjectSuccess,
-  deleteProjectError,
+  addProjectError,
   deleteProjectPending,
-  deleteProjectSuccess
+  deleteProjectSuccess,
+  deleteProjectError
 } from './actions';
 
 export const getProjects = () => {

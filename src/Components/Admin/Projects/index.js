@@ -146,7 +146,7 @@ const Projects = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      {isLoading ? <Preloader /> : null}
+      {/* {isLoading ? <Preloader /> : null} */}
       <Table
         data={projects}
         headers={['name', 'description', 'startDate', 'endDate', 'clientName', 'active', 'members']}
