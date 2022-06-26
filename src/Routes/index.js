@@ -1,14 +1,21 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import styles from './routes.module.css';
+import { tokenListener } from 'helper/firebase';
+import PrivateRoute from 'Routes/PrivateRoute';
 import { Header, Footer, Preloader } from 'Components/Shared';
 import SideBarRoutes from './TemporarySidebar';
+import styles from './routes.module.css';
 
 const Home = lazy(() => import('Components/Home'));
-const AdminRoutes = lazy(() => import('./admin'));
-const EmployeeRoutes = lazy(() => import('./employee'));
+const AdminRoutes = lazy(() => import('Routes/admin'));
+const EmployeeRoutes = lazy(() => import('Routes/employee'));
+const AuthRoutes = lazy(() => import('Routes/auth'));
 
-function Routes() {
+const Routes = () => {
+  useEffect(() => {
+    tokenListener();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Header />
@@ -16,8 +23,9 @@ function Routes() {
         <Switch>
           <Suspense fallback={<Preloader />}>
             <Route path="/home" component={Home} />
-            <Route path="/admin" component={AdminRoutes} />
-            <Route path="/employee" component={EmployeeRoutes} />
+            <Route path="/admin" role="ADMIN" component={AdminRoutes} />
+            <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
+            <Route path="/auth" component={AuthRoutes} />
             <Route exact path="/" />
           </Suspense>
         </Switch>
@@ -28,6 +36,6 @@ function Routes() {
       </div>
     </div>
   );
-}
+};
 
 export default Routes;
