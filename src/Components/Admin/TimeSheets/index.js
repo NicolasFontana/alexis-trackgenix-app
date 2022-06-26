@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTimesheets, deleteTimesheet } from 'redux/time-sheets/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
 import {
   Preloader,
   Table,
@@ -29,6 +31,8 @@ function TimeSheets() {
 
   useEffect(() => {
     dispatch(getAllTimesheets());
+    dispatch(getProjects());
+    dispatch(getTasks());
   }, []);
 
   const closeModalEdit = () => {
