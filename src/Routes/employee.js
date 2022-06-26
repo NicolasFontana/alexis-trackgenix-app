@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Employee/Home';
 import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
-import Profile from 'Components/Employee/EditProfile';
+import Profile from 'Components/Employee/Profile';
 
 const Employee = () => {
   const { url } = useRouteMatch();
