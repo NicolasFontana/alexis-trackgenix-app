@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './edit.module.css';
-import ButtonText from '../../../Shared/Buttons/ButtonText';
-import Input from '../../../Shared/Input';
-import SuccessModal from '../../../Shared/ErrorSuccessModal/index';
+import ButtonText from 'Components/Shared/Buttons/ButtonText';
+import Input from 'Components/Shared/Input';
+import SuccessModal from 'Components/Shared/ErrorSuccessModal/index';
 import { useDispatch } from 'react-redux';
-import { updateEmployee } from '../../../../redux/employees/thunks';
+import { updateEmployee } from 'redux/employees/thunks';
 
 const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const dispatch = useDispatch();
