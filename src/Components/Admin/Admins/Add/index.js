@@ -72,7 +72,7 @@ const AdminsAdd = ({ closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(adminSchema),
     defaultValues: {
       firstName: '',
