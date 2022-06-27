@@ -83,7 +83,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
     register,
     formState: { errors }
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(adminSchema),
     defaultValues: {
       firstName: edit.firstName,
