@@ -14,7 +14,7 @@ const SideBar = ({ routes }) => {
         <ul className={styles.ul}>
           {routes?.map((route) => (
             <li key={route.name} className={styles.li}>
-              <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C', fontWeight: 700 }}>
+              <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C' }}>
                 {route.icon}
                 {route.name}
               </NavLink>
