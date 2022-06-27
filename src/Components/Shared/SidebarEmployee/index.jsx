@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
 const SideBar = ({ routes }) => {
@@ -14,10 +14,10 @@ const SideBar = ({ routes }) => {
         <ul className={styles.ul}>
           {routes?.map((route) => (
             <li key={route.name} className={styles.li}>
-              <Link to={route.path}>
+              <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C', fontWeight: 700 }}>
                 {route.icon}
                 {route.name}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>
