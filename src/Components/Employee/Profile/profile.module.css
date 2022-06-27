@@ -51,9 +51,9 @@
 .rowText {
   margin-block-start: auto;
   font-size: 16px;
-  border: 1px solid #373867;
+  /* border: 1px solid #373867;
   border-radius: 5px;
-  padding: 7px;
+  padding: 7px; */
 }
 
 .buttonContainer {
