@@ -27,24 +27,6 @@ export const getAllTimesheets = () => {
   };
 };
 
-export const deleteTimesheet = (id, setResponse) => {
-  return (dispatch) => {
-    dispatch(deleteTimesheetPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch(deleteTimesheetSuccess(response.data));
-        setResponse(response);
-      })
-      .catch((error) => {
-        dispatch(deleteTimesheetError(error.toString()));
-        setResponse(error);
-      });
-  };
-};
-
 export const createTimesheet = (projectId, task, approved, setMessage) => {
   return (dispatch) => {
     dispatch(createTimesheetPending());
@@ -91,10 +73,30 @@ export const putTimesheet = (userInput, id, setMessage) => {
       .then((response) => {
         dispatch(putTimesheetSuccess(response.data));
         setMessage(response);
+        console.log('termino el put');
       })
       .catch((error) => {
         dispatch(putTimesheetError(error.toString()));
         setMessage(error);
+        console.log('termino el error');
+      });
+  };
+};
+
+export const deleteTimesheet = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(deleteTimesheetPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteTimesheetSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(deleteTimesheetError(error.toString()));
+        setResponse(error);
       });
   };
 };

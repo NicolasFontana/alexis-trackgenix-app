@@ -1,42 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createTimesheet } from 'redux/time-sheets/thunks';
+import { getTasks } from 'redux/tasks/thunks';
+import { getProjects } from 'redux/projects/thunks';
 import { Input, Select, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 import styles from './form.module.css';
 
 const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-  const [listTask, setListTask] = useState([]);
-  const [listProject, setListProject] = useState([]);
+  const projects = useSelector((state) => state.projects.list);
+  const tasks = useSelector((state) => state.tasks.list);
+
   const [task, setTask] = useState('');
   const [projectId, setProjectId] = useState('');
   const [approved, setApproved] = useState(false);
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
-  const fetchTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      setListTask(...listTask, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchProject = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const data = await response.json();
-      setListProject(...listProject, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchTask();
-    fetchProject();
+    dispatch(getTasks());
+    dispatch(getProjects());
   }, []);
 
   const onSubmit = () => {
@@ -65,7 +48,7 @@ const FormAdd = ({ closeModalForm }) => {
         value={projectId}
         onChange={onChangeProject}
         title="Choose project"
-        data={listProject.map((project) => ({
+        data={projects.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
@@ -77,7 +60,7 @@ const FormAdd = ({ closeModalForm }) => {
         value={task}
         onChange={handleSelectedTask}
         title="Choose task"
-        data={listTask.map((task) => ({
+        data={tasks.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}

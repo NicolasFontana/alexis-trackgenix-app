@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { putTimesheet } from 'redux/time-sheets/thunks';
+import { getTasks } from 'redux/tasks/thunks';
+import { getProjects } from 'redux/projects/thunks';
 import { Select, ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import styles from './form.module.css';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
-  const [listTask, setListTask] = useState([]);
-  const [listProject, setListProject] = useState([]);
+  const projects = useSelector((state) => state.projects.list);
+  const tasks = useSelector((state) => state.tasks.list);
+
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [userInput, setUserInput] = useState({
@@ -16,34 +19,17 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
     approved: true
   });
 
-  const fetchTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`);
-      const data = await response.json();
-      setListTask(...listTask, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchProject = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/projects`);
-      const data = await response.json();
-      setListProject(...listProject, data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchTask();
-    fetchProject();
+    dispatch(getTasks());
+    dispatch(getProjects());
   }, []);
 
   const onSubmit = () => {
-    dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
-    setShowMessageModal(true);
+    dispatch(putTimesheet(userInput, timesheetItem._id, (response) => setMessage(response))).then(
+      () => {
+        setShowMessageModal(true);
+      }
+    );
   };
 
   const onChange = (e) => {
@@ -66,7 +52,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         value={userInput.projectId}
         onChange={onChange}
         title="Choose project"
-        data={listProject.map((project) => ({
+        data={projects.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
@@ -78,7 +64,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         value={userInput.task}
         onChange={onChange}
         title="Choose task"
-        data={listTask.map((task) => ({
+        data={tasks.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}
