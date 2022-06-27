@@ -113,7 +113,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   });
 
   return (
-    <div className={styles.container}>
+    <div>
       <form className={styles.formBody} onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="First Name"
@@ -187,10 +187,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           register={register}
           error={errors.dateBirth?.message}
         />
-        <div className={styles.buttonBox}>
-          <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-          <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
-        </div>
         <ErrorSuccessModal
           show={showSuccessModal}
           closeModal={() => {
@@ -200,6 +196,10 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           successResponse={response}
         />
       </form>
+      <div className={styles.buttonBox}>
+        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
+      </div>
     </div>
   );
 };
