@@ -53,7 +53,7 @@
     text-align: justify;
     font-weight: 500;
     font-size: 12px;
-    margin: 3px 0 0;
+    margin: 3px 0 10px;
 }
 
 .noselect {
@@ -63,4 +63,4 @@
     -moz-user-select: none !important;
     -ms-user-select: none !important;
     user-select: none !important;
-  }
+}
