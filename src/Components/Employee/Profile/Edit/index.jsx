@@ -71,7 +71,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const [response, setResponse] = useState('');
 
   const onSubmit = (data) => {
-    console.log('Submit');
     if (
       data.firstName === employeeEdit.firstName &&
       data.lastName === employeeEdit.lastName &&
