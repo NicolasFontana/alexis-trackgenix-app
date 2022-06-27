@@ -28,7 +28,7 @@ const EmployeeProfile = () => {
   let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
-      <ModalForm isOpen={showModalFormEdit} handleClose={editClose} title="Edit Employee">
+      <ModalForm isOpen={showModalFormEdit} handleClose={editClose} title="Edit Personal Data">
         <FormEdit employeeEdit={employee} closeModalForm={editClose} />
       </ModalForm>
     );
@@ -51,8 +51,12 @@ const EmployeeProfile = () => {
       </div>
       <div className={styles.data}>
         <div className={styles.row}>
-          <h3 className={styles.rowTitle}>Name:</h3>
-          <p className={styles.rowText}>{`${employee?.firstName} ${employee?.lastName}`}</p>
+          <h3 className={styles.rowTitle}>First Name:</h3>
+          <p className={styles.rowText}>{`${employee?.firstName}`}</p>
+        </div>
+        <div className={styles.row}>
+          <h3 className={styles.rowTitle}>Last Name:</h3>
+          <p className={styles.rowText}>{`${employee?.lastName}`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Phone:</h3>
