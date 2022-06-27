@@ -42,20 +42,22 @@
   align-items: center;
   width: 35%;
   border-bottom: 1px solid #76a068;
+  margin: 5px;
 }
 
 .data .row:last-child {
-  border-bottom: none;
+  margin-bottom: 40px;
 }
 
 .rowTitle {
-  /* margin-block-end: auto; */
+  margin-block-end: auto;
   font-size: 16px;
 }
 
 .rowText {
   /* margin-block-start: auto; */
   font-size: 16px;
+  margin-block-end: 0px;
   /* border: 1px solid #373867;
   border-radius: 5px;
   padding: 7px; */
