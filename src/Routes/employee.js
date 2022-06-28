@@ -4,6 +4,7 @@ import Home from 'Components/Employee/Home';
 import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
 import Layout from 'Components/LayoutSideBar';
+import Profile from 'Components/Employee/Profile';
 import { faClock, faFolderClosed, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './routes.module.css';
@@ -26,7 +27,8 @@ const Employee = () => {
         <Switch>
           <Route path={`${url}/time-sheet`} component={Timesheet} />
           <Route path={`${url}/projects`} component={Projects} />
-          <Route exac path={`${url}/`} component={Home} />
+          <Route path={`${url}/profile`} component={Profile} />
+          <Route exact path={`${url}/`} component={Home} />
         </Switch>
       </div>
     </Layout>

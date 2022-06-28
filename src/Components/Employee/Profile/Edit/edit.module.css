@@ -1,0 +1,18 @@
+.formBody {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.formBody > div {
+  width: 45%;
+}
+
+  .buttonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: flex-end;
+  }
