@@ -25,7 +25,7 @@ const Employees = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+  }, [showModalFormAdd === false, showModalFormDelete === false, showModalFormEdit === false]);
 
   const closeModalFormAdd = () => {
     setShowModalFormAdd(false);

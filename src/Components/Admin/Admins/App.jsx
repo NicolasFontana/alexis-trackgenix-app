@@ -31,7 +31,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getAdmins());
-  }, []);
+  }, [showModalFormAdd === false, showModalFormEdit === false, showModalFormDelete === false]);
 
   const handleConfirm = () => {
     dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {

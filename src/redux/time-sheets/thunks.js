@@ -43,14 +43,15 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (!response.error) {
-          dispatch(createTimesheetSuccess(response.data));
+        if (response.error) {
+          throw response.error;
         }
+        dispatch(createTimesheetSuccess(response.data));
         setMessage(response);
       })
       .catch((error) => {
-        dispatch(createTimesheetError(error.toString()));
-        setMessage(error);
+        dispatch(createTimesheetError(error));
+        setMessage(error.toString());
       });
   };
 };
@@ -71,7 +72,7 @@ export const putTimesheet = (userInput, id, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(putTimesheetSuccess(response.data));
+        dispatch(putTimesheetSuccess(id));
         setMessage(response);
       })
       .catch((error) => {

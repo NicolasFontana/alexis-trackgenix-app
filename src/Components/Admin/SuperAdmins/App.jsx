@@ -31,7 +31,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getSuperAdmins());
-  }, []);
+  }, [showModalFormAdd === false, showModalFormDelete === false, showModalFormEdit === false]);
 
   const handleConfirm = () => {
     dispatch(deleteSuperAdmin(superAdminId, (response) => setMessage(response))).then(() => {

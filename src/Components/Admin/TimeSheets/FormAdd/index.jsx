@@ -17,27 +17,43 @@ const FormAdd = ({ closeModalForm }) => {
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
 
+  let changed = false;
+
   useEffect(() => {
     dispatch(getTasks());
     dispatch(getProjects());
   }, []);
 
   const onSubmit = () => {
-    dispatch(createTimesheet(projectId, task, approved, setMessage)).then(() => {
-      setShowMessageModal(true);
-    });
+    const message = 'Error, please make a change';
+    if (changed) {
+      dispatch(createTimesheet(projectId, task, approved, setMessage)).then(() => {
+        setShowMessageModal(true);
+      });
+    }
+    setMessage(message);
+    setShowMessageModal(true);
   };
 
   const onChangeProject = (e) => {
     setProjectId(e.target.value);
+    if (!changed) {
+      changed = true;
+    }
   };
 
   const handleSelectedTask = (e) => {
     setTask(e.target.value);
+    if (!changed) {
+      changed = true;
+    }
   };
 
   const onChangeApproved = (e) => {
     setApproved(e.target.checked);
+    if (!changed) {
+      changed = true;
+    }
   };
 
   return (

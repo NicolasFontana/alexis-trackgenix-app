@@ -32,7 +32,7 @@ function TimeSheets() {
 
   useEffect(() => {
     dispatch(getAllTimesheets());
-  }, [showSuccessModal === false, showModalAdd === false, showModalDelete === false]);
+  }, [showModalAdd === false, showModalDelete === false, showModalEdit === false]);
 
   const closeModalEdit = () => {
     setShowModalEdit(false);
