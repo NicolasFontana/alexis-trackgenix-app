@@ -8,7 +8,7 @@ function Layout(props) {
   return (
     <div className={styles.container}>
       <Header />
-      {props.children}
+      <div className={styles.currentScreen}>{props.children}</div>
       <SideBar routes={routes} />
       <Footer />
     </div>

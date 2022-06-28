@@ -7,7 +7,6 @@ import Layout from 'Components/LayoutSideBar';
 import Profile from 'Components/Employee/Profile';
 import { faClock, faFolderClosed, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './routes.module.css';
 
 const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
 const projects = <FontAwesomeIcon icon={faFolderClosed}></FontAwesomeIcon>;
@@ -23,14 +22,12 @@ const Employee = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={employeesRoutes}>
-      <div className={styles.currentScreen}>
-        <Switch>
-          <Route path={`${url}/time-sheet`} component={Timesheet} />
-          <Route path={`${url}/projects`} component={Projects} />
-          <Route path={`${url}/profile`} component={Profile} />
-          <Route exact path={`${url}/`} component={Home} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path={`${url}/time-sheet`} component={Timesheet} />
+        <Route path={`${url}/projects`} component={Projects} />
+        <Route path={`${url}/profile`} component={Profile} />
+        <Route exact path={`${url}/`} component={Home} />
+      </Switch>
     </Layout>
   );
 };

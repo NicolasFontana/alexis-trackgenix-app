@@ -1,10 +1,17 @@
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import Login from 'Components/Auth/Login';
 import Layout from 'Components/LayoutSideBar';
-// import NotAllowed from 'Components/Auth/NotAllowed';
+import Login from 'Components/Auth/Login';
 import SignUp from 'Components/Auth/SignUp';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const authRoutes = [{ name: 'Log In', path: '/auth/login' }];
+const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
+
+const authRoutes = [
+  { icon: home, name: 'Home', path: '/' },
+  { name: 'Log In', path: '/auth/login' },
+  { name: 'Sign Up', path: '/auth' }
+];
 
 const AuthRoutes = () => {
   const { url } = useRouteMatch();
@@ -13,7 +20,6 @@ const AuthRoutes = () => {
       <Switch>
         <Route path={`${url}/login`} component={Login} />
         <Route path={`${url}/signup`} component={SignUp} />
-        {/* <Route path={`${url}/notAllowed`} component={NotAllowed} /> */}
         <Redirect to={`${url}/login`} />
       </Switch>
     </Layout>
