@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
 import Layout from 'Components/LayoutSideBar';
 import Admins from 'Components/Admin/Admins';
@@ -47,6 +47,7 @@ const Admin = () => {
           <Route path={`${url}/time-sheets`} component={Timesheets} />
           <Route path={`${url}/tasks`} component={Tasks} />
           <Route exact path={`${url}/`} component={Home} />
+          <Redirect exact to={`${url}/`} />
         </Switch>
       </div>
     </Layout>

@@ -7,8 +7,9 @@ import FormEdit from './Edit';
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
-  const employee = useSelector((state) => state.employees.list).find(
-    (employee) => employee._id === '62996ab1b89dc4b653576647'
+  const employeeId = useSelector((state) => state.auth.user?._id);
+  const employee = useSelector((state) => state.employees.list).filter(
+    (employee) => employee._id === employeeId
   );
   const isLoading = useSelector((state) => state.employees.isLoading);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);

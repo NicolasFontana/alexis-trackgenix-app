@@ -8,6 +8,7 @@ export const login = (credentials) => {
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(async (response) => {
+        console.log(response);
         const token = await response.user.getIdToken();
         const {
           claims: { role }

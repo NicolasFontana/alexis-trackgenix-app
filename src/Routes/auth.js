@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Login from 'Components/Auth/Login';
-import Layout from 'Components/Layout';
+import Layout from 'Components/LayoutSideBar';
 // import NotAllowed from 'Components/Auth/NotAllowed';
 import SignUp from 'Components/Auth/SignUp';
 

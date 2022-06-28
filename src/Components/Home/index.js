@@ -19,6 +19,16 @@ function Home() {
                 Employee
               </Link>
             </button>
+            <button className={styles.linkButton}>
+              <Link to="auth/login" className={styles.link}>
+                Login
+              </Link>
+            </button>
+            <button className={styles.linkButton}>
+              <Link to="" className={styles.link}>
+                Sign up
+              </Link>
+            </button>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { tokenListener } from 'helper/firebase';
-import PrivateRoute from 'Routes/PrivateRoute';
+// import PrivateRoute from 'Routes/PrivateRoute';
 import { Preloader } from 'Components/Shared';
 
 const Home = lazy(() => import('./home'));
@@ -19,9 +19,11 @@ const Routes = () => {
       <Suspense fallback={<Preloader />}>
         <Route path="/home" component={Home} />
         <Route path="/admin" role="ADMIN" component={AdminRoutes} />
-        <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
+        <Route path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
         <Route path="/auth" component={AuthRoutes} />
-        <Route exact path="/" />
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
       </Suspense>
     </Switch>
   );
