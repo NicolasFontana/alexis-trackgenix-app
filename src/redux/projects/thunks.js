@@ -88,12 +88,10 @@ export const updateProject = (id, body, setAlertMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('entro al then');
-        dispatch(updateProjectSuccess());
+        dispatch(updateProjectSuccess(id));
         setAlertMessage(response);
       })
       .catch((error) => {
-        console.log('entro al catch');
         dispatch(updateProjectError(error.toString()));
         setAlertMessage(error);
       });

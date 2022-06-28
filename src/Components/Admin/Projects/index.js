@@ -19,7 +19,7 @@ const Projects = () => {
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
 
-  let [value, setValue] = useState(false); // PREGUNTAR
+  let [value, setValue] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [idToEdit, setIdToEdit] = useState();
   const [showConfirmModal, setConfirmModal] = useState(false);

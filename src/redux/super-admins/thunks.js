@@ -73,7 +73,7 @@ export const putSuperAdmin = (superAdminId, editedSuperAdmin, setResponse) => {
   };
 };
 
-export const deleteSuperAdmin = (id) => {
+export const deleteSuperAdmin = (id, setMessage) => {
   return (dispatch) => {
     dispatch(deleteSuperAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
@@ -82,9 +82,11 @@ export const deleteSuperAdmin = (id) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(deleteSuperAdminSuccess(response.data));
+        setMessage(response);
       })
       .catch((error) => {
         dispatch(deleteSuperAdminError(error.toString()));
+        setMessage(error);
       });
   };
 };
