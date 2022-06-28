@@ -92,7 +92,24 @@ const Form = ({ closeModalForm, edit, item }) => {
         setResponse({ message: "There haven't been any changes", data: {}, error: true });
         setShowSuccessModal(true);
       } else {
-        dispatch(updateEmployee(data, item._id, setResponse)).then(() => {
+        let body = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          email: data.email,
+          password: data.password,
+          active: data.active,
+          isProjectManager: data.isProjectManager,
+          projects:
+            data.projects.length === 0
+              ? []
+              : data.projects.toString().replace(/\s+/g, '').split(','),
+          timeSheets:
+            data.timeSheets.length === 0
+              ? []
+              : data.timeSheets.toString().replace(/\s+/g, '').split(',')
+        });
+        dispatch(updateEmployee(body, item._id, setResponse)).then(() => {
           setShowSuccessModal(true);
         });
       }
