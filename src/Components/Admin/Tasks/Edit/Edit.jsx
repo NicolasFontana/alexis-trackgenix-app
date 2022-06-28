@@ -83,12 +83,7 @@ const Edit = ({ task, closeModalForm }) => {
         data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
         required={true}
       />
-      <ButtonText clickAction={closeModalForm} label="Cancel">
-        Cancel
-      </ButtonText>
-      <ButtonText clickAction={onSubmit} label="Submit">
-        Submit
-      </ButtonText>
+      <ButtonText clickAction={onSubmit} label="Submit"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {

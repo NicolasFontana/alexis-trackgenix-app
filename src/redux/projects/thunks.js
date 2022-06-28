@@ -45,52 +45,6 @@ export const getProjectById = (id, setUserInput) => {
   };
 };
 
-export const deleteProject = (_id, setMessage) => {
-  return (dispatch) => {
-    dispatch(deleteProjectPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch(deleteProjectSuccess(_id));
-        setMessage(response);
-      })
-      .catch((error) => {
-        dispatch(deleteProjectError(error.toString()));
-      });
-  };
-};
-
-export const updateProject = (id, body, setAlertMessage) => {
-  return async (dispatch) => {
-    dispatch(updateProjectPending());
-    let url = `${process.env.REACT_APP_API_URL}/api/projects/${id}`;
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    };
-    return fetch(url, options)
-      .then((response) => {
-        if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
-          return response.json();
-        }
-        return response.json();
-      })
-      .then((response) => {
-        dispatch(updateProjectSuccess());
-        setAlertMessage(response);
-      })
-      .catch((error) => {
-        dispatch(updateProjectError(error.toString()));
-        setAlertMessage(error);
-      });
-  };
-};
-
 export const addProject = (newProject, setMessage) => {
   return (dispatch) => {
     dispatch(addProjectPending());
@@ -115,10 +69,50 @@ export const addProject = (newProject, setMessage) => {
         }
         setMessage(response);
       })
-
       .catch((error) => {
         dispatch(addProjectError(error.toString()));
         setMessage(error);
+      });
+  };
+};
+
+export const updateProject = (id, body, setAlertMessage) => {
+  return async (dispatch) => {
+    dispatch(updateProjectPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/projects/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('entro al then');
+        dispatch(updateProjectSuccess());
+        setAlertMessage(response);
+      })
+      .catch((error) => {
+        console.log('entro al catch');
+        dispatch(updateProjectError(error.toString()));
+        setAlertMessage(error);
+      });
+  };
+};
+
+export const deleteProject = (_id, setMessage) => {
+  return (dispatch) => {
+    dispatch(deleteProjectPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/projects/${_id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteProjectSuccess(_id));
+        setMessage(response);
+      })
+      .catch((error) => {
+        dispatch(deleteProjectError(error.toString()));
       });
   };
 };

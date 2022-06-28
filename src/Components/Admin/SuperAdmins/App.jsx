@@ -90,6 +90,7 @@ const App = () => {
       {modalAdd}
       {modalEdit}
       {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <Table
         data={superAdmins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}

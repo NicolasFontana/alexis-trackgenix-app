@@ -62,6 +62,10 @@ const App = () => {
     setShowModalFormEdit(false);
   };
 
+  const closeErrorSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
+
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Admin">
@@ -106,6 +110,10 @@ const App = () => {
   ) : (
     <div className={styles.containerApp}>
       <h2 className={styles.title}>Admins</h2>
+      {modalEdit}
+      {modalAdd}
+      {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <Table
         data={admins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
@@ -113,19 +121,12 @@ const App = () => {
         delAction={openConfirmModal}
         editAction={openEditModal}
       />
-      {modalEdit}
-      {modalAdd}
-      {modalDelete}
       <ButtonAdd clickAction={openAddModal} />
       {isLoading ? <Preloader /> : null}
       <ErrorSuccessModal
         show={showSuccessModal}
-        closeModal={() => {
-          setShowSuccessModal(false);
-        }}
-        closeModalForm={() => {
-          setShowSuccessModal(false);
-        }}
+        closeModal={closeErrorSuccessModal}
+        closeModalForm={closeErrorSuccessModal}
         successResponse={response}
       />
     </div>

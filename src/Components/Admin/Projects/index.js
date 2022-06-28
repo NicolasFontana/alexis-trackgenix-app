@@ -15,21 +15,34 @@ import AddForm from './Addform/addForm';
 import styles from './projects.module.css';
 
 const Projects = () => {
-  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idToEdit, setIdToEdit] = useState();
-  let [value, setValue] = useState(false);
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
+
+  let [value, setValue] = useState(false); // PREGUNTAR
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [idToEdit, setIdToEdit] = useState();
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
   const [message, setMessage] = useState('');
 
-  const closeModalFormEdit = () => {
-    setShowModalFormEdit(false);
+  let modalEdit;
+  let modalDelete;
+  let modalAdd;
+  let modalErrorSuccess;
+
+  useEffect(() => {
+    dispatch(getProjects());
     setValue(false);
+  }, []);
+
+  const deleteItem = () => {
+    dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
+      closeConfirmModal();
+      setErrorSuccessModal(true);
+    });
   };
 
   const openModalFormEdit = (id) => {
@@ -37,8 +50,17 @@ const Projects = () => {
     setShowModalFormEdit(true);
   };
 
+  const closeModalFormEdit = () => {
+    setShowModalFormEdit(false);
+    setValue(false);
+  };
+
   const openModalAdd = () => {
     setModalAdd(true);
+  };
+
+  const closeModalAdd = () => {
+    setModalAdd(false);
   };
 
   const openConfirmModal = (_id) => {
@@ -52,24 +74,33 @@ const Projects = () => {
     setModalAdd(false);
   };
 
-  const closeModalAdd = () => {
-    setModalAdd(false);
-  };
-
   const closeErrorSuccessModal = () => {
     setErrorSuccessModal(false);
   };
-
-  useEffect(() => {
-    dispatch(getProjects());
-    setValue(false);
-  }, []);
 
   const functionValue = (value) => {
     setValue(value);
   };
 
-  let modalEdit;
+  if (showConfirmModal) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        handleClose={closeConfirmModal}
+        confirmDelete={deleteItem}
+        title="Delete Project"
+        message="Are you sure you want to delete this project?"
+      />
+    );
+  }
+
+  if (showModalAdd) {
+    modalAdd = (
+      <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
+        <AddForm closeModalForm={closeModalAdd} />
+      </ModalForm>
+    );
+  }
 
   if (showModalFormEdit) {
     modalEdit = (
@@ -89,37 +120,6 @@ const Projects = () => {
             functionValue={functionValue}
           />
         )}
-      </ModalForm>
-    );
-  }
-
-  const deleteItem = () => {
-    dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
-      closeConfirmModal();
-      setErrorSuccessModal(true);
-    });
-  };
-
-  let modalDelete;
-  let modalAdd;
-  let modalErrorSuccess;
-
-  if (showConfirmModal) {
-    modalDelete = (
-      <ConfirmModal
-        isOpen={showConfirmModal}
-        handleClose={closeConfirmModal}
-        confirmDelete={deleteItem}
-        title="Delete Project"
-        message="Are you sure you want to delete this project?"
-      />
-    );
-  }
-
-  if (showModalAdd) {
-    modalAdd = (
-      <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
-        <AddForm closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -146,7 +146,7 @@ const Projects = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      {/* {isLoading ? <Preloader /> : null} */}
+      {isLoading ? <Preloader /> : null}
       <Table
         data={projects}
         headers={['name', 'description', 'startDate', 'endDate', 'clientName', 'active', 'members']}

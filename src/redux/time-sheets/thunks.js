@@ -73,12 +73,10 @@ export const putTimesheet = (userInput, id, setMessage) => {
       .then((response) => {
         dispatch(putTimesheetSuccess(response.data));
         setMessage(response);
-        console.log('termino el put');
       })
       .catch((error) => {
         dispatch(putTimesheetError(error.toString()));
         setMessage(error);
-        console.log('termino el error');
       });
   };
 };

@@ -26,16 +26,17 @@ const initialState = {
 
 export const projectsReducer = (state = initialState, action) => {
   switch (action.type) {
+    //GET PROJECTS
+    case GET_PROJECTS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
     case GET_PROJECTS_SUCCESS:
       return {
         ...state,
         list: action.payload,
         isLoading: false
-      };
-    case GET_PROJECTS_PENDING:
-      return {
-        ...state,
-        isLoading: true
       };
     case GET_PROJECTS_ERROR:
       return {
@@ -43,23 +44,7 @@ export const projectsReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload
       };
-    case DELETE_PROJECT_SUCCESS:
-      return {
-        ...state,
-        list: state.list.filter((t) => t._id !== action.payload),
-        isLoading: false
-      };
-    case DELETE_PROJECT_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case DELETE_PROJECT_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload
-      };
+    //GET PROJECT BY ID
     case GET_PROJECT_BY_ID_PENDING:
       return {
         ...state,
@@ -77,6 +62,26 @@ export const projectsReducer = (state = initialState, action) => {
         error: action.payload,
         isLoading: false
       };
+    //ADD PROJECT
+    case ADD_PROJECT_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        isLoading: false
+      };
+    case ADD_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+    case ADD_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    //UPDATE PROJECT
     case UPDATE_PROJECT_PENDING:
       return {
         ...state,
@@ -99,19 +104,19 @@ export const projectsReducer = (state = initialState, action) => {
         error: action.payload,
         isLoading: false
       };
-    case ADD_PROJECT_SUCCESS:
+    //DELETE PROJECT
+    case DELETE_PROJECT_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: state.list.filter((item) => item._id !== action.payload),
         isLoading: false
       };
-    case ADD_PROJECT_PENDING:
+    case DELETE_PROJECT_PENDING:
       return {
         ...state,
-        isLoading: true,
-        error: false
+        isLoading: true
       };
-    case ADD_PROJECT_ERROR:
+    case DELETE_PROJECT_ERROR:
       return {
         ...state,
         isLoading: false,

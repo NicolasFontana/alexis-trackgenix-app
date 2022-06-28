@@ -78,9 +78,7 @@ const Form = ({ closeModalForm }) => {
           onSubmit();
         }}
         label="Submit"
-      >
-        Submit
-      </ButtonText>
+      ></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
