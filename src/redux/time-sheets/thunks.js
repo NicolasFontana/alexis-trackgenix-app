@@ -89,7 +89,7 @@ export const deleteTimesheet = (id, setResponse) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(deleteTimesheetSuccess(response.data));
+        dispatch(deleteTimesheetSuccess(id));
         setResponse(response);
       })
       .catch((error) => {
