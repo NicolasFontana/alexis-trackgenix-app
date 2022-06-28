@@ -1,9 +1,10 @@
 .maincontainer {
   display: flex;
+  width: 600px;
+  height: 400px;
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   color: #373867;
-  width: 571px;
 }
 
 .maincontainer .add {
@@ -25,7 +26,7 @@
 }
 
 .larger {
-  width: 45%;
+  width: 53%;
 }
 
 .buttons input {
