@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
-const SideBar = ({ titles, directions }) => {
+const SideBar = ({ routes }) => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.headerContainer}>
@@ -11,17 +11,16 @@ const SideBar = ({ titles, directions }) => {
         </Link>
       </div>
       <nav>
-        {titles.map((title, index) => {
-          return (
-            <ul key={title} className={styles.ul}>
-              <li>
-                <NavLink to={directions[index]} className={styles.li}>
-                  {title}
-                </NavLink>
-              </li>
-            </ul>
-          );
-        })}
+        <ul className={styles.ul}>
+          {routes?.map((route) => (
+            <li key={route.name} className={styles.li}>
+              <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C' }}>
+                {route.icon}
+                {route.name}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </nav>
     </aside>
   );

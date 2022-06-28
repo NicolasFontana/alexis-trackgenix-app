@@ -1,4 +1,4 @@
-import styles from 'Components/Home/home.module.css';
+import styles from './home.module.css';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,9 +18,11 @@ function Home() {
     dispatch(getAllTimesheets());
   }, []);
   return isLoading ? (
-    <Preloader>
-      <p>Loading Employee</p>
-    </Preloader>
+    <div className={styles.container}>
+      <Preloader>
+        <p>Loading Employee</p>
+      </Preloader>
+    </div>
   ) : (
     <section className={styles.container}>
       <h2>Employee Home</h2>

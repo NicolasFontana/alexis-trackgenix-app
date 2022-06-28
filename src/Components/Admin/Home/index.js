@@ -1,4 +1,4 @@
-import styles from 'Components/Home/home.module.css';
+import styles from 'Components/Employee/Home/home.module.css';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 function Home() {
