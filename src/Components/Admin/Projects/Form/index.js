@@ -1,12 +1,12 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
+import * as Joi from 'joi';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { getProjectById, updateProject } from 'redux/projects/thunks';
-import { ButtonText, Input, Textarea, ErrorSuccessModal } from 'Components/Shared';
 import styles from './form.module.css';
 import ListMembers from './ListMembers/ListMembers';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import * as Joi from 'joi';
 
 const schema = Joi.object({
   name: Joi.string()
@@ -120,13 +120,6 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               error={errors.clientName?.message}
             />
             <Input
-              label="Active"
-              name="active"
-              type="checkbox"
-              register={register}
-              error={errors.active?.message}
-            />
-            <Input
               label="Start Date"
               type="date"
               name="startDate"
@@ -139,6 +132,13 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               name="endDate"
               register={register}
               error={errors.endDate?.message}
+            />
+            <Input
+              label="Active"
+              name="active"
+              type="checkbox"
+              register={register}
+              error={errors.active?.message}
             />
           </div>
           <div className={styles.larger}>

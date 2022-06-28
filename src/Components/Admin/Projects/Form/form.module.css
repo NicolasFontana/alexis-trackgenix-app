@@ -6,29 +6,31 @@
   font-style: normal;
   color: #373867;
 }
-
+ 
 .maincontainer .add {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   color: #373867;
 }
-
+ 
 .formcontainer {
   display: flex;
 }
-
+ 
 .divcontainer {
-  width: 30%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-right: 30px;
 }
-
-.larger {
-  width: 53%;
+.input {
+  margin-bottom: 0px;
 }
-
+.larger {
+  width:40%;
+}
+ 
 .buttons input {
   display: block;
   margin: 15px auto;
@@ -40,8 +42,9 @@
   font-size: 16px;
   color: #373867;
   cursor: pointer;
+  align-items: center;
 }
-
+ 
 .container a {
   margin-top: 10px;
   font-weight: 500;
@@ -49,7 +52,7 @@
   opacity: 0.9;
   cursor: pointer;
 }
-
+ 
 .goBack {
   display: block;
   margin: 15px auto;
