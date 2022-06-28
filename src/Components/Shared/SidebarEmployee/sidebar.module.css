@@ -33,8 +33,36 @@
   margin-top: 20%;
   padding: 0;
   color: #ffffff;
+  list-style: none;
 }
-.li {
+
+.li a {
+  display: table-cell;
+  padding-top: 30px;
+  list-style: none;
   text-decoration: none;
   color: #ffffff;
+}
+
+.li a svg {
+  margin-right: 5px;
+}
+
+.li a {
+  font-size: 20px;
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+.li a * {
+  color: #ffffff;
+  margin-right: 2px;
+}
+
+.li a {
+  color: #ffffff;
+}
+
+.li a:hover {
+  color: #76a068;
 }

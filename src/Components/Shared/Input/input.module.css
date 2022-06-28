@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 78px;
 }
 
 .checkboxContainer {
@@ -24,12 +25,12 @@
 .input {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  margin: 5px 0 10px 0;
   padding: 4px 6px;
   height: 25px;
   border: 1px solid #373867;
   border-radius: 4px;
   color: #373867;
+  margin: 5px 0 3px;
 }
 
 .input::placeholder {
@@ -40,17 +41,42 @@
 
 .input:focus {
   outline: #373867 solid 0.5px;
+  border: 1px solid #373867;
+  background: none;
+  color: #373867;
 }
 
 .input[type=checkbox] {
-  margin-top: 9px;
+  margin-top: 1px;
   margin-left: 15px;
   cursor: pointer;
-  height: 15px;
 }
 
 .input[type=checkbox]:checked{
   accent-color:#34636E;
+}
+
+.input[type=checkbox]:focus {
+  outline: none;
+}
+
+.inputError {
+  border: solid 1px #f33413;
+  background: rgba(243, 52, 19, 0.19);
+  color: #F33413;
+}
+
+.input:focus ~ p {
+  visibility: hidden;
+}
+
+.error {
+  visibility: visible;
+  color: #F33413;
+  text-align: justify;
+  font-weight: 500;
+  font-size: 12px;
+  margin: 3px 0 10px;
 }
 
 .noselect {

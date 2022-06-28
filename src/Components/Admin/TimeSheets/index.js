@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTimesheets, deleteTimesheet } from 'redux/time-sheets/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
 import {
   Preloader,
   Table,
@@ -32,7 +34,9 @@ function TimeSheets() {
 
   useEffect(() => {
     dispatch(getAllTimesheets());
-  }, [showModalAdd === false, showModalDelete === false, showModalEdit === false]);
+    dispatch(getProjects());
+    dispatch(getTasks());
+  }, []);
 
   const closeModalEdit = () => {
     setShowModalEdit(false);
@@ -133,6 +137,10 @@ function TimeSheets() {
         editAction={(id) => {
           setTimeSheetId(id);
           setShowModalEdit(true);
+        }}
+        modifiers={{
+          startDate: (x) => x?.slice(0, 10),
+          approved: (x) => (x ? 'Yes' : 'No')
         }}
       />
       {loading ? <Preloader /> : null}

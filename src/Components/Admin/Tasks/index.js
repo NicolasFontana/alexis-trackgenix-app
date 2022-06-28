@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { delTask, getTasks } from 'redux/tasks/thunks';
 import {
-  Preloader,
-  Table,
-  ModalForm,
   ButtonAdd,
   ConfirmModal,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  ModalForm,
+  Preloader,
+  Table
 } from 'Components/Shared';
-import Form from './Form/Form';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { delTask, getTasks } from '../../../redux/tasks/thunks';
 import EditForm from './Edit/Edit';
+import Form from './Form/Form';
 import styles from './tasks.module.css';
 
 function Tasks() {
@@ -116,6 +116,9 @@ function Tasks() {
         titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
         delAction={openConfirmModal}
         editAction={openEditModal}
+        modifiers={{
+          startDate: (x) => x?.slice(0, 10)
+        }}
       />
       <ErrorSuccessModal
         show={showMessageModal}

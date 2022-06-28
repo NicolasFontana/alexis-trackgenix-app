@@ -8,6 +8,7 @@ import {
   Table,
   ModalForm,
   ButtonAdd,
+  Select,
   ConfirmModal,
   ErrorSuccessModal
 } from 'Components/Shared';
@@ -91,7 +92,6 @@ const Employees = () => {
       <Table
         data={employees}
         headers={[
-          '_id',
           'firstName',
           'lastName',
           'phone',
@@ -102,7 +102,6 @@ const Employees = () => {
           'timeSheets'
         ]}
         titles={[
-          'ID',
           'First Name',
           'Last Name',
           'Phone',
@@ -119,6 +118,20 @@ const Employees = () => {
         editAction={(id) => {
           setEmployeeId(id);
           setShowModalFormEdit(true);
+        }}
+        modifiers={{
+          active: (x) => (x ? 'Active' : 'Inactive'),
+          isProjectManager: (x) => (x ? 'Yes' : 'No'),
+          projects: (x) => (
+            <Select data={[...x.map((project) => project.name)]} disabled register={console.log} />
+          ),
+          timeSheets: (x) => (
+            <Select
+              data={[...x.map((timesheet) => timesheet._id)]}
+              disabled
+              register={console.log}
+            />
+          )
         }}
       />
       {modalEdit}

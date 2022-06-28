@@ -1,84 +1,140 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input, Select } from 'Components/Shared';
+import Joi from 'joi';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { addTask } from 'redux/tasks/thunks';
-import { ButtonText, Input, Select, ErrorSuccessModal } from 'Components/Shared';
+import { addTask } from '../../../../redux/tasks/thunks';
 import styles from './form.module.css';
+
+const taskSchema = Joi.object({
+  taskName: Joi.string().min(3).max(50).required().messages({
+    'string.min': 'Invalid task name, it must contain more than 3 characters',
+    'string.max': 'Invalid task name, it must not contain more than 50 characters',
+    'string.empty': 'Task name is a required field',
+    'string.pattern.base':
+      'Must contain only letters and words can only be separated by a single white space'
+  }),
+  startDate: Joi.date()
+    .min(1950 - 1 - 1)
+    .max('now')
+    .required()
+    .messages({
+      'date.base': 'Start date is a required field',
+      'date.min': 'Invalid start date',
+      'date.max': 'Invalid start date, it must not be over the current date'
+    }),
+  workedHours: Joi.string()
+    .regex(/^[0-9]*$/)
+    .min(1)
+    .max(3)
+    .required()
+    .messages({
+      'string.min': 'Invalid number, it must be positive',
+      'string.max': 'Invalid number, it exceeds the number of posible worked hours',
+      'string.pattern.base': 'Invalid, it must contain only interger numbers',
+      'string.empty': 'Worked hours is a required field'
+    }),
+  description: Joi.string().min(6).max(150).required().messages({
+    'string.min': 'Invalid description, it must contain more than 6 letters',
+    'string.max': 'Invalid description, it must not contain more than 150 letters',
+    'string.empty': 'Description is a required field'
+  }),
+  status: Joi.string()
+    .min(2)
+    .valid('To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled')
+    .required()
+    .messages({
+      'string.min': 'Invalid status, it must contain more than 2 letters',
+      'any.only':
+        'Invalid status, it must be one of the following: To do, In progress, Review, Blocked, Done, Cancelled',
+      'string.empty': 'Status is a required field'
+    })
+});
 
 const Form = ({ closeModalForm }) => {
   const dispatch = useDispatch();
-
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [message, setMessage] = useState('');
-  const [userInput, setUserInput] = useState({
-    taskName: '',
-    startDate: '',
-    workedHours: '',
-    description: '',
-    status: ''
-  });
 
-  const onChange = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
-  };
+  const onSubmit = (data) => {
+    let newTask = {
+      taskName: data.taskName,
+      startDate: data.startDate,
+      workedHours: data.workedHours,
+      description: data.description,
+      status: data.status
+    };
 
-  const onSubmit = () => {
-    dispatch(addTask(userInput, (response) => setMessage(response))).then(() => {
+    dispatch(addTask(newTask, setMessage)).then(() => {
       setShowMessageModal(true);
     });
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(taskSchema),
+    defaultValues: {
+      taskName: '',
+      startDate: '',
+      workedHours: '',
+      description: '',
+      status: ''
+    }
+  });
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
         label="Task Name"
         type="text"
         name="taskName"
         placeholder="Insert task name"
-        value={userInput.taskName}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.taskName?.message}
       />
       <Input
         label="Start Date"
         type="date"
         name="startDate"
-        value={userInput.startDate}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.startDate?.message}
       />
       <Input
         label="Worked Hours"
         type="text"
         name="workedHours"
         placeholder="Insert hours"
-        value={userInput.workedHours}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.workedHours?.message}
       />
       <Input
         label="Description"
         type="text"
         name="description"
         placeholder="Insert description"
-        value={userInput.description}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.description?.message}
       />
       <Select
         label="Status"
         name="status"
-        value={userInput.status}
-        onChange={onChange}
         title="Choose status"
         data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
-        required={true}
+        register={register}
+        error={errors.status?.message}
       />
       <ButtonText
         clickAction={() => {
-          onSubmit();
+          closeModalForm();
         }}
-        label="Submit"
+        label="Cancel"
       ></ButtonText>
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {

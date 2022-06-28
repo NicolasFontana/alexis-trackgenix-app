@@ -71,14 +71,5 @@
   flex-direction: row-reverse;
   justify-content: space-around;
   width: 70%;
-}
-
-.Button {
-  background-color: #76a068;
-  font-size: 16px;
-  border-radius: 5px;
-  padding: 10px 20px;
-  align-self: center;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
 }

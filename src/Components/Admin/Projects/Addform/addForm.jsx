@@ -3,32 +3,74 @@ import { useDispatch } from 'react-redux';
 import { addProject } from 'redux/projects/thunks';
 import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
 import styles from './add.form.module.css';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
+
+const schema = Joi.object({
+  name: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .required()
+    .messages({
+      'string.min': 'Project name must contain more than 3 letters',
+      'string.max': 'Project name must not contain more than 50 letters',
+      'string.pattern.base':
+        'Project name must contain only letters and start with a capital letter',
+      'string.empty': 'Name is a required field'
+    }),
+  description: Joi.string().min(4).required().messages({
+    'string.min': 'Description must contain more than 4 letters',
+    'string.empty': 'Description is a required field'
+  }),
+  startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
+  endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
+    'date.greater': 'End Date must be after the start date',
+    'date.base': 'End date is a required field'
+  }),
+  clientName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .required()
+    .messages({
+      'string.min': 'Client name must contain more than 3 letters',
+      'string.max': 'Client name must not contain more than 50 letters',
+      'string.pattern.base':
+        'Client name must contain only letters and start with a capital letter',
+      'string.empty': 'Client name is a required field'
+    }),
+  active: Joi.boolean().required()
+});
 
 const AddForm = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [message, setMessage] = useState('');
-  const [newProject, setNewProject] = useState({
-    name: '',
-    startDate: '',
-    endDate: '',
-    clientName: '',
-    active: true,
-    description: ''
-  });
 
-  const onSubmit = async () => {
-    dispatch(addProject(newProject, (message) => setMessage(message))).then(() => {
+  const onSubmit = (data) => {
+    dispatch(addProject(data, (message) => setMessage(message))).then(() => {
       setModalErrorSuccess(true);
     });
   };
 
-  const onChangeCheckBox = (e) => {
-    setNewProject({ ...newProject, active: e.target.checked });
-  };
-  const onChange = (e) => {
-    setNewProject({ ...newProject, [e.target.name]: e.target.value });
-  };
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema),
+    defaultValues: {
+      name: '',
+      startDate: '',
+      endDate: '',
+      clientName: '',
+      active: true,
+      description: ''
+    }
+  });
 
   return (
     <>
@@ -39,65 +81,48 @@ const AddForm = ({ closeModalForm }) => {
             type="text"
             name="name"
             placeholder="Insert project name"
-            value={newProject.name}
-            onChange={onChange}
-            required={true}
+            register={register}
+            error={errors.name?.message}
           />
           <Input
             label="Client"
             type="text"
             name="clientName"
             placeholder="Insert client name"
-            value={newProject.clientName}
-            onChange={onChange}
-            required={true}
+            register={register}
+            error={errors.clientName?.message}
           />
           <Input
             label="Start Date"
             type="date"
             name="startDate"
-            value={newProject.startDate.slice(0, 10)}
-            onChange={onChange}
-            required={true}
+            register={register}
+            error={errors.startDate?.message}
           />
           <Input
             label="End Date"
             type="date"
             name="endDate"
-            value={newProject.endDate.slice(0, 10)}
-            onChange={onChange}
-            required={true}
+            register={register}
+            error={errors.endDate?.message}
           />
-
           <Textarea
             label="Description"
             name="description"
-            value={newProject.description}
             placeholder="Add a description of the project"
-            onChange={onChange}
-            required={true}
+            register={register}
+            error={errors.description?.message}
           />
           <Input
             label="Active"
             name="active"
             type="checkbox"
-            checked={newProject.active}
-            onChange={onChangeCheckBox}
+            register={register}
+            error={errors.active?.message}
           />
         </form>
         <div className={styles.buttons}>
-          <ButtonText
-            clickAction={() => {
-              closeModalForm();
-            }}
-            label="Cancel"
-          ></ButtonText>
-          <ButtonText
-            clickAction={() => {
-              onSubmit();
-            }}
-            label="Create"
-          ></ButtonText>
+          <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
         </div>
         <ErrorSuccessModal
           show={showModalErrorSuccess}

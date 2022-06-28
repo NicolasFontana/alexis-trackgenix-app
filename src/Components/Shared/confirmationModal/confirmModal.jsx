@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './confirmModal.module.css';
 import { useEffect } from 'react';
+import { ButtonText } from 'Components/Shared';
 
 const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) => {
   if (!isOpen) {
@@ -22,12 +23,8 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
-          <button onClick={confirmDelete} className={styles.Button}>
-            Confirm
-          </button>
-          <button onClick={handleClose} className={styles.Button}>
-            Cancel
-          </button>
+          <ButtonText clickAction={confirmDelete} label={'Confirm'} />
+          <ButtonText clickAction={handleClose} label={'Close'} />
         </div>
       </div>
     </div>

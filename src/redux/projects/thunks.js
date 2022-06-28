@@ -55,10 +55,10 @@ export const addProject = (newProject, setMessage) => {
       },
       body: JSON.stringify({
         name: newProject.name,
-        startDate: newProject.startDate.slice(0, 10),
-        endDate: newProject.endDate.slice(0, 10),
+        startDate: newProject.startDate,
+        endDate: newProject.endDate,
         clientName: newProject.clientName,
-        active: newProject.active === 'Active' ? true : false,
+        active: newProject.active,
         description: newProject.description
       })
     })

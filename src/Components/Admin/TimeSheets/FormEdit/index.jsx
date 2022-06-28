@@ -1,98 +1,86 @@
-import { useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { putTimesheet } from 'redux/time-sheets/thunks';
-import { getTasks } from 'redux/tasks/thunks';
-import { getProjects } from 'redux/projects/thunks';
+import { useForm } from 'react-hook-form';
 import { Select, ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
+import { putTimesheet } from 'redux/time-sheets/thunks';
 import styles from './form.module.css';
 
 const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
+  const [message, setMessage] = useState('');
+  const [showMessageModal, setShowMessageModal] = useState(false);
   const projects = useSelector((state) => state.projects.list);
   const tasks = useSelector((state) => state.tasks.list);
 
-  const [message, setMessage] = useState('');
-  const [showMessageModal, setShowMessageModal] = useState(false);
-  const [userInput, setUserInput] = useState({
-    projectId: timesheetItem.projectId._id,
-    task: timesheetItem.Task[0].taskId._id,
-    approved: true
-  });
-
-  useEffect(() => {
-    dispatch(getTasks());
-    dispatch(getProjects());
-  }, []);
-
-  const onSubmit = () => {
-    dispatch(putTimesheet(userInput, timesheetItem._id, (response) => setMessage(response))).then(
-      () => {
-        setShowMessageModal(true);
-      }
-    );
-  };
-
-  const onChange = (e) => {
-    setUserInput({ ...userInput, [e.target.name]: e.target.value });
-  };
-
-  const onChangeApproved = (e) => {
-    setUserInput({ ...userInput, active: e.target.checked });
+  const onSubmit = (data) => {
+    let userInput = {
+      projectId: data.projectId,
+      task: data.task,
+      approved: data.approved
+    };
+    if (
+      userInput.projectId == timesheetItem.projectId._id &&
+      userInput.task == timesheetItem.Task[0].taskId._id &&
+      userInput.approved == timesheetItem.approved
+    ) {
+      setMessage({ message: "There haven't been any changes", data: {}, error: true });
+      setShowMessageModal(true);
+    } else {
+      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
+      setShowMessageModal(true);
+    }
   };
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      projectId: timesheetItem.projectId._id,
+      task: timesheetItem.Task[0].taskId._id,
+      approved: timesheetItem.approved
+    }
+  });
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Select
         label="Projects"
         name="projectId"
-        value={userInput.projectId}
-        onChange={onChange}
         title="Choose project"
         data={projects.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
-        required={true}
+        register={register}
+        error={errors.projectId?.message}
       />
       <Select
         label="Tasks"
         name="task"
-        value={userInput.task}
-        onChange={onChange}
         title="Choose task"
         data={tasks.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}
-        required={true}
+        register={register}
+        error={errors.task?.message}
       />
       <Input
         label="Approved"
         name="approved"
-        checked={userInput.active}
-        onChange={onChangeApproved}
         title="Approve"
         type="checkbox"
-        required={true}
+        register={register}
+        error={errors.approved?.message}
       />
-      <ButtonText
-        clickAction={() => {
-          closeModalEdit();
-        }}
-        label="Cancel"
-      >
-        Cancel
-      </ButtonText>
-      <ButtonText
-        clickAction={() => {
-          onSubmit();
-        }}
-        label="Edit"
-      />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit" />
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={closeMessageModal}

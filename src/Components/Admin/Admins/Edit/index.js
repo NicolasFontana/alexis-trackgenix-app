@@ -1,115 +1,144 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import styles from './edit.module.css';
-import ButtonText from 'Components/Shared/Buttons/ButtonText';
-import Input from 'Components/Shared/Input';
-import SuccessModal from 'Components/Shared/ErrorSuccessModal/index';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
+import Joi from 'joi';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { editAdmin } from 'redux/admins/thunks';
+import { editAdmin } from '../../../../redux/admins/thunks';
+import styles from './edit.module.css';
+
+const adminSchema = Joi.object({
+  firstName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[\p{L}\p{M}]*$/u)
+    .required()
+    .messages({
+      'string.min': 'Invalid name, it must contain more than 3 letters',
+      'string.max': 'Invalid name, it must not contain more than 50 letters',
+      'string.pattern.base': 'Invalid name, it must contain only letters',
+      'string.empty': 'First name is a required field'
+    }),
+  lastName: Joi.string()
+    .min(3)
+    .max(50)
+    .pattern(/^[\p{L}\p{M}]*$/u)
+    .required()
+    .messages({
+      'string.min': 'Invalid last name, it must contain more than 3 letters',
+      'string.max': 'Invalid last name, it must not contain more than 50 letters',
+      'string.pattern.base': 'Invalid last name, it must contain only letters',
+      'string.empty': 'Last name is a required field'
+    }),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'string.email': 'Invalid email format',
+      'string.empty': 'Email is a required field'
+    }),
+  password: Joi.string()
+    .min(8)
+    .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?!.*[^a-zA-Z0-9])/)
+    .required()
+    .messages({
+      'string.min': 'Invalid password, it must contain at least 8 characters',
+      'string.pattern.base': 'Invalid password, it must contain both letters and numbers',
+      'string.empty': 'Password is a required field'
+    }),
+  active: Joi.boolean().required()
+});
 
 const AdminsEdit = ({ edit, closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
-  const [adminInput, setadminInput] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    active: ''
-  });
 
-  useEffect(() => {
-    setadminInput({
-      firstName: edit.firstName,
-      lastName: edit.lastName,
-      email: edit.email,
-      password: edit.password,
-      active: edit.active
-    });
-  }, []);
-
-  const onChange = (event) => {
-    setadminInput({ ...adminInput, [event.target.name]: event.target.value });
-  };
-
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     let editedAdmin = JSON.stringify({
-      firstName: adminInput.firstName,
-      lastName: adminInput.lastName,
-      email: adminInput.email,
-      password: adminInput.password,
-      active: adminInput.active
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      active: data.active
     });
     if (
-      adminInput.firstName === edit.firstName &&
-      adminInput.lastName === edit.lastName &&
-      adminInput.email === edit.email &&
-      adminInput.password === edit.password &&
-      adminInput.active === edit.active
+      data.firstName === edit.firstName &&
+      data.lastName === edit.lastName &&
+      data.email === edit.email &&
+      data.password === edit.password &&
+      data.active === edit.active
     ) {
-      setResponse({ message: "There haven't been any changes", data: {}, error: true });
+      setResponse({ message: "There hasn't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(editAdmin(edit._id, editedAdmin, (response) => setResponse(response))).then(() => {
+      dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
     }
   };
 
-  const onChangeActive = (e) => {
-    setadminInput({ ...adminInput, active: e.target.checked });
-  };
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(adminSchema),
+    defaultValues: {
+      firstName: edit.firstName,
+      lastName: edit.lastName,
+      email: edit.email,
+      password: edit.password,
+      active: edit.active
+    }
+  });
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
         label="First Name"
         type="text"
         name="firstName"
         placeholder="Insert admin name"
-        value={adminInput.firstName}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.firstName?.message}
       />
       <Input
-        label="Last Name"
+        label="Admin Last Name"
         type="text"
         name="lastName"
         placeholder="Insert admin lastName"
-        value={adminInput.lastName}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.lastName?.message}
       />
       <Input
         label="Email"
         type="email"
         name="email"
         placeholder="Insert email"
-        value={adminInput.email}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.email?.message}
       />
       <Input
         label="Password"
         type="password"
         name="password"
         placeholder="Insert Password"
-        value={adminInput.password}
-        onChange={onChange}
-        required={true}
+        register={register}
+        error={errors.password?.message}
       />
       <Input
         label="Active"
         name="active"
         type="checkbox"
-        checked={adminInput.active}
-        onChange={onChangeActive}
+        register={register}
+        error={errors.active?.message}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={onSubmit} label="Edit"></ButtonText>
+        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
       </div>
-      <SuccessModal
+      <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
           setShowSuccessModal(false);
