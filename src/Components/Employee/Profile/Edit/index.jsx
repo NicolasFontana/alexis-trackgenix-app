@@ -70,6 +70,8 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
 
+  const id = employeeEdit._id;
+
   const onSubmit = (data) => {
     if (
       data.firstName === employeeEdit.firstName &&
@@ -80,12 +82,23 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       data.address === employeeEdit.address &&
       data.picture === employeeEdit.picture &&
       data.dni === employeeEdit.dni &&
-      data.dateBirth === employeeEdit.dateBirth
+      data.dateBirth.toString() == new Date(employeeEdit.dateBirth)
     ) {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(updateEmployee(data, employeeEdit._id, setResponse)).then(() => {
+      let body = JSON.stringify({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        email: data.email,
+        password: data.password,
+        address: data.address,
+        picture: data.picture,
+        dni: data.dni,
+        dateBirth: data.dateBirth
+      });
+      dispatch(updateEmployee(body, id, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
     }
@@ -107,7 +120,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       address: employeeEdit.address,
       picture: employeeEdit.picture,
       dni: employeeEdit.dni,
-      dateBirth: employeeEdit.dateBirth
+      dateBirth: employeeEdit.dateBirth.slice(0, 10)
     }
   });
 
@@ -186,6 +199,10 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           register={register}
           error={errors.dateBirth?.message}
         />
+      </form>
+      <div className={styles.buttonBox}>
+        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
         <ErrorSuccessModal
           show={showSuccessModal}
           closeModal={() => {
@@ -194,10 +211,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           closeModalForm={closeModalForm}
           successResponse={response}
         />
-      </form>
-      <div className={styles.buttonBox}>
-        <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
       </div>
     </div>
   );
