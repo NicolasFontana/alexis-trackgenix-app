@@ -19,6 +19,11 @@ function Home() {
                 Employee
               </Link>
             </button>
+            <button className={styles.linkButton}>
+              <Link to="auth" className={styles.link}>
+                SignUp
+              </Link>
+            </button>
           </div>
         </div>
       </section>
