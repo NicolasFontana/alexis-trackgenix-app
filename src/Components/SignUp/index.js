@@ -50,7 +50,9 @@ const schema = Joi.object({
     }),
   repeatPassword: Joi.string().equal(Joi.ref('password')).messages({
     'any.only': "Passwords don't match"
-  })
+  }),
+  active: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
+  isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' })
 });
 
 const Form = () => {
@@ -71,7 +73,9 @@ const Form = () => {
       phone: '',
       email: '',
       password: '',
-      repeatPassword: ''
+      repeatPassword: '',
+      active: true,
+      isProjectManager: false
     }
   });
 
