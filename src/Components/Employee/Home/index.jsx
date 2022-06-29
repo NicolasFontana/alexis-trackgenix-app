@@ -1,5 +1,5 @@
 import styles from './home.module.css';
-import { Link, useRouteMatch } from 'react-router-dom';
+// import { Link, useRouteMatch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from 'redux/employees/thunks';
@@ -10,7 +10,8 @@ import { Preloader } from 'Components/Shared';
 function Home() {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.timesheets.loading);
-  const { url } = useRouteMatch();
+  const user = useSelector((state) => state.auth.user.data);
+  // const { url } = useRouteMatch();
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -25,8 +26,10 @@ function Home() {
     </div>
   ) : (
     <section className={styles.container}>
-      <h2>Employee Home</h2>
-      <div className={styles.buttonsContainer}>
+      <h2>
+        Welcome {user?.firstName} {user?.lastName}
+      </h2>
+      {/* <div className={styles.buttonsContainer}>
         <button className={styles.linkButton}>
           <Link to="/home" className={styles.link}>
             Home
@@ -47,7 +50,7 @@ function Home() {
             Profile
           </Link>
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

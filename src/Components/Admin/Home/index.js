@@ -1,12 +1,17 @@
+import { useSelector } from 'react-redux';
 import styles from 'Components/Employee/Home/home.module.css';
-import { Link, useRouteMatch } from 'react-router-dom';
+// import { Link, useRouteMatch } from 'react-router-dom';
 
 function Home() {
-  const { url } = useRouteMatch();
+  const user = useSelector((state) => state.auth.user.data);
+  // const { url } = useRouteMatch();
   return (
     <section className={styles.container}>
-      <h2>Admin Home</h2>
-      <div className={styles.buttonsContainer}>
+      <h2>
+        {' '}
+        Welcome {user?.firstName} {user?.lastName}
+      </h2>
+      {/* <div className={styles.buttonsContainer}>
         <button className={styles.linkButton}>
           <Link to="/home" className={styles.link}>
             Home
@@ -42,7 +47,7 @@ function Home() {
             Tasks
           </Link>
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

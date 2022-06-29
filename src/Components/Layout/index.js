@@ -1,7 +1,7 @@
 import Header from 'Components/Shared/Header';
 import Footer from 'Components/Shared/Footer';
 import styles from './layout.module.css';
-import SideBar from 'Components/Shared/Sidebar';
+import SideBar from 'Components/Shared/SideBar';
 
 function Layout(props) {
   const { routes, logout } = props;

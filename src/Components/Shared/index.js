@@ -9,7 +9,7 @@ import Input from './Input';
 import ModalForm from './ModalForm';
 import Header from './Header';
 import Footer from './Footer';
-import Sidebar from './Sidebar';
+import SideBar from './SideBar';
 import Preloader from './Preloader/Preloader';
 import Select from './Select';
 import Table from './Table/Table';
@@ -27,7 +27,7 @@ export {
   ModalForm,
   Header,
   Footer,
-  Sidebar,
+  SideBar,
   Preloader,
   Select,
   Table,
