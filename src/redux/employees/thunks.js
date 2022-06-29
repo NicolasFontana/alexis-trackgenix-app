@@ -16,7 +16,9 @@ import {
 export const getEmployees = () => {
   return (dispatch) => {
     dispatch(getEmployeesPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/employees`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getEmployeesSuccess(response.data));
