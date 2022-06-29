@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
 import { login } from 'redux/auth/thunks';
-import { Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
+import { cleanError } from 'redux/auth/actions';
+import { Input, ButtonText, ErrorSuccessModal, Preloader } from 'Components/Shared';
 import styles from './login.module.css';
 
 const schema = Joi.object({
@@ -30,15 +31,15 @@ const schema = Joi.object({
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  // const isLoading = useSelector((state) => state.auth.isLoading);
-  // const error = useSelector((state) => state.auth.error);
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const error = useSelector((state) => state.auth.error);
+
+  const closeModal = () => {
+    dispatch(cleanError());
+  };
 
   const onSubmit = (data) => {
     return dispatch(login(data)).then((response) => {
-      // if (error) {
-      //   setShowErrorModal(true);
-      // } else
       if (response) {
         switch (response.payload?.role) {
           case 'EMPLOYEE':
@@ -83,17 +84,16 @@ const Login = () => {
         register={register}
         error={errors.password?.message}
       />
+      {isLoading ? <Preloader /> : null}
       <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} />
-      <ErrorSuccessModal
-        show={showErrorModal}
-        closeModal={() => {
-          setShowErrorModal(false);
-        }}
-        closeModalForm={() => {
-          setShowErrorModal(false);
-        }}
-        // successResponse={error}
-      />
+      {isLoading ? null : (
+        <ErrorSuccessModal
+          show={!!error}
+          closeModal={closeModal}
+          closeModalForm={closeModal}
+          successResponse={{ message: 'Wrong email or password', data: {}, error: true }}
+        />
+      )}
     </form>
   );
 };

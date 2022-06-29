@@ -10,7 +10,7 @@ import {
 } from './constants';
 
 const initialState = {
-  isFetching: true,
+  isLoading: true,
   authenticated: undefined,
   user: undefined,
   error: ''
@@ -21,21 +21,21 @@ export const authReducer = (state = initialState, action) => {
     case LOGIN_PENDING: {
       return {
         ...state,
-        isFetching: true,
+        isLoading: true,
         error: initialState.error
       };
     }
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        isFetching: false,
+        isLoading: false,
         authenticated: action.payload
       };
     }
     case LOGIN_ERROR: {
       return {
         ...state,
-        isFetching: false,
+        isLoading: false,
         error: action.payload
       };
     }
@@ -49,27 +49,27 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: action.payload,
-        isFetching: false
+        isLoading: false
       };
     }
     case GET_ME_PENDING: {
       return {
         ...state,
-        isFetching: true,
+        isLoading: true,
         error: initialState.error
       };
     }
     case GET_ME_SUCCESS: {
       return {
         ...state,
-        isFetching: false,
+        isLoading: false,
         user: action.payload
       };
     }
     case GET_ME_ERROR: {
       return {
         ...state,
-        isFetching: false,
+        isLoading: false,
         error: action.payload
       };
     }
