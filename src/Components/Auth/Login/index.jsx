@@ -83,9 +83,10 @@ const Login = () => {
         register={register}
         error={errors.password?.message}
       />
-      {isLoading ? <Preloader /> : null}
       <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} />
-      {isLoading ? null : (
+      {isLoading ? (
+        <Preloader />
+      ) : (
         <ErrorSuccessModal
           show={!!error}
           closeModal={closeModal}
