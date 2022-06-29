@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
 import Layout from 'Components/LayoutSideBar';
 import Admins from 'Components/Admin/Admins';
@@ -40,13 +40,14 @@ const Admin = () => {
     <Layout routes={adminsRoutes} logout>
       <div className={styles.currentScreen}>
         <Switch>
-          <Route path={`${url}/admins`} component={Admins} />
-          <Route path={`${url}/super-admins`} component={SuperAdmins} />
-          <Route path={`${url}/employees`} component={Employees} />
-          <Route path={`${url}/projects`} component={Projects} />
-          <Route path={`${url}/time-sheets`} component={Timesheets} />
-          <Route path={`${url}/tasks`} component={Tasks} />
+          <Route exact path={`${url}/admins`} component={Admins} />
+          <Route exact path={`${url}/super-admins`} component={SuperAdmins} />
+          <Route exact path={`${url}/employees`} component={Employees} />
+          <Route exact path={`${url}/projects`} component={Projects} />
+          <Route exact path={`${url}/time-sheets`} component={Timesheets} />
+          <Route exact path={`${url}/tasks`} component={Tasks} />
           <Route exact path={`${url}/`} component={Home} />
+          <Redirect to={`${url}`} />
         </Switch>
       </div>
     </Layout>
