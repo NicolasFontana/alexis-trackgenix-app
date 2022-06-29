@@ -3,7 +3,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   CLEAN_ERROR,
-  SET_AUTHENTICATION
+  SET_AUTHENTICATION,
+  GET_ME_PENDING,
+  GET_ME_SUCCESS,
+  GET_ME_ERROR
 } from './constants';
 
 const initialState = {
@@ -47,6 +50,27 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         authenticated: action.payload,
         isFetching: false
+      };
+    }
+    case GET_ME_PENDING: {
+      return {
+        ...state,
+        isFetching: true,
+        error: initialState.error
+      };
+    }
+    case GET_ME_SUCCESS: {
+      return {
+        ...state,
+        isFetching: false,
+        user: action.payload
+      };
+    }
+    case GET_ME_ERROR: {
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload
       };
     }
     default: {

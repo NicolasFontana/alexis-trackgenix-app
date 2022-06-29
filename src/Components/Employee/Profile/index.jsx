@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from 'redux/employees/thunks';
 import styles from './profile.module.css';
-import { Preloader, ButtonText, ModalForm } from 'Components/Shared';
+import { ButtonText, ModalForm } from 'Components/Shared';
 import FormEdit from './Edit';
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
-  const employeeId = useSelector((state) => state.auth.user?._id);
-  const employee = useSelector((state) => state.employees.list).filter(
+  // const isLoading = useSelector((state) => state.employees.isLoading);
+  const employeeId = useSelector((state) => state.auth.user?.data._id);
+  const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
   );
-  const isLoading = useSelector((state) => state.employees.isLoading);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-
+  console.log(employee);
   const editOpen = () => {
     setShowModalFormEdit(true);
   };
@@ -38,9 +38,7 @@ const EmployeeProfile = () => {
   const status = employee?.active ? 'Active' : 'Inactive';
   const isPM = employee?.isProjectManager ? 'Yes' : 'No';
 
-  return isLoading && !showModalFormEdit ? (
-    <Preloader />
-  ) : (
+  return (
     <section className={styles.container}>
       <h2 className={styles.title}>Profile</h2>
       <div className={styles.pictureFrame}>

@@ -1,4 +1,11 @@
-import { loginPending, loginSuccess, loginError } from './actions';
+import {
+  loginPending,
+  loginSuccess,
+  loginError,
+  getMePending,
+  getMeSuccess,
+  getMeError
+} from './actions';
 import firebase from 'helper/firebase';
 
 export const login = (credentials) => {
@@ -8,7 +15,6 @@ export const login = (credentials) => {
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(async (response) => {
-        console.log(response);
         const token = await response.user.getIdToken();
         const {
           claims: { role }
@@ -17,6 +23,22 @@ export const login = (credentials) => {
       })
       .catch((error) => {
         return dispatch(loginError(error.toString()));
+      });
+  };
+};
+
+export const getMe = () => {
+  return (dispatch) => {
+    dispatch(getMePending());
+    const token = sessionStorage.getItem('token');
+    return fetch(`${process.env.REACT_APP_API_URL}/api/auth`, { headers: { token } })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getMeSuccess(response));
+        return response;
+      })
+      .catch((error) => {
+        dispatch(getMeError(error.toString()));
       });
   };
 };
