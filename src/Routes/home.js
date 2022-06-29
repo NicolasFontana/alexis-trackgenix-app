@@ -3,7 +3,6 @@ import Home from 'Components/Home';
 
 const MainHomeRoutes = () => {
   const { url } = useRouteMatch();
-  console.log(url);
   return (
     <Switch>
       <Route exact path={`${url}/`} component={Home} />
