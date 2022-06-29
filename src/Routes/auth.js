@@ -1,5 +1,5 @@
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import Layout from 'Components/LayoutSideBar';
+import Layout from 'Components/Layout';
 import Login from 'Components/Auth/Login';
 import SignUp from 'Components/Auth/SignUp';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';

@@ -7,10 +7,9 @@ import ErrorSuccessModal from './ErrorSuccessModal';
 import ConfirmModal from './confirmationModal/confirmModal';
 import Input from './Input';
 import ModalForm from './ModalForm';
-import NavBar from './NavBar/navbar';
 import Header from './Header';
 import Footer from './Footer';
-import SideBar from './SideBar';
+import Sidebar from './Sidebar';
 import Preloader from './Preloader/Preloader';
 import Select from './Select';
 import Table from './Table/Table';
@@ -26,10 +25,9 @@ export {
   ConfirmModal,
   Input,
   ModalForm,
-  NavBar,
   Header,
   Footer,
-  SideBar,
+  Sidebar,
   Preloader,
   Select,
   Table,

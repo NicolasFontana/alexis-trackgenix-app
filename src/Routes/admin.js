@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
-import Layout from 'Components/LayoutSideBar';
+import Layout from 'Components/Layout';
 import Admins from 'Components/Admin/Admins';
 import SuperAdmins from 'Components/Admin/SuperAdmins';
 import Employees from 'Components/Admin/Employees';
@@ -45,7 +45,7 @@ const Admin = () => {
         <Route path={`${url}/time-sheets`} component={Timesheets} />
         <Route path={`${url}/tasks`} component={Tasks} />
         <Route exact path={`${url}/`} component={Home} />
-        <Redirect exact to={`${url}/`} />
+        <Redirect to={`${url}/`} />
       </Switch>
     </Layout>
   );

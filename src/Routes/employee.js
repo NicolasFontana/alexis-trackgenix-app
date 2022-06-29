@@ -3,7 +3,7 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Home from 'Components/Employee/Home';
 import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
-import Layout from 'Components/LayoutSideBar';
+import Layout from 'Components/Layout';
 import Profile from 'Components/Employee/Profile';
 import { faClock, faFolderClosed, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,7 +21,7 @@ const employeesRoutes = [
 const Employee = () => {
   const { url } = useRouteMatch();
   return (
-    <Layout routes={employeesRoutes}>
+    <Layout routes={employeesRoutes} logout>
       <Switch>
         <Route path={`${url}/time-sheet`} component={Timesheet} />
         <Route path={`${url}/projects`} component={Projects} />

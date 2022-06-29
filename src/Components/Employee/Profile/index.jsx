@@ -13,7 +13,7 @@ const EmployeeProfile = () => {
     (employee) => employee._id === employeeId
   );
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  console.log(employee);
+
   const editOpen = () => {
     setShowModalFormEdit(true);
   };
