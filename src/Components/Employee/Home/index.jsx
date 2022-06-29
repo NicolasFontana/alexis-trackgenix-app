@@ -10,7 +10,7 @@ import { Preloader } from 'Components/Shared';
 function Home() {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.timesheets.loading);
-  const user = useSelector((state) => state.auth.user.data);
+  const user = useSelector((state) => state.auth.user?.data);
   // const { url } = useRouteMatch();
 
   useEffect(() => {

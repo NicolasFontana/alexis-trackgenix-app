@@ -49,12 +49,12 @@ function TimeSheets() {
       timeSheetTable.push({
         _id: timeSheet._id,
         projectName: timeSheet.projectId.name,
-        taskId: timeSheet.Task[0].taskId._id,
-        taskName: timeSheet.Task[0].taskId.taskName,
-        startDate: timeSheet.Task[0].taskId.startDate,
-        workedHours: timeSheet.Task[0].taskId.workedHours,
-        description: timeSheet.Task[0].taskId.description,
-        status: timeSheet.Task[0].taskId.status,
+        taskId: timeSheet.Task[0].taskId?._id,
+        taskName: timeSheet.Task[0].taskId?.taskName,
+        startDate: timeSheet.Task[0].taskId?.startDate,
+        workedHours: timeSheet.Task[0].taskId?.workedHours,
+        description: timeSheet.Task[0].taskId?.description,
+        status: timeSheet.Task[0].taskId?.status,
         approved: timeSheet.approved
       });
     });

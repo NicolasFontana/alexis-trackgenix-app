@@ -3,7 +3,7 @@ import styles from 'Components/Employee/Home/home.module.css';
 // import { Link, useRouteMatch } from 'react-router-dom';
 
 function Home() {
-  const user = useSelector((state) => state.auth.user.data);
+  const user = useSelector((state) => state.auth.user?.data);
   // const { url } = useRouteMatch();
   return (
     <section className={styles.container}>
