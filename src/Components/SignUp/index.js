@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createEmployee } from 'redux/employees/thunks';
 import styles from './signup.module.css';
-import { Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
+import { Input, ButtonText } from 'Components/Shared';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
@@ -58,15 +55,9 @@ const schema = Joi.object({
   isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' })
 });
 
-const Form = ({ closeModalForm }) => {
-  const dispatch = useDispatch();
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [response, setResponse] = useState('');
-
-  const onSubmit = (data) => {
-    dispatch(createEmployee(data, setResponse)).then(() => {
-      setShowSuccessModal(true);
-    });
+const Form = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
   };
 
   const {
@@ -156,14 +147,6 @@ const Form = ({ closeModalForm }) => {
         />
       </div>
       <ButtonText clickAction={handleSubmit(onSubmit)} label={'Create'} />
-      <ErrorSuccessModal
-        show={showSuccessModal}
-        closeModal={() => {
-          setShowSuccessModal(false);
-        }}
-        closeModalForm={closeModalForm}
-        successResponse={response}
-      />
     </form>
   );
 };
