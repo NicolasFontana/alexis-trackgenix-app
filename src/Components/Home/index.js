@@ -20,7 +20,7 @@ function Home() {
               </Link>
             </button>
             <button className={styles.linkButton}>
-              <Link to="auth" className={styles.link}>
+              <Link to="signup" className={styles.link}>
                 SignUp
               </Link>
             </button>

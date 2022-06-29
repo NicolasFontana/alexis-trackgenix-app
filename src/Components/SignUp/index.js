@@ -51,6 +51,9 @@ const schema = Joi.object({
       'string.pattern.base': 'Password must contain both letters and numbers',
       'string.empty': 'Password is a required field'
     }),
+  repeatPassword: Joi.string().equal(Joi.ref('password')).messages({
+    'any.only': "Passwords don't match"
+  }),
   active: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
   isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' })
 });
@@ -129,14 +132,14 @@ const Form = ({ closeModalForm }) => {
           register={register}
           error={errors.password?.message}
         />
-        {/* <Input
-          label="Repeat Password"
-          name="repeatpassword"
+        <Input
+          label="Repeat password"
+          name="repeatPassword"
           type="password"
           placeholder="********"
           register={register}
           error={errors.repeatPassword?.message}
-        /> */}
+        />
         <Input
           label="Is a Project Manager?"
           name="isProjectManager"

@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Preloader } from 'Components/Shared';
 
 const Home = lazy(() => import('./home'));
 const AdminRoutes = lazy(() => import('./admin'));
 const EmployeeRoutes = lazy(() => import('./employee'));
-const AuthRoutes = lazy(() => import('./auth'));
+const SignUpRoutes = lazy(() => import('./SignUp'));
 
 function Routes() {
   return (
@@ -14,10 +14,10 @@ function Routes() {
         <Route path="/home" component={Home} />
         <Route path="/admin" component={AdminRoutes} />
         <Route path="/employee" component={EmployeeRoutes} />
-        <Route path="/auth" component={AuthRoutes} />
-        {/* <Route path="/">
+        <Route path="/signup" component={SignUpRoutes} />
+        <Route path="/">
           <Redirect to="/home" />
-        </Route> */}
+        </Route>
       </Suspense>
     </Switch>
   );
