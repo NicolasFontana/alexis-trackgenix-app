@@ -18,7 +18,7 @@ import styles from './time-sheets.module.css';
 function TimeSheets() {
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
-  const loading = useSelector((state) => state.timesheets.loading);
+  const isLoading = useSelector((state) => state.timesheets.isLoading);
   const [response, setResponse] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -99,7 +99,7 @@ function TimeSheets() {
     );
   }
 
-  return loading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
+  return isLoading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
     <Preloader>
       <p>Loading Timesheets</p>
     </Preloader>
@@ -141,7 +141,7 @@ function TimeSheets() {
           approved: (x) => (x ? 'Yes' : 'No')
         }}
       />
-      {loading ? <Preloader /> : null}
+      {isLoading ? <Preloader /> : null}
       {modalDelete}
       {modalAdd}
       {modalEdit}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tokenListener } from 'helper/firebase';
 import { getMe } from 'redux/auth/thunks';
 import PrivateRoute from 'Routes/PrivateRoute';
+import Layout from 'Components/Layout';
 import { Preloader } from 'Components/Shared';
 
 const MainHomeRoutes = lazy(() => import('./home'));
@@ -27,7 +28,13 @@ const Routes = () => {
 
   return (
     <Switch>
-      <Suspense fallback={<Preloader />}>
+      <Suspense
+        fallback={
+          <Layout>
+            <Preloader />
+          </Layout>
+        }
+      >
         <Route path="/home" component={MainHomeRoutes} />
         <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
         <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
