@@ -120,6 +120,9 @@ const App = () => {
         titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
         delAction={openConfirmModal}
         editAction={openEditModal}
+        modifiers={{
+          active: (x) => (x ? 'Active' : 'Inactive')
+        }}
       />
       <ButtonAdd clickAction={openAddModal} />
       {isLoading ? <Preloader /> : null}
