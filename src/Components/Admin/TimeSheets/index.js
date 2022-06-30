@@ -36,7 +36,7 @@ function TimeSheets() {
     dispatch(getAllTimesheets());
     dispatch(getProjects());
     dispatch(getTasks());
-  }, []);
+  }, [showSuccessModal === false, showModalDelete === false, showModalEdit === false]);
 
   const closeModalEdit = () => {
     setShowModalEdit(false);

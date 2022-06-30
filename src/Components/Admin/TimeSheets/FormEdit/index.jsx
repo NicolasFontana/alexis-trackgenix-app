@@ -26,8 +26,9 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
       setMessage({ message: "There haven't been any changes", data: {}, error: true });
       setShowMessageModal(true);
     } else {
-      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
-      setShowMessageModal(true);
+      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage)).then(() => {
+        setShowMessageModal(true);
+      });
     }
   };
 
