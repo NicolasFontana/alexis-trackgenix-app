@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
 import { createEmployee } from 'redux/employees/thunks';
-import { createEmployeesError } from 'redux/employees/actions';
 import { Input, ButtonText, ErrorSuccessModal, Preloader } from 'Components/Shared';
 import styles from './signup.module.css';
 
@@ -77,15 +76,13 @@ const Form = () => {
 
   const closeModal = () => {
     setShowSuccessModal(false);
+    document.body.style.overflow = 'unset';
     history.push('/');
   };
 
   const onSubmit = (data) => {
     return dispatch(createEmployee(data, setResponse)).then(() => {
-      console.log(response);
-      if (response.error) {
-        dispatch(createEmployeesError(response.error.toString()));
-      }
+      document.body.style.overflow = 'hidden';
       setShowSuccessModal(true);
     });
   };
@@ -171,6 +168,7 @@ const Form = () => {
           show={showSuccessModal}
           closeModal={() => {
             setShowSuccessModal(false);
+            document.body.style.overflow = 'unset';
           }}
           closeModalForm={closeModal}
           successResponse={response}

@@ -169,7 +169,9 @@ const Projects = () => {
               title="Members"
               defaultValue=""
               data={[
-                ...x.map((member) => `${member.employeeId.firstName} ${member.employeeId.lastName}`)
+                ...x.map(
+                  (member) => `${member.employeeId?.firstName} ${member.employeeId?.lastName}`
+                )
               ]}
               disabled
               register={console.log}
