@@ -37,7 +37,7 @@ const Projects = () => {
   useEffect(() => {
     dispatch(getProjects());
     setValue(false);
-  }, []);
+  }, [showModalAdd === false, showErrorSuccessModal === false, showModalFormEdit === false]);
 
   const deleteItem = () => {
     dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
