@@ -10,7 +10,7 @@ const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
 const authRoutes = [
   { icon: home, name: 'Home', path: '/' },
   { name: 'Log In', path: '/auth/login' },
-  { name: 'Sign Up', path: '/auth' }
+  { name: 'Sign Up', path: '/auth/signup' }
 ];
 
 const AuthRoutes = () => {

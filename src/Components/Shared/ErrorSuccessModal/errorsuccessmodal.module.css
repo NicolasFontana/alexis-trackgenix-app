@@ -10,6 +10,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
+  z-index: 5;
 }
 
 .modal {

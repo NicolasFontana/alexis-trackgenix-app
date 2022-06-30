@@ -4,7 +4,7 @@ import Home from 'Components/Home';
 
 const mainHomeRoutes = [
   { name: 'Log In', path: '/auth/login' },
-  { name: 'Sign Up', path: '/' }
+  { name: 'Sign Up', path: '/auth/signup' }
 ];
 
 const MainHomeRoutes = () => {
