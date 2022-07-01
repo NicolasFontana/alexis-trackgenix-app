@@ -83,7 +83,7 @@ const EmployeeProfile = () => {
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Date of Birth:</h3>
-          <p className={styles.rowText}>{`${employee?.dateBirth}`}</p>
+          <p className={styles.rowText}>{`${employee?.dateBirth?.slice(0, 10)}`}</p>
         </div>
       </div>
       <div className={styles.buttonContainer}>

@@ -120,7 +120,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       address: employeeEdit.address,
       picture: employeeEdit.picture,
       dni: employeeEdit.dni,
-      dateBirth: employeeEdit.dateBirth.slice(0, 10)
+      dateBirth: employeeEdit.dateBirth?.slice(0, 10)
     }
   });
 
