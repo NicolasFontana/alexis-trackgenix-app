@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styles from './sidebar.module.css';
+import firebase from 'helper/firebase';
 
-const SideBar = ({ routes }) => {
+const SideBar = ({ routes, logout }) => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.headerContainer}>
@@ -20,6 +21,20 @@ const SideBar = ({ routes }) => {
               </NavLink>
             </li>
           ))}
+          {logout && (
+            <li className={styles.li}>
+              <NavLink
+                to={'/home'}
+                exact
+                activeStyle={{ color: '#A1D28C' }}
+                onClick={() => {
+                  firebase.auth().signOut();
+                }}
+              >
+                Log Out
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </aside>

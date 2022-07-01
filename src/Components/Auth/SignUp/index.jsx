@@ -1,8 +1,12 @@
-import styles from './signup.module.css';
-import { Input, ButtonText } from 'Components/Shared';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
+import { createEmployee } from 'redux/employees/thunks';
+import { Input, ButtonText, ErrorSuccessModal, Preloader } from 'Components/Shared';
+import styles from './signup.module.css';
 
 const schema = Joi.object({
   firstName: Joi.string()
@@ -52,12 +56,35 @@ const schema = Joi.object({
     'any.only': "Passwords don't match"
   }),
   active: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
-  isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' })
+  isProjectManager: Joi.boolean().required().messages({ 'any.only': 'This is a required field' }),
+  projects: Joi.string().allow('').alphanum().length(24).messages({
+    'string.alphanum': 'Project id must contain both letters and numbers',
+    'string.length': 'Project id must contain 24 characters'
+  }),
+  timeSheets: Joi.string().allow('').alphanum().length(24).messages({
+    'string.alphanum': 'Timesheet id must contain both letters and numbers',
+    'string.length': 'Timesheet id must contain 24 characters'
+  })
 });
 
 const Form = () => {
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isLoading = useSelector((state) => state.employees.isLoading);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [response, setResponse] = useState('');
+
+  const closeModal = () => {
+    setShowSuccessModal(false);
+    document.body.style.overflow = 'unset';
+    history.push('/');
+  };
+
+  const onSubmit = (data) => {
+    return dispatch(createEmployee(data, setResponse)).then(() => {
+      document.body.style.overflow = 'hidden';
+      setShowSuccessModal(true);
+    });
   };
 
   const {
@@ -75,13 +102,14 @@ const Form = () => {
       password: '',
       repeatPassword: '',
       active: true,
-      isProjectManager: false
+      isProjectManager: false,
+      projects: '',
+      timeSheets: ''
     }
   });
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-      <h2 className={styles.title}>Sign up</h2>
       <div className={styles.inputs}>
         <Input
           label="First Name"
@@ -133,6 +161,19 @@ const Form = () => {
         />
       </div>
       <ButtonText clickAction={handleSubmit(onSubmit)} label={'Create'} />
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <ErrorSuccessModal
+          show={showSuccessModal}
+          closeModal={() => {
+            setShowSuccessModal(false);
+            document.body.style.overflow = 'unset';
+          }}
+          closeModalForm={closeModal}
+          successResponse={response}
+        />
+      )}
     </form>
   );
 };

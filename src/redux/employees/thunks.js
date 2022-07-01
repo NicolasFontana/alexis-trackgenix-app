@@ -16,7 +16,9 @@ import {
 export const getEmployees = () => {
   return (dispatch) => {
     dispatch(getEmployeesPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/employees`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/employees`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getEmployeesSuccess(response.data));
@@ -54,12 +56,18 @@ export const createEmployee = (userInput, setResponse) => {
         'Content-type': 'application/json'
       }
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status !== 200 && response.status !== 201) {
+          return response.json().then(({ message }) => {
+            throw new Error(message);
+          });
+        }
+        return response.json();
+      })
       .then((response) => {
         if (response.error === false) {
           dispatch(createEmployeesSuccess(response.data));
         }
-        dispatch(getEmployees());
         setResponse(response);
         return response.data;
       })

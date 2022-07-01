@@ -5,10 +5,6 @@
   min-height: 100vh;
 }
 
-.sidebar {
-  position: fixed;
-}
-
 .currentScreen {
   margin-left: 15%;
 }

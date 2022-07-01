@@ -15,7 +15,7 @@ import {
 
 const initialState = {
   listTimesheet: [],
-  loading: false,
+  isLoading: false,
   error: ''
 };
 
@@ -24,69 +24,69 @@ export const timesheetsReducer = (state = initialState, action) => {
     case GET_ALL_TIMESHEETS_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: true
       };
     case GET_ALL_TIMESHEETS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         listTimesheet: action.payload
       };
     case GET_ALL_TIMESHEETS_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case DELETE_TIMESHEET_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload
       };
     case DELETE_TIMESHEET_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         listTimesheet: state.listTimesheet.filter((timesheet) => timesheet._id !== action.payload)
       };
     case DELETE_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case CREATE_TIMESHEET_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload
       };
     case CREATE_TIMESHEET_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         listTimesheet: [...state.listTimesheet, action.payload]
       };
     case CREATE_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case PUT_TIMESHEET_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload
       };
     case PUT_TIMESHEET_SUCCESS:
       return {
         ...state,
-        loading: false
+        isLoading: false
       };
     case PUT_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     default:
       return state;
