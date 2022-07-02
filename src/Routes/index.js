@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tokenListener } from 'helper/firebase';
 import { getMe } from 'redux/auth/thunks';
 import PrivateRoute from 'Routes/PrivateRoute';
-import Layout from 'Components/Layout';
 import { Preloader } from 'Components/Shared';
 
 const MainHomeRoutes = lazy(() => import('./home'));
 const AdminRoutes = lazy(() => import('./admin'));
 const EmployeeRoutes = lazy(() => import('./employee'));
+const Error404 = lazy(() => import('Components/Error404'));
 const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
@@ -27,14 +27,8 @@ const Routes = () => {
   }, [token]);
 
   return (
-    <Switch>
-      <Suspense
-        fallback={
-          <Layout>
-            <Preloader />
-          </Layout>
-        }
-      >
+    <Suspense fallback={<Preloader />}>
+      <Switch>
         <Route path="/home" component={MainHomeRoutes} />
         <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
         <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
@@ -42,8 +36,9 @@ const Routes = () => {
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
-      </Suspense>
-    </Switch>
+        <Route path="/*" component={Error404} />
+      </Switch>
+    </Suspense>
   );
 };
 

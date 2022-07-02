@@ -137,9 +137,11 @@ const Projects = () => {
   }
 
   return isLoading && !showModalAdd && !showConfirmModal && !showModalFormEdit ? (
-    <Preloader>
-      <p>Loading Projects</p>
-    </Preloader>
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Projects</p>
+      </Preloader>
+    </section>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>

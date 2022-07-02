@@ -100,9 +100,11 @@ function TimeSheets() {
   }
 
   return isLoading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
-    <Preloader>
-      <p>Loading Timesheets</p>
-    </Preloader>
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Timesheets</p>
+      </Preloader>
+    </section>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.timesheets}>Timesheets</h2>

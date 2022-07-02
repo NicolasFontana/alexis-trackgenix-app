@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import Home from 'Components/Employee/Home';
 import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
@@ -22,12 +22,13 @@ const employeesRoutes = [
 const Employee = () => {
   const { url } = useRouteMatch();
   return (
-    <Layout routes={employeesRoutes} logout>
+    <Layout routes={employeesRoutes}>
       <Switch>
-        <Route path={`${url}/time-sheet`} component={Timesheet} />
-        <Route path={`${url}/projects`} component={Projects} />
-        <Route path={`${url}/profile`} component={Profile} />
+        <Route exact path={`${url}/time-sheet`} component={Timesheet} />
+        <Route exact path={`${url}/projects`} component={Projects} />
+        <Route exact path={`${url}/profile`} component={Profile} />
         <Route exact path={`${url}/`} component={Home} />
+        <Redirect to={`${url}`} />
       </Switch>
     </Layout>
   );
