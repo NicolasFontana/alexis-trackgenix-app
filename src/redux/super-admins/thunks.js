@@ -17,7 +17,9 @@ export const getSuperAdmins = () => {
   return async (dispatch) => {
     dispatch(getSuperAdminsPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+        headers: { token: sessionStorage.getItem('token') }
+      });
       const data = await response.json();
       dispatch(getSuperAdminsSuccess(data.data));
       return data.data;

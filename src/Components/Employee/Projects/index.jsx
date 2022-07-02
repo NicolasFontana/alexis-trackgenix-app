@@ -3,13 +3,12 @@ import { Table } from 'Components/Shared';
 import styles from './projects.module.css';
 
 function Projects() {
-  const employeeId = '62996ab1b89dc4b653576647';
-
+  const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
   );
   const projects = useSelector((state) => state.projects.list).filter((listProject) =>
-    employee.projects.some((employeeProject) => employeeProject._id === listProject._id)
+    employee?.projects.some((employeeProject) => employeeProject._id === listProject._id)
   );
 
   projects.forEach(

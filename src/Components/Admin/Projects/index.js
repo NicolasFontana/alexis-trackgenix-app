@@ -137,9 +137,11 @@ const Projects = () => {
   }
 
   return isLoading && !showModalAdd && !showConfirmModal && !showModalFormEdit ? (
-    <Preloader>
-      <p>Loading Projects</p>
-    </Preloader>
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Projects</p>
+      </Preloader>
+    </section>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.projects}> Projects </h2>
@@ -166,8 +168,12 @@ const Projects = () => {
           active: (x) => (x ? 'Active' : 'Inactive'),
           members: (x) => (
             <Select
+              title="Members"
+              defaultValue=""
               data={[
-                ...x.map((member) => `${member.employeeId.firstName} ${member.employeeId.lastName}`)
+                ...x.map(
+                  (member) => `${member.employeeId?.firstName} ${member.employeeId?.lastName}`
+                )
               ]}
               disabled
               register={console.log}

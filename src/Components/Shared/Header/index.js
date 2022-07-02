@@ -11,7 +11,9 @@ const Header = () => {
 
   return (
     <header>
-      <div className={styles.pathname}>{location.pathname.slice(1)}</div>
+      <div className={styles.pathname}>
+        {location.pathname.slice(location.pathname.lastIndexOf('/') + 1)}
+      </div>
       <div className={styles.user}>
         <div> {user} </div>
         <p> Username</p>

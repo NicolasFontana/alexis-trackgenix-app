@@ -1,14 +1,13 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
-import Layout from 'Components/LayoutSideBar';
+import Layout from 'Components/Layout';
 import Admins from 'Components/Admin/Admins';
 import SuperAdmins from 'Components/Admin/SuperAdmins';
 import Employees from 'Components/Admin/Employees';
 import Projects from 'Components/Admin/Projects';
 import Timesheets from 'Components/Admin/TimeSheets';
 import Tasks from 'Components/Admin/Tasks';
-import styles from './routes.module.css';
 import {
   faClock,
   faFolderClosed,
@@ -38,18 +37,16 @@ const Admin = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={adminsRoutes} logout>
-      <div className={styles.currentScreen}>
-        <Switch>
-          <Route exact path={`${url}/admins`} component={Admins} />
-          <Route exact path={`${url}/super-admins`} component={SuperAdmins} />
-          <Route exact path={`${url}/employees`} component={Employees} />
-          <Route exact path={`${url}/projects`} component={Projects} />
-          <Route exact path={`${url}/time-sheets`} component={Timesheets} />
-          <Route exact path={`${url}/tasks`} component={Tasks} />
-          <Route exact path={`${url}/`} component={Home} />
-          <Redirect to={`${url}`} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path={`${url}/admins`} component={Admins} />
+        <Route exact path={`${url}/super-admins`} component={SuperAdmins} />
+        <Route exact path={`${url}/employees`} component={Employees} />
+        <Route exact path={`${url}/projects`} component={Projects} />
+        <Route exact path={`${url}/time-sheets`} component={Timesheets} />
+        <Route exact path={`${url}/tasks`} component={Tasks} />
+        <Route exact path={`${url}/`} component={Home} />
+        <Redirect to={`${url}`} />
+      </Switch>
     </Layout>
   );
 };
