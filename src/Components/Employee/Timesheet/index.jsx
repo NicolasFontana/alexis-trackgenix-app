@@ -3,14 +3,13 @@ import { Table } from 'Components/Shared';
 import styles from './time-sheet.module.css';
 
 function Timesheet() {
-  const employeeId = '62996ab1b89dc4b653576647';
-
+  const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
   );
   const timesheets = useSelector((state) => state.timesheets.listTimesheet).filter(
     (listTimesheet) =>
-      employee.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
+      employee?.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
   );
 
   return (

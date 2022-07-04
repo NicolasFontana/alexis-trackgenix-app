@@ -16,7 +16,9 @@ import {
 export const getTasks = () => {
   return (dispatch) => {
     dispatch(getTasksPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getTasksSuccess(response.data));

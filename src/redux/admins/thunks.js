@@ -16,7 +16,9 @@ import {
 export const getAdmins = () => {
   return (dispatch) => {
     dispatch(getAdminsPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/admins`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAdminsSuccess(response.data));

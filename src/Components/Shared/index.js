@@ -7,7 +7,6 @@ import ErrorSuccessModal from './ErrorSuccessModal';
 import ConfirmModal from './confirmationModal/confirmModal';
 import Input from './Input';
 import ModalForm from './ModalForm';
-import NavBar from './NavBar/navbar';
 import Header from './Header';
 import Footer from './Footer';
 import SideBar from './SideBar';
@@ -26,7 +25,6 @@ export {
   ConfirmModal,
   Input,
   ModalForm,
-  NavBar,
   Header,
   Footer,
   SideBar,

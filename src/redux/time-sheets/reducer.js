@@ -15,7 +15,7 @@ import {
 
 const initialState = {
   listTimesheet: [],
-  loading: false,
+  isLoading: false,
   error: ''
 };
 
@@ -25,43 +25,43 @@ export const timesheetsReducer = (state = initialState, action) => {
     case GET_TIMESHEETS_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case GET_TIMESHEETS_SUCCESS:
       return {
         ...state,
         listTimesheet: action.payload,
-        loading: false
+        isLoading: false
       };
     case GET_TIMESHEETS_ERROR:
       return {
         ...state,
         error: true,
-        loading: false
+        isLoading: false
       };
     //CREATE TIMESHEET
     case CREATE_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case CREATE_TIMESHEET_SUCCESS:
       return {
         ...state,
         listTimesheet: [...state.listTimesheet, action.payload],
-        loading: false
+        isLoading: false
       };
     case CREATE_TIMESHEET_ERROR:
       return {
         ...state,
         error: action.payload,
-        loading: false
+        isLoading: false
       };
     //EDIT TIMESHEET
     case PUT_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case PUT_TIMESHEET_SUCCESS:
       return {
@@ -72,31 +72,31 @@ export const timesheetsReducer = (state = initialState, action) => {
           }
           return item;
         }),
-        loading: false
+        isLoading: false
       };
     case PUT_TIMESHEET_ERROR:
       return {
         ...state,
         error: action.payload,
-        loading: false
+        isLoading: false
       };
     //DELETE TIMESHEET
     case DELETE_TIMESHEET_PENDING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case DELETE_TIMESHEET_SUCCESS:
       return {
         ...state,
         listTimesheet: state.listTimesheet.filter((timesheet) => timesheet._id !== action.payload),
-        loading: false
+        isLoading: false
       };
     case DELETE_TIMESHEET_ERROR:
       return {
         ...state,
         error: action.payload,
-        loading: false
+        isLoading: false
       };
     default:
       return state;

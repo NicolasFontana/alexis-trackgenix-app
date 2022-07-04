@@ -16,12 +16,16 @@ import {
 export const getSuperAdmins = () => {
   return (dispatch) => {
     dispatch(getSuperAdminsPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response);
         dispatch(getSuperAdminsSuccess(response.data));
       })
       .catch((error) => {
+        console.log(error);
         dispatch(getSuperAdminsError(error.toString()));
       });
   };

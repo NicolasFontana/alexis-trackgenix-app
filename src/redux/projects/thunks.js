@@ -19,7 +19,9 @@ import {
 export const getProjects = () => {
   return (dispatch) => {
     dispatch(getProjectsPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/projects`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/projects`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getProjectsSuccess(response.data));

@@ -100,9 +100,11 @@ function Tasks() {
     !showModalFormAdd &&
     !showMessageModal &&
     !showConfirmModal ? (
-    <Preloader>
-      <p>Loading Tasks</p>
-    </Preloader>
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Tasks</p>
+      </Preloader>
+    </section>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.tasks}>Tasks</h2>

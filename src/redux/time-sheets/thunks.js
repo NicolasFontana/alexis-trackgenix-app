@@ -16,7 +16,9 @@ import {
 export const getAllTimesheets = () => {
   return (dispatch) => {
     dispatch(getAllTimesheetsPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAllTimesheetsSuccess(response.data));
