@@ -7,7 +7,6 @@
   align-items: flex-end;
   align-content: space-between;
   row-gap: 10px;
-  overflow: auto;
 }
 
 .form button {
