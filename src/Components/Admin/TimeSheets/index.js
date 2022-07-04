@@ -18,7 +18,7 @@ import styles from './time-sheets.module.css';
 function TimeSheets() {
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
-  const loading = useSelector((state) => state.timesheets.loading);
+  const isLoading = useSelector((state) => state.timesheets.isLoading);
   const [response, setResponse] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -49,12 +49,12 @@ function TimeSheets() {
       timeSheetTable.push({
         _id: timeSheet._id,
         projectName: timeSheet.projectId.name,
-        taskId: timeSheet.Task[0].taskId._id,
-        taskName: timeSheet.Task[0].taskId.taskName,
-        startDate: timeSheet.Task[0].taskId.startDate,
-        workedHours: timeSheet.Task[0].taskId.workedHours,
-        description: timeSheet.Task[0].taskId.description,
-        status: timeSheet.Task[0].taskId.status,
+        taskId: timeSheet.Task[0].taskId?._id,
+        taskName: timeSheet.Task[0].taskId?.taskName,
+        startDate: timeSheet.Task[0].taskId?.startDate,
+        workedHours: timeSheet.Task[0].taskId?.workedHours,
+        description: timeSheet.Task[0].taskId?.description,
+        status: timeSheet.Task[0].taskId?.status,
         approved: timeSheet.approved
       });
     });
@@ -99,10 +99,12 @@ function TimeSheets() {
     );
   }
 
-  return loading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
-    <Preloader>
-      <p>Loading Timesheets</p>
-    </Preloader>
+  return isLoading && !showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal ? (
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Timesheets</p>
+      </Preloader>
+    </section>
   ) : (
     <section className={styles.container}>
       <h2 className={styles.timesheets}>Timesheets</h2>
@@ -141,7 +143,7 @@ function TimeSheets() {
           approved: (x) => (x ? 'Yes' : 'No')
         }}
       />
-      {loading ? <Preloader /> : null}
+      {isLoading ? <Preloader /> : null}
       {modalDelete}
       {modalAdd}
       {modalEdit}

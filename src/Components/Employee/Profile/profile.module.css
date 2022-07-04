@@ -1,0 +1,72 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title {
+  align-self: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: #373867
+}
+
+.pictureFrame{
+  align-self: center;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #76a068;
+}
+
+.data {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border: 2px solid #76a068;
+  border-radius: 10px;
+  color: #373867;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+  border-bottom: 1px solid #76a068;
+  margin: 5px;
+}
+
+.data .row:last-child {
+  margin-bottom: 40px;
+}
+
+.rowTitle {
+  margin-block-end: auto;
+  font-size: 16px;
+}
+
+.rowText {
+  /* margin-block-start: auto; */
+  font-size: 16px;
+  margin-block-end: 0px;
+  /* border: 1px solid #373867;
+  border-radius: 5px;
+  padding: 7px; */
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  width: 150px;
+}
