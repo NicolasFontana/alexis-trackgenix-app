@@ -7,18 +7,14 @@ import {
   ModalForm,
   ButtonAdd,
   ConfirmModal,
-  ErrorSuccessModal,
-  Select
+  ErrorSuccessModal
 } from 'Components/Shared';
 import Form from './Form';
-import AddMember from './Form/AddMember/AddMember';
-import AddForm from './Addform/addForm';
 import styles from './projects.module.css';
 
 const Projects = () => {
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [idToEdit, setIdToEdit] = useState();
-  let [value, setValue] = useState(false);
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
@@ -30,7 +26,6 @@ const Projects = () => {
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
-    setValue(false);
   };
 
   const openModalFormEdit = (id) => {
@@ -63,33 +58,19 @@ const Projects = () => {
 
   useEffect(() => {
     dispatch(getProjects());
-    setValue(false);
   }, []);
-
-  const functionValue = (value) => {
-    setValue(value);
-  };
 
   let modalEdit;
 
   if (showModalFormEdit) {
     modalEdit = (
-      <ModalForm
-        isOpen={showModalFormEdit}
-        handleClose={closeModalFormEdit}
-        title={value ? 'Add/Edit team members' : 'Edit Project'}
-      >
-        {value ? (
-          <AddMember functionValue={functionValue} projects={projects} itemId={idToEdit} />
-        ) : (
-          <Form
-            closeModalForm={closeModalFormEdit}
-            edit={true}
-            project={projects.find((project) => project._id == idToEdit)}
-            itemId={idToEdit}
-            functionValue={functionValue}
-          />
-        )}
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Project">
+        <Form
+          closeModalForm={closeModalFormEdit}
+          edit={true}
+          project={projects.find((project) => project._id == idToEdit)}
+          projectID={idToEdit}
+        />
       </ModalForm>
     );
   }
@@ -120,7 +101,7 @@ const Projects = () => {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
-        <AddForm closeModalForm={closeModalAdd} />
+        <Form closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -152,33 +133,11 @@ const Projects = () => {
       {isLoading ? <Preloader /> : null}
       <Table
         data={projects}
-        headers={['name', 'description', 'startDate', 'endDate', 'clientName', 'active', 'members']}
-        titles={[
-          'Name',
-          'Description',
-          'Start Date',
-          'End Date',
-          'Client Name',
-          'Active',
-          'Members'
-        ]}
+        headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
+        titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
         modifiers={{
           startDate: (x) => x.slice(0, 10),
-          endDate: (x) => x.slice(0, 10),
-          active: (x) => (x ? 'Active' : 'Inactive'),
-          members: (x) => (
-            <Select
-              title="Members"
-              defaultValue=""
-              data={[
-                ...x.map(
-                  (member) => `${member.employeeId?.firstName} ${member.employeeId?.lastName}`
-                )
-              ]}
-              disabled
-              register={console.log}
-            />
-          )
+          active: (x) => (x ? 'Active' : 'Inactive')
         }}
         delAction={openConfirmModal}
         editAction={openModalFormEdit}

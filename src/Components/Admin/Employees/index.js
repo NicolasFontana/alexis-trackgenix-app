@@ -93,33 +93,11 @@ const Employees = () => {
       <h2 className={styles.employees}> Employees </h2>
       <Table
         data={employees}
-        headers={[
-          'firstName',
-          'lastName',
-          'phone',
-          'email',
-          'isProjectManager',
-          'active',
-          'projects',
-          'timeSheets'
-        ]}
-        titles={[
-          'First Name',
-          'Last Name',
-          'Phone',
-          'Email',
-          'PM',
-          'Active',
-          'Projects',
-          'Timesheets'
-        ]}
+        headers={['firstName', 'lastName', 'phone', 'email', 'active', 'projects']}
+        titles={['First Name', 'Last Name', 'Phone', 'Email', 'Active', 'Projects']}
         delAction={(id) => {
           setEmployeeId(id);
           setShowModalFormDelete(true);
-        }}
-        editAction={(id) => {
-          setEmployeeId(id);
-          setShowModalFormEdit(true);
         }}
         modifiers={{
           active: (x) => (x ? 'Active' : 'Inactive'),
@@ -129,15 +107,6 @@ const Employees = () => {
               title="Projects"
               defaultValue=""
               data={[...x.map((project) => project.name)]}
-              disabled
-              register={console.log}
-            />
-          ),
-          timeSheets: (x) => (
-            <Select
-              title="Timesheets"
-              defaultValue=""
-              data={[...x.map((timesheet) => timesheet._id)]}
               disabled
               register={console.log}
             />

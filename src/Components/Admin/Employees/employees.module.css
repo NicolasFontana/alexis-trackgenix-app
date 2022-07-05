@@ -29,9 +29,14 @@
   margin-bottom: 8px;
 }
 
+.container td > button {
+  margin-right: 20px;
+}
+
 .employees {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
+  color: #373867;
 }
