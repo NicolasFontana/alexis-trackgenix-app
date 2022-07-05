@@ -5,9 +5,9 @@ import {
   Preloader,
   Table,
   ModalForm,
-  ButtonAdd,
   ConfirmModal,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  ButtonText
 } from 'Components/Shared';
 import Form from './Form';
 import styles from './projects.module.css';
@@ -131,18 +131,20 @@ const Projects = () => {
       {modalAdd}
       {modalErrorSuccess}
       {isLoading ? <Preloader /> : null}
-      <Table
-        data={projects}
-        headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
-        titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
-        modifiers={{
-          startDate: (x) => x.slice(0, 10),
-          active: (x) => (x ? 'Active' : 'Inactive')
-        }}
-        delAction={openConfirmModal}
-        editAction={openModalFormEdit}
-      />
-      <ButtonAdd clickAction={openModalAdd}></ButtonAdd>
+      <div className={styles.divContainer}>
+        <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
+        <Table
+          data={projects}
+          headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
+          titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
+          modifiers={{
+            startDate: (x) => x.slice(0, 10),
+            active: (x) => (x ? 'Active' : 'Inactive')
+          }}
+          delAction={openConfirmModal}
+          editAction={openModalFormEdit}
+        />
+      </div>
     </section>
   );
 };

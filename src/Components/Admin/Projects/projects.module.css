@@ -40,3 +40,14 @@
   text-shadow: 2px 2px 2px grey;
   color: #373867;
 }
+
+.divContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.divContainer > button {
+  align-self: flex-end;
+  margin-bottom: 20px;
+  padding: 0 30px;
+}
