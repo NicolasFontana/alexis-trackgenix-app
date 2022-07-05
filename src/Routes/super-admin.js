@@ -14,7 +14,7 @@ const superAdminsRoutes = [
   { icon: users, name: 'Admins', path: '/super-admin/admins' }
 ];
 
-const Admin = () => {
+const SuperAdmin = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={superAdminsRoutes} logout>
@@ -27,4 +27,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default SuperAdmin;

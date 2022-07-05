@@ -45,6 +45,8 @@ const Login = () => {
             return history.push('/employee');
           case 'ADMIN':
             return history.push('/admin');
+          case 'SUPERADMIN':
+            return history.push('/super-admin');
           default:
             break;
         }

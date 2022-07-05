@@ -1,15 +1,8 @@
 import styles from './home.module.css';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAdmins } from 'redux/admins/thunks';
+import { useSelector } from 'react-redux';
 
 function Home() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user?.data);
-
-  useEffect(() => {
-    dispatch(getAdmins());
-  }, []);
 
   return (
     <section className={styles.container}>
