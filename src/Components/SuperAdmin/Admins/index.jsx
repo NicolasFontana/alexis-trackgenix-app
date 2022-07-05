@@ -128,7 +128,7 @@ const Admins = () => {
       {modalErrorSuccess}
       {isLoading ? <Preloader /> : null}
       <div className={styles.divContainer}>
-        <ButtonText label="ADD PROJECT" clickAction={openAddModal}></ButtonText>
+        <ButtonText label="ADD ADMIN" clickAction={openAddModal}></ButtonText>
         <Table
           data={admins}
           headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
