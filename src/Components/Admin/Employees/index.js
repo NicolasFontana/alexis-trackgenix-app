@@ -7,7 +7,6 @@ import {
   Preloader,
   Table,
   ModalForm,
-  ButtonAdd,
   Select,
   ConfirmModal,
   ErrorSuccessModal
@@ -17,7 +16,6 @@ const Employees = () => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
   const isLoading = useSelector((state) => state.employees.isLoading);
-  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -27,10 +25,6 @@ const Employees = () => {
   useEffect(() => {
     dispatch(getEmployees());
   }, []);
-
-  const closeModalFormAdd = () => {
-    setShowModalFormAdd(false);
-  };
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
@@ -45,15 +39,6 @@ const Employees = () => {
           edit={true}
           item={employees.find((item) => item._id === employeeId)}
         />
-      </ModalForm>
-    );
-  }
-
-  let modalAdd;
-  if (showModalFormAdd) {
-    modalAdd = (
-      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Employee">
-        <Form closeModalForm={closeModalFormAdd} />
       </ModalForm>
     );
   }
@@ -78,11 +63,7 @@ const Employees = () => {
     );
   }
 
-  return isLoading &&
-    !showModalFormEdit &&
-    !showModalFormAdd &&
-    !showModalFormDelete &&
-    !showSuccessModal ? (
+  return isLoading && !showModalFormEdit && !showModalFormDelete && !showSuccessModal ? (
     <section className={styles.containerPreloader}>
       <Preloader>
         <p>Loading Employees</p>
@@ -114,14 +95,9 @@ const Employees = () => {
         }}
       />
       {modalEdit}
-      {modalAdd}
       {modalDelete}
       {isLoading ? <Preloader /> : null}
-      <ButtonAdd
-        clickAction={() => {
-          setShowModalFormAdd(true);
-        }}
-      />
+
       <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
