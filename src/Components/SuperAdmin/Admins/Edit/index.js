@@ -100,15 +100,15 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         label="First Name"
         type="text"
         name="firstName"
-        placeholder="Insert admin name"
+        placeholder="Insert admin first name"
         register={register}
         error={errors.firstName?.message}
       />
       <Input
-        label="Admin Last Name"
+        label="Last Name"
         type="text"
         name="lastName"
-        placeholder="Insert admin lastName"
+        placeholder="Insert admin last name"
         register={register}
         error={errors.lastName?.message}
       />
