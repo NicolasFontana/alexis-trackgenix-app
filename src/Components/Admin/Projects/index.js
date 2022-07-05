@@ -139,7 +139,8 @@ const Projects = () => {
           titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
           modifiers={{
             startDate: (x) => x.slice(0, 10),
-            active: (x) => (x ? 'Active' : 'Inactive')
+            active: (x) => (x ? 'Active' : 'Inactive'),
+            projectManager: (x) => (x ? x : 'Not selected')
           }}
           delAction={openConfirmModal}
           editAction={openModalFormEdit}
