@@ -5,7 +5,9 @@ import Layout from 'Components/Layout';
 import Admins from 'Components/Admin/Admins';
 import SuperAdmins from 'Components/Admin/SuperAdmins';
 import Employees from 'Components/Admin/Employees';
+import EmployeeId from 'Components/Admin/Employees/EmployeePage';
 import Projects from 'Components/Admin/Projects';
+import ProjectId from 'Components/Admin/Projects/ProjectPage';
 import Timesheets from 'Components/Admin/TimeSheets';
 import Tasks from 'Components/Admin/Tasks';
 import TaskId from 'Components/Admin/Tasks/TaskId';
@@ -42,7 +44,9 @@ const Admin = () => {
         <Route exact path={`${url}/admins`} component={Admins} />
         <Route exact path={`${url}/super-admins`} component={SuperAdmins} />
         <Route exact path={`${url}/employees`} component={Employees} />
+        <Route exact path={`${url}/employees/:id`} component={EmployeeId} />
         <Route exact path={`${url}/projects`} component={Projects} />
+        <Route exact path={`${url}/projects/:id`} component={ProjectId} />
         <Route exact path={`${url}/time-sheets`} component={Timesheets} />
         <Route exact path={`${url}/tasks`} component={Tasks} />
         <Route exact path={`${url}/tasks/:id`} component={TaskId} />
