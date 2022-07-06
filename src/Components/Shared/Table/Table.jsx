@@ -4,7 +4,7 @@ import ButtonEdit from '../../Shared/Buttons/ButtonEdit';
 import styles from './table.module.css';
 
 const Table = (props) => {
-  const { data, titles, headers, delAction, editAction, modifiers } = props;
+  const { data, titles, headers, delAction, editAction, modifiers, redirect } = props;
 
   return (
     <div>
@@ -25,7 +25,13 @@ const Table = (props) => {
         <tbody className={styles.tbody}>
           {data.map((row) => {
             return (
-              <tr key={row._id} className={styles.tr}>
+              <tr
+                key={row._id}
+                className={styles.tr}
+                onClick={() => {
+                  redirect(row._id);
+                }}
+              >
                 {headers.map((header, index) => {
                   return (
                     <td key={`${row._id}-${index}`} className={styles.td}>

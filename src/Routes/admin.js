@@ -8,6 +8,7 @@ import Employees from 'Components/Admin/Employees';
 import Projects from 'Components/Admin/Projects';
 import Timesheets from 'Components/Admin/TimeSheets';
 import Tasks from 'Components/Admin/Tasks';
+import TaskId from 'Components/Admin/Tasks/TaskId';
 import {
   faClock,
   faFolderClosed,
@@ -44,6 +45,7 @@ const Admin = () => {
         <Route exact path={`${url}/projects`} component={Projects} />
         <Route exact path={`${url}/time-sheets`} component={Timesheets} />
         <Route exact path={`${url}/tasks`} component={Tasks} />
+        <Route exact path={`${url}/tasks/:id`} component={TaskId} />
         <Route exact path={`${url}/`} component={Home} />
         <Redirect to={`${url}`} />
       </Switch>

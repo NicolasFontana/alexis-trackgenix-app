@@ -8,10 +8,11 @@ import {
 } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { delTask, getTasks } from '../../../redux/tasks/thunks';
+import { delTask, getTasks } from 'redux/tasks/thunks';
 import EditForm from './Edit/Edit';
 import Form from './Form/Form';
 import styles from './tasks.module.css';
+import { useHistory, generatePath } from 'react-router-dom';
 
 function Tasks() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function Tasks() {
   let modalEdit;
   let modalAdd;
   let modalMessage;
+  let history = useHistory();
 
   useEffect(() => {
     dispatch(getTasks());
@@ -65,6 +67,10 @@ function Tasks() {
 
   const closeMessageModal = () => {
     setShowMessageModal(false);
+  };
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/tasks/:id', { id }));
   };
 
   if (showModalFormEdit) {
@@ -120,6 +126,7 @@ function Tasks() {
         modifiers={{
           startDate: (x) => x?.slice(0, 10)
         }}
+        redirect={redirectAction}
       />
       <ErrorSuccessModal
         show={showMessageModal}
