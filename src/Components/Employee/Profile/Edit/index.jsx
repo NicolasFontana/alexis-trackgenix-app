@@ -46,23 +46,23 @@ const schema = Joi.object({
   password: Joi.string()
     .min(8)
     .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?!.*[^a-zA-Z0-9])/)
-    .required()
+    .allow('')
     .messages({
       'string.min': 'Password must contain at least 8 characters',
       'string.pattern.base': 'Password must contain both letters and numbers',
       'string.empty': 'Password is a required field'
     }),
-  address: Joi.string().min(4).messages({
+  address: Joi.string().allow('').min(4).messages({
     'string.min': 'Invalid address, it must contain more than 4 letters'
   }),
-  picture: Joi.string().min(4).messages({
+  picture: Joi.string().allow('').min(4).messages({
     'string.min': 'Invalid picture URL, it must contain more than 4 letters'
   }),
-  dni: Joi.number().integer().min(0).messages({
+  dni: Joi.number().allow('', null).integer().min(0).messages({
     'number.integer': 'Invalid number, it must be an integer',
     'number.min': 'Invalid number, it must be positive'
   }),
-  dateBirth: Joi.date()
+  dateBirth: Joi.date().allow('', null)
 });
 
 const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
@@ -71,6 +71,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const [response, setResponse] = useState('');
 
   const id = employeeEdit._id;
+  let body;
 
   const onSubmit = (data) => {
     if (
@@ -78,7 +79,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       data.lastName === employeeEdit.lastName &&
       data.phone === employeeEdit.phone &&
       data.email === employeeEdit.email &&
-      data.password === employeeEdit.password &&
+      data.password === '' &&
       data.address === employeeEdit.address &&
       data.picture === employeeEdit.picture &&
       data.dni === employeeEdit.dni &&
@@ -87,17 +88,30 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      let body = JSON.stringify({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-        email: data.email,
-        password: data.password,
-        address: data.address,
-        picture: data.picture,
-        dni: data.dni,
-        dateBirth: data.dateBirth
-      });
+      if (data.password === '') {
+        body = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          email: data.email,
+          address: data.address,
+          picture: data.picture,
+          dni: data.dni,
+          dateBirth: data.dateBirth
+        });
+      } else {
+        body = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          email: data.email,
+          password: data.password,
+          address: data.address,
+          picture: data.picture,
+          dni: data.dni,
+          dateBirth: data.dateBirth
+        });
+      }
       dispatch(updateEmployee(body, id, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
@@ -116,7 +130,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       lastName: employeeEdit.lastName,
       phone: employeeEdit.phone,
       email: employeeEdit.email,
-      password: employeeEdit.password,
+      password: '',
       address: employeeEdit.address,
       picture: employeeEdit.picture,
       dni: employeeEdit.dni,
