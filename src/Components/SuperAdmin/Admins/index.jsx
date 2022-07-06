@@ -131,8 +131,8 @@ const Admins = () => {
         <ButtonText label="ADD ADMIN" clickAction={openAddModal}></ButtonText>
         <Table
           data={admins}
-          headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
-          titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
+          headers={['_id', 'firstName', 'lastName', 'email', 'active']}
+          titles={['ID', 'First Name', 'Last Name', 'Email', 'Active']}
           delAction={openConfirmModal}
           editAction={openEditModal}
           modifiers={{

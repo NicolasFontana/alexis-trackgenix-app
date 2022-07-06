@@ -40,7 +40,7 @@ const adminSchema = Joi.object({
   password: Joi.string()
     .min(8)
     .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?!.*[^a-zA-Z0-9])/)
-    .required()
+    .allow('')
     .messages({
       'string.min': 'Invalid password, it must contain at least 8 characters',
       'string.pattern.base': 'Invalid password, it must contain both letters and numbers',
@@ -54,24 +54,34 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
 
+  let editedAdmin;
   const onSubmit = (data) => {
-    let editedAdmin = JSON.stringify({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      active: data.active
-    });
     if (
       data.firstName === edit.firstName &&
       data.lastName === edit.lastName &&
       data.email === edit.email &&
-      data.password === edit.password &&
+      data.password === '' &&
       data.active === edit.active
     ) {
       setResponse({ message: "There hasn't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
+      if (data.password === '') {
+        editedAdmin = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          active: data.active
+        });
+      } else {
+        editedAdmin = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          active: data.active
+        });
+      }
       dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
@@ -89,7 +99,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       firstName: edit.firstName,
       lastName: edit.lastName,
       email: edit.email,
-      password: edit.password,
+      password: '',
       active: edit.active
     }
   });
