@@ -25,16 +25,14 @@ const Table = (props) => {
         <tbody className={styles.tbody}>
           {data.map((row) => {
             return (
-              <tr
-                key={row._id}
-                className={styles.tr}
-                onClick={() => {
-                  redirect(row._id);
-                }}
-              >
+              <tr key={row._id} className={styles.tr}>
                 {headers.map((header, index) => {
                   return (
-                    <td key={`${row._id}-${index}`} className={styles.td}>
+                    <td
+                      key={`${row._id}-${index}`}
+                      onClick={() => redirect(row._id)}
+                      className={styles.td}
+                    >
                       {modifiers[header] ? modifiers[header](row[header]) : row[header]}
                     </td>
                   );
