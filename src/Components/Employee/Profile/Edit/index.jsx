@@ -83,7 +83,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       data.address === employeeEdit.address &&
       data.picture === employeeEdit.picture &&
       data.dni === employeeEdit.dni &&
-      data.dateBirth.toString() == new Date(employeeEdit.dateBirth)
+      (data.dateBirth?.toString() == new Date(employeeEdit.dateBirth) || data.dateBirth === null)
     ) {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
@@ -134,7 +134,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       address: employeeEdit.address,
       picture: employeeEdit.picture,
       dni: employeeEdit.dni,
-      dateBirth: employeeEdit.dateBirth?.slice(0, 10)
+      dateBirth: employeeEdit.dateBirth ? employeeEdit.dateBirth.slice(0, 10) : null
     }
   });
 
