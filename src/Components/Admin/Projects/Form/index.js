@@ -130,20 +130,22 @@ const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
           register={register}
           error={errors.active?.message}
         />
-        <Input
-          label="Start Date"
-          type="date"
-          name="startDate"
-          register={register}
-          error={errors.startDate?.message}
-        />
-        <Input
-          label="End Date"
-          type="date"
-          name="endDate"
-          register={register}
-          error={errors.endDate?.message}
-        />
+        <div className={styles.dateContainer}>
+          <Input
+            label="Start Date"
+            type="date"
+            name="startDate"
+            register={register}
+            error={errors.startDate?.message}
+          />
+          <Input
+            label="End Date"
+            type="date"
+            name="endDate"
+            register={register}
+            error={errors.endDate?.message}
+          />
+        </div>
         <Textarea
           label="Description"
           name="description"

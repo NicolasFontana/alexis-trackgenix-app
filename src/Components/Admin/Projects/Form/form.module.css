@@ -15,6 +15,17 @@
   margin: 5px 0 10px 20px
 }
 
+
+.dateContainer {
+  display: flex;
+  flex:50;
+}
+
+.dateContainer div:first-child {
+  margin: 10px
+}
+
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
