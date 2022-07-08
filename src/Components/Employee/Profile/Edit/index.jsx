@@ -8,6 +8,9 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
 
+const now = Date.now();
+const cutoffDate = new Date(now - 1000 * 60 * 60 * 24 * 365 * 18);
+
 const schema = Joi.object({
   firstName: Joi.string()
     .min(3)
@@ -58,11 +61,14 @@ const schema = Joi.object({
   picture: Joi.string().allow('').min(4).messages({
     'string.min': 'Invalid picture URL, it must contain more than 4 letters'
   }),
-  dni: Joi.number().allow('', null).integer().min(0).messages({
+  dni: Joi.number().allow('', null).integer().min(20000000).max(100000000).messages({
     'number.integer': 'Invalid number, it must be an integer',
-    'number.min': 'Invalid number, it must be positive'
+    'number.min': 'Invalid number, it must be a valid DNI(Between 20000000 and 100000000)',
+    'number.max': 'Invalid number, it must be a valid DNI(Between 20000000 and 100000000)'
   }),
-  dateBirth: Joi.date().allow('', null)
+  dateBirth: Joi.date().allow('', null).max(cutoffDate).messages({
+    'date.max': 'Invalid date, it must be older than 18 years'
+  })
 });
 
 const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {

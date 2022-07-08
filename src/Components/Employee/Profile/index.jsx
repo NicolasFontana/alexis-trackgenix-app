@@ -76,12 +76,12 @@ const EmployeeProfile = () => {
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Address:</h3>
           <p className={styles.rowText}>{`${
-            employee?.address === '' ? 'Not provided' : employee.address
+            employee?.address ? employee?.address : 'Not provided'
           }`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>DNI:</h3>
-          <p className={styles.rowText}>{`${employee?.dni ? employee.dni : 'Not provided'}`}</p>
+          <p className={styles.rowText}>{`${employee?.dni ? employee?.dni : 'Not provided'}`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Date of Birth:</h3>
