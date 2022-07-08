@@ -38,7 +38,7 @@ const Table = (props) => {
                     cell = (
                       <td
                         key={`${row._id}-${index}`}
-                        onClick={() => redirect(row._id)}
+                        onClick={() => (redirect ? redirect(row._id) : null)}
                         className={styles.td}
                       >
                         {row[header]}
