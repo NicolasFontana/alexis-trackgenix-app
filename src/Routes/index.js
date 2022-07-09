@@ -9,6 +9,7 @@ import { Preloader } from 'Components/Shared';
 const MainHomeRoutes = lazy(() => import('./home'));
 const AdminRoutes = lazy(() => import('./admin'));
 const EmployeeRoutes = lazy(() => import('./employee'));
+const SuperAdminRoutes = lazy(() => import('./super-admin'));
 const Error404 = lazy(() => import('Components/Error404'));
 const AuthRoutes = lazy(() => import('./auth'));
 
@@ -32,6 +33,7 @@ const Routes = () => {
         <Route path="/home" component={MainHomeRoutes} />
         <PrivateRoute path="/admin" role="ADMIN" component={AdminRoutes} />
         <PrivateRoute path="/employee" role="EMPLOYEE" component={EmployeeRoutes} />
+        <PrivateRoute path="/super-admin" role="SUPERADMIN" component={SuperAdminRoutes} />
         <Route path="/auth" component={AuthRoutes} />
         <Route exact path="/">
           <Redirect to="/home" />

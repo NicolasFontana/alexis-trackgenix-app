@@ -3,8 +3,13 @@ import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import Home from 'Components/Admin/Home';
 import Layout from 'Components/Layout';
 import Employees from 'Components/Admin/Employees';
+import EmployeePage from 'Components/Admin/Employees/EmployeePage';
 import Projects from 'Components/Admin/Projects';
 import { faFolderClosed, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
+import ProjectPage from 'Components/Admin/Projects/ProjectPage';
+import Timesheets from 'Components/Admin/TimeSheets';
+import Tasks from 'Components/Admin/Tasks';
+import TaskId from 'Components/Admin/Tasks/TaskId';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
@@ -23,7 +28,12 @@ const Admin = () => {
     <Layout routes={adminsRoutes} logout>
       <Switch>
         <Route exact path={`${url}/employees`} component={Employees} />
+        <Route exact path={`${url}/employees/:id`} component={EmployeePage} />
         <Route exact path={`${url}/projects`} component={Projects} />
+        <Route exact path={`${url}/projects/:id`} component={ProjectPage} />
+        <Route exact path={`${url}/time-sheets`} component={Timesheets} />
+        <Route exact path={`${url}/tasks`} component={Tasks} />
+        <Route exact path={`${url}/tasks/:id`} component={TaskId} />
         <Route exact path={`${url}/`} component={Home} />
         <Redirect to={`${url}`} />
       </Switch>

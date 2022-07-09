@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
+import { useHistory, generatePath } from 'react-router-dom';
 import styles from './employees.module.css';
 import Form from './Form';
 import {
@@ -22,9 +23,15 @@ const Employees = () => {
   const [response, setResponse] = useState('');
   const [employeeId, setEmployeeId] = useState();
 
+  let history = useHistory();
+
   useEffect(() => {
     dispatch(getEmployees());
   }, []);
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/employees/:id', { id }));
+  };
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
@@ -93,6 +100,7 @@ const Employees = () => {
             />
           )
         }}
+        redirect={redirectAction}
       />
       {modalEdit}
       {modalDelete}
