@@ -34,6 +34,7 @@
   text-align: center;
   color: #232f3e;
   word-wrap: break-word;
+  cursor: pointer;
 }
 
 .tdButton {
