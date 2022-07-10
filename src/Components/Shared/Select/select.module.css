@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 78px;
 }
 
 .label {
   display: block;
   padding-bottom: 3px;
+  margin-bottom: 5px;
   text-align: justify;
   font-weight: 700;
   font-size: 14px;
