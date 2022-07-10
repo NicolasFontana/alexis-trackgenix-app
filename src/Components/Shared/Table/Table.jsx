@@ -27,25 +27,19 @@ const Table = (props) => {
             return (
               <tr key={row._id} className={styles.tr}>
                 {headers.map((header, index) => {
-                  let cell;
-                  if (modifiers[header]) {
-                    cell = (
-                      <td key={`${row._id}-${index}`} className={styles.td}>
-                        {modifiers[header](row[header])}
-                      </td>
-                    );
-                  } else {
-                    cell = (
-                      <td
-                        key={`${row._id}-${index}`}
-                        onClick={() => (redirect ? redirect(row._id) : null)}
-                        className={styles.td}
-                      >
-                        {row[header]}
-                      </td>
-                    );
-                  }
-                  return cell;
+                  return (
+                    <td
+                      key={`${row._id}-${index}`}
+                      className={styles.td}
+                      onPointerDown={() => (redirect ? redirect(row._id) : null)}
+                    >
+                      {modifiers
+                        ? modifiers[header]
+                          ? modifiers[header](row[header])
+                          : row[header]
+                        : row[header]}
+                    </td>
+                  );
                 })}
                 {editAction ? (
                   <td className={styles.tdButton}>
