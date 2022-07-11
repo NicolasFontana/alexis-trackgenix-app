@@ -1,11 +1,11 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
+import * as Joi from 'joi';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { getProjectById, updateProject, addProject } from 'redux/projects/thunks';
-import { ButtonText, Input, Textarea, ErrorSuccessModal } from 'Components/Shared';
 import styles from './form.module.css';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import * as Joi from 'joi';
 
 const schema = Joi.object({
   name: Joi.string()
@@ -48,11 +48,10 @@ const schema = Joi.object({
     .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
     .required()
     .messages({
-      'string.min': 'Client name must contain more than 3 letters',
-      'string.max': 'Client name must not contain more than 50 letters',
-      'string.pattern.base':
-        'Client name must contain only letters and start with a capital letter',
-      'string.empty': 'Client name is a required field'
+      'string.min': 'Client must contain more than 3 letters',
+      'string.max': 'Client must not contain more than 50 letters',
+      'string.pattern.base': 'Client must contain only letters and and be capitalized',
+      'string.empty': 'Client is a required field'
     }),
   active: Joi.boolean().required()
 });
