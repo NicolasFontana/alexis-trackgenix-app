@@ -20,15 +20,28 @@ const schema = Joi.object({
         'Project name must contain only letters and start with a capital letter',
       'string.empty': 'Project name is a required field'
     }),
-  description: Joi.string().min(4).required().messages({
-    'string.min': 'Description must contain more than 4 letters',
-    'string.empty': 'Description is a required field'
+  description: Joi.string()
+    .pattern(/(.*[a-zA-Z]){4}/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Description must contain at least 4 letters',
+      'string.empty': 'Description is a required field'
+    }),
+  startDate: Joi.date().min('01-01-1950').max('12-31-2050').required().messages({
+    'date.min': 'Only dates from 1950 are accepted',
+    'date.max': 'Only dates up to 2050 are accepted',
+    'date.base': 'Start date is a required field'
   }),
-  startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   endDate: Joi.date()
     .greater(Joi.ref('startDate'))
+    .min('01-01-1950')
+    .max('12-31-2050')
     .allow('')
-    .messages({ 'date.greater': 'End Date must be after the start date' }),
+    .messages({
+      'date.greater': 'End Date must be after the start date',
+      'date.min': 'Only dates from 1950 are accepted',
+      'date.max': 'Only dates up to 2050 are accepted'
+    }),
   clientName: Joi.string()
     .min(3)
     .max(50)
