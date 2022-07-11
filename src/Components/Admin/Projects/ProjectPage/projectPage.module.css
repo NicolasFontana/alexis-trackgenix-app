@@ -8,6 +8,10 @@
   margin: 2%;
 }
 
+.container td {
+  max-width: unset;
+}
+
 .title {
   font-size: 36px;
   font-weight: 700;

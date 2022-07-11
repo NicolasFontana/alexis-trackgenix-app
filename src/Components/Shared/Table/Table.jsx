@@ -25,11 +25,11 @@ const Table = (props) => {
         <tbody className={styles.tbody}>
           {data.map((row) => {
             return (
-              <tr key={row._id} className={styles.tr}>
+              <tr key={row._id ? row._id : row.employeeId._id} className={styles.tr}>
                 {headers.map((header, index) => {
                   return (
                     <td
-                      key={`${row._id}-${index}`}
+                      key={`${row._id ? row._id : row.employeeId_id}-${index}`}
                       className={styles.td}
                       onPointerDown={() => (redirect ? redirect(row._id) : null)}
                     >

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 // import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import styles from './projectPage.module.css';
-import { Preloader } from 'Components/Shared';
+import { Preloader, Table } from 'Components/Shared';
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
@@ -57,6 +57,16 @@ const ProjectPage = () => {
           <p>{project?.active ? 'Active' : 'Inactive'}</p>
         </div>
       </div>
+      <Table
+        data={project?.members}
+        headers={['employeeId', 'role', 'rate']}
+        titles={['Name', 'Role', 'Rate']}
+        modifiers={{
+          employeeId: (x) => `${x.firstName} ${x.lastName}`
+        }}
+        delAction={(x) => console.log(x)}
+        editAction={(x) => console.log(x)}
+      />
     </section>
   );
 };
