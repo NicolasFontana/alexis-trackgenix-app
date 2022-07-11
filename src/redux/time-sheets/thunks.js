@@ -22,30 +22,9 @@ export const getAllTimesheets = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getAllTimesheetsSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getAllTimesheetsError(error.toString()));
-      });
-  };
-};
-
-export const deleteTimesheet = (id, setResponse) => {
-  return (dispatch) => {
-    dispatch(deleteTimesheetPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
-      method: 'DELETE'
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        dispatch(deleteTimesheetSuccess(response.data));
-        dispatch(getAllTimesheets());
-        setResponse(response);
-        return response.data;
-      })
-      .catch((error) => {
-        dispatch(deleteTimesheetError(error.toString()));
-        setResponse(error);
       });
   };
 };
@@ -66,16 +45,15 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (!response.error) {
-          dispatch(createTimesheetSuccess(response.data));
+        if (response.error) {
+          throw response.error;
         }
-        dispatch(getAllTimesheets());
+        dispatch(createTimesheetSuccess(response.data));
         setMessage(response);
-        return response;
       })
       .catch((error) => {
-        dispatch(createTimesheetError(error.toString()));
-        setMessage(error);
+        dispatch(createTimesheetError(error));
+        setMessage(error.toString());
       });
   };
 };
@@ -96,14 +74,30 @@ export const putTimesheet = (userInput, id, setMessage) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(putTimesheetSuccess(response.data));
-        dispatch(getAllTimesheets());
+        dispatch(putTimesheetSuccess(id));
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(putTimesheetError(error.toString()));
         setMessage(error);
+      });
+  };
+};
+
+export const deleteTimesheet = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(deleteTimesheetPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteTimesheetSuccess(id));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(deleteTimesheetError(error.toString()));
+        setResponse(error);
       });
   };
 };

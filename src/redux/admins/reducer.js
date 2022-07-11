@@ -21,6 +21,7 @@ const initialState = {
 
 export const adminsReducer = (state = initialState, action) => {
   switch (action.type) {
+    //GET ADMINS
     case GET_ADMINS_PENDING:
       return {
         ...state,
@@ -35,9 +36,10 @@ export const adminsReducer = (state = initialState, action) => {
     case GET_ADMINS_ERROR:
       return {
         ...state,
-        isLoading: false,
-        list: action.payload
+        list: action.payload,
+        isLoading: false
       };
+    //ADD ADMIN
     case ADD_ADMIN_PENDING:
       return {
         ...state,
@@ -55,6 +57,7 @@ export const adminsReducer = (state = initialState, action) => {
         list: action.payload,
         isLoading: false
       };
+    //EDIT ADMIN
     case EDIT_ADMIN_PENDING:
       return {
         ...state,
@@ -63,6 +66,12 @@ export const adminsReducer = (state = initialState, action) => {
     case EDIT_ADMIN_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
     case EDIT_ADMIN_ERROR:
@@ -71,6 +80,7 @@ export const adminsReducer = (state = initialState, action) => {
         list: action.payload,
         isLoading: false
       };
+    //DELETE ADMIN
     case DELETE_ADMIN_PENDING:
       return {
         ...state,

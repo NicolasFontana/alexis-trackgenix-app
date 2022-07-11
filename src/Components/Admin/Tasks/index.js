@@ -111,6 +111,7 @@ function Tasks() {
       {modalEdit}
       {modalAdd}
       {modalMessage}
+      {isLoading ? <Preloader /> : null}
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}

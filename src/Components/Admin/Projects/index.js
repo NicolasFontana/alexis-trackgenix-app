@@ -14,28 +14,41 @@ import Form from './Form';
 import styles from './projects.module.css';
 
 const Projects = () => {
-  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idToEdit, setIdToEdit] = useState();
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
   const [message, setMessage] = useState('');
 
+  let modalEdit;
+  let modalDelete;
+  let modalAdd;
+  let modalErrorSuccess;
+  let history = useHistory();
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/projects/:id', { id }));
+  };
+
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
   };
 
   const openModalFormEdit = (id) => {
-    setIdToEdit(id);
+    setProjectId(id);
     setShowModalFormEdit(true);
   };
 
   const openModalAdd = () => {
     setModalAdd(true);
+  };
+
+  const closeModalAdd = () => {
+    setModalAdd(false);
   };
 
   const openConfirmModal = (_id) => {
@@ -49,19 +62,13 @@ const Projects = () => {
     setModalAdd(false);
   };
 
-  const closeModalAdd = () => {
-    setModalAdd(false);
-  };
-
   const closeErrorSuccessModal = () => {
     setErrorSuccessModal(false);
   };
 
   useEffect(() => {
     dispatch(getProjects());
-  }, []);
-
-  let modalEdit;
+  }, [showModalFormEdit === false, showModalAdd === false, showConfirmModal === false]);
 
   if (showModalFormEdit) {
     modalEdit = (
@@ -69,8 +76,8 @@ const Projects = () => {
         <Form
           closeModalForm={closeModalFormEdit}
           edit={true}
-          project={projects.find((project) => project._id == idToEdit)}
-          projectID={idToEdit}
+          project={projects.find((project) => project._id == projectId)}
+          projectID={projectId}
         />
       </ModalForm>
     );
@@ -82,16 +89,6 @@ const Projects = () => {
       setErrorSuccessModal(true);
     });
   };
-
-  let history = useHistory();
-
-  const redirectAction = (id) => {
-    history.push(generatePath('/admin/projects/:id', { id }));
-  };
-
-  let modalDelete;
-  let modalAdd;
-  let modalErrorSuccess;
 
   if (showConfirmModal) {
     modalDelete = (
@@ -137,7 +134,6 @@ const Projects = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      {isLoading ? <Preloader /> : null}
       <div className={styles.divContainer}>
         <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
         <Table

@@ -27,7 +27,7 @@ const Employees = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+  }, [showModalFormDelete === false]);
 
   const redirectAction = (id) => {
     history.push(generatePath('/admin/employees/:id', { id }));
