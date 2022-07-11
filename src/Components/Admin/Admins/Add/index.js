@@ -51,6 +51,7 @@ const adminSchema = Joi.object({
 
 const AdminsAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
 

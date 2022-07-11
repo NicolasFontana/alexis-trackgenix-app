@@ -44,9 +44,7 @@ export const addTask = (task, setMessage) => {
         if (response.error === false) {
           dispatch(addTaskSuccess(response.data));
         }
-        dispatch(getTasks());
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(addTaskError(error.toString()));
@@ -68,9 +66,7 @@ export const editTask = (task, id, setMessage) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(editTaskSuccess(response.data));
-        dispatch(getTasks());
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(editTaskError(error.toString()));
@@ -88,9 +84,7 @@ export const delTask = (id, setMessage) => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(deleteTaskSuccess(id));
-        dispatch(getTasks());
         setMessage(response);
-        return response.data;
       })
       .catch((error) => {
         dispatch(deleteTaskError(error.toString()));

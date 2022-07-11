@@ -29,7 +29,7 @@ const Employees = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+  }, [showModalFormAdd === false, showModalFormDelete === false, showModalFormEdit === false]);
 
   const redirectAction = (id) => {
     history.push(generatePath('/admin/employees/:id', { id }));

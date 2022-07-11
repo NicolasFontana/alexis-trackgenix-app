@@ -2,93 +2,69 @@ import {
   GET_SUPER_ADMINS_PENDING,
   GET_SUPER_ADMINS_SUCCESS,
   GET_SUPER_ADMINS_ERROR,
-  POST_SUPER_ADMINS_PENDING,
-  POST_SUPER_ADMINS_SUCCESS,
-  POST_SUPER_ADMINS_ERROR,
-  DELETE_SUPER_ADMINS_PENDING,
-  DELETE_SUPER_ADMINS_SUCCESS,
-  DELETE_SUPER_ADMINS_ERROR,
-  PUT_SUPER_ADMINS_PENDING,
-  PUT_SUPER_ADMINS_SUCCESS,
-  PUT_SUPER_ADMINS_ERROR
+  POST_SUPER_ADMIN_PENDING,
+  POST_SUPER_ADMIN_SUCCESS,
+  POST_SUPER_ADMIN_ERROR,
+  PUT_SUPER_ADMIN_PENDING,
+  PUT_SUPER_ADMIN_SUCCESS,
+  PUT_SUPER_ADMIN_ERROR,
+  DELETE_SUPER_ADMIN_PENDING,
+  DELETE_SUPER_ADMIN_SUCCESS,
+  DELETE_SUPER_ADMIN_ERROR
 } from './constants';
 
-export const getSuperAdminsPending = () => {
-  return {
-    type: GET_SUPER_ADMINS_PENDING
-  };
-};
+export const getSuperAdminsPending = () => ({
+  type: GET_SUPER_ADMINS_PENDING
+});
 
-export const getSuperAdminsSuccess = (data) => {
-  return {
-    type: GET_SUPER_ADMINS_SUCCESS,
-    payload: data
-  };
-};
+export const getSuperAdminsSuccess = (data) => ({
+  type: GET_SUPER_ADMINS_SUCCESS,
+  payload: data
+});
 
-export const getSuperAdminsError = (error) => {
-  return {
-    type: GET_SUPER_ADMINS_ERROR,
-    payload: error
-  };
-};
+export const getSuperAdminsError = (error) => ({
+  type: GET_SUPER_ADMINS_ERROR,
+  payload: error
+});
 
-export const postSuperAdminsPending = () => {
-  return {
-    type: POST_SUPER_ADMINS_PENDING
-  };
-};
+export const postSuperAdminPending = () => ({
+  type: POST_SUPER_ADMIN_PENDING
+});
 
-export const postSuperAdminsSuccess = (data) => {
-  return {
-    type: POST_SUPER_ADMINS_SUCCESS,
-    payload: data
-  };
-};
+export const postSuperAdminSuccess = (data) => ({
+  type: POST_SUPER_ADMIN_SUCCESS,
+  payload: data
+});
 
-export const postSuperAdminsError = (error) => {
-  return {
-    type: POST_SUPER_ADMINS_ERROR,
-    payload: error
-  };
-};
+export const postSuperAdminError = (error) => ({
+  type: POST_SUPER_ADMIN_ERROR,
+  payload: error
+});
 
-export const deleteSuperAdminsPending = () => {
-  return {
-    type: DELETE_SUPER_ADMINS_PENDING
-  };
-};
+export const putSuperAdminPending = () => ({
+  type: PUT_SUPER_ADMIN_PENDING
+});
 
-export const deleteSuperAdminsSuccess = (dataid) => {
-  return {
-    type: DELETE_SUPER_ADMINS_SUCCESS,
-    payload: dataid
-  };
-};
+export const putSuperAdminSuccess = (data) => ({
+  type: PUT_SUPER_ADMIN_SUCCESS,
+  payload: data
+});
 
-export const deleteSuperAdminsError = (error) => {
-  return {
-    type: DELETE_SUPER_ADMINS_ERROR,
-    payload: error
-  };
-};
+export const putSuperAdminError = (error) => ({
+  type: PUT_SUPER_ADMIN_ERROR,
+  payload: error
+});
 
-export const putSuperAdminsPending = () => {
-  return {
-    type: PUT_SUPER_ADMINS_PENDING
-  };
-};
+export const deleteSuperAdminPending = () => ({
+  type: DELETE_SUPER_ADMIN_PENDING
+});
 
-export const putSuperAdminsSuccess = (data) => {
-  return {
-    type: PUT_SUPER_ADMINS_SUCCESS,
-    payload: data
-  };
-};
+export const deleteSuperAdminSuccess = (data) => ({
+  type: DELETE_SUPER_ADMIN_SUCCESS,
+  payload: data
+});
 
-export const putSuperAdminsError = (error) => {
-  return {
-    type: PUT_SUPER_ADMINS_ERROR,
-    payload: error
-  };
-};
+export const deleteSuperAdminError = (error) => ({
+  type: DELETE_SUPER_ADMIN_ERROR,
+  payload: error
+});

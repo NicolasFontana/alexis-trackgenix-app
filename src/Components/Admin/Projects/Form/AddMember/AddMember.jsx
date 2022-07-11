@@ -24,14 +24,15 @@ const schema = Joi.object({
 });
 
 const AddMember = ({ itemId, functionValue }) => {
-  let edit;
-  let projectId = itemId;
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.list);
+
   let [projectMembers, setProjectMembers] = useState([]);
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees.list);
+  let edit;
+  let projectId = itemId;
 
   useEffect(() => {
     dispatch(getEmployees());
