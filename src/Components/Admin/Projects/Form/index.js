@@ -1,12 +1,12 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
+import * as Joi from 'joi';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { getProjectById, updateProject } from 'redux/projects/thunks';
-import { ButtonText, Input, Textarea, ErrorSuccessModal } from 'Components/Shared';
 import styles from './form.module.css';
 import ListMembers from './ListMembers/ListMembers';
-import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import * as Joi from 'joi';
 
 const schema = Joi.object({
   name: Joi.string()
@@ -15,10 +15,9 @@ const schema = Joi.object({
     .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
     .required()
     .messages({
-      'string.min': 'Project name must contain more than 3 letters',
-      'string.max': 'Project name must not contain more than 50 letters',
-      'string.pattern.base':
-        'Project name must contain only letters and start with a capital letter',
+      'string.min': 'Name must contain more than 3 letters',
+      'string.max': 'Name must not contain more than 50 letters',
+      'string.pattern.base': 'Name must contain only letters and be capitalized',
       'string.empty': 'Name is a required field'
     }),
   description: Joi.string().min(4).required().messages({
@@ -36,11 +35,10 @@ const schema = Joi.object({
     .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
     .required()
     .messages({
-      'string.min': 'Client name must contain more than 3 letters',
-      'string.max': 'Client name must not contain more than 50 letters',
-      'string.pattern.base':
-        'Client name must contain only letters and start with a capital letter',
-      'string.empty': 'Client name is a required field'
+      'string.min': 'Client must contain more than 3 letters',
+      'string.max': 'Client must not contain more than 50 letters',
+      'string.pattern.base': 'Client must contain only letters and and be capitalized',
+      'string.empty': 'Client is a required field'
     }),
   active: Joi.boolean().required()
 });
@@ -120,13 +118,6 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               error={errors.clientName?.message}
             />
             <Input
-              label="Active"
-              name="active"
-              type="checkbox"
-              register={register}
-              error={errors.active?.message}
-            />
-            <Input
               label="Start Date"
               type="date"
               name="startDate"
@@ -139,6 +130,13 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
               name="endDate"
               register={register}
               error={errors.endDate?.message}
+            />
+            <Input
+              label="Active"
+              name="active"
+              type="checkbox"
+              register={register}
+              error={errors.active?.message}
             />
           </div>
           <div className={styles.larger}>
