@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmins } from 'redux/super-admins/thunks';
-import { Preloader, ButtonAdd, Table, ModalForm, ConfirmModal } from 'Components/Shared';
+import { getSuperAdmins, deleteSuperAdmin } from 'redux/super-admins/thunks';
+import {
+  Preloader,
+  ButtonAdd,
+  Table,
+  ModalForm,
+  ConfirmModal,
+  ErrorSuccessModal
+} from 'Components/Shared';
 import FormAdd from './Form/Add';
 import FormEdit from './Form/Edit';
 import styles from './super-admins.module.css';
@@ -10,10 +17,28 @@ const App = () => {
   const dispatch = useDispatch();
   const superAdmins = useSelector((state) => state.superAdmins.list);
   const isLoading = useSelector((state) => state.superAdmins.isLoading);
+
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [message, setMessage] = useState('');
   const [superAdminId, setSuperAdminId] = useState();
+
+  let modalDelete;
+  let modalAdd;
+  let modalEdit;
+
+  useEffect(() => {
+    dispatch(getSuperAdmins());
+  }, [showModalFormAdd === false, showModalFormDelete === false, showModalFormEdit === false]);
+
+  const handleConfirm = () => {
+    dispatch(deleteSuperAdmin(superAdminId, (response) => setMessage(response))).then(() => {
+      setShowModalFormDelete(false);
+      setShowMessageModal(true);
+    });
+  };
 
   const addOpen = () => {
     setShowModalFormAdd(true);
@@ -32,28 +57,10 @@ const App = () => {
     setShowModalFormEdit(false);
   };
 
-  useEffect(() => {
-    dispatch(getSuperAdmins());
-  }, []);
+  const closeMessageModal = () => {
+    setShowMessageModal(false);
+  };
 
-  let modalDelete;
-  if (showModalFormDelete) {
-    modalDelete = (
-      <ConfirmModal
-        isOpen={showModalFormDelete}
-        handleClose={() => {
-          setShowModalFormDelete(false);
-        }}
-        confirmDelete={() => {
-          dispatch(deleteSuperAdmins(superAdminId)).then(() => setShowModalFormDelete(false));
-        }}
-        title="Delete Super Admin"
-        message="Are you sure you want to delete this Super Admin?"
-      />
-    );
-  }
-
-  let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalFormAdd} handleClose={addClose} title="Add Super Admin">
@@ -62,7 +69,6 @@ const App = () => {
     );
   }
 
-  let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={editClose} title="Edit Super Admin">
@@ -74,13 +80,35 @@ const App = () => {
     );
   }
 
-  return isLoading && !showModalFormEdit && !showModalFormAdd && !showModalFormDelete ? (
+  if (showModalFormDelete) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showModalFormDelete}
+        handleClose={() => {
+          setShowModalFormDelete(false);
+        }}
+        confirmDelete={handleConfirm}
+        title="Delete Super Admin"
+        message="Are you sure you want to delete this Super Admin?"
+      />
+    );
+  }
+
+  return isLoading &&
+    !showModalFormEdit &&
+    !showModalFormAdd &&
+    !showModalFormDelete &&
+    !showMessageModal ? (
     <Preloader>
       <p>Loading Super Admins</p>
     </Preloader>
   ) : (
     <div className={styles.containerApp}>
       <h2 className={styles.title}>Super Admins</h2>
+      {modalAdd}
+      {modalEdit}
+      {modalDelete}
+      {isLoading ? <Preloader /> : null}
       <Table
         data={superAdmins}
         headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
@@ -94,10 +122,13 @@ const App = () => {
           active: (x) => (x ? 'Active' : 'Inactive')
         }}
       />
-      {modalAdd}
-      {modalEdit}
-      {modalDelete}
       {isLoading ? <Preloader /> : null}
+      <ErrorSuccessModal
+        show={showMessageModal}
+        closeModal={closeMessageModal}
+        closeModalForm={closeMessageModal}
+        successResponse={message}
+      />
       <ButtonAdd clickAction={addOpen}></ButtonAdd>
     </div>
   );

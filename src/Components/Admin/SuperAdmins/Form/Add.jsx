@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import styles from './add.module.css';
 import { ButtonText, Input, ErrorSuccessModal } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
-import { postSuperAdmins } from 'redux/super-admins/thunks';
+import { postSuperAdmin } from 'redux/super-admins/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
@@ -62,7 +62,7 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
       password: data.password,
       active: data.active
     });
-    dispatch(postSuperAdmins(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
+    dispatch(postSuperAdmin(newSuperAdmin, setResponse)).then(() => setShowSuccessModal(true));
   };
 
   const {

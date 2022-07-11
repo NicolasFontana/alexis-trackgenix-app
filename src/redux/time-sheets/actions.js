@@ -1,10 +1,10 @@
 import {
-  GET_ALL_TIMESHEETS_ERROR,
-  GET_ALL_TIMESHEETS_SUCCESS,
-  GET_ALL_TIMESHEETS_PENDING,
-  DELETE_TIMESHEET_ERROR,
-  DELETE_TIMESHEET_SUCCESS,
+  GET_TIMESHEETS_PENDING,
+  GET_TIMESHEETS_SUCCESS,
+  GET_TIMESHEETS_ERROR,
   DELETE_TIMESHEET_PENDING,
+  DELETE_TIMESHEET_SUCCESS,
+  DELETE_TIMESHEET_ERROR,
   CREATE_TIMESHEET_PENDING,
   CREATE_TIMESHEET_SUCCESS,
   CREATE_TIMESHEET_ERROR,
@@ -13,81 +13,58 @@ import {
   PUT_TIMESHEET_ERROR
 } from './constants';
 
-export const getAllTimesheetsPending = () => {
-  return {
-    type: GET_ALL_TIMESHEETS_PENDING
-  };
-};
+export const getAllTimesheetsPending = () => ({
+  type: GET_TIMESHEETS_PENDING
+});
 
-export const getAllTimesheetsError = (error) => {
-  return {
-    type: GET_ALL_TIMESHEETS_ERROR,
-    payload: error
-  };
-};
+export const getAllTimesheetsSuccess = (data) => ({
+  type: GET_TIMESHEETS_SUCCESS,
+  payload: data
+});
 
-export const getAllTimesheetsSuccess = (data) => {
-  return {
-    type: GET_ALL_TIMESHEETS_SUCCESS,
-    payload: data
-  };
-};
+export const getAllTimesheetsError = (error) => ({
+  type: GET_TIMESHEETS_ERROR,
+  payload: error
+});
 
-export const deleteTimesheetPending = () => {
-  return {
-    type: DELETE_TIMESHEET_PENDING
-  };
-};
+export const createTimesheetPending = () => ({
+  type: CREATE_TIMESHEET_PENDING
+});
 
-export const deleteTimesheetSuccess = (id) => {
-  return {
-    type: DELETE_TIMESHEET_SUCCESS,
-    payload: id
-  };
-};
+export const createTimesheetSuccess = (data) => ({
+  type: CREATE_TIMESHEET_SUCCESS,
+  payload: data
+});
 
-export const deleteTimesheetError = (error) => {
-  return {
-    type: DELETE_TIMESHEET_ERROR,
-    payload: error
-  };
-};
+export const createTimesheetError = (error) => ({
+  type: CREATE_TIMESHEET_ERROR,
+  payload: error
+});
 
-export const createTimesheetPending = () => {
-  return {
-    type: CREATE_TIMESHEET_PENDING
-  };
-};
+export const putTimesheetPending = () => ({
+  type: PUT_TIMESHEET_PENDING
+});
 
-export const createTimesheetSuccess = (data) => {
-  return {
-    type: CREATE_TIMESHEET_SUCCESS,
-    payload: data
-  };
-};
+export const putTimesheetSuccess = (data) => ({
+  type: PUT_TIMESHEET_SUCCESS,
+  payload: data
+});
 
-export const createTimesheetError = (error) => {
-  return {
-    type: CREATE_TIMESHEET_ERROR,
-    payload: error
-  };
-};
+export const putTimesheetError = (error) => ({
+  type: PUT_TIMESHEET_ERROR,
+  payload: error
+});
 
-export const putTimesheetPending = () => {
-  return {
-    type: PUT_TIMESHEET_PENDING
-  };
-};
+export const deleteTimesheetPending = () => ({
+  type: DELETE_TIMESHEET_PENDING
+});
 
-export const putTimesheetSuccess = () => {
-  return {
-    type: PUT_TIMESHEET_SUCCESS
-  };
-};
+export const deleteTimesheetSuccess = (data) => ({
+  type: DELETE_TIMESHEET_SUCCESS,
+  payload: data
+});
 
-export const putTimesheetError = (error) => {
-  return {
-    type: PUT_TIMESHEET_ERROR,
-    payload: error
-  };
-};
+export const deleteTimesheetError = (error) => ({
+  type: DELETE_TIMESHEET_ERROR,
+  payload: error
+});

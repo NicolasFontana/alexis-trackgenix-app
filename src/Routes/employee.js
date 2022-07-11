@@ -22,7 +22,7 @@ const employeesRoutes = [
 const Employee = () => {
   const { url } = useRouteMatch();
   return (
-    <Layout routes={employeesRoutes}>
+    <Layout routes={employeesRoutes} logout>
       <Switch>
         <Route exact path={`${url}/time-sheet`} component={Timesheet} />
         <Route exact path={`${url}/projects`} component={Projects} />

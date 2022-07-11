@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import styles from './add.module.css';
 import { ButtonText, ErrorSuccessModal, Input } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
-import { putSuperAdmins } from 'redux/super-admins/thunks';
+import { putSuperAdmin } from 'redux/super-admins/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
@@ -72,7 +72,7 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
-      dispatch(putSuperAdmins(superAdminEdit._id, editedSuperAdmin, setResponse)).then(() =>
+      dispatch(putSuperAdmin(superAdminEdit._id, editedSuperAdmin, setResponse)).then(() =>
         setShowSuccessModal(true)
       );
     }
