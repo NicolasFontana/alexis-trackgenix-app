@@ -30,7 +30,6 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <h2 className={styles.title}>Project Page</h2>
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
@@ -57,6 +56,7 @@ const ProjectPage = () => {
           <p>{project?.active ? 'Active' : 'Inactive'}</p>
         </div>
       </div>
+      <h2 className={styles.title}>Members</h2>
       <Table
         data={project?.members}
         headers={['employeeId', 'role', 'rate']}
