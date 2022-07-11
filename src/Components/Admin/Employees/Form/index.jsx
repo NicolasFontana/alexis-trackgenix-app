@@ -137,7 +137,8 @@ const Form = ({ closeModalForm, edit, item }) => {
       isProjectManager: edit ? (item.isProjectManager ? true : false) : false,
       projects: edit ? (item.projects[0] ? item.projects[0]._id : '') : '',
       timeSheets: edit ? (item.timeSheets[0] ? item.timeSheets[0]?._id : '') : ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
