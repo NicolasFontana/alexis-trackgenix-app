@@ -1,7 +1,7 @@
+import { ButtonAdd, ConfirmModal, ErrorSuccessModal } from 'Components/Shared';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateProject } from 'redux/projects/thunks';
-import { ButtonAdd, ConfirmModal, ErrorSuccessModal } from 'Components/Shared';
 import ListItemMember from '../ListItemMember/ListItemMember';
 import styles from './listmembers.module.css';
 
@@ -60,16 +60,7 @@ const ListMembers = ({ edited, project, functionValue }) => {
       : functionValue(true);
   };
 
-  return !members.length ? (
-    <div className={styles.header}>
-      <h3>Team members</h3>
-      <ButtonAdd
-        clickAction={() => {
-          handleOnClick();
-        }}
-      ></ButtonAdd>
-    </div>
-  ) : (
+  return (
     <div className={styles.divcontainer}>
       <div className={styles.header}>
         <h3>Team members</h3>
