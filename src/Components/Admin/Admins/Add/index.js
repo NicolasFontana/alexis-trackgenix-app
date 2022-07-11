@@ -31,10 +31,10 @@ const adminSchema = Joi.object({
       'string.empty': 'Last name is a required field'
     }),
   email: Joi.string()
-    .email({ tlds: { allow: false } })
+    .pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
     .required()
     .messages({
-      'string.email': 'Invalid email format',
+      'string.pattern.base': 'Invalid email format',
       'string.empty': 'Email is a required field'
     }),
   password: Joi.string()
@@ -81,7 +81,8 @@ const AdminsAdd = ({ closeModalForm }) => {
       email: '',
       password: '',
       active: false
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

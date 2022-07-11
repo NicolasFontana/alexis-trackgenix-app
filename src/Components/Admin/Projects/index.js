@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { useHistory, generatePath } from 'react-router-dom';
 import {
   Preloader,
   Table,
@@ -33,6 +34,7 @@ const Projects = () => {
   let modalDelete;
   let modalAdd;
   let modalErrorSuccess;
+  let history = useHistory();
 
   useEffect(() => {
     dispatch(getProjects());
@@ -44,6 +46,10 @@ const Projects = () => {
       closeConfirmModal();
       setErrorSuccessModal(true);
     });
+  };
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/projects/:id', { id }));
   };
 
   const openModalFormEdit = (id) => {
@@ -182,6 +188,7 @@ const Projects = () => {
         }}
         delAction={openConfirmModal}
         editAction={openModalFormEdit}
+        redirect={redirectAction}
       />
       <ButtonAdd clickAction={openModalAdd}></ButtonAdd>
     </section>

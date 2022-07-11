@@ -75,15 +75,19 @@ const EmployeeProfile = () => {
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Address:</h3>
-          <p className={styles.rowText}>{`${employee?.address}`}</p>
+          <p className={styles.rowText}>{`${
+            employee?.address ? employee?.address : 'Not provided'
+          }`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>DNI:</h3>
-          <p className={styles.rowText}>{`${employee?.dni}`}</p>
+          <p className={styles.rowText}>{`${employee?.dni ? employee?.dni : 'Not provided'}`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Date of Birth:</h3>
-          <p className={styles.rowText}>{`${employee?.dateBirth?.slice(0, 10)}`}</p>
+          <p className={styles.rowText}>{`${
+            employee?.dateBirth ? employee.dateBirth.slice(0, 10) : 'Not provided'
+          }`}</p>
         </div>
       </div>
       <div className={styles.buttonContainer}>

@@ -49,7 +49,11 @@ export const createEmployee = (userInput, setResponse) => {
         timeSheets:
           userInput.timeSheets.length === 0
             ? []
-            : userInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+            : userInput.timeSheets.toString().replace(/\s+/g, '').split(','),
+        address: '',
+        picture: '',
+        dni: '',
+        dateBirth: ''
       }),
       headers: {
         'Content-type': 'application/json'
