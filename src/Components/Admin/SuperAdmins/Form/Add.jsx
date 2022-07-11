@@ -78,7 +78,8 @@ const SuperAdminsFormAdd = ({ closeModalForm }) => {
       email: '',
       password: '',
       active: false
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

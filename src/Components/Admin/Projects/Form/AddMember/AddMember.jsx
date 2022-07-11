@@ -109,7 +109,8 @@ const AddMember = ({ itemId, functionValue }) => {
     defaultValues: {
       member: '',
       role: ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

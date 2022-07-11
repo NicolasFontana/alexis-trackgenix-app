@@ -91,7 +91,8 @@ const SuperAdminsFormEdit = ({ superAdminEdit, closeModalForm }) => {
       email: superAdminEdit.email,
       password: superAdminEdit.password,
       active: superAdminEdit.active
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

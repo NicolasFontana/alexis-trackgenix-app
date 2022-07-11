@@ -81,7 +81,8 @@ const AdminsAdd = ({ closeModalForm }) => {
       email: '',
       password: '',
       active: false
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

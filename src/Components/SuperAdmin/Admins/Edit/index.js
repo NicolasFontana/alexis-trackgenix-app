@@ -101,7 +101,8 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       email: edit.email,
       password: '',
       active: edit.active
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

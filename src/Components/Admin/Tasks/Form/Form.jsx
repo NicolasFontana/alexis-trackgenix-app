@@ -40,16 +40,11 @@ const taskSchema = Joi.object({
     'string.max': 'Invalid description, it must not contain more than 150 letters',
     'string.empty': 'Description is a required field'
   }),
-  status: Joi.string()
-    .min(2)
-    .valid('To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled')
-    .required()
-    .messages({
-      'string.min': 'Invalid status, it must contain more than 2 letters',
-      'any.only':
-        'Invalid status, it must be one of the following: To do, In progress, Review, Blocked, Done, Cancelled',
-      'string.empty': 'Status is a required field'
-    })
+  status: Joi.string().min(2).valid('Pending', 'Done', 'Unfinished').required().messages({
+    'string.min': 'Invalid status, it must contain more than 2 letters',
+    'any.only': 'Invalid status, it must be one of the following: Pending, Done, Unfinished',
+    'string.empty': 'Status is a required field'
+  })
 });
 
 const Form = ({ closeModalForm }) => {
@@ -84,7 +79,8 @@ const Form = ({ closeModalForm }) => {
       workedHours: '',
       description: '',
       status: ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
@@ -124,7 +120,7 @@ const Form = ({ closeModalForm }) => {
         label="Status"
         name="status"
         title="Choose status"
-        data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
+        data={['Pending', 'Done', 'Unfinished']}
         register={register}
         error={errors.status?.message}
       />

@@ -45,7 +45,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
       projectId: timesheetItem.projectId._id,
       task: timesheetItem.Task[0].taskId._id,
       approved: timesheetItem.approved
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

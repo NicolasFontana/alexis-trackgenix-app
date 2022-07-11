@@ -12,7 +12,7 @@ const schema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .pattern(/^[A-Z][\p{L}\p{M}\s]*$/u)
     .required()
     .messages({
       'string.min': 'Project name must contain more than 3 letters',
@@ -33,7 +33,7 @@ const schema = Joi.object({
   clientName: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .pattern(/^[A-Z][\p{L}\p{M}\s]*$/u)
     .required()
     .messages({
       'string.min': 'Client name must contain more than 3 letters',
@@ -95,7 +95,8 @@ const ProjectForm = ({ project, itemId, functionValue, closeModalForm }) => {
       clientName: project.clientName,
       active: project.active,
       description: project.description
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
