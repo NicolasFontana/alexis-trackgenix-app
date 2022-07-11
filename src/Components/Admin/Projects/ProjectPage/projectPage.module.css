@@ -1,4 +1,5 @@
-.container {
+.container,
+.containerPreloader {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -16,6 +17,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  width: 90%;
   margin: 10px;
   border: 3px solid #76a068;
   border-radius: 10px;
@@ -23,9 +25,10 @@
 
 .field {
   text-align: center;
-  width: 90%;
+  width: 30%;
+  min-width: 200px;
+  max-width: 350px;
   margin: 5px 0px;
-  /* border: 1px solid rgba(0, 0, 0, 0.15); */
 }
 
 .field > h3 {
@@ -36,10 +39,4 @@
   width: 90%;
   margin: 0px auto 20px;
   border-bottom: 1px solid #76a068;
-}
-
-@media screen and (min-width: 480px) {
-  .field {
-    width: 45%;
-  }
 }
