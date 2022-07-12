@@ -27,15 +27,15 @@ const schema = Joi.object({
       'string.pattern.base': 'Description must contain at least 4 letters',
       'string.empty': 'Description is a required field'
     }),
-  startDate: Joi.date().min('01-01-1950').max('12-31-2050').required().messages({
+  startDate: Joi.date().min('01/01/1950').max('12/31/2050').required().messages({
     'date.min': 'Only dates from 1950 are accepted',
     'date.max': 'Only dates up to 2050 are accepted',
     'date.base': 'Start date is a required field'
   }),
   endDate: Joi.date()
     .greater(Joi.ref('startDate'))
-    .min('01-01-1950')
-    .max('12-31-2050')
+    .min('01/01/1950')
+    .max('12/31/2050')
     .allow('')
     .messages({
       'date.greater': 'End Date must be after the start date',

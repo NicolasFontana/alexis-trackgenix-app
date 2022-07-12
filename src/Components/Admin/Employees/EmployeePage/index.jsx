@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
+import { Select } from 'Components/Shared';
 import styles from 'Components/Admin/Employees/EmployeePage/employeePage.module.css';
 
 const EmployeePage = () => {
@@ -33,39 +34,35 @@ const EmployeePage = () => {
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>First Name</h3>
-          <p>a</p>
+          <p>{employee.firstName}</p>
         </div>
         <div className={styles.field}>
           <h3>Last Name</h3>
-          <p>a</p>
+          <p>{employee.lastName}</p>
         </div>
         <div className={styles.field}>
           <h3>DNI</h3>
-          <p>a</p>
+          <p>{employee.dni ? employee.dni : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Date of Birth</h3>
-          <p>a</p>
+          <p>{employee.dateBirth ? employee.dateBirth : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Adress</h3>
-          <p>a</p>
+          <p>{employee.address ? employee.address : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Phone</h3>
-          <p>a</p>
+          <p>{employee.phone ? employee.phone : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Email</h3>
-          <p>a</p>
+          <p>{employee.email ? employee.email : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Status</h3>
-          <p>a</p>
-        </div>
-        <div className={styles.field}>
-          <h3>Projects</h3>
-          <p>a</p>
+          <p>{employee.status ? employee.status : 'was not loaded'}</p>
         </div>
         <div className={styles.field}>
           <h3>Rate</h3>
@@ -74,6 +71,15 @@ const EmployeePage = () => {
         <div className={styles.field}>
           <h3>Role</h3>
           <p>a</p>
+        </div>
+        <div className={styles.select}>
+          <Select
+            title="Projects"
+            defaultValue=""
+            data={projects}
+            disabled
+            register={console.log}
+          />
         </div>
       </div>
     </section>

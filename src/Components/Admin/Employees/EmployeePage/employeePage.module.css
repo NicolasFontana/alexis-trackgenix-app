@@ -38,6 +38,10 @@
   border-bottom: 1px solid #76a068;
 }
 
+.select {
+  width: 40%;
+}
+
 @media screen and (min-width: 480px) {
   .field {
     width: 45%;
