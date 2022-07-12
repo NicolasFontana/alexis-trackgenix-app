@@ -63,7 +63,7 @@ const ProjectPage = () => {
         handleClose={() => {
           setShowModalEdit(false);
         }}
-        title="Edit Employee"
+        title="Edit Member"
       >
         <MemberForm
           closeModalForm={() => {

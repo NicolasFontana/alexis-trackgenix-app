@@ -26,7 +26,6 @@ const schema = Joi.object({
 const MemberForm = ({ closeModalForm, project, memberId }) => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
-  // const isLoading = useSelector((state) => state.projects.isLoading);
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [message, setMessage] = useState('');
   let memberToEdit = project.members.find((member) => member.employeeId._id === memberId);
@@ -102,19 +101,19 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-      {memberId ? (
+      {memberToEdit ? (
         <Input
           label="Employee"
           type="text"
           name="member"
-          placeholder="Insert rate"
+          placeholder={`${memberToEdit.firstName} ${memberToEdit.lastName}`}
           register={register}
           error={errors.member?.message}
+          disabled
         />
       ) : (
         <Select
           label="Employee"
-          className={styles.inputs}
           title="Choose Member"
           name="member"
           data={employees.map((employee) => ({
