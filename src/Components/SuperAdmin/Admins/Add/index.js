@@ -4,8 +4,8 @@ import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { editAdmin } from '../../../../redux/admins/thunks';
-import styles from './edit.module.css';
+import { addAdmin } from 'redux/admins/thunks';
+import styles from './add.module.css';
 
 const adminSchema = Joi.object({
   firstName: Joi.string()
@@ -49,33 +49,23 @@ const adminSchema = Joi.object({
   active: Joi.boolean().required()
 });
 
-const AdminsEdit = ({ edit, closeModalForm }) => {
+const AdminsAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
 
   const onSubmit = (data) => {
-    let editedAdmin = JSON.stringify({
+    let newAdmin = JSON.stringify({
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       password: data.password,
       active: data.active
     });
-    if (
-      data.firstName === edit.firstName &&
-      data.lastName === edit.lastName &&
-      data.email === edit.email &&
-      data.password === edit.password &&
-      data.active === edit.active
-    ) {
-      setResponse({ message: "There hasn't been any changes", data: {}, error: true });
+    dispatch(addAdmin(newAdmin, setResponse)).then(() => {
       setShowSuccessModal(true);
-    } else {
-      dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
-        setShowSuccessModal(true);
-      });
-    }
+    });
   };
 
   const {
@@ -86,11 +76,11 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
     mode: 'onBlur',
     resolver: joiResolver(adminSchema),
     defaultValues: {
-      firstName: edit.firstName,
-      lastName: edit.lastName,
-      email: edit.email,
-      password: edit.password,
-      active: edit.active
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      active: false
     }
   });
 
@@ -100,15 +90,15 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         label="First Name"
         type="text"
         name="firstName"
-        placeholder="Insert admin name"
+        placeholder="Insert admin first name"
         register={register}
         error={errors.firstName?.message}
       />
       <Input
-        label="Admin Last Name"
+        label="Last Name"
         type="text"
         name="lastName"
-        placeholder="Insert admin lastName"
+        placeholder="Insert admin last name"
         register={register}
         error={errors.lastName?.message}
       />
@@ -124,7 +114,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         label="Password"
         type="password"
         name="password"
-        placeholder="Insert Password"
+        placeholder="Insert password"
         register={register}
         error={errors.password?.message}
       />
@@ -136,7 +126,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         error={errors.active?.message}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
+        <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
       </div>
       <ErrorSuccessModal
         show={showSuccessModal}
@@ -150,4 +140,4 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
   );
 };
 
-export default AdminsEdit;
+export default AdminsAdd;

@@ -66,6 +66,12 @@ export const tasksReducer = (state = initialState, action) => {
     case EDIT_TASK_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
     case EDIT_TASK_ERROR:

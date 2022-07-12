@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
+import { useHistory, generatePath } from 'react-router-dom';
 import styles from './employees.module.css';
 import Form from './Form';
 import {
   Preloader,
   Table,
   ModalForm,
-  ButtonAdd,
   Select,
   ConfirmModal,
   ErrorSuccessModal
@@ -17,19 +17,20 @@ const Employees = () => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
   const isLoading = useSelector((state) => state.employees.isLoading);
-  const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
   const [employeeId, setEmployeeId] = useState();
 
+  let history = useHistory();
+
   useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+  }, [showModalFormDelete === false]);
 
-  const closeModalFormAdd = () => {
-    setShowModalFormAdd(false);
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/employees/:id', { id }));
   };
 
   const closeModalFormEdit = () => {
@@ -45,15 +46,6 @@ const Employees = () => {
           edit={true}
           item={employees.find((item) => item._id === employeeId)}
         />
-      </ModalForm>
-    );
-  }
-
-  let modalAdd;
-  if (showModalFormAdd) {
-    modalAdd = (
-      <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Employee">
-        <Form closeModalForm={closeModalFormAdd} />
       </ModalForm>
     );
   }
@@ -78,11 +70,7 @@ const Employees = () => {
     );
   }
 
-  return isLoading &&
-    !showModalFormEdit &&
-    !showModalFormAdd &&
-    !showModalFormDelete &&
-    !showSuccessModal ? (
+  return isLoading && !showModalFormEdit && !showModalFormDelete && !showSuccessModal ? (
     <section className={styles.containerPreloader}>
       <Preloader>
         <p>Loading Employees</p>
@@ -93,33 +81,11 @@ const Employees = () => {
       <h2 className={styles.employees}> Employees </h2>
       <Table
         data={employees}
-        headers={[
-          'firstName',
-          'lastName',
-          'phone',
-          'email',
-          'isProjectManager',
-          'active',
-          'projects',
-          'timeSheets'
-        ]}
-        titles={[
-          'First Name',
-          'Last Name',
-          'Phone',
-          'Email',
-          'PM',
-          'Active',
-          'Projects',
-          'Timesheets'
-        ]}
+        headers={['firstName', 'lastName', 'phone', 'email', 'active', 'projects']}
+        titles={['First Name', 'Last Name', 'Phone', 'Email', 'Active', 'Projects']}
         delAction={(id) => {
           setEmployeeId(id);
           setShowModalFormDelete(true);
-        }}
-        editAction={(id) => {
-          setEmployeeId(id);
-          setShowModalFormEdit(true);
         }}
         modifiers={{
           active: (x) => (x ? 'Active' : 'Inactive'),
@@ -132,27 +98,14 @@ const Employees = () => {
               disabled
               register={console.log}
             />
-          ),
-          timeSheets: (x) => (
-            <Select
-              title="Timesheets"
-              defaultValue=""
-              data={[...x.map((timesheet) => timesheet._id)]}
-              disabled
-              register={console.log}
-            />
           )
         }}
+        redirect={redirectAction}
       />
       {modalEdit}
-      {modalAdd}
       {modalDelete}
       {isLoading ? <Preloader /> : null}
-      <ButtonAdd
-        clickAction={() => {
-          setShowModalFormAdd(true);
-        }}
-      />
+
       <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {

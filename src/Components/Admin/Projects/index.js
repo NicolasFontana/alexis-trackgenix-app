@@ -1,45 +1,54 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { useHistory, generatePath } from 'react-router-dom';
 import {
   Preloader,
   Table,
   ModalForm,
-  ButtonAdd,
   ConfirmModal,
   ErrorSuccessModal,
-  Select
+  ButtonText
 } from 'Components/Shared';
 import Form from './Form';
-import AddMember from './Form/AddMember/AddMember';
-import AddForm from './Addform/addForm';
 import styles from './projects.module.css';
 
 const Projects = () => {
-  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
-  const [idToEdit, setIdToEdit] = useState();
-  let [value, setValue] = useState(false);
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
+  const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
   const [message, setMessage] = useState('');
 
+  let modalEdit;
+  let modalDelete;
+  let modalAdd;
+  let modalErrorSuccess;
+  let history = useHistory();
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/projects/:id', { id }));
+  };
+
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
-    setValue(false);
   };
 
   const openModalFormEdit = (id) => {
-    setIdToEdit(id);
+    setProjectId(id);
     setShowModalFormEdit(true);
   };
 
   const openModalAdd = () => {
     setModalAdd(true);
+  };
+
+  const closeModalAdd = () => {
+    setModalAdd(false);
   };
 
   const openConfirmModal = (_id) => {
@@ -53,43 +62,23 @@ const Projects = () => {
     setModalAdd(false);
   };
 
-  const closeModalAdd = () => {
-    setModalAdd(false);
-  };
-
   const closeErrorSuccessModal = () => {
     setErrorSuccessModal(false);
   };
 
   useEffect(() => {
     dispatch(getProjects());
-    setValue(false);
-  }, []);
-
-  const functionValue = (value) => {
-    setValue(value);
-  };
-
-  let modalEdit;
+  }, [showModalFormEdit === false, showModalAdd === false, showConfirmModal === false]);
 
   if (showModalFormEdit) {
     modalEdit = (
-      <ModalForm
-        isOpen={showModalFormEdit}
-        handleClose={closeModalFormEdit}
-        title={value ? 'Add/Edit team members' : 'Edit Project'}
-      >
-        {value ? (
-          <AddMember functionValue={functionValue} projects={projects} itemId={idToEdit} />
-        ) : (
-          <Form
-            closeModalForm={closeModalFormEdit}
-            edit={true}
-            project={projects.find((project) => project._id == idToEdit)}
-            itemId={idToEdit}
-            functionValue={functionValue}
-          />
-        )}
+      <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Project">
+        <Form
+          closeModalForm={closeModalFormEdit}
+          edit={true}
+          project={projects.find((project) => project._id == projectId)}
+          projectID={projectId}
+        />
       </ModalForm>
     );
   }
@@ -100,10 +89,6 @@ const Projects = () => {
       setErrorSuccessModal(true);
     });
   };
-
-  let modalDelete;
-  let modalAdd;
-  let modalErrorSuccess;
 
   if (showConfirmModal) {
     modalDelete = (
@@ -120,7 +105,7 @@ const Projects = () => {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Project">
-        <AddForm closeModalForm={closeModalAdd} />
+        <Form closeModalForm={closeModalAdd} />
       </ModalForm>
     );
   }
@@ -149,41 +134,22 @@ const Projects = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      {isLoading ? <Preloader /> : null}
-      <Table
-        data={projects}
-        headers={['name', 'description', 'startDate', 'endDate', 'clientName', 'active', 'members']}
-        titles={[
-          'Name',
-          'Description',
-          'Start Date',
-          'End Date',
-          'Client Name',
-          'Active',
-          'Members'
-        ]}
-        modifiers={{
-          startDate: (x) => x.slice(0, 10),
-          endDate: (x) => x.slice(0, 10),
-          active: (x) => (x ? 'Active' : 'Inactive'),
-          members: (x) => (
-            <Select
-              title="Members"
-              defaultValue=""
-              data={[
-                ...x.map(
-                  (member) => `${member.employeeId?.firstName} ${member.employeeId?.lastName}`
-                )
-              ]}
-              disabled
-              register={console.log}
-            />
-          )
-        }}
-        delAction={openConfirmModal}
-        editAction={openModalFormEdit}
-      />
-      <ButtonAdd clickAction={openModalAdd}></ButtonAdd>
+      <div className={styles.divContainer}>
+        <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
+        <Table
+          data={projects}
+          headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
+          titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
+          modifiers={{
+            startDate: (x) => x.slice(0, 10),
+            active: (x) => (x ? 'Active' : 'Inactive'),
+            projectManager: (x) => (x ? x : 'Not selected')
+          }}
+          delAction={openConfirmModal}
+          editAction={openModalFormEdit}
+          redirect={redirectAction}
+        />
+      </div>
     </section>
   );
 };

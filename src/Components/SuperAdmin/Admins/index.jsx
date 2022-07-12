@@ -1,5 +1,5 @@
 import {
-  ButtonAdd,
+  ButtonText,
   ConfirmModal,
   ErrorSuccessModal,
   ModalForm,
@@ -8,15 +8,16 @@ import {
 } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { delAdmin, getAdmins } from '../../../redux/admins/thunks';
-import styles from '../Admins/admins.module.css';
-import Form from './Add/index';
-import EditForm from './Edit/index';
+import { delAdmin, getAdmins } from 'redux/admins/thunks';
+import styles from './admins.module.css';
+import Form from './Add';
+import EditForm from './Edit';
 
-const App = () => {
+const Admins = () => {
   const dispatch = useDispatch();
   const admins = useSelector((state) => state.admins.list);
   const isLoading = useSelector((state) => state.admins.isLoading);
+
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
@@ -24,9 +25,35 @@ const App = () => {
   const [response, setResponse] = useState('');
   const [idDelete, setIdDelete] = useState();
 
+  let modalEdit;
+  let modalAdd;
+  let modalDelete;
+  let modalErrorSuccess;
+
   useEffect(() => {
     dispatch(getAdmins());
-  }, []);
+  }, [showModalFormAdd === false, showModalFormEdit === false, showModalFormDelete === false]);
+
+  const handleConfirm = () => {
+    dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
+      setShowModalFormDelete(false);
+      setShowSuccessModal(true);
+    });
+  };
+
+  const openConfirmModal = (id) => {
+    setIdDelete(id);
+    setShowModalFormDelete(true);
+  };
+
+  const openAddModal = () => {
+    setShowModalFormAdd(true);
+  };
+
+  const openEditModal = (id) => {
+    setIdDelete(id);
+    setShowModalFormEdit(true);
+  };
 
   const closeModalFormAdd = () => {
     setShowModalFormAdd(false);
@@ -36,7 +63,10 @@ const App = () => {
     setShowModalFormEdit(false);
   };
 
-  let modalEdit;
+  const closeErrorSuccessModal = () => {
+    setShowSuccessModal(false);
+  };
+
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Admin">
@@ -48,7 +78,6 @@ const App = () => {
     );
   }
 
-  let modalAdd;
   if (showModalFormAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalFormAdd} handleClose={closeModalFormAdd} title="Add Admin">
@@ -57,7 +86,6 @@ const App = () => {
     );
   }
 
-  let modalDelete;
   if (showModalFormDelete) {
     modalDelete = (
       <ConfirmModal
@@ -65,14 +93,20 @@ const App = () => {
         handleClose={() => {
           setShowModalFormDelete(false);
         }}
-        confirmDelete={() => {
-          dispatch(delAdmin(idDelete, setResponse)).then(() => {
-            setShowModalFormDelete(false);
-            setShowSuccessModal(true);
-          });
-        }}
+        confirmDelete={handleConfirm}
         title="Delete Admin"
         message="Are you sure you want to delete this admin?"
+      />
+    );
+  }
+
+  if (showSuccessModal) {
+    modalErrorSuccess = (
+      <ErrorSuccessModal
+        show={showSuccessModal}
+        closeModal={closeErrorSuccessModal}
+        closeModalForm={closeErrorSuccessModal}
+        successResponse={response}
       />
     );
   }
@@ -86,45 +120,28 @@ const App = () => {
       <p>Loading Admins</p>
     </Preloader>
   ) : (
-    <div className={styles.containerApp}>
+    <section className={styles.container}>
       <h2 className={styles.title}>Admins</h2>
-      <Table
-        data={admins}
-        headers={['_id', 'firstName', 'lastName', 'email', 'password', 'active']}
-        titles={['ID', 'First Name', 'Last Name', 'Email', 'Password', 'Active']}
-        delAction={(id) => {
-          setIdDelete(id);
-          setShowModalFormDelete(true);
-        }}
-        editAction={(id) => {
-          setIdDelete(id);
-          setShowModalFormEdit(true);
-        }}
-        modifiers={{
-          active: (x) => (x ? 'Active' : 'Inactive')
-        }}
-      />
       {modalEdit}
       {modalAdd}
       {modalDelete}
-      <ButtonAdd
-        clickAction={() => {
-          setShowModalFormAdd(true);
-        }}
-      />
+      {modalErrorSuccess}
       {isLoading ? <Preloader /> : null}
-      <ErrorSuccessModal
-        show={showSuccessModal}
-        closeModal={() => {
-          setShowSuccessModal(false);
-        }}
-        closeModalForm={() => {
-          setShowSuccessModal(false);
-        }}
-        successResponse={response}
-      />
-    </div>
+      <div className={styles.divContainer}>
+        <ButtonText label="ADD ADMIN" clickAction={openAddModal}></ButtonText>
+        <Table
+          data={admins}
+          headers={['firstName', 'lastName', 'email', 'active']}
+          titles={['First Name', 'Last Name', 'Email', 'Active']}
+          delAction={openConfirmModal}
+          editAction={openEditModal}
+          modifiers={{
+            active: (x) => (x ? 'Active' : 'Inactive')
+          }}
+        />
+      </div>
+    </section>
   );
 };
 
-export default App;
+export default Admins;

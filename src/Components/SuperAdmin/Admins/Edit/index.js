@@ -4,8 +4,8 @@ import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { addAdmin } from '../../../../redux/admins/thunks';
-import styles from './add.module.css';
+import { editAdmin } from 'redux/admins/thunks';
+import styles from './edit.module.css';
 
 const adminSchema = Joi.object({
   firstName: Joi.string()
@@ -40,7 +40,7 @@ const adminSchema = Joi.object({
   password: Joi.string()
     .min(8)
     .pattern(/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?!.*[^a-zA-Z0-9])/)
-    .required()
+    .allow('')
     .messages({
       'string.min': 'Invalid password, it must contain at least 8 characters',
       'string.pattern.base': 'Invalid password, it must contain both letters and numbers',
@@ -49,22 +49,43 @@ const adminSchema = Joi.object({
   active: Joi.boolean().required()
 });
 
-const AdminsAdd = ({ closeModalForm }) => {
+const AdminsEdit = ({ edit, closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
 
+  let editedAdmin;
   const onSubmit = (data) => {
-    let newAdmin = JSON.stringify({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      active: data.active
-    });
-    dispatch(addAdmin(newAdmin, setResponse)).then(() => {
+    if (
+      data.firstName === edit.firstName &&
+      data.lastName === edit.lastName &&
+      data.email === edit.email &&
+      data.password === '' &&
+      data.active === edit.active
+    ) {
+      setResponse({ message: "There hasn't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
-    });
+    } else {
+      if (data.password === '') {
+        editedAdmin = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          active: data.active
+        });
+      } else {
+        editedAdmin = JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          active: data.active
+        });
+      }
+      dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
+        setShowSuccessModal(true);
+      });
+    }
   };
 
   const {
@@ -75,11 +96,11 @@ const AdminsAdd = ({ closeModalForm }) => {
     mode: 'onBlur',
     resolver: joiResolver(adminSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: edit.firstName,
+      lastName: edit.lastName,
+      email: edit.email,
       password: '',
-      active: false
+      active: edit.active
     }
   });
 
@@ -89,12 +110,12 @@ const AdminsAdd = ({ closeModalForm }) => {
         label="First Name"
         type="text"
         name="firstName"
-        placeholder="Insert admin name"
+        placeholder="Insert admin first name"
         register={register}
         error={errors.firstName?.message}
       />
       <Input
-        label="Admin Last Name"
+        label="Last Name"
         type="text"
         name="lastName"
         placeholder="Insert admin last name"
@@ -113,7 +134,7 @@ const AdminsAdd = ({ closeModalForm }) => {
         label="Password"
         type="password"
         name="password"
-        placeholder="Insert password"
+        placeholder="Insert Password"
         register={register}
         error={errors.password?.message}
       />
@@ -125,7 +146,7 @@ const AdminsAdd = ({ closeModalForm }) => {
         error={errors.active?.message}
       />
       <div className={styles.buttonBox}>
-        <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
+        <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
       </div>
       <ErrorSuccessModal
         show={showSuccessModal}
@@ -139,4 +160,4 @@ const AdminsAdd = ({ closeModalForm }) => {
   );
 };
 
-export default AdminsAdd;
+export default AdminsEdit;

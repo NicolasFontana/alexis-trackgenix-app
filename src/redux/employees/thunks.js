@@ -2,15 +2,15 @@ import {
   getEmployeesPending,
   getEmployeesSuccess,
   getEmployeesError,
-  createEmployeesPending,
-  createEmployeesSuccess,
-  createEmployeesError,
-  updateEmployeesPending,
-  updateEmployeesSuccess,
-  updateEmployeesError,
-  deleteEmployeesPending,
-  deleteEmployeesSuccess,
-  deleteEmployeesError
+  createEmployeePending,
+  createEmployeeSuccess,
+  createEmployeeError,
+  updateEmployeePending,
+  updateEmployeeSuccess,
+  updateEmployeeError,
+  deleteEmployeePending,
+  deleteEmployeeSuccess,
+  deleteEmployeeError
 } from './actions';
 
 export const getEmployees = () => {
@@ -22,7 +22,6 @@ export const getEmployees = () => {
       .then((response) => response.json())
       .then((response) => {
         dispatch(getEmployeesSuccess(response.data));
-        return response.data;
       })
       .catch((error) => {
         dispatch(getEmployeesError(error.toString()));
@@ -32,7 +31,7 @@ export const getEmployees = () => {
 
 export const createEmployee = (userInput, setResponse) => {
   return (dispatch) => {
-    dispatch(createEmployeesPending());
+    dispatch(createEmployeePending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/`, {
       method: 'POST',
       body: JSON.stringify({
@@ -50,7 +49,11 @@ export const createEmployee = (userInput, setResponse) => {
         timeSheets:
           userInput.timeSheets.length === 0
             ? []
-            : userInput.timeSheets.toString().replace(/\s+/g, '').split(',')
+            : userInput.timeSheets.toString().replace(/\s+/g, '').split(','),
+        address: '',
+        picture: '',
+        dni: '',
+        dateBirth: ''
       }),
       headers: {
         'Content-type': 'application/json'
@@ -66,13 +69,12 @@ export const createEmployee = (userInput, setResponse) => {
       })
       .then((response) => {
         if (response.error === false) {
-          dispatch(createEmployeesSuccess(response.data));
+          dispatch(createEmployeeSuccess(response.data));
         }
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
-        dispatch(createEmployeesError(error.toString()));
+        dispatch(createEmployeeError(error.toString()));
         setResponse(error);
       });
   };
@@ -80,7 +82,7 @@ export const createEmployee = (userInput, setResponse) => {
 
 export const updateEmployee = (userInput, id, setResponse) => {
   return (dispatch) => {
-    dispatch(updateEmployeesPending());
+    dispatch(updateEmployeePending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
       method: 'PUT',
       body: userInput,
@@ -90,13 +92,11 @@ export const updateEmployee = (userInput, id, setResponse) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(updateEmployeesSuccess(response.data));
-        dispatch(getEmployees());
+        dispatch(updateEmployeeSuccess(response.data));
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
-        dispatch(updateEmployeesError(error.toString()));
+        dispatch(updateEmployeeError(error.toString()));
         setResponse(error);
       });
   };
@@ -104,19 +104,17 @@ export const updateEmployee = (userInput, id, setResponse) => {
 
 export const deleteEmployee = (id, setResponse) => {
   return (dispatch) => {
-    dispatch(deleteEmployeesPending());
+    dispatch(deleteEmployeePending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
       method: 'DELETE'
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(deleteEmployeesSuccess(response.data));
-        dispatch(getEmployees());
+        dispatch(deleteEmployeeSuccess(response.data));
         setResponse(response);
-        return response.data;
       })
       .catch((error) => {
-        dispatch(deleteEmployeesError(error.toString()));
+        dispatch(deleteEmployeeError(error.toString()));
         setResponse(error);
       });
   };
