@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-// import { getEmployees } from 'redux/employees/thunks';
+import { getEmployees } from 'redux/employees/thunks';
 import { getProjects, updateProject } from 'redux/projects/thunks';
 import MemberForm from './MemberForm';
 import {
@@ -34,7 +34,7 @@ const ProjectPage = () => {
 
   useEffect(() => {
     dispatch(getProjects());
-    // dispatch(getEmployees());
+    dispatch(getEmployees());
   }, [!showModalDelete]);
 
   if (showModalAdd) {
