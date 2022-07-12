@@ -69,8 +69,8 @@ const ProjectPage = () => {
           closeModalForm={() => {
             setShowModalEdit(false);
           }}
-          edit={true}
-          item={{}}
+          project={project}
+          memberId={memberId}
         />
       </ModalForm>
     );
@@ -188,7 +188,10 @@ const ProjectPage = () => {
             setMemberId(id);
             setShowModalDelete(true);
           }}
-          editAction={{}}
+          editAction={(id) => {
+            setMemberId(id);
+            setShowModalEdit(true);
+          }}
         />
       </div>
     </section>
