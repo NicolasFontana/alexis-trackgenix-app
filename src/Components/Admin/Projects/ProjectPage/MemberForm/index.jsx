@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from 'redux/employees/thunks';
-import { updateProject } from 'redux/projects/thunks';
+import { getProjects, updateProject } from 'redux/projects/thunks';
 import { Select, Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 import styles from './memberForm.module.css';
 import { useForm } from 'react-hook-form';
@@ -26,12 +26,14 @@ const schema = Joi.object({
 const MemberForm = ({ closeModalForm, project, edit }) => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
+  const isLoading = useSelector((state) => state.projects.isLoading);
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+    dispatch(getProjects());
+  }, [!isLoading]);
 
   const onSubmit = (data) => {
     // if (edit) {

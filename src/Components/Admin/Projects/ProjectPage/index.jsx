@@ -35,7 +35,7 @@ const ProjectPage = () => {
   useEffect(() => {
     dispatch(getProjects());
     // dispatch(getEmployees());
-  }, [!showModalEdit, !showModalAdd, !showModalDelete]);
+  }, [!showModalDelete]);
 
   if (showModalAdd) {
     modalAdd = (
