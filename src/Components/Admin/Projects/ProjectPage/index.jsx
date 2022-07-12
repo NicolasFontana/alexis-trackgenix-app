@@ -1,31 +1,140 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getProjectById } from 'redux/projects/thunks';
 import { useParams } from 'react-router-dom';
 // import { getEmployees } from 'redux/employees/thunks';
-import { getProjects } from 'redux/projects/thunks';
+import { getProjects, updateProject } from 'redux/projects/thunks';
+import MemberForm from './MemberForm';
+import {
+  Preloader,
+  Table,
+  ModalForm,
+  ConfirmModal,
+  ErrorSuccessModal,
+  ButtonText
+} from 'Components/Shared';
 import styles from './projectPage.module.css';
-import { Preloader, Table } from 'Components/Shared';
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const project = useSelector((state) => state.projects.list).find((project) => project._id === id);
   const isLoading = useSelector((state) => state.projects.isLoading);
-  // const employees = useSelector((state) => state.employees.list);
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
+  const [memberId, setMemberId] = useState(0);
+  const [message, setMessage] = useState('');
   let pm = project?.members.find((member) => member.role === 'PM');
-  // console.log(project);
+  let modalAdd;
+  let modalEdit;
+  let modalDelete;
+  let modalErrorSuccess;
 
   useEffect(() => {
     dispatch(getProjects());
     // dispatch(getEmployees());
-  }, []);
+  }, [!showModalEdit, !showModalAdd, !showModalDelete]);
 
-  return isLoading ? (
+  if (showModalAdd) {
+    modalAdd = (
+      <ModalForm
+        isOpen={showModalAdd}
+        handleClose={() => {
+          setShowModalAdd(false);
+        }}
+        title="Add Member"
+      >
+        <MemberForm
+          closeModalForm={() => {
+            setShowModalAdd(false);
+          }}
+          project={project}
+        />
+      </ModalForm>
+    );
+  }
+
+  if (showModalEdit) {
+    modalEdit = (
+      <ModalForm
+        isOpen={showModalEdit}
+        handleClose={() => {
+          setShowModalEdit(false);
+        }}
+        title="Edit Employee"
+      >
+        <MemberForm
+          closeModalForm={() => {
+            setShowModalEdit(false);
+          }}
+          edit={true}
+          item={{}}
+        />
+      </ModalForm>
+    );
+  }
+
+  if (showModalDelete) {
+    modalDelete = (
+      <ConfirmModal
+        isOpen={showModalDelete}
+        handleClose={() => {
+          setShowModalDelete(false);
+        }}
+        confirmDelete={() => {
+          dispatch(
+            updateProject(
+              project._id,
+              {
+                members: project.members
+                  .filter((member) => member.employeeId._id != memberId)
+                  .map((member) => ({
+                    employeeId: member.employeeId._id,
+                    role: member.role,
+                    rate: member.rate
+                  }))
+              },
+              setMessage
+            )
+          ).then(() => {
+            setShowModalDelete(false);
+            setModalErrorSuccess(true);
+            document.body.style.overflow = 'hidden';
+          });
+        }}
+        title="Remove Member"
+        message={'Are you sure you want to remove this member?'}
+      />
+    );
+  }
+
+  if (showModalErrorSuccess) {
+    modalErrorSuccess = (
+      <ErrorSuccessModal
+        show={showModalErrorSuccess}
+        closeModal={() => {
+          setModalErrorSuccess(false);
+          document.body.style.overflow = 'unset';
+        }}
+        closeModalForm={() => {
+          setModalErrorSuccess(false);
+          document.body.style.overflow = 'unset';
+        }}
+        successResponse={message}
+      ></ErrorSuccessModal>
+    );
+  }
+
+  return isLoading &&
+    !showModalAdd &&
+    !showModalDelete &&
+    !showModalEdit &&
+    !showModalErrorSuccess ? (
     <section className={styles.containerPreloader}>
       <Preloader>
-        <p>Loading Projects</p>
+        <p>Loading Project</p>
       </Preloader>
     </section>
   ) : (
@@ -57,16 +166,31 @@ const ProjectPage = () => {
         </div>
       </div>
       <h2 className={styles.title}>Members</h2>
-      <Table
-        data={project?.members}
-        headers={['employeeId', 'role', 'rate']}
-        titles={['Name', 'Role', 'Rate']}
-        modifiers={{
-          employeeId: (x) => `${x.firstName} ${x.lastName}`
-        }}
-        delAction={(x) => console.log(x)}
-        editAction={(x) => console.log(x)}
-      />
+      {modalEdit}
+      {modalDelete}
+      {modalAdd}
+      {modalErrorSuccess}
+      <div className={styles.divContainer}>
+        <ButtonText
+          label="ADD MEMBER"
+          clickAction={() => {
+            setShowModalAdd(true);
+          }}
+        ></ButtonText>
+        <Table
+          data={project?.members}
+          headers={['employeeId', 'role', 'rate']}
+          titles={['Name', 'Role', 'Rate']}
+          modifiers={{
+            employeeId: (x) => `${x.firstName} ${x.lastName}`
+          }}
+          delAction={(id) => {
+            setMemberId(id);
+            setShowModalDelete(true);
+          }}
+          editAction={{}}
+        />
+      </div>
     </section>
   );
 };

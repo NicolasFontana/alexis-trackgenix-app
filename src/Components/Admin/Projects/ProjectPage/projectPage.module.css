@@ -21,14 +21,6 @@
   padding: unset;
 }
 
-.title {
-  font-size: 30px;
-  font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
-}
-
 .box {
   display: flex;
   justify-content: center;
@@ -56,4 +48,23 @@
   width: 90%;
   margin: 0px auto 20px;
   border-bottom: 1px solid #76a068;
+}
+
+.title {
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
+}
+
+.divContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.divContainer > button {
+  align-self: flex-end;
+  margin-bottom: 20px;
+  padding: 0 30px;
 }

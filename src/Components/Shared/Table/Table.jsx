@@ -45,7 +45,7 @@ const Table = (props) => {
                   <td className={styles.tdButton}>
                     <ButtonEdit
                       clickAction={() => {
-                        editAction(row._id);
+                        editAction(row._id ? row._id : row.employeeId._id);
                       }}
                     ></ButtonEdit>
                   </td>
@@ -54,7 +54,7 @@ const Table = (props) => {
                   <td className={styles.tdButton}>
                     <ButtonDelete
                       clickAction={() => {
-                        delAction(row._id);
+                        delAction(row._id ? row._id : row.employeeId._id);
                       }}
                     ></ButtonDelete>
                   </td>
