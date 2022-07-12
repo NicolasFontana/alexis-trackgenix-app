@@ -29,6 +29,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [message, setMessage] = useState('');
   let memberToEdit = project.members.find((member) => member.employeeId._id === memberId);
+  let pm = project?.members.find((member) => member.role === 'PM');
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -36,7 +37,14 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
   }, [showModalErrorSuccess]);
 
   const onSubmit = (data) => {
-    if (memberToEdit) {
+    if (pm && data.role === 'PM' && memberId !== pm.employeeId._id) {
+      setMessage({
+        message: `Project Manager already defined: ${pm.employeeId.firstName} ${pm.employeeId.lastName}`,
+        data: {},
+        error: true
+      });
+      setModalErrorSuccess(true);
+    } else if (memberToEdit) {
       if (data.role === memberToEdit.role && data.rate === memberToEdit.rate) {
         setMessage({ message: "There haven't been any changes", data: {}, error: true });
         setModalErrorSuccess(true);
