@@ -25,7 +25,9 @@ const schema = Joi.object({
 
 const MemberForm = ({ closeModalForm, project, memberId }) => {
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees.list);
+  const employees = useSelector((state) => state.employees.list).filter(
+    (employee) => !project.members.some((member) => member.employeeId._id === employee._id)
+  );
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [message, setMessage] = useState('');
   let memberToEdit = project.members.find((member) => member.employeeId._id === memberId);
@@ -107,7 +109,9 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
     shouldFocusError: false
   });
 
-  return (
+  return !employees.length && !memberToEdit ? (
+    <p className={styles.noEmployeesMessage}>There are no more employees to add</p>
+  ) : (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       {memberToEdit ? (
         <Input
