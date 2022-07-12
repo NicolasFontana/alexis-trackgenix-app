@@ -138,12 +138,17 @@ const Projects = () => {
         <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
         <Table
           data={projects}
-          headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
+          headers={['name', 'clientName', 'members', 'description', 'startDate', 'active']}
           titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
           modifiers={{
+            members: (x) => {
+              let pm = x.find((member) => member.role === 'PM');
+              return pm
+                ? `${pm.employeeId?.firstName} ${pm.employeeId?.lastName}`
+                : 'To be defined';
+            },
             startDate: (x) => x.slice(0, 10),
-            active: (x) => (x ? 'Active' : 'Inactive'),
-            projectManager: (x) => (x ? x : 'Not selected')
+            active: (x) => (x ? 'Active' : 'Inactive')
           }}
           delAction={openConfirmModal}
           editAction={openModalFormEdit}
