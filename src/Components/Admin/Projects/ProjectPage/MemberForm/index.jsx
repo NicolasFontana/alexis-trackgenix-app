@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees } from 'redux/employees/thunks';
+import { getEmployees, updateEmployee } from 'redux/employees/thunks';
 import { getProjects, updateProject } from 'redux/projects/thunks';
 import { Select, Input, ButtonText, ErrorSuccessModal } from 'Components/Shared';
 import styles from './memberForm.module.css';
@@ -29,7 +29,8 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
     (employee) => !project.members.some((member) => member.employeeId._id === employee._id)
   );
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
-  const [message, setMessage] = useState('');
+  const [response, setResponse] = useState('');
+  const [responseEmployee, setResponseEmployee] = useState('');
   let memberToEdit = project.members.find((member) => member.employeeId._id === memberId);
   let pm = project?.members.find((member) => member.role === 'PM');
 
@@ -40,7 +41,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
 
   const onSubmit = (data) => {
     if (pm && data.role === 'PM' && memberId !== pm.employeeId._id) {
-      setMessage({
+      setResponse({
         message: `Project Manager already defined: ${pm.employeeId.firstName} ${pm.employeeId.lastName}`,
         data: {},
         error: true
@@ -48,7 +49,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
       setModalErrorSuccess(true);
     } else if (memberToEdit) {
       if (data.role === memberToEdit.role && data.rate === memberToEdit.rate) {
-        setMessage({ message: "There haven't been any changes", data: {}, error: true });
+        setResponse({ message: "There haven't been any changes", data: {}, error: true });
         setModalErrorSuccess(true);
       } else {
         dispatch(
@@ -61,7 +62,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
                 rate: member.employeeId._id === memberId ? data.rate : member.rate
               }))
             },
-            setMessage
+            setResponse
           )
         ).then(() => {
           setModalErrorSuccess(true);
@@ -84,11 +85,26 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
                 rate: data.rate
               })
           },
-          setMessage
+          setResponse
         )
-      ).then(() => {
-        setModalErrorSuccess(true);
-      });
+      )
+        .then(
+          dispatch(
+            updateEmployee(
+              JSON.stringify({
+                projects: employees
+                  .find((employee) => employee._id === data.member)
+                  .projects.map((project) => project._id)
+                  .concat(project._id)
+              }),
+              data.member,
+              setResponseEmployee
+            )
+          )
+        )
+        .then(() => {
+          setModalErrorSuccess(true);
+        });
     }
   };
 
@@ -162,7 +178,11 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
           setModalErrorSuccess(false);
         }}
         closeModalForm={closeModalForm}
-        successResponse={message}
+        successResponse={{
+          message: `${response.message}. ${responseEmployee.message}`,
+          data: response.data,
+          error: response.error
+        }}
       />
     </form>
   );

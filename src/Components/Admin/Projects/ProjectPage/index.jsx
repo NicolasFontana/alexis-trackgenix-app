@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getEmployees } from 'redux/employees/thunks';
+import { getEmployees, updateEmployee } from 'redux/employees/thunks';
 import { getProjects, updateProject } from 'redux/projects/thunks';
 import MemberForm from './MemberForm';
 import {
@@ -20,12 +20,15 @@ const ProjectPage = () => {
   const { id } = useParams();
   const project = useSelector((state) => state.projects.list).find((project) => project._id === id);
   const isLoading = useSelector((state) => state.projects.isLoading);
+  const employees = useSelector((state) => state.employees.list);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalErrorSuccess, setModalErrorSuccess] = useState(false);
   const [memberId, setMemberId] = useState(0);
-  const [message, setMessage] = useState('');
+  const [response, setResponse] = useState('');
+  const [responseEmployee, setResponseEmployee] = useState('');
+
   let pm = project?.members.find((member) => member.role === 'PM');
   let modalAdd;
   let modalEdit;
@@ -96,13 +99,28 @@ const ProjectPage = () => {
                     rate: member.rate
                   }))
               },
-              setMessage
+              setResponse
             )
-          ).then(() => {
-            setShowModalDelete(false);
-            setModalErrorSuccess(true);
-            document.body.style.overflow = 'hidden';
-          });
+          )
+            .then(
+              dispatch(
+                updateEmployee(
+                  JSON.stringify({
+                    projects: employees
+                      .find((employee) => employee._id === memberId)
+                      .projects.filter((employeeProject) => employeeProject._id != project._id)
+                      .map((project) => project._id)
+                  }),
+                  memberId,
+                  setResponseEmployee
+                )
+              )
+            )
+            .then(() => {
+              setShowModalDelete(false);
+              setModalErrorSuccess(true);
+              document.body.style.overflow = 'hidden';
+            });
         }}
         title="Remove Member"
         message={'Are you sure you want to remove this member?'}
@@ -122,7 +140,11 @@ const ProjectPage = () => {
           setModalErrorSuccess(false);
           document.body.style.overflow = 'unset';
         }}
-        successResponse={message}
+        successResponse={{
+          message: `${response.message}. ${responseEmployee.message}`,
+          data: response.data,
+          error: response.error
+        }}
       ></ErrorSuccessModal>
     );
   }
