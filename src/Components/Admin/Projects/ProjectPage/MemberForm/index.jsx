@@ -109,7 +109,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
     shouldFocusError: false
   });
 
-  return !employees.length && !memberToEdit ? (
+  return !employees.length && !memberToEdit && !showModalErrorSuccess ? (
     <p className={styles.noEmployeesMessage}>There are no more employees to add</p>
   ) : (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
