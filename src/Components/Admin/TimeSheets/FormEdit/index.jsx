@@ -9,8 +9,8 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const listProject = useSelector((state) => state.projects.list);
-  const listTask = useSelector((state) => state.tasks.list);
+  const projects = useSelector((state) => state.projects.list);
+  const tasks = useSelector((state) => state.tasks.list);
 
   const onSubmit = (data) => {
     let userInput = {
@@ -26,8 +26,9 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
       setMessage({ message: "There haven't been any changes", data: {}, error: true });
       setShowMessageModal(true);
     } else {
-      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage));
-      setShowMessageModal(true);
+      dispatch(putTimesheet(userInput, timesheetItem._id, setMessage)).then(() => {
+        setShowMessageModal(true);
+      });
     }
   };
 
@@ -55,7 +56,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         label="Projects"
         name="projectId"
         title="Choose project"
-        data={listProject.map((project) => ({
+        data={projects.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
@@ -66,7 +67,7 @@ const FormEdit = ({ closeModalEdit, timesheetItem }) => {
         label="Tasks"
         name="task"
         title="Choose task"
-        data={listTask.map((task) => ({
+        data={tasks.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}

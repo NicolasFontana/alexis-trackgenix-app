@@ -2,15 +2,15 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
-  CREATE_EMPLOYEES_PENDING,
-  CREATE_EMPLOYEES_SUCCESS,
-  CREATE_EMPLOYEES_ERROR,
-  UPDATE_EMPLOYEES_PENDING,
-  UPDATE_EMPLOYEES_SUCCESS,
-  UPDATE_EMPLOYEES_ERROR,
-  DELETE_EMPLOYEES_PENDING,
-  DELETE_EMPLOYEES_SUCCESS,
-  DELETE_EMPLOYEES_ERROR
+  CREATE_EMPLOYEE_PENDING,
+  CREATE_EMPLOYEE_SUCCESS,
+  CREATE_EMPLOYEE_ERROR,
+  UPDATE_EMPLOYEE_PENDING,
+  UPDATE_EMPLOYEE_SUCCESS,
+  UPDATE_EMPLOYEE_ERROR,
+  DELETE_EMPLOYEE_PENDING,
+  DELETE_EMPLOYEE_SUCCESS,
+  DELETE_EMPLOYEE_ERROR
 } from './constants';
 
 const initialState = {
@@ -38,51 +38,57 @@ export const employeesReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload
       };
-    case CREATE_EMPLOYEES_PENDING:
+    case CREATE_EMPLOYEE_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case CREATE_EMPLOYEES_SUCCESS:
+    case CREATE_EMPLOYEE_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload],
         isLoading: false
       };
-    case CREATE_EMPLOYEES_ERROR:
+    case CREATE_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       };
-    case UPDATE_EMPLOYEES_PENDING:
+    case UPDATE_EMPLOYEE_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case UPDATE_EMPLOYEES_SUCCESS:
+    case UPDATE_EMPLOYEE_SUCCESS:
       return {
         ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
         isLoading: false
       };
-    case UPDATE_EMPLOYEES_ERROR:
+    case UPDATE_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,
         error: action.payload
       };
-    case DELETE_EMPLOYEES_PENDING:
+    case DELETE_EMPLOYEE_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case DELETE_EMPLOYEES_SUCCESS:
+    case DELETE_EMPLOYEE_SUCCESS:
       return {
         ...state,
         list: state.list.filter((employee) => employee.id !== action.payload),
         isLoading: false
       };
-    case DELETE_EMPLOYEES_ERROR:
+    case DELETE_EMPLOYEE_ERROR:
       return {
         ...state,
         isLoading: false,

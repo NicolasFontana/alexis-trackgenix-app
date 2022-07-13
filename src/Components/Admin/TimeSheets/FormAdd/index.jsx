@@ -25,8 +25,8 @@ const FormAdd = ({ closeModalForm }) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const listProject = useSelector((state) => state.projects.list);
-  const listTask = useSelector((state) => state.tasks.list);
+  const projects = useSelector((state) => state.projects.list);
+  const tasks = useSelector((state) => state.tasks.list);
 
   const onSubmit = (data) => {
     dispatch(createTimesheet(data.project, data.task, data.approved, setMessage)).then(() => {
@@ -55,7 +55,7 @@ const FormAdd = ({ closeModalForm }) => {
         label="Projects"
         name="project"
         title="Choose project"
-        data={listProject.map((project) => ({
+        data={projects.map((project) => ({
           _id: project._id,
           optionText: project.name
         }))}
@@ -66,7 +66,7 @@ const FormAdd = ({ closeModalForm }) => {
         label="Tasks"
         name="task"
         title="Choose task"
-        data={listTask.map((task) => ({
+        data={tasks.map((task) => ({
           _id: task._id,
           optionText: task.taskName
         }))}

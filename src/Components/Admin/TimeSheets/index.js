@@ -19,12 +19,15 @@ function TimeSheets() {
   const dispatch = useDispatch();
   const listTimesheets = useSelector((state) => state.timesheets.listTimesheet);
   const isLoading = useSelector((state) => state.timesheets.isLoading);
+
+  const timeSheetTable = [];
   const [response, setResponse] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalAdd, setShowModalAdd] = useState();
   const [showModalEdit, setShowModalEdit] = useState();
+
   let modalDelete;
   let modalAdd;
   let modalEdit;
@@ -33,7 +36,7 @@ function TimeSheets() {
     dispatch(getAllTimesheets());
     dispatch(getProjects());
     dispatch(getTasks());
-  }, []);
+  }, [!showModalAdd && !showModalDelete && !showModalEdit && !showSuccessModal]);
 
   const closeModalEdit = () => {
     setShowModalEdit(false);
@@ -43,7 +46,6 @@ function TimeSheets() {
     setShowModalAdd(false);
   };
 
-  const timeSheetTable = [];
   const timesheetFormatted = (listTimesheets) => {
     listTimesheets.forEach((timeSheet) => {
       timeSheetTable.push({
