@@ -20,10 +20,15 @@ const schema = Joi.object({
         'Project name must contain only letters and start with a capital letter',
       'string.empty': 'Name is a required field'
     }),
-  description: Joi.string().min(4).required().messages({
-    'string.min': 'Description must contain more than 4 letters',
-    'string.empty': 'Description is a required field'
-  }),
+  description: Joi.string()
+    .min(4)
+    .required()
+    .pattern(/(.*[a-zA-Z]){4}/)
+    .messages({
+      'string.min': 'Description must contain more than 4 letters',
+      'string.empty': 'Description is a required field',
+      'string.pattern.base': 'Project description must contain at least one word'
+    }),
   startDate: Joi.date().required().messages({ 'date.base': 'Start date is a required field' }),
   endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
     'date.greater': 'End Date must be after the start date',
