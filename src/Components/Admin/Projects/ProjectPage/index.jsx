@@ -175,10 +175,6 @@ const ProjectPage = () => {
           <p>{pm ? `${pm.employeeId?.firstName} ${pm.employeeId?.lastName}` : 'To be defined'}</p>
         </div>
         <div className={styles.field}>
-          <h3>Description</h3>
-          <p>{project?.description}</p>
-        </div>
-        <div className={styles.field}>
           <h3>Start Date</h3>
           <p>{project?.startDate?.slice(0, 10)}</p>
         </div>
@@ -191,6 +187,10 @@ const ProjectPage = () => {
         <div className={styles.field}>
           <h3>Active</h3>
           <p>{project?.active ? 'Active' : 'Inactive'}</p>
+        </div>
+        <div className={styles.field}>
+          <h3>Description</h3>
+          <p>{project?.description}</p>
         </div>
       </div>
       <h2 className={styles.title}>Members</h2>
