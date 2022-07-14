@@ -41,13 +41,13 @@ const taskSchema = Joi.object({
     .required()
     .pattern(/(.*[a-zA-Z]){4}/)
     .messages({
-      'string.min': 'Invalid description, it must contain more than 6 letters',
-      'string.max': 'Invalid description, it must not contain more than 150 letters',
+      'string.min': 'Invalid description, it must contain more than 6 characters',
+      'string.max': 'Invalid description, it must not contain more than 150 characters',
       'string.empty': 'Description is a required field',
-      'string.pattern.base': 'Task description must contain at least one word'
+      'string.pattern.base': 'Task description must contain at least 4 letters'
     }),
   status: Joi.string().min(2).valid('Pending', 'Done', 'Unfinished').required().messages({
-    'string.min': 'Invalid status, it must contain more than 2 letters',
+    'string.min': 'Invalid status, it must contain more than 2 characters',
     'any.only': 'Invalid status, it must be one of the following: Pending, Done, Unfinished',
     'string.empty': 'Status is a required field'
   })
