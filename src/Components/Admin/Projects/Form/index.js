@@ -52,7 +52,7 @@ const schema = Joi.object({
     .messages({
       'string.min': 'Client must contain more than 3 letters',
       'string.max': 'Client must not contain more than 50 letters',
-      'string.pattern.base': 'Client must contain only letters and and be capitalized',
+      'string.pattern.base': 'Client must contain only letters and start with capital letter',
       'string.empty': 'Client is a required field'
     }),
   active: Joi.boolean().required()
