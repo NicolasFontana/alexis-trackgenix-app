@@ -1,10 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
 import * as Joi from 'joi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { getProjectById, updateProject, addProject } from 'redux/projects/thunks';
+import { updateProject, addProject } from 'redux/projects/thunks';
 import styles from './form.module.css';
 
 const schema = Joi.object({
@@ -27,15 +27,15 @@ const schema = Joi.object({
       'string.pattern.base': 'Description must contain at least 4 letters',
       'string.empty': 'Description is a required field'
     }),
-  startDate: Joi.date().min('01-01-1950').max('12-31-2050').required().messages({
+  startDate: Joi.date().min('01/01/1950').max('12/31/2050').required().messages({
     'date.min': 'Only dates from 1950 are accepted',
     'date.max': 'Only dates up to 2050 are accepted',
     'date.base': 'Start date is a required field'
   }),
   endDate: Joi.date()
     .greater(Joi.ref('startDate'))
-    .min('01-01-1950')
-    .max('12-31-2050')
+    .min('01/01/1950')
+    .max('12/31/2050')
     .allow('')
     .messages({
       'date.greater': 'End Date must be after the start date',
@@ -62,16 +62,14 @@ const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProjectById(projectID));
-  }, []);
-
   const handleOnSubmit = (data) => {
     if (edit) {
       if (
         data.name === project.name &&
         data.startDate.toString() == new Date(project.startDate) &&
-        data.endDate.toString() == new Date(project.endDate) &&
+        (data.endDate
+          ? data.endDate.toString() == new Date(project.endDate)
+          : project.endDate === null) &&
         data.clientName === project.clientName &&
         data.active === project.active &&
         data.description === project.description
@@ -108,7 +106,7 @@ const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
     defaultValues: {
       name: edit ? project.name : '',
       startDate: edit ? project.startDate.slice(0, 10) : '',
-      endDate: edit ? project.endDate.slice(0, 10) : '',
+      endDate: edit ? project.endDate?.slice(0, 10) : '',
       clientName: edit ? project.clientName : '',
       active: edit ? project.active : true,
       description: edit ? project.description : ''

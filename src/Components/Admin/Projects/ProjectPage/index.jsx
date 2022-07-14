@@ -182,6 +182,12 @@ const ProjectPage = () => {
           <h3>Start Date</h3>
           <p>{project?.startDate?.slice(0, 10)}</p>
         </div>
+        {project.endDate && (
+          <div className={styles.field}>
+            <h3>End Date</h3>
+            <p>{project?.endDate?.slice(0, 10)}</p>
+          </div>
+        )}
         <div className={styles.field}>
           <h3>Active</h3>
           <p>{project?.active ? 'Active' : 'Inactive'}</p>
