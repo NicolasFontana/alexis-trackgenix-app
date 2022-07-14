@@ -116,15 +116,3 @@ export const deleteProject = (_id, setMessage) => {
       });
   };
 };
-
-export const editEmployeeRoleRate = () => {
-  return console.log('todavia nada creado');
-};
-
-export const delEmployeeFromProject = () => {
-  // return (dispatch) => {
-  //   dispatch(deleteEmployeeFromProjectPending());
-  //   return fetch()
-  // };
-  return console.log('Crear thunk, actions, constant and reducer case');
-};

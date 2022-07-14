@@ -4,7 +4,7 @@ import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { editEmployeeRoleRate } from 'redux/projects/thunks';
+import { updateProject } from 'redux/projects/thunks';
 import styles from './editform.module.css';
 
 const employeePageSchema = Joi.object({
@@ -21,18 +21,24 @@ const employeePageSchema = Joi.object({
   })
 });
 
-const EditForm = ({ project, closeModalForm }) => {
+const EditForm = ({ project, employeeData, closeModalForm }) => {
   const dispatch = useDispatch();
 
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    if (data.role === project.role && data.rate === project.rate) {
+    if (data.role === employeeData.role && data.rate === employeeData.rate) {
       setMessage({ message: "There hasn't been any changes", data: {}, error: true });
       setShowMessageModal(true);
     } else {
-      dispatch(editEmployeeRoleRate(data, project._id, setMessage)).then(() => {
+      project.members.forEach((member) => {
+        if (member.employeeId._id === employeeData._id) {
+          member.role = employeeData.role;
+          member.rate = employeeData.rate;
+        }
+      });
+      dispatch(updateProject(project._id, project, setMessage)).then(() => {
         setShowMessageModal(true);
       });
     }
@@ -46,8 +52,8 @@ const EditForm = ({ project, closeModalForm }) => {
     mode: 'onBlur',
     resolver: joiResolver(employeePageSchema),
     defaultValues: {
-      role: project.role,
-      rate: project.rate
+      role: employeeData.role,
+      rate: employeeData.rate
     }
   });
 
