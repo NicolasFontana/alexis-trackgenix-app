@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { getEmployees, updateEmployee } from 'redux/employees/thunks';
 import { useHistory, generatePath } from 'react-router-dom';
 import {
   Preloader,
@@ -17,12 +18,14 @@ const Projects = () => {
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
+  const employees = useSelector((state) => state.employees.list);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
   const [message, setMessage] = useState('');
+  const [responseEmployee, setResponseEmployee] = useState('');
 
   let modalEdit;
   let modalDelete;
@@ -68,6 +71,7 @@ const Projects = () => {
 
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getEmployees());
   }, [showModalFormEdit === false, showModalAdd === false, showConfirmModal === false]);
 
   if (showModalFormEdit) {
@@ -84,10 +88,28 @@ const Projects = () => {
   }
 
   const deleteItem = () => {
-    dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
-      closeConfirmModal();
-      setErrorSuccessModal(true);
-    });
+    dispatch(deleteProject(projectId, (message) => setMessage(message)))
+      .then(() => {
+        closeConfirmModal();
+        setErrorSuccessModal(true);
+      })
+      .then(
+        employees
+          .filter((employee) => employee.projects.some((project) => project._id === projectId))
+          .map((employee) =>
+            dispatch(
+              updateEmployee(
+                JSON.stringify({
+                  projects: employee.projects
+                    .filter((employeeProject) => employeeProject._id != projectId)
+                    .map((project) => project._id)
+                }),
+                employee._id,
+                setResponseEmployee
+              )
+            )
+          )
+      );
   };
 
   if (showConfirmModal) {
@@ -116,7 +138,14 @@ const Projects = () => {
         show={showErrorSuccessModal}
         closeModal={closeErrorSuccessModal}
         closeModalForm={closeConfirmModal}
-        successResponse={message}
+        successResponse={{
+          message:
+            responseEmployee === ''
+              ? message.message
+              : `${message.message}. ${responseEmployee.message}`,
+          data: message.data,
+          error: message.error
+        }}
       ></ErrorSuccessModal>
     );
   }
