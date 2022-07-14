@@ -45,8 +45,7 @@ const adminSchema = Joi.object({
       'string.min': 'Invalid password, it must contain at least 8 characters',
       'string.pattern.base': 'Invalid password, it must contain both letters and numbers',
       'string.empty': 'Password is a required field'
-    }),
-  active: Joi.boolean().required()
+    })
 });
 
 const AdminsEdit = ({ edit, closeModalForm }) => {
@@ -60,8 +59,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       data.firstName === edit.firstName &&
       data.lastName === edit.lastName &&
       data.email === edit.email &&
-      data.password === '' &&
-      data.active === edit.active
+      data.password === ''
     ) {
       setResponse({ message: "There hasn't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
@@ -70,16 +68,14 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         editedAdmin = JSON.stringify({
           firstName: data.firstName,
           lastName: data.lastName,
-          email: data.email,
-          active: data.active
+          email: data.email
         });
       } else {
         editedAdmin = JSON.stringify({
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
-          password: data.password,
-          active: data.active
+          password: data.password
         });
       }
       dispatch(editAdmin(edit._id, editedAdmin, setResponse)).then(() => {
@@ -99,8 +95,7 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
       firstName: edit.firstName,
       lastName: edit.lastName,
       email: edit.email,
-      password: '',
-      active: edit.active
+      password: ''
     },
     shouldFocusError: false
   });
@@ -138,13 +133,6 @@ const AdminsEdit = ({ edit, closeModalForm }) => {
         placeholder="Insert Password"
         register={register}
         error={errors.password?.message}
-      />
-      <Input
-        label="Active"
-        name="active"
-        type="checkbox"
-        register={register}
-        error={errors.active?.message}
       />
       <div className={styles.buttonBox}>
         <ButtonText clickAction={handleSubmit(onSubmit)} label="Edit"></ButtonText>
