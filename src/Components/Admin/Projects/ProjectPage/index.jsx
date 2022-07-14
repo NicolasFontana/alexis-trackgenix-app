@@ -188,7 +188,7 @@ const ProjectPage = () => {
           <h3>Active</h3>
           <p>{project?.active ? 'Active' : 'Inactive'}</p>
         </div>
-        <div className={styles.field}>
+        <div className={styles.fieldDescription}>
           <h3>Description</h3>
           <p>{project?.description}</p>
         </div>
