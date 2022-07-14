@@ -31,7 +31,9 @@ const Table = (props) => {
                     <td
                       key={`${row._id ? row._id : row.employeeId_id}-${index}`}
                       className={redirect ? styles.tdPointer : styles.td}
-                      onPointerDown={() => (redirect ? redirect(row._id) : null)}
+                      onPointerDown={() =>
+                        redirect ? redirect(row._id ? row._id : row.employeeId._id) : null
+                      }
                     >
                       {modifiers
                         ? modifiers[header]

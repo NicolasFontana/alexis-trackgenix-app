@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, generatePath } from 'react-router-dom';
 import { getEmployees, updateEmployee } from 'redux/employees/thunks';
 import { getProjects, updateProject } from 'redux/projects/thunks';
 import MemberForm from './MemberForm';
@@ -17,6 +17,7 @@ import styles from './projectPage.module.css';
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
   const { id } = useParams();
   const project = useSelector((state) => state.projects.list).find((project) => project._id === id);
   const isLoading = useSelector((state) => state.projects.isLoading);
@@ -39,6 +40,10 @@ const ProjectPage = () => {
     dispatch(getProjects());
     dispatch(getEmployees());
   }, [!showModalDelete]);
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/employees/:id', { id }));
+  };
 
   if (showModalAdd) {
     modalAdd = (
@@ -220,6 +225,7 @@ const ProjectPage = () => {
             setMemberId(id);
             setShowModalEdit(true);
           }}
+          redirect={redirectAction}
         />
       </div>
     </section>

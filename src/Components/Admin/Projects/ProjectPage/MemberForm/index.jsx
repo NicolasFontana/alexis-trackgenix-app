@@ -33,6 +33,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
   const [responseEmployee, setResponseEmployee] = useState('');
   let memberToEdit = project.members.find((member) => member.employeeId._id === memberId);
   let pm = project?.members.find((member) => member.role === 'PM');
+  let tl = project?.members.find((member) => member.role === 'TL');
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -40,9 +41,17 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
   }, [showModalErrorSuccess]);
 
   const onSubmit = (data) => {
+    setResponseEmployee('');
     if (pm && data.role === 'PM' && memberId !== pm.employeeId._id) {
       setResponse({
         message: `Project Manager already defined: ${pm.employeeId.firstName} ${pm.employeeId.lastName}`,
+        data: {},
+        error: true
+      });
+      setModalErrorSuccess(true);
+    } else if (tl && data.role === 'TL' && memberId !== tl.employeeId._id) {
+      setResponse({
+        message: `Team Leader already defined: ${tl.employeeId.firstName} ${tl.employeeId.lastName}`,
         data: {},
         error: true
       });
@@ -179,7 +188,10 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         }}
         closeModalForm={closeModalForm}
         successResponse={{
-          message: `${response.message}. ${responseEmployee.message}`,
+          message:
+            responseEmployee === ''
+              ? response.message
+              : `${response.message}. ${responseEmployee.message}`,
           data: response.data,
           error: response.error
         }}
