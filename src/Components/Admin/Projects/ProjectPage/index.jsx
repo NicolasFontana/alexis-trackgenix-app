@@ -210,23 +210,25 @@ const ProjectPage = () => {
             setShowModalAdd(true);
           }}
         ></ButtonText>
-        <Table
-          data={project?.members}
-          headers={['employeeId', 'role', 'rate']}
-          titles={['Name', 'Role', 'Rate']}
-          modifiers={{
-            employeeId: (x) => `${x.firstName} ${x.lastName}`
-          }}
-          delAction={(id) => {
-            setMemberId(id);
-            setShowModalDelete(true);
-          }}
-          editAction={(id) => {
-            setMemberId(id);
-            setShowModalEdit(true);
-          }}
-          redirect={redirectAction}
-        />
+        {project?.members.length ? (
+          <Table
+            data={project?.members}
+            headers={['employeeId', 'role', 'rate']}
+            titles={['Name', 'Role', 'Rate']}
+            modifiers={{
+              employeeId: (x) => `${x.firstName} ${x.lastName}`
+            }}
+            delAction={(id) => {
+              setMemberId(id);
+              setShowModalDelete(true);
+            }}
+            editAction={(id) => {
+              setMemberId(id);
+              setShowModalEdit(true);
+            }}
+            redirect={redirectAction}
+          />
+        ) : null}
       </div>
     </section>
   );
