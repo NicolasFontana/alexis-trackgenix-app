@@ -63,10 +63,12 @@ const Projects = () => {
     setConfirmModal(false);
     setErrorSuccessModal(false);
     setModalAdd(false);
+    document.body.style.overflow = 'unset';
   };
 
   const closeErrorSuccessModal = () => {
     setErrorSuccessModal(false);
+    document.body.style.overflow = 'unset';
   };
 
   useEffect(() => {
@@ -92,6 +94,7 @@ const Projects = () => {
       .then(() => {
         closeConfirmModal();
         setErrorSuccessModal(true);
+        document.body.style.overflow = 'hidden';
       })
       .then(
         employees
@@ -150,7 +153,11 @@ const Projects = () => {
     );
   }
 
-  return isLoading && !showModalAdd && !showConfirmModal && !showModalFormEdit ? (
+  return isLoading &&
+    !showModalAdd &&
+    !showConfirmModal &&
+    !showModalFormEdit &&
+    !showErrorSuccessModal ? (
     <section className={styles.containerPreloader}>
       <Preloader>
         <p>Loading Projects</p>
