@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, generatePath } from 'react-router-dom';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import { Preloader, Table } from 'Components/Shared';
@@ -16,6 +16,7 @@ const EmployeePage = () => {
 
   let employee;
   let employeeProjects = []; //the data of the projects will be loaded here
+  let history = useHistory();
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -41,6 +42,10 @@ const EmployeePage = () => {
     });
   }
 
+  const redirectAction = (id) => {
+    history.push(generatePath('/admin/projects/:id', { id }));
+  };
+
   return employeeLoading && projectsLoading ? (
     <section className={styles.containerPreloader}>
       <Preloader>
@@ -49,7 +54,7 @@ const EmployeePage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <div className={styles.box}>
+      <div className={styles.information}>
         <div className={styles.field}>
           <h3>First Name</h3>
           <p>{employee.firstName}</p>
@@ -83,12 +88,15 @@ const EmployeePage = () => {
           <p>{employee.status ? employee.status : 'was not loaded'}</p>
         </div>
       </div>
-      <Table
-        data={employeeProjects}
-        headers={['name', 'role', 'rate']}
-        titles={['Name', 'Role', 'Rate']}
-        modifiers={{}}
-      />
+      <div className={styles.table}>
+        <Table
+          data={employeeProjects}
+          headers={['name', 'role', 'rate']}
+          titles={['Name', 'Role', 'Rate']}
+          modifiers={{}}
+          redirect={redirectAction}
+        />
+      </div>
     </section>
   );
 };
