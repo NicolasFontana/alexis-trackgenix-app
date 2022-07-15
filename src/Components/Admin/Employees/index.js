@@ -30,7 +30,6 @@ const Employees = () => {
   let history = useHistory();
   let modalEdit;
   let modalDelete;
-  let projectToEdit = {};
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -38,26 +37,34 @@ const Employees = () => {
   }, [showModalFormDelete === false]);
 
   const handleConfirm = () => {
-    dispatch(deleteEmployee(employeeId, setResponse)).then(() => {
-      setShowModalFormDelete(false);
-      setShowSuccessModal(true);
-    });
-    // projects are maped
-    projects.forEach((project) => {
-      projectToEdit = project;
-      let members; //the filtered array is saved here
-      project.members.forEach((member) => {
-        if (member.employeeId._id === employeeId) {
-          //filter members to delete the employee with that id
-          members = projectToEdit.members.filter((member) => member.employeeId._id !== employeeId);
-          projectToEdit.members = members;
-          //the project is updated
-          dispatch(updateProject(projectToEdit._id, projectToEdit, setResponse)).then(() => {
-            setShowSuccessModal(true);
+    dispatch(deleteEmployee(employeeId, setResponse))
+      .then(() => {
+        projects.forEach((project) => {
+          project.members.forEach((member) => {
+            if (member.employeeId._id === employeeId) {
+              dispatch(
+                updateProject(
+                  project._id,
+                  {
+                    members: project.members
+                      .filter((member) => member.employeeId._id != employeeId)
+                      .map((member) => ({
+                        employeeId: member.employeeId._id,
+                        role: member.role,
+                        rate: member.rate
+                      }))
+                  },
+                  setResponse
+                )
+              );
+            }
           });
-        }
+        });
+      })
+      .then(() => {
+        setShowModalFormDelete(false);
+        setShowSuccessModal(true);
       });
-    });
   };
 
   const redirectAction = (id) => {
