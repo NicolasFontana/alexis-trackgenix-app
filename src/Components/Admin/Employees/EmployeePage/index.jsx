@@ -65,27 +65,27 @@ const EmployeePage = () => {
         </div>
         <div className={styles.field}>
           <h3>DNI</h3>
-          <p>{employee.dni ? employee.dni : 'was not loaded'}</p>
+          <p>{employee.dni ? employee.dni : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
           <h3>Date of Birth</h3>
-          <p>{employee.dateBirth ? employee.dateBirth.substring(0, 10) : 'was not loaded'}</p>
+          <p>{employee.dateBirth ? employee.dateBirth.substring(0, 10) : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
           <h3>Adress</h3>
-          <p>{employee.address ? employee.address : 'was not loaded'}</p>
+          <p>{employee.address ? employee.address : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
           <h3>Phone</h3>
-          <p>{employee.phone ? employee.phone : 'was not loaded'}</p>
+          <p>{employee.phone ? employee.phone : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
           <h3>Email</h3>
-          <p>{employee.email ? employee.email : 'was not loaded'}</p>
+          <p>{employee.email ? employee.email : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
           <h3>Status</h3>
-          <p>{employee.status ? employee.status : 'was not loaded'}</p>
+          <p>{employee.status ? employee.status : 'was not defined'}</p>
         </div>
       </div>
       <div className={styles.table}>
