@@ -17,8 +17,8 @@ function Timesheet() {
       <h2 className={styles.title}>Employee Timesheets</h2>
       <Table
         data={timesheets}
-        headers={['projectId', 'approved', 'Task']}
-        titles={['Project', 'PMs approval', 'Worked hours']}
+        headers={['projectId', 'approved', 'Task', 'createdAt']}
+        titles={['Project', 'PMs approval', 'Worked hours', 'Month']}
         modifiers={{
           projectId: (x) => x.name,
           approved: (x) => (x ? 'Approved' : 'Not approved'),
