@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
+import { useHistory, generatePath } from 'react-router-dom';
 import { Table } from 'Components/Shared';
 import styles from './projects.module.css';
 
 function Projects() {
+  let history = useHistory();
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
@@ -36,6 +38,9 @@ function Projects() {
           endDate: (x) => x?.slice(0, 10),
           active: (x) => (x ? 'Active' : 'Inactive'),
           members: (x) => x.find((e) => e.employeeId._id === employeeId)?.rate
+        }}
+        redirect={(id) => {
+          history.push(generatePath('/employee/projects/:id', { id }));
         }}
       />
     </section>
