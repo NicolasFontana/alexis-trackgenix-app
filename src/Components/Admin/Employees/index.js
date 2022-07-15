@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, deleteEmployee } from 'redux/employees/thunks';
+import { getProjects, updateProject } from 'redux/projects/thunks';
 import { useHistory, generatePath } from 'react-router-dom';
 import styles from './employees.module.css';
 import Form from './Form';
@@ -16,7 +17,10 @@ import {
 const Employees = () => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.list);
-  const isLoading = useSelector((state) => state.employees.isLoading);
+  const projects = useSelector((state) => state.projects.list);
+  const employeeLoading = useSelector((state) => state.employees.isLoading);
+  const projectsLoading = useSelector((state) => state.projects.isLoading);
+
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showModalFormDelete, setShowModalFormDelete] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -24,10 +28,41 @@ const Employees = () => {
   const [employeeId, setEmployeeId] = useState();
 
   let history = useHistory();
+  let modalEdit;
+  let modalDelete;
 
   useEffect(() => {
     dispatch(getEmployees());
+    dispatch(getProjects());
   }, [showModalFormDelete === false]);
+
+  const handleConfirm = () => {
+    dispatch(deleteEmployee(employeeId, setResponse)).then(() => {
+      setShowModalFormDelete(false);
+      setShowSuccessModal(true);
+    });
+    projects.forEach((project) => {
+      project.members.forEach((member) => {
+        if (member.employeeId._id === employeeId) {
+          dispatch(
+            updateProject(
+              project._id,
+              {
+                members: project.members
+                  .filter((member) => member.employeeId._id != employeeId)
+                  .map((member) => ({
+                    employeeId: member.employeeId._id,
+                    role: member.role,
+                    rate: member.rate
+                  }))
+              },
+              setResponse
+            )
+          );
+        }
+      });
+    });
+  };
 
   const redirectAction = (id) => {
     history.push(generatePath('/admin/employees/:id', { id }));
@@ -37,7 +72,6 @@ const Employees = () => {
     setShowModalFormEdit(false);
   };
 
-  let modalEdit;
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModalFormEdit} title="Edit Employee">
@@ -50,7 +84,6 @@ const Employees = () => {
     );
   }
 
-  let modalDelete;
   if (showModalFormDelete) {
     modalDelete = (
       <ConfirmModal
@@ -58,19 +91,18 @@ const Employees = () => {
         handleClose={() => {
           setShowModalFormDelete(false);
         }}
-        confirmDelete={() => {
-          dispatch(deleteEmployee(employeeId, setResponse)).then(() => {
-            setShowModalFormDelete(false);
-            setShowSuccessModal(true);
-          });
-        }}
+        confirmDelete={handleConfirm}
         title="Delete Employee"
         message={'Are you sure you want to delete this employee?'}
       />
     );
   }
 
-  return isLoading && !showModalFormEdit && !showModalFormDelete && !showSuccessModal ? (
+  return employeeLoading &&
+    projectsLoading &&
+    !showModalFormEdit &&
+    !showModalFormDelete &&
+    !showSuccessModal ? (
     <section className={styles.containerPreloader}>
       <Preloader>
         <p>Loading Employees</p>
@@ -104,7 +136,7 @@ const Employees = () => {
       />
       {modalEdit}
       {modalDelete}
-      {isLoading ? <Preloader /> : null}
+      {employeeLoading ? <Preloader /> : null}
 
       <ErrorSuccessModal
         show={showSuccessModal}
