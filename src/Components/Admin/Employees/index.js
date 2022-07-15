@@ -37,34 +37,31 @@ const Employees = () => {
   }, [showModalFormDelete === false]);
 
   const handleConfirm = () => {
-    dispatch(deleteEmployee(employeeId, setResponse))
-      .then(() => {
-        projects.forEach((project) => {
-          project.members.forEach((member) => {
-            if (member.employeeId._id === employeeId) {
-              dispatch(
-                updateProject(
-                  project._id,
-                  {
-                    members: project.members
-                      .filter((member) => member.employeeId._id != employeeId)
-                      .map((member) => ({
-                        employeeId: member.employeeId._id,
-                        role: member.role,
-                        rate: member.rate
-                      }))
-                  },
-                  setResponse
-                )
-              );
-            }
-          });
-        });
-      })
-      .then(() => {
-        setShowModalFormDelete(false);
-        setShowSuccessModal(true);
+    dispatch(deleteEmployee(employeeId, setResponse)).then(() => {
+      setShowModalFormDelete(false);
+      setShowSuccessModal(true);
+    });
+    projects.forEach((project) => {
+      project.members.forEach((member) => {
+        if (member.employeeId._id === employeeId) {
+          dispatch(
+            updateProject(
+              project._id,
+              {
+                members: project.members
+                  .filter((member) => member.employeeId._id != employeeId)
+                  .map((member) => ({
+                    employeeId: member.employeeId._id,
+                    role: member.role,
+                    rate: member.rate
+                  }))
+              },
+              setResponse
+            )
+          );
+        }
       });
+    });
   };
 
   const redirectAction = (id) => {

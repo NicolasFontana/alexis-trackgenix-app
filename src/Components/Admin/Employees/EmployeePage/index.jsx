@@ -92,7 +92,7 @@ const EmployeePage = () => {
         <Table
           data={employeeProjects}
           headers={['name', 'role', 'rate']}
-          titles={['Name', 'Role', 'Rate']}
+          titles={['Project Name', 'Role', 'Rate']}
           modifiers={{}}
           redirect={redirectAction}
         />
