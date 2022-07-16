@@ -14,12 +14,6 @@ const schema = Joi.object({
   }),
   role: Joi.string().required().messages({
     'string.empty': 'Role is a required field'
-  }),
-  rate: Joi.number().min(0).max(999999).required().messages({
-    'number.min': 'Rate must be positive',
-    'number.max': 'Rate must be between 0 and 999999',
-    'number.unsafe': 'Rate must be a safe number',
-    'number.base': 'Rate is a required field'
   })
 });
 
@@ -57,7 +51,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
       });
       setModalErrorSuccess(true);
     } else if (memberToEdit) {
-      if (data.role === memberToEdit.role && data.rate === memberToEdit.rate) {
+      if (data.role === memberToEdit.role) {
         setResponse({ message: "There haven't been any changes", data: {}, error: true });
         setModalErrorSuccess(true);
       } else {
@@ -68,7 +62,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
               members: project.members.map((member) => ({
                 employeeId: member.employeeId._id,
                 role: member.employeeId._id === memberId ? data.role : member.role,
-                rate: member.employeeId._id === memberId ? data.rate : member.rate
+                rate: member.rate
               }))
             },
             setResponse
@@ -91,7 +85,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
               .concat({
                 employeeId: data.member,
                 role: data.role,
-                rate: data.rate
+                rate: 0
               })
           },
           setResponse
@@ -128,8 +122,8 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
       member: memberId
         ? `${memberToEdit.employeeId.firstName} ${memberToEdit.employeeId.lastName}`
         : '',
-      role: memberId ? memberToEdit.role : '',
-      rate: memberId ? memberToEdit.rate : ''
+      role: memberId ? memberToEdit.role : ''
+      // rate: memberId ? memberToEdit.rate : ''
     },
     shouldFocusError: false
   });
@@ -168,14 +162,6 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         data={['TL', 'QA', 'DEV', 'PM']}
         register={register}
         error={errors.role?.message}
-      />
-      <Input
-        label="Rate"
-        type="number"
-        name="rate"
-        placeholder="Insert rate"
-        register={register}
-        error={errors.rate?.message}
       />
       <ButtonText
         clickAction={handleSubmit(onSubmit)}

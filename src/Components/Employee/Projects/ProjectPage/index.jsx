@@ -31,9 +31,6 @@ const ProjectPage = () => {
   const [responseEmployee, setResponseEmployee] = useState('');
   const [isPM, setIsPM] = useState(false);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
-  // const employee = useSelector((state) => state.employees.list).find(
-  //   (employee) => employee._id === employeeId
-  // );
 
   let pm = project?.members.find((member) => member.role === 'PM');
   let modalAdd;
@@ -50,8 +47,8 @@ const ProjectPage = () => {
     dispatch(getEmployees());
   }, [!showModalDelete]);
 
-  const redirectAction = (employeeId) => {
-    history.push(generatePath('/employee/projects/:id/:employeeId', { id: id, employeeId }));
+  const redirectAction = (memberId) => {
+    history.push(generatePath('/employee/projects/:id/:memberId', { id: id, memberId }));
   };
 
   if (showModalAdd) {
@@ -245,7 +242,7 @@ const ProjectPage = () => {
                   }
                 : null
             }
-            redirect={redirectAction}
+            redirect={isPM ? redirectAction : null}
           />
         ) : null}
       </div>
