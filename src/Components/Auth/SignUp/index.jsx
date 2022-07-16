@@ -105,7 +105,8 @@ const Form = () => {
       isProjectManager: false,
       projects: '',
       timeSheets: ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
