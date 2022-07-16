@@ -37,6 +37,7 @@ const ProjectPage = () => {
   let modalEdit;
   let modalDelete;
   let modalErrorSuccess;
+  console.log(pm);
 
   useEffect(() => {
     dispatch(getProjects()).then(setIsPM(pm?.employeeId._id === employeeId));
@@ -172,6 +173,7 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
+      {isPM ? <h2 className={styles.titlePM}>You are a PM in this project</h2> : null}
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
@@ -220,7 +222,11 @@ const ProjectPage = () => {
         ) : null}
         {project?.members.length ? (
           <Table
-            data={project?.members}
+            data={
+              isPM
+                ? project?.members.filter((member) => member.employeeId._id !== pm.employeeId._id)
+                : project?.members
+            }
             headers={['employeeId', 'role']}
             titles={['Name', 'Role']}
             modifiers={{
