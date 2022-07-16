@@ -141,7 +141,8 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       picture: employeeEdit.picture,
       dni: employeeEdit.dni,
       dateBirth: employeeEdit.dateBirth ? employeeEdit.dateBirth.slice(0, 10) : null
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

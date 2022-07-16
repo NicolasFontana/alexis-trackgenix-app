@@ -11,7 +11,7 @@ const schema = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .pattern(/^[A-Z][\p{L}\p{M}\s]*$/u)
     .required()
     .messages({
       'string.min': 'Project name must contain more than 3 letters',
@@ -21,9 +21,11 @@ const schema = Joi.object({
       'string.empty': 'Project name is a required field'
     }),
   description: Joi.string()
+    .min(4)
     .pattern(/(.*[a-zA-Z]){4}/)
     .required()
     .messages({
+      'string.min': 'Description must contain more than 4 letters',
       'string.pattern.base': 'Description must contain at least 4 letters',
       'string.empty': 'Description is a required field'
     }),
@@ -45,12 +47,12 @@ const schema = Joi.object({
   clientName: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/^[A-Z][\p{L}\p{M}]*$/u)
+    .pattern(/^[A-Z][\p{L}\p{M}\s]*$/u)
     .required()
     .messages({
       'string.min': 'Client must contain more than 3 letters',
       'string.max': 'Client must not contain more than 50 letters',
-      'string.pattern.base': 'Client must contain only letters and and be capitalized',
+      'string.pattern.base': 'Client must contain only letters and start with capital letter',
       'string.empty': 'Client is a required field'
     }),
   active: Joi.boolean().required()

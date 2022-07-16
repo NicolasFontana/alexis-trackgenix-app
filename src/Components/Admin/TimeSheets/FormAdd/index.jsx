@@ -45,7 +45,8 @@ const FormAdd = ({ closeModalForm }) => {
       project: '',
       task: '',
       approved: false
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
