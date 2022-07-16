@@ -159,7 +159,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         label="Role"
         name="role"
         title="Choose Role"
-        data={['TL', 'QA', 'DEV', 'PM']}
+        data={['TL', 'QA', 'DEV']}
         register={register}
         error={errors.role?.message}
       />

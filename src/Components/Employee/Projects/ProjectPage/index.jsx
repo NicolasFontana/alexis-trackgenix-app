@@ -179,7 +179,7 @@ const ProjectPage = () => {
           history.push('/employee/projects');
         }}
       ></ButtonText>
-      {isPM ? <h2 className={styles.titlePM}>You are a PM in this project</h2> : null}
+      {isPM ? <h2 className={styles.titlePM}>You are the PM of this project</h2> : null}
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
@@ -226,7 +226,7 @@ const ProjectPage = () => {
             }}
           ></ButtonText>
         ) : null}
-        {project?.members.length ? (
+        {(project?.members.length && !isPM) || (project?.members.length > 1 && isPM) ? (
           <Table
             data={
               isPM
