@@ -57,7 +57,7 @@ const EmployeePage = () => {
       <ButtonText
         label="Go back"
         clickAction={() => {
-          history.push('/admin/employees/');
+          history.push('/admin/employees');
         }}
       ></ButtonText>
       <div className={styles.information}>

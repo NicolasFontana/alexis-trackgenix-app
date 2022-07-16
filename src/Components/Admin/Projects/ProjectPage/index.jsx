@@ -169,7 +169,7 @@ const ProjectPage = () => {
       <ButtonText
         label="Go back"
         clickAction={() => {
-          history.push('/admin/projects/');
+          history.push('/admin/projects');
         }}
       ></ButtonText>
       <div className={styles.box}>
