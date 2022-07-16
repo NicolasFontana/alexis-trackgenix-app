@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, generatePath } from 'react-router-dom';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
-import { Preloader, Table } from 'Components/Shared';
+import { Preloader, Table, ButtonText } from 'Components/Shared';
 import styles from 'Components/Admin/Employees/EmployeePage/employeePage.module.css';
 
 const EmployeePage = () => {
@@ -54,6 +54,12 @@ const EmployeePage = () => {
     </section>
   ) : (
     <section className={styles.container}>
+      <ButtonText
+        label="Go back"
+        clickAction={() => {
+          history.push('/admin/employees/');
+        }}
+      ></ButtonText>
       <div className={styles.information}>
         <div className={styles.field}>
           <h3>First Name</h3>
@@ -88,6 +94,7 @@ const EmployeePage = () => {
           <p>{employee.status ? employee.status : 'was not defined'}</p>
         </div>
       </div>
+      <h2 className={styles.title}>Projects</h2>
       <div className={styles.table}>
         <Table
           data={employeeProjects}

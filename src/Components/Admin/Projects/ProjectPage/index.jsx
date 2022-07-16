@@ -166,6 +166,12 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
+      <ButtonText
+        label="Go back"
+        clickAction={() => {
+          history.push('/admin/projects/');
+        }}
+      ></ButtonText>
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>

@@ -3,8 +3,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2% 0px;
+  margin: 2%;
   color: #373867;
+}
+
+.container > button {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  padding: 0 30px;
+}
+
+.container td {
+  max-width: unset;
+  padding: 20px 40px;
 }
 
 .information {
@@ -34,6 +45,14 @@
 
 .select {
   width: 90%;
+}
+
+.title {
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
 }
 
 @media screen and (min-width: 480px) {
