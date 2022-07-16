@@ -50,8 +50,8 @@ const ProjectPage = () => {
     dispatch(getEmployees());
   }, [!showModalDelete]);
 
-  const redirectAction = (id) => {
-    history.push(generatePath('/admin/employees/:id', { id }));
+  const redirectAction = (employeeId) => {
+    history.push(generatePath('/employee/projects/:id/:employeeId', { id: id, employeeId }));
   };
 
   if (showModalAdd) {
@@ -224,8 +224,8 @@ const ProjectPage = () => {
         {project?.members.length ? (
           <Table
             data={project?.members}
-            headers={['employeeId', 'role', 'rate']}
-            titles={['Name', 'Role', 'Rate']}
+            headers={['employeeId', 'role']}
+            titles={['Name', 'Role']}
             modifiers={{
               employeeId: (x) => `${x.firstName} ${x.lastName}`
             }}

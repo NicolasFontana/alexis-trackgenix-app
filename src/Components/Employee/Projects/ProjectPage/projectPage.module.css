@@ -13,10 +13,7 @@
   padding: 0 40px;
 }
 
-.container td:last-child {
-  padding: unset;
-}
-
+.container td:last-child,
 .container td:nth-last-child(2) {
   padding: unset;
 }
@@ -88,6 +85,8 @@
   padding: 0 30px;
 }
 
-.divContainer td {
+.divContainerNotPM td:last-child,
+.divContainerNotPM td:nth-last-child(2) {
+  height: 40px;
   padding: 0 40px;
 }
