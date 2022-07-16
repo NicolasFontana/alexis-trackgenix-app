@@ -78,7 +78,7 @@ const EmployeePage = () => {
           <p>{employee.dateBirth ? employee.dateBirth.substring(0, 10) : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
-          <h3>Adress</h3>
+          <h3>Address</h3>
           <p>{employee.address ? employee.address : 'was not defined'}</p>
         </div>
         <div className={styles.field}>
