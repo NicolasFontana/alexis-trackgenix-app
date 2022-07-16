@@ -15,15 +15,11 @@ const taskSchema = Joi.object({
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
-  startDate: Joi.date()
-    .min(1950 - 1 - 1)
-    .max('now')
-    .required()
-    .messages({
-      'date.base': 'Start date is a required field',
-      'date.min': 'Invalid start date',
-      'date.max': 'Invalid start date, it must not be over the current date'
-    }),
+  startDate: Joi.date().min('1950/1/1').max('12/31/2050').required().messages({
+    'date.base': 'Start date is a required field',
+    'date.min': 'Invalid start date',
+    'date.max': 'Invalid start date, it must not be over the current date'
+  }),
   workedHours: Joi.string()
     .regex(/^[0-9]*$/)
     .min(1)
@@ -32,24 +28,25 @@ const taskSchema = Joi.object({
     .messages({
       'string.min': 'Invalid number, it must be positive',
       'string.max': 'Invalid number, it exceeds the number of posible worked hours',
-      'string.pattern.base': 'Invalid, it must contain only interger numbers',
+      'string.pattern.base': 'Invalid, it must contain only integer numbers',
       'string.empty': 'Worked hours is a required field'
     }),
-  description: Joi.string().min(6).max(150).required().messages({
-    'string.min': 'Invalid description, it must contain more than 6 letters',
-    'string.max': 'Invalid description, it must not contain more than 150 letters',
-    'string.empty': 'Description is a required field'
-  }),
-  status: Joi.string()
-    .min(2)
-    .valid('To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled')
+  description: Joi.string()
+    .min(6)
+    .max(150)
     .required()
+    .pattern(/(.*[a-zA-Z]){4}/)
     .messages({
-      'string.min': 'Invalid status, it must contain more than 2 letters',
-      'any.only':
-        'Invalid status, it must be one of the following: To do, In progress, Review, Blocked, Done, Cancelled',
-      'string.empty': 'Status is a required field'
-    })
+      'string.min': 'Invalid description, it must contain more than 6 characters',
+      'string.max': 'Invalid description, it must not contain more than 150 characters',
+      'string.empty': 'Description is a required field',
+      'string.pattern.base': 'Task description must contain at least 4 letters'
+    }),
+  status: Joi.string().min(2).valid('Pending', 'Done', 'Unfinished').required().messages({
+    'string.min': 'Invalid status, it must contain more than 2 characters',
+    'any.only': 'Invalid status, it must be one of the following: Pending, Done, Unfinished',
+    'string.empty': 'Status is a required field'
+  })
 });
 
 const Form = ({ closeModalForm }) => {
@@ -84,7 +81,8 @@ const Form = ({ closeModalForm }) => {
       workedHours: '',
       description: '',
       status: ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (
@@ -124,7 +122,7 @@ const Form = ({ closeModalForm }) => {
         label="Status"
         name="status"
         title="Choose status"
-        data={['To do', 'In progress', 'Review', 'Blocked', 'Done', 'Cancelled']}
+        data={['Pending', 'Done', 'Unfinished']}
         register={register}
         error={errors.status?.message}
       />
