@@ -6,6 +6,8 @@
   justify-content: center;
   align-items: center;
   margin: 2%;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(55, 56, 103, 1);
 }
 
 .container > button {
@@ -35,7 +37,6 @@
   margin: 10px;
   border: 3px solid #76a068;
   border-radius: 10px;
-  color: #373867;
 }
 
 .field {
@@ -80,7 +81,6 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
 }
 
 .divContainer {

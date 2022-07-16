@@ -96,13 +96,17 @@ const EmployeePage = () => {
       </div>
       <h2 className={styles.title}>Projects</h2>
       <div className={styles.table}>
-        <Table
-          data={employeeProjects}
-          headers={['name', 'role', 'rate']}
-          titles={['Project Name', 'Role', 'Rate']}
-          modifiers={{}}
-          redirect={redirectAction}
-        />
+        {employeeProjects?.length ? (
+          <Table
+            data={employeeProjects}
+            headers={['name', 'role', 'rate']}
+            titles={['Project Name', 'Role', 'Rate']}
+            modifiers={{}}
+            redirect={redirectAction}
+          />
+        ) : (
+          <p className={styles.message}>Not a member of any project</p>
+        )}
       </div>
     </section>
   );

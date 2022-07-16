@@ -4,7 +4,8 @@
   justify-content: center;
   align-items: center;
   margin: 2%;
-  color: #373867;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(55, 56, 103, 1);
 }
 
 .container > button {
@@ -49,10 +50,13 @@
 
 .title {
   font-size: 30px;
-  font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
+}
+
+.message {
+  margin: 0;
+  font-size: 20px;
 }
 
 @media screen and (min-width: 480px) {
