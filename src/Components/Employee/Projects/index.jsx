@@ -4,9 +4,11 @@ import Form from './Form';
 import styles from './projects.module.css';
 import { getProjects } from 'redux/projects/thunks';
 import { useEffect, useState } from 'react';
+import { useHistory, generatePath } from 'react-router-dom';
 
 function Projects() {
   const dispatch = useDispatch();
+  let history = useHistory();
   const employee = useSelector((state) => state.auth.user?.data);
   const isLoading = useSelector((state) => state.projects.isLoading);
   const projects = useSelector((state) => state.projects.list).filter((project) =>
@@ -22,6 +24,10 @@ function Projects() {
   useEffect(() => {
     dispatch(getProjects());
   }, [showModalFormEdit === false]);
+
+  const redirectAction = (id) => {
+    history.push(generatePath('/employee/projects/:id', { id }));
+  };
 
   const closeModalFormEdit = () => {
     setShowModalFormEdit(false);
@@ -67,6 +73,7 @@ function Projects() {
               active: (x) => (x ? 'Active' : 'Inactive')
             }}
             editAction={openModalFormEdit}
+            redirect={redirectAction}
           />
         </section>
       ) : null}
@@ -83,6 +90,7 @@ function Projects() {
               active: (x) => (x ? 'Active' : 'Inactive'),
               members: (x) => x.find((e) => e.employeeId._id === employee._id)?.role
             }}
+            redirect={redirectAction}
           />
         ) : (
           <p> You have not been assigned to any project yet </p>
