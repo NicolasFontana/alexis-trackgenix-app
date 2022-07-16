@@ -173,6 +173,12 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
+      <ButtonText
+        label="Go back"
+        clickAction={() => {
+          history.push('/employee/projects');
+        }}
+      ></ButtonText>
       {isPM ? <h2 className={styles.titlePM}>You are a PM in this project</h2> : null}
       <div className={styles.box}>
         <div className={styles.field}>
