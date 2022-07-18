@@ -23,7 +23,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody className={styles.tbody}>
-          {data.map((row) => {
+          {data?.map((row) => {
             return (
               <tr key={row._id ? row._id : row.employeeId._id} className={styles.tr}>
                 {headers.map((header, index) => {
