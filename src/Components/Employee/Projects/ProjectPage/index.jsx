@@ -51,6 +51,43 @@ const ProjectPage = () => {
     history.push(generatePath('/employee/projects/:id/:memberId', { id: id, memberId }));
   };
 
+  const deleteMember = () => {
+    dispatch(
+      updateProject(
+        project._id,
+        {
+          members: project.members
+            .filter((member) => member.employeeId._id != memberId)
+            .map((member) => ({
+              employeeId: member.employeeId._id,
+              role: member.role,
+              rate: member.rate
+            }))
+        },
+        setResponse
+      )
+    )
+      .then(
+        dispatch(
+          updateEmployee(
+            JSON.stringify({
+              projects: employees
+                .find((employee) => employee._id === memberId)
+                .projects.filter((employeeProject) => employeeProject._id != project._id)
+                .map((project) => project._id)
+            }),
+            memberId,
+            setResponseEmployee
+          )
+        )
+      )
+      .then(() => {
+        setShowModalDelete(false);
+        setModalErrorSuccess(true);
+        document.body.style.overflow = 'hidden';
+      });
+  };
+
   if (showModalAdd) {
     modalAdd = (
       <ModalForm
@@ -97,42 +134,7 @@ const ProjectPage = () => {
         handleClose={() => {
           setShowModalDelete(false);
         }}
-        confirmDelete={() => {
-          dispatch(
-            updateProject(
-              project._id,
-              {
-                members: project.members
-                  .filter((member) => member.employeeId._id != memberId)
-                  .map((member) => ({
-                    employeeId: member.employeeId._id,
-                    role: member.role,
-                    rate: member.rate
-                  }))
-              },
-              setResponse
-            )
-          )
-            .then(
-              dispatch(
-                updateEmployee(
-                  JSON.stringify({
-                    projects: employees
-                      .find((employee) => employee._id === memberId)
-                      .projects.filter((employeeProject) => employeeProject._id != project._id)
-                      .map((project) => project._id)
-                  }),
-                  memberId,
-                  setResponseEmployee
-                )
-              )
-            )
-            .then(() => {
-              setShowModalDelete(false);
-              setModalErrorSuccess(true);
-              document.body.style.overflow = 'hidden';
-            });
-        }}
+        confirmDelete={deleteMember}
         title="Remove Member"
         message={'Are you sure you want to remove this member?'}
       />

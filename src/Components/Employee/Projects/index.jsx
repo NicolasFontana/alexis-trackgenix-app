@@ -13,6 +13,10 @@ function Projects() {
     employee?.projects.some((employeeProject) => employeeProject._id === listProject._id)
   );
 
+  const redirectAction = (id) => {
+    history.push(generatePath('/employee/projects/:id', { id }));
+  };
+
   projects.forEach(
     (project) =>
       (project.employeeRole = project.members.find((e) => e.employeeId._id === employeeId)?.role)
@@ -39,9 +43,7 @@ function Projects() {
           active: (x) => (x ? 'Active' : 'Inactive'),
           members: (x) => x.find((e) => e.employeeId._id === employeeId)?.rate
         }}
-        redirect={(id) => {
-          history.push(generatePath('/employee/projects/:id', { id }));
-        }}
+        redirect={redirectAction}
       />
     </section>
   );

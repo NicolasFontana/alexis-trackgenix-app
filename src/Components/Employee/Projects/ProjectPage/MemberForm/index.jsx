@@ -50,6 +50,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         error: true
       });
       setModalErrorSuccess(true);
+      // Edit member
     } else if (memberToEdit) {
       if (data.role === memberToEdit.role) {
         setResponse({ message: "There haven't been any changes", data: {}, error: true });
@@ -71,6 +72,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
           setModalErrorSuccess(true);
         });
       }
+      // Add member
     } else {
       dispatch(
         updateProject(
@@ -123,7 +125,6 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         ? `${memberToEdit.employeeId.firstName} ${memberToEdit.employeeId.lastName}`
         : '',
       role: memberId ? memberToEdit.role : ''
-      // rate: memberId ? memberToEdit.rate : ''
     },
     shouldFocusError: false
   });
