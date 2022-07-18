@@ -22,6 +22,7 @@ const ProjectPage = () => {
   const project = useSelector((state) => state.projects.list).find((project) => project._id === id);
   const isLoading = useSelector((state) => state.projects.isLoading);
   const employees = useSelector((state) => state.employees.list);
+  const employeeId = useSelector((state) => state.auth.user?.data._id);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -30,18 +31,16 @@ const ProjectPage = () => {
   const [response, setResponse] = useState('');
   const [responseEmployee, setResponseEmployee] = useState('');
   const [isPM, setIsPM] = useState(false);
-  const employeeId = useSelector((state) => state.auth.user?.data._id);
 
   let pm = project?.members.find((member) => member.role === 'PM');
   let modalAdd;
   let modalEdit;
   let modalDelete;
   let modalErrorSuccess;
-  console.log(pm);
 
   useEffect(() => {
-    dispatch(getProjects()).then(setIsPM(pm?.employeeId._id === employeeId));
-  }, []);
+    setIsPM(pm?.employeeId._id === employeeId);
+  }, [pm]);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -197,7 +196,7 @@ const ProjectPage = () => {
           <h3>Start Date</h3>
           <p>{project?.startDate?.slice(0, 10)}</p>
         </div>
-        {project.endDate && (
+        {project?.endDate && (
           <div className={styles.field}>
             <h3>End Date</h3>
             <p>{project?.endDate?.slice(0, 10)}</p>
