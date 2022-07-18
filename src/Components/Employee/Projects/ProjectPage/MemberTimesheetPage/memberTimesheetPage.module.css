@@ -1,8 +1,19 @@
-.container {
+.container,
+.containerPreloader {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 2%;
+}
+
+.container > button {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  padding: 0 30px;
+}
+
+.container td {
+  max-width: unset;
 }
