@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, ModalForm, Preloader } from 'Components/Shared';
+import { Table, ModalForm, Preloader, ButtonText } from 'Components/Shared';
 import Form from './Form';
 import styles from './projects.module.css';
 import { getProjects } from 'redux/projects/thunks';
@@ -19,6 +19,7 @@ function Projects() {
   );
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [projectId, setProjectId] = useState();
+  const [open, setOpen] = useState(false);
   let modalEdit;
 
   useEffect(() => {
@@ -58,45 +59,57 @@ function Projects() {
       </Preloader>
     </section>
   ) : (
-    <>
-      {projectsPM.length ? (
-        <section className={styles.container}>
-          <h2 className={styles.title}>PM Projects</h2>
-          {modalEdit}
-          <Table
-            data={projectsPM}
-            headers={['name', 'clientName', 'startDate', 'endDate', 'active']}
-            titles={['Project name', 'Client', 'Start Date', 'End Date', 'Active']}
-            modifiers={{
-              startDate: (x) => x?.slice(0, 10),
-              endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
-              active: (x) => (x ? 'Active' : 'Inactive')
-            }}
-            editAction={openModalFormEdit}
-            redirect={redirectAction}
-          />
-        </section>
-      ) : null}
-      <section className={styles.container}>
-        <h2 className={styles.title}>All Projects</h2>
-        {projects.length ? (
-          <Table
-            data={projects}
-            headers={['name', 'clientName', 'startDate', 'endDate', 'active', 'members']}
-            titles={['Project name', 'Client', 'Start Date', 'End Date', 'Active', 'Role']}
-            modifiers={{
-              startDate: (x) => x?.slice(0, 10),
-              endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
-              active: (x) => (x ? 'Active' : 'Inactive'),
-              members: (x) => x.find((e) => e.employeeId._id === employee._id)?.role
-            }}
-            redirect={redirectAction}
-          />
-        ) : (
-          <p> You have not been assigned to any project yet </p>
-        )}
-      </section>
-    </>
+    <div className={styles.maincontainer}>
+      {projectsPM.length || projects.length ? (
+        <>
+          {projectsPM.length ? (
+            <ButtonText
+              label={open ? 'Show all projects' : 'Show PM projects'}
+              clickAction={() => setOpen(!open)}
+            />
+          ) : null}
+          <section className={styles.container}>
+            {open && (
+              <>
+                <h2 className={styles.title}>PM Projects</h2>
+                <Table
+                  data={projectsPM}
+                  headers={['name', 'clientName', 'startDate', 'endDate', 'active']}
+                  titles={['Project name', 'Client', 'Start Date', 'End Date', 'Active']}
+                  modifiers={{
+                    startDate: (x) => x?.slice(0, 10),
+                    endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
+                    active: (x) => (x ? 'Active' : 'Inactive')
+                  }}
+                  editAction={openModalFormEdit}
+                  redirect={redirectAction}
+                />
+              </>
+            )}
+            {modalEdit}
+            {!open && (
+              <>
+                <h2 className={styles.title}>All Projects</h2>
+                <Table
+                  data={projects}
+                  headers={['name', 'clientName', 'startDate', 'endDate', 'active', 'members']}
+                  titles={['Project name', 'Client', 'Start Date', 'End Date', 'Active', 'Role']}
+                  modifiers={{
+                    startDate: (x) => x?.slice(0, 10),
+                    endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
+                    active: (x) => (x ? 'Active' : 'Inactive'),
+                    members: (x) => x.find((e) => e.employeeId._id === employee._id)?.role
+                  }}
+                  redirect={redirectAction}
+                />
+              </>
+            )}
+          </section>
+        </>
+      ) : (
+        <h3 className={styles.subtitle}> You have not been assigned to any project yet </h3>
+      )}
+    </div>
   );
 }
 
