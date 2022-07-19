@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Table } from 'Components/Shared';
+import { useHistory } from 'react-router-dom';
 import styles from './time-sheet.module.css';
 
 function Timesheet() {
@@ -11,6 +12,12 @@ function Timesheet() {
     (listTimesheet) =>
       employee?.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
   );
+
+  const history = useHistory();
+
+  const redirect = (id) => {
+    history.push(`/employee/time-sheet/:${id}`);
+  };
 
   return (
     <section className={styles.container}>
@@ -27,6 +34,7 @@ function Timesheet() {
               return previous + current.taskId.workedHours;
             }, 0)
         }}
+        redirect={redirect}
       />
     </section>
   );

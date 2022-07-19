@@ -1,11 +1,12 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonText, ErrorSuccessModal, Input, Select } from 'Components/Shared';
-import Joi from 'joi';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { editTask } from '../../../../redux/tasks/thunks';
-import styles from './edit.module.css';
+import { addTask } from 'redux/tasks/thunks';
+import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+import styles from './form.module.css';
+import { putTimesheet } from 'redux/time-sheets/thunks';
 
 const taskSchema = Joi.object({
   taskName: Joi.string().min(3).max(50).required().messages({
@@ -15,15 +16,11 @@ const taskSchema = Joi.object({
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
-  startDate: Joi.date()
-    .min(1950 - 1 - 1)
-    .max('now')
-    .required()
-    .messages({
-      'date.base': 'Start date is a required field',
-      'date.min': 'Invalid start date',
-      'date.max': 'Invalid start date, it must not be over the current date'
-    }),
+  startDate: Joi.date().min('01/01/1950').max('12/31/2050').required().messages({
+    'date.base': 'Start date is a required field',
+    'date.min': 'Invalid start date',
+    'date.max': 'Invalid start date, it must not be over the current date'
+  }),
   workedHours: Joi.string()
     .regex(/^[0-9]*$/)
     .min(1)
@@ -32,7 +29,7 @@ const taskSchema = Joi.object({
     .messages({
       'string.min': 'Invalid number, it must be positive',
       'string.max': 'Invalid number, it exceeds the number of posible worked hours',
-      'string.pattern.base': 'Invalid, it must contain only interger numbers',
+      'string.pattern.base': 'Invalid, it must contain only integer numbers',
       'string.empty': 'Worked hours is a required field'
     }),
   description: Joi.string()
@@ -53,27 +50,36 @@ const taskSchema = Joi.object({
   })
 });
 
-const Edit = ({ task, closeModalForm }) => {
+const Form = ({ closeModalForm, timesheet }) => {
   const dispatch = useDispatch();
-
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    if (
-      data.taskName === task.taskName &&
-      data.startDate.toString() == new Date(task.startDate) &&
-      data.workedHours === task.workedHours &&
-      data.description === task.description &&
-      data.status == task.status
-    ) {
-      setMessage({ message: "There hasn't been any changes", data: {}, error: true });
+    let newTask = {
+      taskName: data.taskName,
+      startDate: data.startDate,
+      workedHours: data.workedHours,
+      description: data.description,
+      status: data.status
+    };
+
+    dispatch(addTask(newTask, setMessage)).then(() => {
       setShowMessageModal(true);
-    } else {
-      dispatch(editTask(data, task._id, setMessage)).then(() => {
-        setShowMessageModal(true);
-      });
-    }
+      editTimesheet();
+    });
+  };
+
+  const editTimesheet = () => {
+    // Como buscar y encontrr la task??
+    const tasksEdited = timesheet.Task.push();
+    timesheet = {
+      projectId: timesheet.projectId,
+      tasks: tasksEdited,
+      approved: timesheet.approved
+    };
+
+    dispatch(putTimesheet(timesheet, timesheet._id, setMessage));
   };
 
   const {
@@ -84,11 +90,11 @@ const Edit = ({ task, closeModalForm }) => {
     mode: 'onBlur',
     resolver: joiResolver(taskSchema),
     defaultValues: {
-      taskName: task.taskName,
-      startDate: task.startDate.slice(0, 10),
-      workedHours: task.workedHours,
-      description: task.description,
-      status: task.status
+      taskName: '',
+      startDate: '',
+      workedHours: '',
+      description: '',
+      status: ''
     },
     shouldFocusError: false
   });
@@ -134,8 +140,13 @@ const Edit = ({ task, closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
-      <ButtonText clickAction={handleSubmit(onSubmit)} label="Submit"></ButtonText>
+      <ButtonText
+        clickAction={() => {
+          closeModalForm();
+        }}
+        label="Cancel"
+      ></ButtonText>
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
@@ -148,4 +159,4 @@ const Edit = ({ task, closeModalForm }) => {
   );
 };
 
-export default Edit;
+export default Form;

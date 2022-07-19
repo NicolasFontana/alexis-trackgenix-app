@@ -1,11 +1,11 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonText, ErrorSuccessModal, Input, Select } from 'Components/Shared';
-import Joi from 'joi';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../../../../redux/tasks/thunks';
-import styles from './form.module.css';
+import { editTask } from 'redux/tasks/thunks';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+import styles from './edit.module.css';
 
 const taskSchema = Joi.object({
   taskName: Joi.string().min(3).max(50).required().messages({
@@ -15,11 +15,15 @@ const taskSchema = Joi.object({
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
-  startDate: Joi.date().min('01/01/1950').max('12/31/2050').required().messages({
-    'date.base': 'Start date is a required field',
-    'date.min': 'Invalid start date',
-    'date.max': 'Invalid start date, it must not be over the current date'
-  }),
+  startDate: Joi.date()
+    .min(1950 - 1 - 1)
+    .max('now')
+    .required()
+    .messages({
+      'date.base': 'Start date is a required field',
+      'date.min': 'Invalid start date',
+      'date.max': 'Invalid start date, it must not be over the current date'
+    }),
   workedHours: Joi.string()
     .regex(/^[0-9]*$/)
     .min(1)
@@ -28,7 +32,7 @@ const taskSchema = Joi.object({
     .messages({
       'string.min': 'Invalid number, it must be positive',
       'string.max': 'Invalid number, it exceeds the number of posible worked hours',
-      'string.pattern.base': 'Invalid, it must contain only integer numbers',
+      'string.pattern.base': 'Invalid, it must contain only interger numbers',
       'string.empty': 'Worked hours is a required field'
     }),
   description: Joi.string()
@@ -49,23 +53,27 @@ const taskSchema = Joi.object({
   })
 });
 
-const Form = ({ closeModalForm }) => {
+const Edit = ({ task, closeModalForm }) => {
   const dispatch = useDispatch();
+
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    let newTask = {
-      taskName: data.taskName,
-      startDate: data.startDate,
-      workedHours: data.workedHours,
-      description: data.description,
-      status: data.status
-    };
-
-    dispatch(addTask(newTask, setMessage)).then(() => {
+    if (
+      data.taskName === task.taskName &&
+      data.startDate.toString() == new Date(task.startDate) &&
+      data.workedHours === task.workedHours &&
+      data.description === task.description &&
+      data.status == task.status
+    ) {
+      setMessage({ message: "There hasn't been any changes", data: {}, error: true });
       setShowMessageModal(true);
-    });
+    } else {
+      dispatch(editTask(data, task._id, setMessage)).then(() => {
+        setShowMessageModal(true);
+      });
+    }
   };
 
   const {
@@ -76,11 +84,11 @@ const Form = ({ closeModalForm }) => {
     mode: 'onBlur',
     resolver: joiResolver(taskSchema),
     defaultValues: {
-      taskName: '',
-      startDate: '',
-      workedHours: '',
-      description: '',
-      status: ''
+      taskName: task.taskName,
+      startDate: task.startDate.slice(0, 10),
+      workedHours: task.workedHours,
+      description: task.description,
+      status: task.status
     },
     shouldFocusError: false
   });
@@ -126,13 +134,8 @@ const Form = ({ closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <ButtonText
-        clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
-      ></ButtonText>
-      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
+      <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
+      <ButtonText clickAction={handleSubmit(onSubmit)} label="Submit"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
@@ -145,4 +148,4 @@ const Form = ({ closeModalForm }) => {
   );
 };
 
-export default Form;
+export default Edit;

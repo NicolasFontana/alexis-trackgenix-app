@@ -1,5 +1,5 @@
 import {
-  ButtonAdd,
+  ButtonText,
   ConfirmModal,
   ErrorSuccessModal,
   ModalForm,
@@ -8,15 +8,21 @@ import {
 } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { delTask, getTasks } from '../../../redux/tasks/thunks';
+import { delTask } from 'redux/tasks/thunks';
+import { useParams, useHistory } from 'react-router-dom';
 import EditForm from './Edit/Edit';
 import Form from './Form/Form';
 import styles from './tasks.module.css';
+import { getAllTimesheets, putTimesheet } from 'redux/time-sheets/thunks';
 
 function Tasks() {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.list);
-  const isLoading = useSelector((state) => state.tasks.isLoading);
+  //Here we save all the data of the clicked timesheet
+  const timesheet = useSelector((state) => state.timesheets.listTimesheet).find(
+    (timesheet) => timesheet._id === id
+  );
+  const isLoading = useSelector((state) => state.timesheets.isLoading);
 
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
@@ -31,15 +37,36 @@ function Tasks() {
   let modalMessage;
 
   useEffect(() => {
-    dispatch(getTasks());
+    dispatch(getAllTimesheets());
   }, []);
 
-  const handleConfirm = () => {
-    dispatch(delTask(idDelete, (response) => setMessage(response))).then(() => {
-      closeModal();
-      setShowConfirmModal(false);
-      setShowMessageModal(true);
+  const history = useHistory();
+  let tasks = [];
+  let month;
+
+  if (timesheet) {
+    timesheet.Task.forEach((task) => {
+      tasks.push(task.taskId);
+      console.log(task.taskId._id);
     });
+    month = timesheet.createdAt.substring(5, 10);
+  }
+
+  const handleConfirm = () => {
+    const tasksFiltered = timesheet.Task.filter((task) => task.taskId._id !== idDelete);
+    let editedTimesheet = {
+      projectId: timesheet.projectId,
+      tasks: tasksFiltered,
+      approved: timesheet.approved
+    };
+    if (id === 0) {
+      dispatch(delTask(idDelete, (response) => setMessage(response))).then(() => {
+        closeModal();
+        setShowConfirmModal(false);
+        setShowMessageModal(true);
+      });
+      dispatch(putTimesheet(editedTimesheet, id, setMessage));
+    }
   };
 
   const openConfirmModal = (id) => {
@@ -78,7 +105,7 @@ function Tasks() {
   if (showModalFormAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalFormAdd} handleClose={closeModal} title="Add Task">
-        <Form closeModalForm={closeModal} />
+        <Form closeModalForm={closeModal} timesheet={timesheet} />
       </ModalForm>
     );
   }
@@ -95,6 +122,14 @@ function Tasks() {
     );
   }
 
+  const redirect = (taskId) => {
+    if (taskId) {
+      history.push(`/employee/time-sheet/${id}/${taskId}`);
+    } else {
+      history.push('/employee/time-sheet');
+    }
+  };
+
   return isLoading &&
     !showModalFormEdit &&
     !showModalFormAdd &&
@@ -107,11 +142,13 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      <h2 className={styles.tasks}>Tasks</h2>
       {modalEdit}
       {modalAdd}
       {modalMessage}
       {isLoading ? <Preloader /> : null}
+      <h2>Tasks of {month}</h2>
+      <ButtonText label="Go back" clickAction={() => redirect()}></ButtonText>
+      <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
       <Table
         data={tasks}
         headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
@@ -128,7 +165,6 @@ function Tasks() {
         closeModalForm={closeModal}
         successResponse={message}
       />
-      <ButtonAdd clickAction={openAddModal}></ButtonAdd>
     </section>
   );
 }
