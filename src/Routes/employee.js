@@ -5,6 +5,7 @@ import Timesheet from 'Components/Employee/Timesheet';
 import Projects from 'Components/Employee/Projects';
 import ProjectPage from 'Components/Employee/Projects/ProjectPage';
 import MemberTimesheetPage from 'Components/Employee/Projects/ProjectPage/MemberTimesheetPage';
+import MemberTasksPage from 'Components/Employee/Projects/ProjectPage/MemberTimesheetPage/MemberTasksPage';
 import Layout from 'Components/Layout';
 import Profile from 'Components/Employee/Profile';
 import { faClock, faFolderClosed, faHouse } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +34,11 @@ const Employee = () => {
           exact
           path={`${url}/projects/:id/members/:memberId`}
           component={MemberTimesheetPage}
+        />
+        <Route
+          exact
+          path={`${url}/projects/:id/members/:memberId/timesheets/:timesheetId`}
+          component={MemberTasksPage}
         />
         <Route exact path={`${url}/profile`} component={Profile} />
         <Route exact path={`${url}/`} component={Home} />

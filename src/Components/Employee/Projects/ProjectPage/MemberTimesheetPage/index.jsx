@@ -27,13 +27,22 @@ const MemberTimesheetPage = () => {
   //     member?.timeSheets.some((memberTimesheet) => memberTimesheet._id === timesheet._id) &&
   //     timesheet.projectId._id === id
   // );
+  const redirectAction = (timesheetId) => {
+    history.push(
+      generatePath('/employee/projects/:id/members/:memberId/timesheets/:timesheetId', {
+        id: id,
+        memberId: memberId,
+        timesheetId
+      })
+    );
+  };
 
   useEffect(() => {
     dispatch(getEmployees());
     // dispatch(getAllTimesheets());
   }, []);
 
-  console.log(member);
+  // console.log(member);
   // console.log(timesheets);
 
   return isLoading ? (
@@ -50,17 +59,17 @@ const MemberTimesheetPage = () => {
           history.push(generatePath('/employee/projects/:id', { id: id }));
         }}
       ></ButtonText>
-      <h2>Employee Timesheet Page</h2>
-      <p>Project ID: {id} </p>
-      <p>Employee ID: {memberId} </p>
+      <h2>Member Timesheets</h2>
+      <h3>{`${member?.firstName} ${member?.lastName}`}</h3>
       <Table
         data={member?.timeSheets}
-        headers={['projectId', 'approved']}
-        titles={['Project', 'Approved']}
+        headers={['projectId', '', 'approved']}
+        titles={['Project', 'Worked hours', 'Approved']}
         modifiers={{
           projectId: (x) => member.projects.find((project) => project._id === x).name,
           approved: (x) => (x ? 'Approved' : 'Not approved')
         }}
+        redirect={redirectAction}
       />
     </section>
   );
