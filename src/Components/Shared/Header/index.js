@@ -1,31 +1,46 @@
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
-const user = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
-
-const Header = () => {
+const Header = ({ sidebarOpener }) => {
   const location = useLocation();
-  let indexOfLastSlash = location.pathname.lastIndexOf('/');
-  let isID = location.pathname.slice(indexOfLastSlash + 1).length === 24;
-  let idTitle = location.pathname.slice(
-    location.pathname.slice(0, indexOfLastSlash).lastIndexOf('/') + 1,
-    indexOfLastSlash - 1
-  );
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+
+  let user;
+
+  //This comparison is used to show or hide the profile when its not logged
+  if (
+    location.pathname !== '/home' &&
+    location.pathname !== '/auth/login' &&
+    location.pathname !== '/auth/signup'
+  ) {
+    user = (
+      <div className={styles.user}>
+        <div>{userIcon}</div>
+        <p>Username</p>
+      </div>
+    );
+  }
+
+  const sidebarOpenClose = (state) => {
+    setOpenSidebar(!state);
+    sidebarOpener(state);
+  };
 
   return (
-    <header>
-      <div className={styles.pathname}>
-        {isID
-          ? `${idTitle}: ${location.pathname.slice(indexOfLastSlash + 1)}`
-          : location.pathname.slice(indexOfLastSlash + 1)}
+    <header className={styles.header}>
+      <div className={styles.leftSide}>
+        <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
+          <div className={styles.bar1}></div>
+          <div className={styles.bar2}></div>
+          <div className={styles.bar3}></div>
+        </div>
+        <h2 className={styles.title}>Trackgenix</h2>
       </div>
-      <div className={styles.user}>
-        <div> {user} </div>
-        <p> Username</p>
-      </div>
+      <div>{user}</div>
     </header>
   );
 };
