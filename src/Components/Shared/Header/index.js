@@ -11,7 +11,7 @@ const Header = ({ sidebarOpener }) => {
 
   let user;
 
-  //This comparison is used to show or hide the profile when its not logged
+  //This comparison is used to show or hide the profile button
   if (
     location.pathname !== '/home' &&
     location.pathname !== '/auth/login' &&
