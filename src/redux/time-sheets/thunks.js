@@ -35,7 +35,8 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify({
         projectId: projectId,
@@ -64,7 +65,8 @@ export const putTimesheet = (userInput, id, setMessage) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify({
         projectId: userInput.projectId,
@@ -88,7 +90,8 @@ export const deleteTimesheet = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {

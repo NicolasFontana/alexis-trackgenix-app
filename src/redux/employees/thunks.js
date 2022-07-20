@@ -56,7 +56,8 @@ export const createEmployee = (userInput, setResponse) => {
         dateBirth: ''
       }),
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => {
@@ -87,7 +88,8 @@ export const updateEmployee = (userInput, id, setResponse) => {
       method: 'PUT',
       body: userInput,
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => response.json())
@@ -106,7 +108,8 @@ export const deleteEmployee = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteEmployeePending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/employees/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {

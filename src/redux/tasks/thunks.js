@@ -35,7 +35,8 @@ export const addTask = (task, setMessage) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify(task)
     })
@@ -59,7 +60,8 @@ export const editTask = (task, id, setMessage) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify(task)
     })
@@ -79,7 +81,8 @@ export const delTask = (id, setMessage) => {
   return (dispatch) => {
     dispatch(deleteTaskPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {
