@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  padding: 20px;
+  height: 100px;
+  padding: 5px 20px;
   background-color: #76a068;
   z-index: 1;
 }
@@ -15,9 +15,10 @@
   width: 180px;
 }
 
-.socialContainer * {
+.socialContainer a {
   font-size: 30px;
   color: #373867;
+  margin: 0px 15px;
 }
 
 .license {
@@ -26,8 +27,6 @@
   justify-content: center;
   align-items: center;
   width: 90%;
-  height: 100px;
-  padding: 0 20px;
   background-color: #76a068;
 }
 
