@@ -165,33 +165,31 @@ const Projects = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <h2 className={styles.projects}> Projects </h2>
       {modalEdit}
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
+      <h2 className={styles.projects}> Projects </h2>
       <div className={styles.divContainer}>
         <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
-        <Table
-          data={projects}
-          headers={['name', 'clientName', 'members', 'startDate', 'endDate', 'active']}
-          titles={['Project name', 'Client', 'PM', 'Start Date', 'End Date', 'Active']}
-          modifiers={{
-            members: (x) => {
-              let pm = x.find((member) => member.role === 'PM');
-              return pm
-                ? `${pm.employeeId?.firstName} ${pm.employeeId?.lastName}`
-                : 'To be defined';
-            },
-            startDate: (x) => x.slice(0, 10),
-            endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
-            active: (x) => (x ? 'Active' : 'Inactive')
-          }}
-          delAction={openConfirmModal}
-          editAction={openModalFormEdit}
-          redirect={redirectAction}
-        />
       </div>
+      <Table
+        data={projects}
+        headers={['name', 'clientName', 'members', 'startDate', 'endDate', 'active']}
+        titles={['Project name', 'Client', 'PM', 'Start Date', 'End Date', 'Active']}
+        modifiers={{
+          members: (x) => {
+            let pm = x.find((member) => member.role === 'PM');
+            return pm ? `${pm.employeeId?.firstName} ${pm.employeeId?.lastName}` : 'To be defined';
+          },
+          startDate: (x) => x.slice(0, 10),
+          endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
+          active: (x) => (x ? 'Active' : 'Inactive')
+        }}
+        delAction={openConfirmModal}
+        editAction={openModalFormEdit}
+        redirect={redirectAction}
+      />
     </section>
   );
 };

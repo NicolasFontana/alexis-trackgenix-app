@@ -4,6 +4,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  margin: 0px 2% 30px 2%;
 }
 
 .container > section {

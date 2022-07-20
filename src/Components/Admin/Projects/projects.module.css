@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2%;
+  margin: 0px 2% 30px 2%;
 }
 
 .container > section {
@@ -22,14 +22,6 @@
   z-index: 5;
 }
 
-.container td > div {
-  justify-content: center;
-}
-
-.container td > button {
-  margin-right: 20px;
-}
-
 .projects {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
@@ -41,10 +33,17 @@
 .divContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 10px;
 }
 
 .divContainer > button {
   align-self: flex-end;
-  margin-bottom: 20px;
-  padding: 0 30px;
+}
+
+@media only screen and (max-width: 760px) {
+  .divContainer > button {
+    align-self: center;
+  }
 }

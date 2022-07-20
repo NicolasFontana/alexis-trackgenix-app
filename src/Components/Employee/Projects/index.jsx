@@ -18,7 +18,7 @@ function Projects() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>Employee Projects</h2>
+      <h2 className={styles.title}>Projects</h2>
       <Table
         data={projects}
         headers={[

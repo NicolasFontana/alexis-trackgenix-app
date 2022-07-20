@@ -54,12 +54,14 @@ const EmployeePage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back"
-        clickAction={() => {
-          history.push('/admin/employees');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back"
+          clickAction={() => {
+            history.push('/admin/employees');
+          }}
+        ></ButtonText>
+      </div>
       <div className={styles.information}>
         <div className={styles.field}>
           <h3>First Name</h3>

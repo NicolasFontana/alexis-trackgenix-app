@@ -17,6 +17,19 @@
   margin: 15px 0px;
 }
 
+.container > div:last-child {
+  width: 100vw;
+  z-index: 5;
+}
+
+.container > section {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
 @media screen and (min-width: 1024px) {
   .inputs {
     display: flex;
