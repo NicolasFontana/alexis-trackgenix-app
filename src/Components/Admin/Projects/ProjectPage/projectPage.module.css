@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: unset;
   margin: 0px 2% 30px 2%;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
@@ -10,7 +11,7 @@
 
 .btnContainer {
   display: flex;
-  width: 100%;
+  width: 90%;
   max-width: 820px;
 }
 
@@ -22,6 +23,8 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  width: 90%;
+  max-width: 820px;
   margin: 10px;
   border: 3px solid #76a068;
   border-radius: 10px;

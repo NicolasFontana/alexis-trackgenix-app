@@ -34,6 +34,7 @@ const Table = (props) => {
                       redirect ? redirect(row._id ? row._id : row.employeeId._id) : null
                     }
                   >
+                    <p className={styles.headerOnMobile}>{titles[index] + ': '}</p>
                     {modifiers
                       ? modifiers[header]
                         ? modifiers[header](row[header])
