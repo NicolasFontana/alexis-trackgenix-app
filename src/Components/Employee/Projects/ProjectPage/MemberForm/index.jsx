@@ -178,7 +178,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
           message:
             responseEmployee === ''
               ? response.message
-              : `${response.message}. ${
+              : `${response.message}.\n${
                   responseEmployee.error
                     ? responseEmployee.message
                     : 'The employee has been added to the project'

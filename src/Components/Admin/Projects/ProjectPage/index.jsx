@@ -146,7 +146,7 @@ const ProjectPage = () => {
           document.body.style.overflow = 'unset';
         }}
         successResponse={{
-          message: `${response.message}. ${responseEmployee.message}`,
+          message: `${response.message}.\n${responseEmployee.message}`,
           data: response.data,
           error: response.error
         }}
