@@ -1,30 +1,29 @@
 .container {
-  flex: 1;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  align-content: space-between;
-  row-gap: 10px;
   overflow: auto;
-  padding: 0 20px;
+  max-width: 800px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonContainer button {
-  margin: 5px 0 10px 20px
+  width: 30%;
+  height: 40px;
 }
-
 
 .dateContainer {
   display: flex;
-  flex:50;
+  flex: 50;
 }
 
 .dateContainer div:first-child {
-  margin-right: 40px
+  margin-right: 40px;
 }
-
 
 .noselect {
   -webkit-touch-callout: none;
