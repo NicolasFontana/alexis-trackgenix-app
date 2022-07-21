@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table, ButtonAdd, ModalForm, ErrorSuccessModal } from 'Components/Shared';
 import FormAdd from './AddTimesheet';
 import { getTasks } from 'redux/tasks/thunks';
+import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
+import { getAllTimesheets } from 'redux/time-sheets/thunks';
 import styles from './time-sheet.module.css';
 
 function Timesheet() {
@@ -24,8 +26,10 @@ function Timesheet() {
 
   useEffect(() => {
     dispatch(getTasks());
+    dispatch(getEmployees());
     dispatch(getProjects());
-  }, []);
+    dispatch(getAllTimesheets());
+  }, [!showSuccessModal && !showModalAdd]);
 
   const closeModalAdd = () => {
     setShowModalAdd(false);
@@ -52,7 +56,7 @@ function Timesheet() {
       <Table
         data={timesheets}
         headers={['projectId', 'approved', 'Task', 'createdAt']}
-        titles={['Project', 'PMs approval', 'Worked hours', 'Month']}
+        titles={['Project', 'PMs approval', 'Worked hours', 'Period']}
         modifiers={{
           projectId: (x) => x?.name,
           approved: (x) => (x ? 'Approved' : 'Not approved'),

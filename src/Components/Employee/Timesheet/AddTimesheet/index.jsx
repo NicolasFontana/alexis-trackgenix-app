@@ -29,6 +29,13 @@ const FormAdd = ({ closeModalForm }) => {
   const projects = useSelector((state) => state.projects.list);
   const tasks = useSelector((state) => state.tasks.list);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
+  const employee = useSelector((state) => state.employees.list).find(
+    (employee) => employee._id === employeeId
+  );
+  // const timesheets = useSelector((state) => state.timesheets.listTimesheet).filter(
+  //   (listTimesheet) =>
+  //     employee?.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
+  // );
 
   const onSubmit = (data) => {
     let dataToSave;
@@ -42,7 +49,7 @@ const FormAdd = ({ closeModalForm }) => {
     ).then(() => {
       setShowMessageModal(true);
       let body = JSON.stringify({
-        timeSheets: [dataToSave._id]
+        timeSheets: employee.timeSheets.map((timesheet) => timesheet._id).concat(dataToSave._id)
       });
       dispatch(updateEmployee(body, employeeId, setMessage)).then(() => {
         setShowMessageModal(true);
