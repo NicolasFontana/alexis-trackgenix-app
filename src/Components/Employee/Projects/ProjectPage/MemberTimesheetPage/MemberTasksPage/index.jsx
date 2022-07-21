@@ -19,10 +19,10 @@ const MemberTasksPage = () => {
   let history = useHistory();
   const { id, memberId, timesheetId } = useParams();
   const isLoading = useSelector((state) => state.employees.isLoading);
-  const member = useSelector((state) => state.employees.list).find(
+  const member = useSelector((state) => state.employees.list)?.find(
     (employee) => employee._id === memberId
   );
-  const timesheet = useSelector((state) => state.timesheets.listTimesheet).find(
+  const timesheet = useSelector((state) => state.timesheets.listTimesheet)?.find(
     (timesheet) => timesheet._id === timesheetId
   );
 
@@ -49,7 +49,7 @@ const MemberTasksPage = () => {
       ></ButtonText>
       <h2>Member: {`${member?.firstName} ${member?.lastName}`}</h2>
       <h3>Project: {member?.projects.find((project) => project._id === id).name} </h3>
-      {timesheet?.Task.length !== 0 ? (
+      {timesheet?.Task.length ? (
         <Table
           data={timesheet?.Task.map((task) => task.taskId)}
           headers={['taskName', 'description', 'startDate', 'status', 'workedHours']}
