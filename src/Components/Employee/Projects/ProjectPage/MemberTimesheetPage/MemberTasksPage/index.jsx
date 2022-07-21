@@ -31,9 +31,6 @@ const MemberTasksPage = () => {
     dispatch(getAllTimesheets());
   }, []);
 
-  // console.log(member);
-  console.log(timesheet);
-
   return isLoading ? (
     <section className={styles.containerPreloader}>
       <Preloader>
@@ -52,11 +49,18 @@ const MemberTasksPage = () => {
       ></ButtonText>
       <h2>Member: {`${member?.firstName} ${member?.lastName}`}</h2>
       <h3>Project: {member?.projects.find((project) => project._id === id).name} </h3>
-      <Table
-        data={timesheet?.Task.map((task) => task.taskId)}
-        headers={['taskName', 'description', 'startDate', 'status', 'workedHours']}
-        titles={['Task Name', 'Description', 'Start Date', 'Status', 'Worked Hours']}
-      />
+      {timesheet?.Task.length !== 0 ? (
+        <Table
+          data={timesheet?.Task.map((task) => task.taskId)}
+          headers={['taskName', 'description', 'startDate', 'status', 'workedHours']}
+          titles={['Task Name', 'Description', 'Start Date', 'Status', 'Worked Hours']}
+          modifiers={{
+            startDate: (x) => x?.slice(0, 10)
+          }}
+        />
+      ) : (
+        <p>No tasks have been uploaded for this timesheet</p>
+      )}
     </section>
   );
 };
