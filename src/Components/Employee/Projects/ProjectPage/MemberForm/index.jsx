@@ -112,7 +112,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
         });
     }
   };
-
+  console.log(responseEmployee);
   const {
     handleSubmit,
     register,
@@ -178,7 +178,11 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
           message:
             responseEmployee === ''
               ? response.message
-              : `${response.message}. ${responseEmployee.message}`,
+              : `${response.message}. ${
+                  responseEmployee.error
+                    ? responseEmployee.message
+                    : 'The employee has been added to the project'
+                }`,
           data: response.data,
           error: response.error
         }}

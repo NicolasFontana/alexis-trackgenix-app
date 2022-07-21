@@ -154,7 +154,11 @@ const ProjectPage = () => {
           document.body.style.overflow = 'unset';
         }}
         successResponse={{
-          message: `${response.message}. ${responseEmployee.message}`,
+          message: `${response.message}. ${
+            responseEmployee.error
+              ? responseEmployee.message
+              : 'The employee has been removed from the project'
+          }`,
           data: response.data,
           error: response.error
         }}
@@ -175,12 +179,18 @@ const ProjectPage = () => {
   ) : (
     <section className={styles.container}>
       <ButtonText
-        label="Go back"
+        label="Go back to Projects"
         clickAction={() => {
           history.push('/employee/projects');
         }}
       ></ButtonText>
-      {isPM ? <h2 className={styles.titlePM}>You are the PM of this project</h2> : null}
+      <h2 className={styles.titleRole}>
+        {isPM
+          ? 'You are the PM of this project'
+          : `You are ${
+              project?.members.find((member) => member.employeeId._id === employeeId)?.role
+            } on this project`}
+      </h2>
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
