@@ -47,8 +47,9 @@ const MemberTasksPage = () => {
           );
         }}
       ></ButtonText>
-      <h2>Member: {`${member?.firstName} ${member?.lastName}`}</h2>
-      <h3>Project: {member?.projects.find((project) => project._id === id).name} </h3>
+      <h2>{`${member?.firstName} ${member?.lastName}`}</h2>
+      <h3>Project: {member?.projects.find((project) => project._id === id).name}</h3>
+      <p>Timesheet for {timesheet?.createdAt?.slice(0, 7)}</p>
       {timesheet?.Task.length ? (
         <Table
           data={timesheet?.Task.map((task) => task.taskId)}
