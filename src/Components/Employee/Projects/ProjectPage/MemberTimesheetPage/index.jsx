@@ -51,8 +51,8 @@ const MemberTimesheetPage = () => {
           history.push(generatePath('/employee/projects/:id', { id: id }));
         }}
       ></ButtonText>
-      <h2>Member Timesheets</h2>
-      <h3>{`${member?.firstName} ${member?.lastName}`}</h3>
+      <h2>{`${member?.firstName} ${member?.lastName}`}</h2>
+      <h3>Timesheets</h3>
       {timesheets.length ? (
         <Table
           data={timesheets}
