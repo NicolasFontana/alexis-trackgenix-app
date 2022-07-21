@@ -3,23 +3,23 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, generatePath } from 'react-router-dom';
 import { getEmployees } from 'redux/employees/thunks';
+import { getAllTimesheets } from 'redux/time-sheets/thunks';
+
 import styles from './memberTimesheetPage.module.css';
-import {
-  Preloader,
-  Table,
-  // ModalForm,
-  // ConfirmModal,
-  // ErrorSuccessModal,
-  ButtonText
-} from 'Components/Shared';
+import { Preloader, Table, ButtonText } from 'Components/Shared';
 
 const MemberTimesheetPage = () => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { id, memberId } = useParams();
   const isLoading = useSelector((state) => state.employees.isLoading);
-  const member = useSelector((state) => state.employees.list).find(
+  const member = useSelector((state) => state.employees.list)?.find(
     (employee) => employee._id === memberId
+  );
+  const timesheets = useSelector((state) => state.timesheets.listTimesheet)?.filter(
+    (timesheet) =>
+      timesheet.projectId._id === id &&
+      member?.timeSheets.some((memberTS) => memberTS._id === timesheet._id)
   );
 
   const redirectAction = (timesheetId) => {
@@ -34,6 +34,7 @@ const MemberTimesheetPage = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
+    dispatch(getAllTimesheets());
   }, []);
 
   return isLoading ? (
@@ -52,13 +53,18 @@ const MemberTimesheetPage = () => {
       ></ButtonText>
       <h2>Member Timesheets</h2>
       <h3>{`${member?.firstName} ${member?.lastName}`}</h3>
-      {member?.timeSheets.length !== 0 ? (
+      {timesheets.length ? (
         <Table
-          data={member?.timeSheets}
-          headers={['projectId', '', 'approved']}
-          titles={['Project', 'Worked hours', 'Approved']}
+          data={timesheets}
+          headers={['projectId', 'createdAt', 'Task', 'approved']}
+          titles={['Project', 'Month', 'Worked hours', 'Approved']}
           modifiers={{
-            projectId: (x) => member.projects.find((project) => project._id === x).name,
+            projectId: (x) => x.name,
+            createdAt: (x) => x?.slice(0, 7),
+            Task: (x) =>
+              x.reduce((previous, current) => {
+                return previous + current.taskId.workedHours;
+              }, 0),
             approved: (x) => (x ? 'Approved' : 'Not approved')
           }}
           redirect={redirectAction}
