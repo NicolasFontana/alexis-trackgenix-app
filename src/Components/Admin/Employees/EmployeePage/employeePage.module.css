@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2%;
+  margin: 0px 2% 30px 2%;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
 }
@@ -12,18 +12,10 @@
   display: flex;
   width: 100%;
   max-width: 940px;
-  margin-bottom: 10px;
 }
 
-.container > button {
-  align-self: flex-start;
-  margin-bottom: 20px;
-  padding: 0 30px;
-}
-
-.container td {
-  max-width: unset;
-  padding: 20px 40px;
+.btnContainer button {
+  margin: 20px 0px 20px 10px;
 }
 
 .information {
@@ -36,9 +28,9 @@
 }
 
 .field {
-  text-align: center;
   width: 90%;
   margin: 5px 0px;
+  text-align: center;
 }
 
 .field > h3 {
