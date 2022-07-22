@@ -1,9 +1,10 @@
-.container {
-  flex: 1;
+.maincontainer,
+.container,
+.containerPreloader {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0px 2% 30px 2%;
 }
 
@@ -20,9 +21,16 @@
   z-index: 100;
 }
 
-.title {
+.title,
+.subtitle {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
+}
+
+.subtitle {
+  font-size: 20px;
+  text-shadow: none;
 }
