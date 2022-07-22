@@ -15,8 +15,7 @@ const timesheets = <FontAwesomeIcon icon={faClock}></FontAwesomeIcon>;
 const employeesRoutes = [
   { icon: home, name: 'Home', path: '/employee' },
   { icon: projects, name: 'Projects', path: '/employee/projects' },
-  { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' },
-  { name: 'Profile', path: '/employee/profile' }
+  { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' }
 ];
 
 const Employee = () => {

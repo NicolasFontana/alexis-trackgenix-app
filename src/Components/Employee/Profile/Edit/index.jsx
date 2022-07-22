@@ -81,7 +81,6 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   let body;
 
   const onSubmit = async (data) => {
-    console.log(employeeEdit);
     if (
       data.firstName === employeeEdit.firstName &&
       data.lastName === employeeEdit.lastName &&
@@ -99,13 +98,12 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       let enlaceUrl;
       if (data.profilePicture.length !== 0) {
         const storageRef = firebaseApp.storage().ref();
-        const pathFile = storageRef.child(
-          `employees/${employeeEdit._id}/${data.profilePicture[0].name}`
-        );
+        const pathFile = storageRef.child(`employees/${employeeEdit._id}/pictureProfile`);
         await pathFile.put(data.profilePicture[0]);
         console.log('archivo cargado: ', data.profilePicture[0].name);
         enlaceUrl = await pathFile.getDownloadURL();
         console.log('url: ', enlaceUrl);
+        console.log(data.profilePicture);
       }
       if (data.password === '') {
         body = JSON.stringify({
