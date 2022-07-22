@@ -47,6 +47,7 @@ const MemberTasksPage = () => {
           );
         }}
       ></ButtonText>
+<<<<<<< HEAD
       <h2>{`${member?.firstName} ${member?.lastName}`}</h2>
       <h3>Project: {member?.projects.find((project) => project._id === id).name}</h3>
       <p>Timesheet for {timesheet?.createdAt?.slice(0, 7)}</p>
@@ -62,6 +63,15 @@ const MemberTasksPage = () => {
       ) : (
         <p>No tasks have been uploaded for this timesheet</p>
       )}
+=======
+      <h2>Member: {`${member?.firstName} ${member?.lastName}`}</h2>
+      <h3>Project: {member?.projects.find((project) => project._id === id).name} </h3>
+      <Table
+        data={timesheet?.Task.map((task) => task.taskId)}
+        headers={['taskName', 'description', 'startDate', 'status', 'workedHours']}
+        titles={['Task Name', 'Description', 'Start Date', 'Status', 'Worked Hours']}
+      />
+>>>>>>> 5b405aec (TG-116: add tasks page)
     </section>
   );
 };
