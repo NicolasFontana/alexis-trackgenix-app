@@ -191,7 +191,7 @@ const MemberForm = ({ closeModalForm, project, memberId }) => {
           message:
             responseEmployee === ''
               ? response.message
-              : `${response.message}.\n${responseEmployee.message}`,
+              : `${response.message}\n${responseEmployee.message}`,
           data: response.data,
           error: response.error
         }}

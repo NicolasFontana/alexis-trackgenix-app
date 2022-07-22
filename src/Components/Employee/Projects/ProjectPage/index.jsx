@@ -154,7 +154,7 @@ const ProjectPage = () => {
           document.body.style.overflow = 'unset';
         }}
         successResponse={{
-          message: `${response.message}.\n${
+          message: `${response.message}\n${
             responseEmployee.error
               ? responseEmployee.message
               : 'The employee has been removed from the project'

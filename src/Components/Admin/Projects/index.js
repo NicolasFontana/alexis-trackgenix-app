@@ -145,7 +145,7 @@ const Projects = () => {
           message:
             responseEmployee === ''
               ? message.message
-              : `${message.message}.\n${responseEmployee.message}`,
+              : `${message.message}\n${responseEmployee.message}`,
           data: message.data,
           error: message.error
         }}
