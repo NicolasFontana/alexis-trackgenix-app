@@ -1,0 +1,36 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: space-between;
+  row-gap: 10px;
+  overflow: auto;
+  padding: 0 20px;
+}
+
+.buttonContainer button {
+  margin: 5px 0 10px 20px
+}
+
+
+.dateContainer {
+  display: flex;
+  flex:50;
+}
+
+.dateContainer div:first-child {
+  margin-right: 40px
+}
+
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
