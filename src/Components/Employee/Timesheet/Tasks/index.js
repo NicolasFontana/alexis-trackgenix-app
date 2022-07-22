@@ -16,7 +16,8 @@ import styles from './tasks.module.css';
 import { getAllTimesheets, putTimesheet } from 'redux/time-sheets/thunks';
 
 function Tasks() {
-  const { id } = useParams();
+  let { id } = useParams();
+  id = id.substring(1);
   const dispatch = useDispatch();
   //Here we save all the data of the clicked timesheet
   const timesheet = useSelector((state) => state.timesheets.listTimesheet).find(
@@ -44,13 +45,10 @@ function Tasks() {
   let tasks = [];
   let month;
 
-  if (timesheet) {
-    timesheet.Task.forEach((task) => {
-      tasks.push(task.taskId);
-      console.log(task.taskId._id);
-    });
-    month = timesheet.createdAt.substring(5, 10);
-  }
+  console.log(timesheet.Task[0]);
+  console.log(tasks);
+  tasks.concat(timesheet.Task);
+  console.log(tasks);
 
   const handleConfirm = () => {
     const tasksFiltered = timesheet.Task.filter((task) => task.taskId._id !== idDelete);
@@ -170,3 +168,21 @@ function Tasks() {
 }
 
 export default Tasks;
+
+// const onSubmit = (data) => {
+//   let dataToSave;
+//   dispatch(
+//     createTask(
+//       Datos de la task
+//       (message) => (setMessage(message), (dataToSave = message.data))
+//     )
+//   ).then(() => {
+//     setShowMessageModal(true);
+//     let body = JSON.stringify({
+//       tasks: timeSheet.task.map((task) => task._id).concat(dataToSave._id)
+//     });
+//     dispatch(updateTask(body, taskId, setMessage)).then(() => {
+//       setShowMessageModal(true);
+//     });
+//   });
+// };
