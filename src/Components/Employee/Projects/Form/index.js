@@ -1,10 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
 import * as Joi from 'joi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { getProjectById, updateProject } from 'redux/projects/thunks';
+import { updateProject } from 'redux/projects/thunks';
 import styles from './form.module.css';
 
 const schema = Joi.object({
@@ -63,10 +63,6 @@ const ProjectForm = ({ project, closeModalForm, projectID }) => {
   const [alertMessage, setAlertMessage] = useState('');
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProjectById(projectID));
-  }, []);
 
   const handleOnSubmit = (data) => {
     if (

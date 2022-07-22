@@ -2,6 +2,9 @@ import {
   getTasksPending,
   getTasksSuccess,
   getTasksError,
+  getDeletedTasksPending,
+  getDeletedTasksSuccess,
+  getDeletedTasksError,
   addTaskPending,
   addTaskSuccess,
   addTaskError,
@@ -25,6 +28,22 @@ export const getTasks = () => {
       })
       .catch((error) => {
         dispatch(getTasksError(error.toString()));
+      });
+  };
+};
+
+export const getDeletedTasks = () => {
+  return (dispatch) => {
+    dispatch(getDeletedTasksPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/deleted`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getDeletedTasksSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getDeletedTasksError(error.toString()));
       });
   };
 };

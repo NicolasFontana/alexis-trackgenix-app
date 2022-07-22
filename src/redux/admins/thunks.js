@@ -2,6 +2,9 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
+  getDeletedAdminsPending,
+  getDeletedAdminsSuccess,
+  getDeletedAdminsError,
   addAdminPending,
   addAdminSucces,
   addAdminError,
@@ -25,6 +28,22 @@ export const getAdmins = () => {
       })
       .catch((error) => {
         dispatch(getAdminsError(error.toString()));
+      });
+  };
+};
+
+export const getDeletedAdmins = () => {
+  return (dispatch) => {
+    dispatch(getDeletedAdminsPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/deleted`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getDeletedAdminsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getDeletedAdminsError(error.toString()));
       });
   };
 };

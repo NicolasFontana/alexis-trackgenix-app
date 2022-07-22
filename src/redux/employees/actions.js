@@ -2,6 +2,9 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
+  GET_DELETED_EMPLOYEES_PENDING,
+  GET_DELETED_EMPLOYEES_SUCCESS,
+  GET_DELETED_EMPLOYEES_ERROR,
   CREATE_EMPLOYEE_PENDING,
   CREATE_EMPLOYEE_SUCCESS,
   CREATE_EMPLOYEE_ERROR,
@@ -24,6 +27,20 @@ export const getEmployeesSuccess = (data) => ({
 
 export const getEmployeesError = (error) => ({
   type: GET_EMPLOYEES_ERROR,
+  payload: error
+});
+
+export const getDeletedEmployeesPending = () => ({
+  type: GET_DELETED_EMPLOYEES_PENDING
+});
+
+export const getDeletedEmployeesSuccess = (data) => ({
+  type: GET_DELETED_EMPLOYEES_SUCCESS,
+  payload: data
+});
+
+export const getDeletedEmployeesError = (error) => ({
+  type: GET_DELETED_EMPLOYEES_ERROR,
   payload: error
 });
 

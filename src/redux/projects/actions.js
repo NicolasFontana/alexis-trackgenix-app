@@ -2,9 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
-  GET_PROJECT_BY_ID_PENDING,
-  GET_PROJECT_BY_ID_SUCCESS,
-  GET_PROJECT_BY_ID_ERROR,
+  GET_DELETED_PROJECTS_PENDING,
+  GET_DELETED_PROJECTS_SUCCESS,
+  GET_DELETED_PROJECTS_ERROR,
   UPDATE_PROJECT_PENDING,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_ERROR,
@@ -30,17 +30,17 @@ export const getProjectsError = (error) => ({
   payload: error
 });
 
-export const getProjectByIdPending = () => ({
-  type: GET_PROJECT_BY_ID_PENDING
+export const getDeletedProjectsPending = () => ({
+  type: GET_DELETED_PROJECTS_PENDING
 });
 
-export const getProjectByIdSuccess = (projects) => ({
-  type: GET_PROJECT_BY_ID_SUCCESS,
+export const getDeletedProjectsSuccess = (projects) => ({
+  type: GET_DELETED_PROJECTS_SUCCESS,
   payload: projects
 });
 
-export const getProjectByIdError = (error) => ({
-  type: GET_PROJECT_BY_ID_ERROR,
+export const getDeletedProjectsError = (error) => ({
+  type: GET_DELETED_PROJECTS_ERROR,
   payload: error
 });
 

@@ -2,6 +2,9 @@ import {
   GET_TIMESHEETS_PENDING,
   GET_TIMESHEETS_SUCCESS,
   GET_TIMESHEETS_ERROR,
+  GET_DELETED_TIMESHEETS_PENDING,
+  GET_DELETED_TIMESHEETS_SUCCESS,
+  GET_DELETED_TIMESHEETS_ERROR,
   DELETE_TIMESHEET_PENDING,
   DELETE_TIMESHEET_SUCCESS,
   DELETE_TIMESHEET_ERROR,
@@ -25,6 +28,20 @@ export const getAllTimesheetsSuccess = (data) => ({
 export const getAllTimesheetsError = (error) => ({
   type: GET_TIMESHEETS_ERROR,
   payload: error
+});
+
+export const getDeletedTimesheetsError = (error) => ({
+  type: GET_DELETED_TIMESHEETS_ERROR,
+  payload: error
+});
+
+export const getDeletedTimesheetsPending = () => ({
+  type: GET_DELETED_TIMESHEETS_PENDING
+});
+
+export const getDeletedTimesheetsSuccess = (data) => ({
+  type: GET_DELETED_TIMESHEETS_SUCCESS,
+  payload: data
 });
 
 export const createTimesheetPending = () => ({

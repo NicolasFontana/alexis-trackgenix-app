@@ -2,6 +2,9 @@ import {
   getEmployeesPending,
   getEmployeesSuccess,
   getEmployeesError,
+  getDeletedEmployeesPending,
+  getDeletedEmployeesSuccess,
+  getDeletedEmployeesError,
   createEmployeePending,
   createEmployeeSuccess,
   createEmployeeError,
@@ -25,6 +28,22 @@ export const getEmployees = () => {
       })
       .catch((error) => {
         dispatch(getEmployeesError(error.toString()));
+      });
+  };
+};
+
+export const getDeletedEmployees = () => {
+  return (dispatch) => {
+    dispatch(getDeletedEmployeesPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/employees/deleted`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getDeletedEmployeesSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getDeletedEmployeesError(error.toString()));
       });
   };
 };

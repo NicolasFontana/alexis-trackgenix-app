@@ -2,6 +2,9 @@ import {
   GET_TASKS_PENDING,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_DELETED_TASKS_PENDING,
+  GET_DELETED_TASKS_SUCCESS,
+  GET_DELETED_TASKS_ERROR,
   ADD_TASK_PENDING,
   ADD_TASK_SUCCESS,
   ADD_TASK_ERROR,
@@ -19,6 +22,20 @@ export const getTasksPending = () => ({
 
 export const getTasksSuccess = (data) => ({
   type: GET_TASKS_SUCCESS,
+  payload: data
+});
+
+export const getDeletedTasksError = (error) => ({
+  type: GET_DELETED_TASKS_ERROR,
+  payload: error
+});
+
+export const getDeletedTasksPending = () => ({
+  type: GET_DELETED_TASKS_PENDING
+});
+
+export const getDeletedTasksSuccess = (data) => ({
+  type: GET_DELETED_TASKS_SUCCESS,
   payload: data
 });
 
