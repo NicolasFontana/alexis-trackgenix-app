@@ -83,6 +83,7 @@ function Projects() {
                   }}
                   editAction={openModalFormEdit}
                   redirect={redirectAction}
+                  sort={{ name: 1, clientName: 1, startDate: 1, endDate: 1, active: 1 }}
                 />
               </>
             )}

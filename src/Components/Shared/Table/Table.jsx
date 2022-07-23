@@ -12,43 +12,44 @@ const Table = (props) => {
   const [sortDirection, setSortDirection] = useState(sort);
 
   const sortAscending = (header) => {
+    // Find a defined value inside the column for reference
     let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
     setSortDirection({ ...sortDirection, [header]: 'down' });
-    // number
-    if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
-      data.sort((a, b) => a[header] - b[header]);
-      // boolean
-    } else if (typeof refValue === 'boolean') {
-      data.sort((a, b) => b[header] - a[header]);
-      // string or date
-    } else if (typeof refValue === 'string') {
-      data.sort((a, b) => a[header]?.localeCompare(b[header]));
-      // PM
-    } else if (sortModifiers[header]) {
+
+    // Modifier (members, employeeId, etc) --> Sorted as a string
+    if (sortModifiers && sortModifiers[header]) {
       data.sort((a, b) =>
         sortModifiers[header](a[header])?.localeCompare(sortModifiers[header](b[header]))
       );
-      // array
+      // Number
+    } else if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
+      data.sort((a, b) => a[header] - b[header]);
+      // Boolean
+    } else if (typeof refValue === 'boolean') {
+      data.sort((a, b) => b[header] - a[header]);
+      // String or Date
+    } else if (typeof refValue === 'string') {
+      data.sort((a, b) => a[header]?.localeCompare(b[header]));
+      // Array
     } else if (Array.isArray(refValue)) {
       data.sort((a, b) => a[header]?.length - b[header]?.length);
-    } else if (header === 'employeeId') {
-      data.sort((a, b) => a[header]?.firstName?.localeCompare(b[header]?.firstName));
     }
   };
 
   const sortDescending = (header) => {
     let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
     setSortDirection({ ...sortDirection, [header]: 'up' });
-    if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
+
+    if (sortModifiers && sortModifiers[header]) {
+      data.sort((a, b) =>
+        sortModifiers[header](b[header])?.localeCompare(sortModifiers[header](a[header]))
+      );
+    } else if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
       data.sort((a, b) => b[header] - a[header]);
     } else if (typeof refValue === 'boolean') {
       data.sort((a, b) => a[header] - b[header]);
     } else if (typeof refValue === 'string') {
       data.sort((a, b) => b[header]?.localeCompare(a[header]));
-    } else if (sortModifiers[header]) {
-      data.sort((a, b) =>
-        sortModifiers[header](b[header])?.localeCompare(sortModifiers[header](a[header]))
-      );
     } else if (Array.isArray(refValue)) {
       data.sort((a, b) => b[header]?.length - a[header]?.length);
     }
