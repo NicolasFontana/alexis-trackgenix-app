@@ -133,6 +133,7 @@ const Employees = () => {
           )
         }}
         redirect={redirectAction}
+        sort={{ firstName: 1, lastName: 1, phone: 1, email: 1, active: 1, projects: 1 }}
       />
       {modalEdit}
       {modalDelete}

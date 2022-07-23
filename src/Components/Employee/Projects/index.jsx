@@ -98,9 +98,13 @@ function Projects() {
                     startDate: (x) => x?.slice(0, 10),
                     endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
                     active: (x) => (x ? 'Active' : 'Inactive'),
-                    members: (x) => x.find((e) => e.employeeId._id === employee._id)?.role
+                    members: (x) => x.find((member) => member.employeeId._id === employee._id)?.role
                   }}
                   redirect={redirectAction}
+                  sort={{ name: 1, clientName: 1, startDate: 1, endDate: 1, active: 1, members: 1 }}
+                  sortModifiers={{
+                    members: (x) => x.find((member) => member.employeeId._id === employee._id)?.role
+                  }}
                 />
               </>
             )}

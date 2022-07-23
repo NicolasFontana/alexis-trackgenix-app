@@ -190,6 +190,10 @@ const Projects = () => {
           delAction={openConfirmModal}
           editAction={openModalFormEdit}
           redirect={redirectAction}
+          sort={{ name: 1, clientName: 1, members: 1, startDate: 1, endDate: 1, active: 1 }}
+          sortModifiers={{
+            members: (x) => x.find((member) => member.role === 'PM')?.employeeId.firstName
+          }}
         />
       </div>
     </section>
