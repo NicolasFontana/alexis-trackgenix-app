@@ -11,7 +11,6 @@
 .container > button {
   align-self: flex-start;
   margin-bottom: 20px;
-  padding: 0 30px;
 }
 
 .container td {

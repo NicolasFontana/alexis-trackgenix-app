@@ -66,11 +66,7 @@ export const putTimesheet = (userInput, id, setMessage) => {
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({
-        projectId: userInput.projectId,
-        Task: [{ taskId: userInput.task }],
-        approved: userInput.approved
-      })
+      body: JSON.stringify(userInput)
     })
       .then((response) => response.json())
       .then((response) => {
