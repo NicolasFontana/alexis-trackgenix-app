@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Layout from 'Components/Layout';
-import Home from 'Components/Home';
+import LandinPage from 'Components/LandingPage';
 
 const mainHomeRoutes = [
   { name: 'Log In', path: '/auth/login' },
@@ -12,7 +12,7 @@ const MainHomeRoutes = () => {
   return (
     <Layout routes={mainHomeRoutes}>
       <Switch>
-        <Route exact path={`${url}/`} component={Home} />
+        <Route exact path={`${url}/`} component={LandinPage} />
         <Redirect to={`${url}/`} />
       </Switch>
     </Layout>

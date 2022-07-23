@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+.info,
+.functionalities,
+.list,
+.history {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  padding: 30px 5px;
+  border-bottom: 1px solid #999999;
+}
+
+.functionalities {
+  flex-direction: column;
+}
+
+.img1,
+.img2,
+.img3 {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.info button,
+.list button {
+  display: none;
+  margin: 0px;
+}
+
+.list ul,
+.lists ol {
+  padding: 0px 0px 0px 20px;
+}
+
+.lists {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 0px;
+}
+
+.lists a {
+  text-decoration: none;
+  color: #000000;
+}
+
+@media screen and (min-width: 480px) {
+  .info button,
+  .list button {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .info,
+  .list,
+  .history {
+    flex-direction: row;
+  }
+
+  .info > div,
+  .list > div,
+  .history > div {
+    align-self: center;
+    width: 1000px;
+    margin-right: 20px;
+  }
+
+  .info > img,
+  .list > img,
+  .history > img {
+    max-width: 600px;
+  }
+
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px auto;
+  }
+
+  .items > div {
+    width: 45%;
+  }
+}
