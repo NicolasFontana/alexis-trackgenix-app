@@ -64,7 +64,8 @@ const Login = () => {
     defaultValues: {
       email: '',
       password: ''
-    }
+    },
+    shouldFocusError: false
   });
 
   return (

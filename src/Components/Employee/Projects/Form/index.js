@@ -1,10 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ButtonText, ErrorSuccessModal, Input, Textarea } from 'Components/Shared';
 import * as Joi from 'joi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { updateProject, addProject } from 'redux/projects/thunks';
+import { getProjectById, updateProject } from 'redux/projects/thunks';
 import styles from './form.module.css';
 
 const schema = Joi.object({
@@ -58,35 +58,33 @@ const schema = Joi.object({
   active: Joi.boolean().required()
 });
 
-const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
+const ProjectForm = ({ project, closeModalForm, projectID }) => {
   const [showErrorSuccessModal, setShowErrorSuccessModal] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getProjectById(projectID));
+  }, []);
+
   const handleOnSubmit = (data) => {
-    if (edit) {
-      if (
-        data.name === project.name &&
-        data.startDate.toString() == new Date(project.startDate) &&
-        (data.endDate
-          ? data.endDate.toString() == new Date(project.endDate)
-          : project.endDate === null) &&
-        data.clientName === project.clientName &&
-        data.active === project.active &&
-        data.description === project.description
-      ) {
-        setAlertMessage({ message: "There hasn't been any changes", data: {}, error: true });
-        setShowErrorSuccessModal(true);
-      } else {
-        dispatch(
-          updateProject(projectID, data, (alertMessage) => setAlertMessage(alertMessage))
-        ).then(() => openAlertModal());
-      }
+    if (
+      data.name === project.name &&
+      data.startDate.toString() == new Date(project.startDate) &&
+      (data.endDate
+        ? data.endDate.toString() == new Date(project.endDate)
+        : project.endDate === null) &&
+      data.clientName === project.clientName &&
+      data.active === project.active &&
+      data.description === project.description
+    ) {
+      setAlertMessage({ message: "There hasn't been any changes", data: {}, error: true });
+      setShowErrorSuccessModal(true);
     } else {
-      dispatch(addProject(data, (message) => setAlertMessage(message))).then(() => {
-        setShowErrorSuccessModal(true);
-      });
+      dispatch(
+        updateProject(projectID, data, (alertMessage) => setAlertMessage(alertMessage))
+      ).then(() => openAlertModal());
     }
   };
 
@@ -106,12 +104,12 @@ const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
     mode: 'onBlur',
     resolver: joiResolver(schema),
     defaultValues: {
-      name: edit ? project.name : '',
-      startDate: edit ? project.startDate.slice(0, 10) : '',
-      endDate: edit ? project.endDate?.slice(0, 10) : '',
-      clientName: edit ? project.clientName : '',
-      active: edit ? project.active : true,
-      description: edit ? project.description : ''
+      name: project.name,
+      startDate: project.startDate.slice(0, 10),
+      endDate: project.endDate?.slice(0, 10),
+      clientName: project.clientName,
+      active: project.active,
+      description: project.description
     },
     shouldFocusError: false
   });
@@ -167,10 +165,7 @@ const ProjectForm = ({ project, closeModalForm, edit, projectID }) => {
         />
       </form>
       <div className={styles.buttonContainer}>
-        <ButtonText
-          clickAction={handleSubmit(handleOnSubmit)}
-          label={edit ? 'Edit' : 'Create'}
-        ></ButtonText>
+        <ButtonText clickAction={handleSubmit(handleOnSubmit)} label={'Edit'}></ButtonText>
         <ErrorSuccessModal
           show={showErrorSuccessModal}
           closeModal={closeAlertModal}

@@ -131,13 +131,11 @@ const Admins = () => {
         <ButtonText label="ADD ADMIN" clickAction={openAddModal}></ButtonText>
         <Table
           data={admins}
-          headers={['firstName', 'lastName', 'email', 'active']}
-          titles={['First Name', 'Last Name', 'Email', 'Active']}
+          headers={['firstName', 'lastName', 'email']}
+          titles={['First Name', 'Last Name', 'Email']}
           delAction={openConfirmModal}
           editAction={openEditModal}
-          modifiers={{
-            active: (x) => (x ? 'Active' : 'Inactive')
-          }}
+          modifiers={{}}
         />
       </div>
     </section>

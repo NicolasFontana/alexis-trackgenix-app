@@ -25,33 +25,29 @@ const Table = (props) => {
         <tbody className={styles.tbody}>
           {data.map((row) => {
             return (
-              <tr key={row._id} className={styles.tr}>
+              <tr key={row._id ? row._id : row.employeeId._id} className={styles.tr}>
                 {headers.map((header, index) => {
-                  let cell;
-                  if (modifiers[header]) {
-                    cell = (
-                      <td key={`${row._id}-${index}`} className={styles.td}>
-                        {modifiers[header](row[header])}
-                      </td>
-                    );
-                  } else {
-                    cell = (
-                      <td
-                        key={`${row._id}-${index}`}
-                        onClick={() => (redirect ? redirect(row._id) : null)}
-                        className={styles.td}
-                      >
-                        {row[header]}
-                      </td>
-                    );
-                  }
-                  return cell;
+                  return (
+                    <td
+                      key={`${row._id ? row._id : row.employeeId_id}-${index}`}
+                      className={redirect ? styles.tdPointer : styles.td}
+                      onPointerDown={() =>
+                        redirect ? redirect(row._id ? row._id : row.employeeId._id) : null
+                      }
+                    >
+                      {modifiers
+                        ? modifiers[header]
+                          ? modifiers[header](row[header])
+                          : row[header]
+                        : row[header]}
+                    </td>
+                  );
                 })}
                 {editAction ? (
                   <td className={styles.tdButton}>
                     <ButtonEdit
                       clickAction={() => {
-                        editAction(row._id);
+                        editAction(row._id ? row._id : row.employeeId._id);
                       }}
                     ></ButtonEdit>
                   </td>
@@ -60,7 +56,7 @@ const Table = (props) => {
                   <td className={styles.tdButton}>
                     <ButtonDelete
                       clickAction={() => {
-                        delAction(row._id);
+                        delAction(row._id ? row._id : row.employeeId._id);
                       }}
                     ></ButtonDelete>
                   </td>
