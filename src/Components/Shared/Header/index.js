@@ -10,7 +10,9 @@ const userOff = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
 const Header = () => {
   const location = useLocation();
   const user = useSelector((state) => state.auth.user?.data);
-  console.log(user);
+  const employee = useSelector((state) => state.employees.list).find(
+    (employee) => employee._id === user._id
+  );
 
   return (
     <header>
@@ -19,14 +21,14 @@ const Header = () => {
       </div>
       <NavLink to={'/employee/profile'} exact className={styles.user}>
         <div>
-          {user?.picture ? (
-            <img src={user.picture} className={styles.userLogged} />
+          {employee?.picture ? (
+            <img src={employee.picture} className={styles.userLogged} />
           ) : user ? (
             userOff
           ) : null}
         </div>
         <p>
-          {user?.firstName} {user?.lastName}
+          {employee?.firstName} {employee?.lastName}
         </p>
       </NavLink>
     </header>

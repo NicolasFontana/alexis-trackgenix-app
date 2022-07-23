@@ -7,7 +7,6 @@ import FormEdit from './Edit';
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
-  // const isLoading = useSelector((state) => state.employees.isLoading);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
