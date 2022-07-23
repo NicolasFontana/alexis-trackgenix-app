@@ -86,7 +86,7 @@ const Login = () => {
         register={register}
         error={errors.password?.message}
       />
-      <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} enter />
       {isLoading ? (
         <Preloader />
       ) : (
