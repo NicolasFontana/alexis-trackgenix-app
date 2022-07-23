@@ -3,7 +3,7 @@
   position: fixed;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
+  height: 100vh;
   background-color: #373867;
   overflow-x: hidden;
   transition: 0.5s;
