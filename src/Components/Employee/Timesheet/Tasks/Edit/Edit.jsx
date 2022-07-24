@@ -134,7 +134,6 @@ const Edit = ({ task, closeModalForm }) => {
         register={register}
         error={errors.status?.message}
       />
-      <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>
       <ButtonText clickAction={handleSubmit(onSubmit)} label="Submit"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}

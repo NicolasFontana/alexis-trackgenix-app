@@ -51,11 +51,14 @@ const taskSchema = Joi.object({
 });
 
 const Form = ({ closeModalForm, timesheet }) => {
+  console.log(timesheet);
   const dispatch = useDispatch();
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+  const [taskResponse, setTaskResponse] = useState('');
+  const [, setTimesheetResponse] = useState('');
 
   const onSubmit = (data) => {
+    let taskData;
     let newTask = {
       taskName: data.taskName,
       startDate: data.startDate,
@@ -64,22 +67,24 @@ const Form = ({ closeModalForm, timesheet }) => {
       status: data.status
     };
 
-    dispatch(addTask(newTask, setMessage)).then(() => {
-      setShowMessageModal(true);
-      editTimesheet();
-    });
-  };
-
-  const editTimesheet = () => {
-    // Como buscar y encontrr la task??
-    const tasksEdited = timesheet.Task.push();
-    timesheet = {
-      projectId: timesheet.projectId,
-      tasks: tasksEdited,
-      approved: timesheet.approved
-    };
-
-    dispatch(putTimesheet(timesheet, timesheet._id, setMessage));
+    dispatch(addTask(newTask, (message) => (setTaskResponse(message), (taskData = message.data))))
+      .then(() => {
+        setShowMessageModal(true);
+      })
+      .then(() => {
+        let taskToSave = timesheet.Task.map((task) => ({ taskId: task.taskId._id })).concat({
+          taskId: taskData._id
+        });
+        dispatch(
+          putTimesheet(
+            {
+              Task: taskToSave
+            },
+            timesheet._id,
+            setTimesheetResponse
+          )
+        );
+      });
   };
 
   const {
@@ -153,7 +158,13 @@ const Form = ({ closeModalForm, timesheet }) => {
           setShowMessageModal(false);
         }}
         closeModalForm={closeModalForm}
-        successResponse={message}
+        successResponse={{
+          message: `${taskResponse.message}\n${
+            taskResponse.error ? taskResponse.message : 'The task has been added to the timesheet'
+          }`,
+          data: taskResponse.data,
+          error: taskResponse.error
+        }}
       />
     </form>
   );

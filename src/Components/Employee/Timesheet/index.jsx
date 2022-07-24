@@ -1,9 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'Components/Shared';
 import { useHistory } from 'react-router-dom';
 import styles from './time-sheet.module.css';
+import { useEffect } from 'react';
+import { getAllTimesheets } from 'redux/time-sheets/thunks';
+import { getEmployees } from 'redux/employees/thunks';
 
 function Timesheet() {
+  const dispatch = useDispatch();
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
@@ -15,8 +19,13 @@ function Timesheet() {
 
   const history = useHistory();
 
+  useEffect(() => {
+    dispatch(getEmployees());
+    dispatch(getAllTimesheets());
+  }, []);
+
   const redirect = (id) => {
-    history.push(`/employee/time-sheet/:${id}`);
+    history.push(`/employee/time-sheet/${id}`);
   };
 
   return (
