@@ -41,7 +41,7 @@ function Tasks() {
   useEffect(() => {
     dispatch(getAllTimesheets());
     dispatch(getTasks());
-  }, [!showModalFormEdit && !showModalFormAdd && !showConfirmModal]);
+  }, [showModalFormEdit === false && showModalFormAdd === false && showConfirmModal === false]);
 
   const history = useHistory();
 
@@ -131,31 +131,32 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      {modalEdit}
-      {modalAdd}
-      {modalMessage}
-      {isLoading ? <Preloader /> : null}
+      <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
       <h2 className={styles.title}>Tasks</h2>
       <div className={styles.box}>
         <h4>Project: {timesheet?.projectId?.name}</h4>
-        <p>Task for {timesheet?.createdAt?.slice(0, 7)} period</p>
+        <p>Tasks for {timesheet?.createdAt?.slice(0, 7)} period</p>
       </div>
-      <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
-      <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
-      {timesheet?.Task.length ? (
-        <Table
-          data={timesheet?.Task?.map((task) => task.taskId)}
-          headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
-          titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
-          delAction={openConfirmModal}
-          editAction={openEditModal}
-          modifiers={{
-            startDate: (x) => x?.slice(0, 10)
-          }}
-        />
-      ) : (
-        <p>No tasks have been uploaded for this timesheet</p>
-      )}
+      <div className={styles.divContainer}>
+        {modalEdit}
+        {modalAdd}
+        {modalMessage}
+        <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
+        {timesheet?.Task.length ? (
+          <Table
+            data={timesheet?.Task?.map((task) => task.taskId)}
+            headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
+            titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
+            delAction={openConfirmModal}
+            editAction={openEditModal}
+            modifiers={{
+              startDate: (x) => x?.slice(0, 10)
+            }}
+          />
+        ) : (
+          <p>No tasks have been uploaded for this timesheet</p>
+        )}
+      </div>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={closeMessageModal}
