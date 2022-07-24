@@ -146,13 +146,23 @@ function Tasks() {
         <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
         {timesheet?.Task.length ? (
           <Table
-            data={timesheet?.Task?.map((task) => task.taskId)}
-            headers={['taskName', 'startDate', 'workedHours', 'description', 'status']}
-            titles={['Task Name', 'Start Date', 'Worked Hours', 'Description', 'Status']}
+            data={timesheet?.Task?.filter(
+              (task) => task.taskId.createdAt?.slice(0, 7) === timesheet.createdAt?.slice(0, 7)
+            ).map((task) => task.taskId)}
+            headers={['taskName', 'createdAt', 'updatedAt', 'workedHours', 'description', 'status']}
+            titles={[
+              'Task Name',
+              'Created at',
+              'Updated at',
+              'Worked Hours',
+              'Description',
+              'Status'
+            ]}
             delAction={openConfirmModal}
             editAction={openEditModal}
             modifiers={{
-              startDate: (x) => x?.slice(0, 10)
+              createdAt: (x) => x?.slice(0, 10),
+              updatedAt: (x) => x?.slice(0, 10)
             }}
           />
         ) : (

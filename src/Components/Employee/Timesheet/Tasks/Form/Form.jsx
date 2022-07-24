@@ -16,11 +16,6 @@ const taskSchema = Joi.object({
     'string.pattern.base':
       'Must contain only letters and words can only be separated by a single white space'
   }),
-  startDate: Joi.date().min('01/01/1950').max('12/31/2050').required().messages({
-    'date.base': 'Start date is a required field',
-    'date.min': 'Invalid start date',
-    'date.max': 'Invalid start date, it must not be over the current date'
-  }),
   workedHours: Joi.string()
     .pattern(/^[0-9]*$/)
     .min(1)
@@ -61,7 +56,6 @@ const Form = ({ closeModalForm, timesheet, edit, task }) => {
     if (edit) {
       if (
         data.taskName === task.taskName &&
-        data.startDate.toString() == new Date(task.startDate) &&
         data.workedHours === task.workedHours.toString() &&
         data.description === task.description &&
         data.status == task.status
@@ -77,7 +71,6 @@ const Form = ({ closeModalForm, timesheet, edit, task }) => {
       let taskData;
       let newTask = {
         taskName: data.taskName,
-        startDate: data.startDate,
         workedHours: data.workedHours,
         description: data.description,
         status: data.status
@@ -112,7 +105,6 @@ const Form = ({ closeModalForm, timesheet, edit, task }) => {
     resolver: joiResolver(taskSchema),
     defaultValues: {
       taskName: edit ? task.taskName : '',
-      startDate: edit ? task.startDate?.slice(0, 10) : '',
       workedHours: edit ? task.workedHours.toString() : '',
       description: edit ? task.description : '',
       status: edit ? task.status : ''
@@ -130,13 +122,6 @@ const Form = ({ closeModalForm, timesheet, edit, task }) => {
           placeholder="Insert task name"
           register={register}
           error={errors.taskName?.message}
-        />
-        <Input
-          label="Start Date"
-          type="date"
-          name="startDate"
-          register={register}
-          error={errors.startDate?.message}
         />
         <Input
           label="Worked Hours"
