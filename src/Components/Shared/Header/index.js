@@ -23,7 +23,7 @@ const Header = () => {
         <div>
           {employee?.picture ? (
             <img src={employee.picture} className={styles.userLogged} />
-          ) : user ? (
+          ) : employee ? (
             userOff
           ) : null}
         </div>
