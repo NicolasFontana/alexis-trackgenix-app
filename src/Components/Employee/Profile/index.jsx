@@ -4,6 +4,10 @@ import { getEmployees } from 'redux/employees/thunks';
 import styles from './profile.module.css';
 import { ButtonText, ModalForm, Preloader } from 'Components/Shared';
 import FormEdit from './Edit';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const userOff = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
@@ -38,9 +42,7 @@ const EmployeeProfile = () => {
 
   const status = employee?.active ? 'Active' : 'Inactive';
   const isPM = employee?.isProjectManager ? 'Yes' : 'No';
-  const linkPicture = employee?.picture
-    ? employee.picture
-    : 'https://avatars.dicebear.com/api/male/luchito.svg';
+  const linkPicture = employee?.picture ? employee.picture : '';
 
   return employeeLoading && !showModalFormEdit ? (
     <section className={styles.containerPreloader}>
@@ -52,7 +54,11 @@ const EmployeeProfile = () => {
     <section className={styles.container}>
       <h2 className={styles.title}>Profile</h2>
       <div className={styles.pictureFrame}>
-        <img src={linkPicture} alt="Profile picture" className={styles.profilePicture} />
+        {linkPicture ? (
+          <img src={linkPicture} alt="Profile picture" className={styles.profilePicture} />
+        ) : (
+          <div className={styles.profilePicture}>{userOff}</div>
+        )}
       </div>
       <div className={styles.data}>
         <div className={styles.row}>

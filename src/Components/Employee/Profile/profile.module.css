@@ -6,17 +6,28 @@
   margin-right: 5%;
   margin-bottom: 5%;
   font-family: 'Roboto', sans-serif;
+  align-items: center;
 }
 
 .title {
   align-self: center;
   font-weight: bold;
   font-size: 40px;
-  color: #373867
+  color: #373867;
+  margin: 20px 0;
 }
 
 .pictureFrame{
   align-self: center;
+  margin-bottom: 20px;
+}
+
+.pictureFrame * {
+  color: #FFFFFF;
+  background-color: #76a068;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
 }
 
 .profilePicture {
@@ -34,6 +45,8 @@
   border: 2px solid #76a068;
   border-radius: 10px;
   color: #373867;
+  margin-bottom: 15px;
+  max-width: 1000px;
 }
 
 .row {
@@ -55,12 +68,8 @@
 }
 
 .rowText {
-  /* margin-block-start: auto; */
   font-size: 16px;
   margin-block-end: 0px;
-  /* border: 1px solid #373867;
-  border-radius: 5px;
-  padding: 7px; */
 }
 
 .buttonContainer {
