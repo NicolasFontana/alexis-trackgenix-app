@@ -29,15 +29,15 @@ const Employee = () => {
       <Switch>
         <Route exact path={`${url}/time-sheet`} component={Timesheet} />
         <Route exact path={`${url}/projects`} component={Projects} />
-        <Route exact path={`${url}/projects/:id`} component={ProjectPage} />
+        <Route exact path={`${url}/projects/id=:id`} component={ProjectPage} />
         <Route
           exact
-          path={`${url}/projects/:id/members/:memberId`}
+          path={`${url}/projects/id=:id/members/id=:memberId`}
           component={MemberTimesheetPage}
         />
         <Route
           exact
-          path={`${url}/projects/:id/members/:memberId/timesheets/:timesheetId`}
+          path={`${url}/projects/id=:id/members/id=:memberId/timesheets/id=:timesheetId`}
           component={MemberTasksPage}
         />
         <Route exact path={`${url}/profile`} component={Profile} />

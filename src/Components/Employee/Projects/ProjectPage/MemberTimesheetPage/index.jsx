@@ -24,7 +24,7 @@ const MemberTimesheetPage = () => {
 
   const redirectAction = (timesheetId) => {
     history.push(
-      generatePath('/employee/projects/:id/members/:memberId/timesheets/:timesheetId', {
+      generatePath('/employee/projects/id=:id/members/id=:memberId/timesheets/id=:timesheetId', {
         id: id,
         memberId: memberId,
         timesheetId
@@ -48,7 +48,7 @@ const MemberTimesheetPage = () => {
       <ButtonText
         label={`Go back to ${project?.name}`}
         clickAction={() => {
-          history.push(generatePath('/employee/projects/:id', { id: id }));
+          history.push(generatePath('/employee/projects/id=:id', { id: id }));
         }}
       ></ButtonText>
       <h2 className={styles.title}>Timesheets</h2>

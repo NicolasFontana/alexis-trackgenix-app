@@ -48,7 +48,9 @@ const ProjectPage = () => {
   }, [!showModalDelete]);
 
   const redirectAction = (memberId) => {
-    history.push(generatePath('/employee/projects/:id/members/:memberId', { id: id, memberId }));
+    history.push(
+      generatePath('/employee/projects/id=:id/members/id=:memberId', { id: id, memberId })
+    );
   };
 
   const deleteMember = () => {

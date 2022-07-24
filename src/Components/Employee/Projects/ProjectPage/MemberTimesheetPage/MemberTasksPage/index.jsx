@@ -94,7 +94,10 @@ const MemberTasksPage = () => {
         label="Go back to the timesheets"
         clickAction={() => {
           history.push(
-            generatePath('/employee/projects/:id/members/:memberId', { id: id, memberId: memberId })
+            generatePath('/employee/projects/id=:id/members/id=:memberId', {
+              id: id,
+              memberId: memberId
+            })
           );
         }}
       ></ButtonText>
