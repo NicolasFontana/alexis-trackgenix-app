@@ -10,7 +10,7 @@ const mainHomeRoutes = [
 const MainHomeRoutes = () => {
   const { url } = useRouteMatch();
   return (
-    <Layout routes={mainHomeRoutes}>
+    <Layout routesHeader={mainHomeRoutes}>
       <Switch>
         <Route exact path={`${url}/`} component={LandinPage} />
         <Redirect to={`${url}/`} />

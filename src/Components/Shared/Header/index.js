@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 
-const Header = ({ sidebarOpener }) => {
+const Header = ({ sidebarOpener, routesHeader }) => {
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(false);
   const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
@@ -50,7 +50,21 @@ const Header = ({ sidebarOpener }) => {
           <Link to={url}>Trackgenix</Link>
         </h2>
       </div>
-      <div>{user}</div>
+      <div className={styles.rightSide}>
+        <nav>
+          <ul className={styles.ul}>
+            {routesHeader?.map((route) => (
+              <li key={route.name} className={styles.li}>
+                <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C' }}>
+                  {route.icon}
+                  {route.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div>{user}</div>
+      </div>
     </header>
   );
 };
