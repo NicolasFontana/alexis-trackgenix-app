@@ -9,3 +9,7 @@
   row-gap: 10px;
   overflow: auto;
 }
+
+.buttonContainer button {
+  margin: 5px 0 10px 0px
+}

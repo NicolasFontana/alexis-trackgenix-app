@@ -121,71 +121,75 @@ const Form = ({ closeModalForm, timesheet, edit, task }) => {
   });
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        label="Task Name"
-        type="text"
-        name="taskName"
-        placeholder="Insert task name"
-        register={register}
-        error={errors.taskName?.message}
-      />
-      <Input
-        label="Start Date"
-        type="date"
-        name="startDate"
-        register={register}
-        error={errors.startDate?.message}
-      />
-      <Input
-        label="Worked Hours"
-        type="text"
-        name="workedHours"
-        placeholder="Insert hours"
-        register={register}
-        error={errors.workedHours?.message}
-      />
-      <Input
-        label="Description"
-        type="text"
-        name="description"
-        placeholder="Insert description"
-        register={register}
-        error={errors.description?.message}
-      />
-      <Select
-        label="Status"
-        name="status"
-        title="Choose status"
-        data={['Pending', 'Done', 'Unfinished']}
-        register={register}
-        error={errors.status?.message}
-      />
-      <ButtonText
-        clickAction={handleSubmit(onSubmit)}
-        label={edit ? 'Edit' : 'Create'}
-      ></ButtonText>
-      <ErrorSuccessModal
-        show={showMessageModal}
-        closeModal={() => {
-          setShowMessageModal(false);
-        }}
-        closeModalForm={closeModalForm}
-        successResponse={
-          edit
-            ? message
-            : {
-                message: `${taskResponse.message}\n${
-                  taskResponse.error
-                    ? taskResponse.message
-                    : 'The task has been added to the timesheet'
-                }`,
-                data: taskResponse.data,
-                error: taskResponse.error
-              }
-        }
-      />
-    </form>
+    <>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          label="Task Name"
+          type="text"
+          name="taskName"
+          placeholder="Insert task name"
+          register={register}
+          error={errors.taskName?.message}
+        />
+        <Input
+          label="Start Date"
+          type="date"
+          name="startDate"
+          register={register}
+          error={errors.startDate?.message}
+        />
+        <Input
+          label="Worked Hours"
+          type="text"
+          name="workedHours"
+          placeholder="Insert hours"
+          register={register}
+          error={errors.workedHours?.message}
+        />
+        <Input
+          label="Description"
+          type="text"
+          name="description"
+          placeholder="Insert description"
+          register={register}
+          error={errors.description?.message}
+        />
+        <Select
+          label="Status"
+          name="status"
+          title="Choose status"
+          data={['Pending', 'Done', 'Unfinished']}
+          register={register}
+          error={errors.status?.message}
+        />
+      </form>
+      <div className={styles.buttonContainer}>
+        <ButtonText
+          clickAction={handleSubmit(onSubmit)}
+          label={edit ? 'Edit' : 'Create'}
+        ></ButtonText>
+        <ErrorSuccessModal
+          show={showMessageModal}
+          closeModal={() => {
+            setShowMessageModal(false);
+          }}
+          closeModalForm={closeModalForm}
+          successResponse={
+            edit
+              ? message
+              : {
+                  message: `${taskResponse.message}\n${
+                    taskResponse.error
+                      ? taskResponse.message
+                      : 'The task has been added to the timesheet'
+                  }`,
+                  data: taskResponse.data,
+                  error: taskResponse.error
+                }
+          }
+        />
+      </div>
+    </>
   );
 };
 
