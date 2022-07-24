@@ -14,8 +14,8 @@ const Table = (props) => {
   const sortAscending = (header) => {
     // Find a defined value inside the column for reference
     let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
-    setSortDirection({ ...sortDirection, [header]: 'down' });
-
+    // Reset arrows and define new sort
+    setSortDirection({ ...sort, [header]: 'down' });
     // Modifier (members, employeeId, etc) --> Sorted as a string
     if (sortModifiers && sortModifiers[header]) {
       data.sort((a, b) =>
@@ -38,8 +38,7 @@ const Table = (props) => {
 
   const sortDescending = (header) => {
     let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
-    setSortDirection({ ...sortDirection, [header]: 'up' });
-
+    setSortDirection({ ...sort, [header]: 'up' });
     if (sortModifiers && sortModifiers[header]) {
       data.sort((a, b) =>
         sortModifiers[header](b[header])?.localeCompare(sortModifiers[header](a[header]))
