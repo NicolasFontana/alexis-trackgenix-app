@@ -1,7 +1,7 @@
 import { ButtonText, ErrorSuccessModal, Input, Select } from 'Components/Shared';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask } from 'redux/tasks/thunks';
+import { addTask, editTask } from 'redux/tasks/thunks';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -22,7 +22,7 @@ const taskSchema = Joi.object({
     'date.max': 'Invalid start date, it must not be over the current date'
   }),
   workedHours: Joi.string()
-    .regex(/^[0-9]*$/)
+    .pattern(/^[0-9]*$/)
     .min(1)
     .max(3)
     .required()
@@ -50,41 +50,57 @@ const taskSchema = Joi.object({
   })
 });
 
-const Form = ({ closeModalForm, timesheet }) => {
-  console.log(timesheet);
+const Form = ({ closeModalForm, timesheet, edit, task }) => {
   const dispatch = useDispatch();
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [taskResponse, setTaskResponse] = useState('');
   const [, setTimesheetResponse] = useState('');
+  const [message, setMessage] = useState('');
 
   const onSubmit = (data) => {
-    let taskData;
-    let newTask = {
-      taskName: data.taskName,
-      startDate: data.startDate,
-      workedHours: data.workedHours,
-      description: data.description,
-      status: data.status
-    };
-
-    dispatch(addTask(newTask, (message) => (setTaskResponse(message), (taskData = message.data))))
-      .then(() => {
+    if (edit) {
+      if (
+        data.taskName === task.taskName &&
+        data.startDate.toString() == new Date(task.startDate) &&
+        data.workedHours === task.workedHours.toString() &&
+        data.description === task.description &&
+        data.status == task.status
+      ) {
+        setMessage({ message: "There hasn't been any changes", data: {}, error: true });
         setShowMessageModal(true);
-      })
-      .then(() => {
-        let taskToSave = timesheet.Task.map((task) => ({ taskId: task.taskId._id })).concat({
-          taskId: taskData._id
+      } else {
+        dispatch(editTask(data, task._id, setMessage)).then(() => {
+          setShowMessageModal(true);
         });
-        dispatch(
-          putTimesheet(
-            {
-              Task: taskToSave
-            },
-            timesheet._id,
-            setTimesheetResponse
-          )
-        );
-      });
+      }
+    } else {
+      let taskData;
+      let newTask = {
+        taskName: data.taskName,
+        startDate: data.startDate,
+        workedHours: data.workedHours,
+        description: data.description,
+        status: data.status
+      };
+      dispatch(addTask(newTask, (message) => (setTaskResponse(message), (taskData = message.data))))
+        .then(() => {
+          setShowMessageModal(true);
+        })
+        .then(() => {
+          let taskToSave = timesheet.Task.map((task) => ({ taskId: task.taskId._id })).concat({
+            taskId: taskData._id
+          });
+          dispatch(
+            putTimesheet(
+              {
+                Task: taskToSave
+              },
+              timesheet._id,
+              setTimesheetResponse
+            )
+          );
+        });
+    }
   };
 
   const {
@@ -95,11 +111,11 @@ const Form = ({ closeModalForm, timesheet }) => {
     mode: 'onBlur',
     resolver: joiResolver(taskSchema),
     defaultValues: {
-      taskName: '',
-      startDate: '',
-      workedHours: '',
-      description: '',
-      status: ''
+      taskName: edit ? task.taskName : '',
+      startDate: edit ? task.startDate?.slice(0, 10) : '',
+      workedHours: edit ? task.workedHours.toString() : '',
+      description: edit ? task.description : '',
+      status: edit ? task.status : ''
     },
     shouldFocusError: false
   });
@@ -146,25 +162,28 @@ const Form = ({ closeModalForm, timesheet }) => {
         error={errors.status?.message}
       />
       <ButtonText
-        clickAction={() => {
-          closeModalForm();
-        }}
-        label="Cancel"
+        clickAction={handleSubmit(onSubmit)}
+        label={edit ? 'Edit' : 'Create'}
       ></ButtonText>
-      <ButtonText clickAction={handleSubmit(onSubmit)} label="Create"></ButtonText>
       <ErrorSuccessModal
         show={showMessageModal}
         closeModal={() => {
           setShowMessageModal(false);
         }}
         closeModalForm={closeModalForm}
-        successResponse={{
-          message: `${taskResponse.message}\n${
-            taskResponse.error ? taskResponse.message : 'The task has been added to the timesheet'
-          }`,
-          data: taskResponse.data,
-          error: taskResponse.error
-        }}
+        successResponse={
+          edit
+            ? message
+            : {
+                message: `${taskResponse.message}\n${
+                  taskResponse.error
+                    ? taskResponse.message
+                    : 'The task has been added to the timesheet'
+                }`,
+                data: taskResponse.data,
+                error: taskResponse.error
+              }
+        }
       />
     </form>
   );

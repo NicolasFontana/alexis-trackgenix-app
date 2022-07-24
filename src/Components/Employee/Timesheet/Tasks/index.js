@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { delTask, getTasks } from 'redux/tasks/thunks';
 import { useParams, useHistory } from 'react-router-dom';
-import EditForm from './Edit/Edit';
 import Form from './Form/Form';
 import styles from './tasks.module.css';
 import { getAllTimesheets, putTimesheet } from 'redux/time-sheets/thunks';
@@ -28,15 +27,14 @@ function Tasks() {
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
-  const [message, setMessage] = useState('');
+  const [taskResponse, setTaskResponse] = useState('');
+  const [timesheetResponse, setTimesheetResponse] = useState('');
   const [idDelete, setIdDelete] = useState(0);
   const [idToEdit, setIdToEdit] = useState();
 
   let modalEdit;
   let modalAdd;
   let modalMessage;
-
-  console.log(timesheet);
 
   useEffect(() => {
     dispatch(getAllTimesheets());
@@ -49,8 +47,8 @@ function Tasks() {
     const tasksFiltered = timesheet.Task.filter((task) => task.taskId._id !== idDelete).map(
       (task) => ({ taskId: task.taskId._id })
     );
-    dispatch(delTask(idDelete, setMessage))
-      .then(dispatch(putTimesheet({ Task: tasksFiltered }, id, setMessage)))
+    dispatch(delTask(idDelete, setTaskResponse))
+      .then(dispatch(putTimesheet({ Task: tasksFiltered }, id, setTimesheetResponse)))
       .then(() => {
         closeModal();
         setShowConfirmModal(false);
@@ -86,7 +84,11 @@ function Tasks() {
   if (showModalFormEdit) {
     modalEdit = (
       <ModalForm isOpen={showModalFormEdit} handleClose={closeModal} title="Edit Task">
-        <EditForm closeModalForm={closeModal} task={tasks.find((task) => task._id === idToEdit)} />
+        <Form
+          closeModalForm={closeModal}
+          task={tasks.find((task) => task._id === idToEdit)}
+          edit={true}
+        />
       </ModalForm>
     );
   }
@@ -161,7 +163,11 @@ function Tasks() {
         show={showMessageModal}
         closeModal={closeMessageModal}
         closeModalForm={closeModal}
-        successResponse={message}
+        successResponse={{
+          message: `${taskResponse.message}.\n${timesheetResponse.message}.`,
+          data: taskResponse.data,
+          error: taskResponse.error
+        }}
       />
     </section>
   );
