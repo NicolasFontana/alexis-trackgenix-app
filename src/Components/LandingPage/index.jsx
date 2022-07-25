@@ -3,6 +3,7 @@ import styles from './landing.module.css';
 import { faClock, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import { faUsersCog, faSitemap, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ScrollToTop from 'Components/Shared/ScrollToTop';
 
 const clockIcon = <FontAwesomeIcon icon={faClock} className={styles.icons} />;
 const fileIcon = <FontAwesomeIcon icon={faFileAlt} className={styles.icons} />;
@@ -13,6 +14,7 @@ const checkIcon = <FontAwesomeIcon icon={faCheck} className={styles.checkIcon} /
 function Home() {
   return (
     <section className={styles.container}>
+      <ScrollToTop />
       <section className={styles.info}>
         <div>
           <h2 className={styles.title}>What is Trackgenix?</h2>
