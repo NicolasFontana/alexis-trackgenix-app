@@ -15,16 +15,22 @@ header {
   text-decoration: none;
 }
 
+.userPicture {
+  display: flex;
+  padding: 3px 0;
+}
+
 .user p {
   margin: 0;
   color: #ffffff;
   font-size: 17px;
   word-spacing: normal;
+  padding: 3px 0;
 }
 
 .user * {
   color: #ffffff;
-  font-size: 50px;
+  font-size: 70px;
 }
 
 .pathname {

@@ -20,7 +20,7 @@ const Header = () => {
         {location.pathname.slice(location.pathname.lastIndexOf('/') + 1)}
       </div>
       <NavLink to={'/employee/profile'} exact className={styles.user}>
-        <div>
+        <div className={styles.userPicture}>
           {employee?.picture ? (
             <img src={employee.picture} className={styles.userLogged} />
           ) : employee ? (
