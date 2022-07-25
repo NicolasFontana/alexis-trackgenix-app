@@ -15,7 +15,6 @@
 
 .leftSide .title {
   font-size: 36px;
-  padding-left: 10px;
   margin: 0;
 }
 
@@ -28,6 +27,7 @@
 .burger {
   display: inline-block;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .bar1,
@@ -47,7 +47,7 @@
 
 .ul {
   display: flex;
-  font-size: 20px;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   color: #ffffff;
@@ -80,7 +80,7 @@
   list-style: none;
   text-decoration: none;
   color: #373867;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -91,6 +91,14 @@
 }
 
 @media screen and (min-width: 480px) {
+  .ul {
+    flex-direction: row;
+  }
+
+  .li a {
+    font-size: 20px;
+  }
+
   .user {
     display: flex;
     flex-direction: column;

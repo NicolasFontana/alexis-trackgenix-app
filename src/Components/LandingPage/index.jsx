@@ -38,7 +38,7 @@ function Home() {
         <h2 className={styles.title}>Functionalities</h2>
         <div className={styles.items}>
           <div className={styles.containerItem}>
-            <div>{clockIcon}</div>
+            <div className={styles.containerIcon}>{clockIcon}</div>
             <div>
               <h3 className={styles.subtitle}>Hours log</h3>
               <p>
@@ -48,7 +48,7 @@ function Home() {
             </div>
           </div>
           <div className={styles.containerItem}>
-            <div>{resourceIcon}</div>
+            <div className={styles.containerIcon}>{resourceIcon}</div>
             <div>
               <h3 className={styles.subtitle}>Resource management</h3>
               <p>
@@ -58,7 +58,7 @@ function Home() {
             </div>
           </div>
           <div className={styles.containerItem}>
-            <div>{fileIcon}</div>
+            <div className={styles.containerIcon}>{fileIcon}</div>
             <div>
               <h3 className={styles.subtitle}>Reports</h3>
               <p>
@@ -68,7 +68,7 @@ function Home() {
             </div>
           </div>
           <div className={styles.containerItem}>
-            <div>{teamIcon}</div>
+            <div className={styles.containerIcon}>{teamIcon}</div>
             <div>
               <h3 className={styles.subtitle}>Multiple Roles</h3>
               <p>
