@@ -4,7 +4,7 @@ import {
   Preloader,
   Table,
   ConfirmModal,
-  ButtonAdd,
+  ButtonText,
   ModalForm,
   ErrorSuccessModal
 } from 'Components/Shared';
@@ -85,11 +85,11 @@ function Timesheet() {
       {isLoading ? <Preloader /> : null}
       {modalAdd}
       {modalDelete}
-      <ButtonAdd
-        className={styles.buttonAdd}
+      <ButtonText
         clickAction={() => {
           setShowModalAdd(true);
         }}
+        label="Add Timesheet"
       />
       <Table
         data={timesheets}

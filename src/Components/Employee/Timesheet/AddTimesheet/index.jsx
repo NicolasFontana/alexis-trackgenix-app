@@ -23,7 +23,6 @@ const FormAdd = ({ closeModalForm }) => {
   const [message, setMessage] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const projects = useSelector((state) => state.projects.list);
-  // const tasks = useSelector((state) => state.tasks.list);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
@@ -32,13 +31,13 @@ const FormAdd = ({ closeModalForm }) => {
     (listTimesheet) =>
       employee?.timeSheets.some((employeeTimesheet) => employeeTimesheet._id === listTimesheet._id)
   );
-
+  const activeTimesheets = timesheets?.filter((ts) => ts.isDeleted !== true);
   let currentDate = new Date().toISOString().slice(0, 7);
 
   const onSubmit = (data) => {
-    const projects = timesheets.filter((pj) => pj.projectId._id === data.project);
+    const projects = activeTimesheets.filter((pj) => pj.projectId._id === data.project);
     const filteredByDate = projects.filter((pj) => pj.createdAt.slice(0, 7) === currentDate);
-    if (filteredByDate) {
+    if (!(filteredByDate.length === 0)) {
       setMessage({
         message: 'Timesheet for the selected project already created for the current period',
         data: {},
