@@ -31,6 +31,7 @@ function Timesheet() {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState();
+  const currentDate = new Date().toISOString().slice(0, 7);
 
   let modalAdd;
   let modalDelete;
@@ -103,9 +104,11 @@ function Timesheet() {
           projectId: (x) => x?.name,
           approved: (x) => (x ? 'Approved' : 'Not approved'),
           Task: (x) =>
-            x?.reduce((previous, current) => {
-              return previous + current.taskId.workedHours;
-            }, 0),
+            x
+              ?.filter((task) => task.taskId.createdAt?.slice(0, 7) === currentDate)
+              .reduce((previous, current) => {
+                return previous + current.taskId.workedHours;
+              }, 0),
           createdAt: (x) => x?.slice(0, 7)
         }}
       />
