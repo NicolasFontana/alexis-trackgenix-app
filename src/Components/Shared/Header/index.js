@@ -41,11 +41,13 @@ const Header = ({ sidebarOpener, routesHeader }) => {
   return (
     <header className={styles.header}>
       <div className={styles.leftSide}>
-        <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
-          <div className={styles.bar1}></div>
-          <div className={styles.bar2}></div>
-          <div className={styles.bar3}></div>
-        </div>
+        {user ? (
+          <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
+            <div className={styles.bar1}></div>
+            <div className={styles.bar2}></div>
+            <div className={styles.bar3}></div>
+          </div>
+        ) : null}
         <h2 className={styles.title}>
           <Link to={url}>Trackgenix</Link>
         </h2>
@@ -55,7 +57,7 @@ const Header = ({ sidebarOpener, routesHeader }) => {
           <ul className={styles.ul}>
             {routesHeader?.map((route) => (
               <li key={route.name} className={styles.li}>
-                <NavLink to={route.path} exact activeStyle={{ color: '#A1D28C' }}>
+                <NavLink to={route.path} exact activeStyle={{ fontWeight: 'bold' }}>
                   {route.icon}
                   {route.name}
                 </NavLink>

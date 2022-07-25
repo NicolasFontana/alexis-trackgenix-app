@@ -1,12 +1,21 @@
 import { ButtonText } from 'Components/Shared';
 import styles from './landing.module.css';
+import { faClock, faFileAlt } from '@fortawesome/free-regular-svg-icons';
+import { faUsersCog, faSitemap, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const clockIcon = <FontAwesomeIcon icon={faClock} className={styles.icons} />;
+const fileIcon = <FontAwesomeIcon icon={faFileAlt} className={styles.icons} />;
+const resourceIcon = <FontAwesomeIcon icon={faSitemap} className={styles.icons} />;
+const teamIcon = <FontAwesomeIcon icon={faUsersCog} className={styles.icons} />;
+const checkIcon = <FontAwesomeIcon icon={faCheck} className={styles.checkIcon} />;
 
 function Home() {
   return (
     <section className={styles.container}>
       <section className={styles.info}>
         <div>
-          <h2>What is Trackgenix?</h2>
+          <h2 className={styles.title}>What is Trackgenix?</h2>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam quam quisquam esse,
             ducimus molestias, quae cupiditate obcaecati sed, nisi animi eius asperiores quas quidem
@@ -24,38 +33,42 @@ function Home() {
         />
       </section>
       <section className={styles.functionalities}>
-        <h2>Functionalities</h2>
+        <h2 className={styles.title}>Functionalities</h2>
         <div className={styles.items}>
-          <div>
+          <div className={styles.containerItem}>
+            <div>{clockIcon}</div>
             <div>
-              <h3>Hours log</h3>
+              <h3 className={styles.subtitle}>Hours log</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
                 consequatur inventore asperiores illo atque at.
               </p>
             </div>
           </div>
-          <div>
+          <div className={styles.containerItem}>
+            <div>{resourceIcon}</div>
             <div>
-              <h3>Resource management</h3>
+              <h3 className={styles.subtitle}>Resource management</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
                 consequatur inventore asperiores illo atque at.
               </p>
             </div>
           </div>
-          <div>
+          <div className={styles.containerItem}>
+            <div>{fileIcon}</div>
             <div>
-              <h3>Reports</h3>
+              <h3 className={styles.subtitle}>Reports</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
                 consequatur inventore asperiores illo atque at.
               </p>
             </div>
           </div>
-          <div>
+          <div className={styles.containerItem}>
+            <div>{teamIcon}</div>
             <div>
-              <h3>Multiple Roles</h3>
+              <h3 className={styles.subtitle}>Multiple Roles</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
                 consequatur inventore asperiores illo atque at.
@@ -66,12 +79,12 @@ function Home() {
       </section>
       <section className={styles.list}>
         <div>
-          <h2>Why Trackgenix?</h2>
+          <h2 className={styles.title}>Why Trackgenix?</h2>
           <ul>
-            <li>Productivity booster</li>
-            <li>Work traceability</li>
-            <li>Leadership and team management</li>
-            <li>Decision making</li>
+            <li>{checkIcon} Productivity booster</li>
+            <li>{checkIcon} Work traceability</li>
+            <li>{checkIcon} Leadership and team management</li>
+            <li>{checkIcon} Decision making</li>
           </ul>
           <ButtonText label={'Learn More'} />
         </div>
@@ -83,7 +96,7 @@ function Home() {
       </section>
       <section className={styles.history}>
         <div>
-          <h2>Our History</h2>
+          <h2 className={styles.title}>Our History</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, consequuntur, beatae
             labore dolores a asperiores quo recusandae deserunt animi in iure non voluptatibus nulla
@@ -101,7 +114,7 @@ function Home() {
       </section>
       <section className={styles.lists}>
         <div>
-          <h2>Company</h2>
+          <h2 className={styles.title}>Company</h2>
           <ol>
             <li>
               <a href="#">About us</a>
@@ -118,7 +131,7 @@ function Home() {
           </ol>
         </div>
         <div>
-          <h2>Support</h2>
+          <h2 className={styles.title}>Support</h2>
           <ol>
             <li>
               <a href="#">Help</a>
