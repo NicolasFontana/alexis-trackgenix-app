@@ -14,6 +14,7 @@ import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import { getAllTimesheets, deleteTimesheet } from 'redux/time-sheets/thunks';
 import styles from './time-sheet.module.css';
+import { useHistory } from 'react-router-dom';
 
 function Timesheet() {
   const dispatch = useDispatch();
@@ -32,6 +33,17 @@ function Timesheet() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showModalAdd, setShowModalAdd] = useState();
   const currentDate = new Date().toISOString().slice(0, 7);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(getEmployees());
+    dispatch(getAllTimesheets());
+  }, []);
+
+  const redirect = (id) => {
+    history.push(`/employee/time-sheet/${id}`);
+  };
 
   let modalAdd;
   let modalDelete;
@@ -111,6 +123,7 @@ function Timesheet() {
               }, 0),
           createdAt: (x) => x?.slice(0, 7)
         }}
+        redirect={redirect}
       />
       <ErrorSuccessModal
         show={showSuccessModal}
