@@ -218,6 +218,26 @@ const ProjectPage = () => {
             setShowModalAdd(true);
           }}
         ></ButtonText>
+        {project?.members.length ? (
+          <Table
+            data={project?.members}
+            headers={['employeeId', 'role', 'rate']}
+            titles={['Name', 'Role', 'Rate']}
+            modifiers={{
+              employeeId: (x) => `${x.firstName} ${x.lastName}`
+            }}
+            delAction={(id) => {
+              setMemberId(id);
+              setShowModalDelete(true);
+            }}
+            editAction={(id) => {
+              setMemberId(id);
+              setShowModalEdit(true);
+            }}
+            redirect={redirectAction}
+            sort={{ employeeId: 1, role: 1, rate: 1 }}
+          />
+        ) : null}
       </div>
       {project?.members.length ? (
         <Table
