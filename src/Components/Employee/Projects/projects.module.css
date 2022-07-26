@@ -1,9 +1,12 @@
-.container {
+.maincontainer,
+.container,
+.containerPreloader {
   flex: 1;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
 }
 
 .container > section {
@@ -19,9 +22,20 @@
   z-index: 100;
 }
 
-.title {
+.container th {
+  padding: 2% 10px;
+}
+
+.title,
+.subtitle {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
+}
+
+.subtitle {
+  font-size: 20px;
+  text-shadow: none;
 }

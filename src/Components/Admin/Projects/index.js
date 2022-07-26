@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { getEmployees, updateEmployee } from 'redux/employees/thunks';
 import { useHistory, generatePath } from 'react-router-dom';
 import {
   Preloader,
@@ -17,12 +18,14 @@ const Projects = () => {
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.list);
   const isLoading = useSelector((state) => state.projects.isLoading);
+  const employees = useSelector((state) => state.employees.list);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [showModalAdd, setModalAdd] = useState(false);
   const [showErrorSuccessModal, setErrorSuccessModal] = useState(false);
   const [projectId, setProjectId] = useState(0);
   const [message, setMessage] = useState('');
+  const [responseEmployee, setResponseEmployee] = useState('');
 
   let modalEdit;
   let modalDelete;
@@ -60,14 +63,17 @@ const Projects = () => {
     setConfirmModal(false);
     setErrorSuccessModal(false);
     setModalAdd(false);
+    document.body.style.overflow = 'unset';
   };
 
   const closeErrorSuccessModal = () => {
     setErrorSuccessModal(false);
+    document.body.style.overflow = 'unset';
   };
 
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getEmployees());
   }, [showModalFormEdit === false, showModalAdd === false, showConfirmModal === false]);
 
   if (showModalFormEdit) {
@@ -84,10 +90,29 @@ const Projects = () => {
   }
 
   const deleteItem = () => {
-    dispatch(deleteProject(projectId, (message) => setMessage(message))).then(() => {
-      closeConfirmModal();
-      setErrorSuccessModal(true);
-    });
+    dispatch(deleteProject(projectId, (message) => setMessage(message)))
+      .then(() => {
+        closeConfirmModal();
+        setErrorSuccessModal(true);
+        document.body.style.overflow = 'hidden';
+      })
+      .then(
+        employees
+          .filter((employee) => employee.projects.some((project) => project._id === projectId))
+          .map((employee) =>
+            dispatch(
+              updateEmployee(
+                JSON.stringify({
+                  projects: employee.projects
+                    .filter((employeeProject) => employeeProject._id != projectId)
+                    .map((project) => project._id)
+                }),
+                employee._id,
+                setResponseEmployee
+              )
+            )
+          )
+      );
   };
 
   if (showConfirmModal) {
@@ -116,12 +141,23 @@ const Projects = () => {
         show={showErrorSuccessModal}
         closeModal={closeErrorSuccessModal}
         closeModalForm={closeConfirmModal}
-        successResponse={message}
+        successResponse={{
+          message:
+            responseEmployee === ''
+              ? message.message
+              : `${message.message}\n${responseEmployee.message}`,
+          data: message.data,
+          error: message.error
+        }}
       ></ErrorSuccessModal>
     );
   }
 
-  return isLoading && !showModalAdd && !showConfirmModal && !showModalFormEdit ? (
+  return isLoading &&
+    !showModalAdd &&
+    !showConfirmModal &&
+    !showModalFormEdit &&
+    !showErrorSuccessModal ? (
     <section className={styles.containerPreloader}>
       <Preloader>
         <p>Loading Projects</p>
@@ -138,16 +174,26 @@ const Projects = () => {
         <ButtonText label="ADD PROJECT" clickAction={openModalAdd}></ButtonText>
         <Table
           data={projects}
-          headers={['name', 'clientName', 'projectManager', 'description', 'startDate', 'active']}
-          titles={['Project name', 'Client', 'PM', 'Description', 'Start Date', 'Active']}
+          headers={['name', 'clientName', 'members', 'startDate', 'endDate', 'active']}
+          titles={['Project name', 'Client', 'PM', 'Start Date', 'End Date', 'Active']}
           modifiers={{
+            members: (x) => {
+              let pm = x.find((member) => member.role === 'PM');
+              return pm
+                ? `${pm.employeeId?.firstName} ${pm.employeeId?.lastName}`
+                : 'To be defined';
+            },
             startDate: (x) => x.slice(0, 10),
-            active: (x) => (x ? 'Active' : 'Inactive'),
-            projectManager: (x) => (x ? x : 'Not selected')
+            endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
+            active: (x) => (x ? 'Active' : 'Inactive')
           }}
           delAction={openConfirmModal}
           editAction={openModalFormEdit}
           redirect={redirectAction}
+          sort={{ name: 1, clientName: 1, members: 1, startDate: 1, endDate: 1, active: 1 }}
+          sortModifiers={{
+            members: (x) => x.find((member) => member.role === 'PM')?.employeeId.firstName
+          }}
         />
       </div>
     </section>

@@ -16,6 +16,11 @@
   padding: 20px;
 }
 
+.th svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
 .tr {
   border-bottom: 1px solid #37386725;
 }
@@ -29,6 +34,14 @@
 }
 
 .td {
+  max-width: 9vw;
+  padding: 20px;
+  text-align: center;
+  color: #232f3e;
+  word-wrap: break-word;
+}
+
+.tdPointer {
   max-width: 9vw;
   padding: 20px;
   text-align: center;
