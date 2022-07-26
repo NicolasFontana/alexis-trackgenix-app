@@ -1,11 +1,10 @@
 .container,
 .containerPreloader {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 2% 30px 2%;
+  margin: 10px 2% 30px 2%;
 }
 
 .container > section {
@@ -24,10 +23,7 @@
 
 .container td > div {
   justify-content: center;
-}
-
-.container td > button {
-  margin-right: 20px;
+  align-items: center;
 }
 
 .employees {

@@ -4,7 +4,7 @@ import firebase from 'helper/firebase';
 import styles from './sidebar.module.css';
 
 const SideBar = ({ state, routes, logout }) => {
-  let width = state ? '250px' : '0px';
+  let width = state ? '150px' : '0px';
 
   return (
     <aside style={{ width }} className={styles.sidebar}>

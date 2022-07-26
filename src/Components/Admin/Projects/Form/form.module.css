@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   overflow: auto;
   max-width: 800px;
+  width: 100%;
 }
 
 .buttonContainer {
@@ -18,11 +19,13 @@
 
 .dateContainer {
   display: flex;
+  justify-content: space-between;
   flex: 50;
+  width: 100%;
 }
 
-.dateContainer div:first-child {
-  margin-right: 40px;
+.dateContainer > div {
+  width: 45%;
 }
 
 .noselect {

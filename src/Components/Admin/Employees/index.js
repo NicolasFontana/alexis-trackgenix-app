@@ -137,7 +137,6 @@ const Employees = () => {
       {modalEdit}
       {modalDelete}
       {employeeLoading ? <Preloader /> : null}
-
       <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {
