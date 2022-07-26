@@ -164,6 +164,14 @@ function Tasks() {
               createdAt: (x) => x?.slice(0, 10),
               updatedAt: (x) => x?.slice(0, 10)
             }}
+            sort={{
+              taskName: 1,
+              createdAt: 1,
+              updatedAt: 1,
+              workedHours: 1,
+              description: 1,
+              status: 1
+            }}
           />
         ) : (
           <p>No tasks have been uploaded for this timesheet</p>
