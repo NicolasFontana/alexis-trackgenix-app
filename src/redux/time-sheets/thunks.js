@@ -29,7 +29,7 @@ export const getAllTimesheets = () => {
   };
 };
 
-export const createTimesheet = (projectId, task, approved, setMessage) => {
+export const createTimesheet = (projectId, setMessage) => {
   return (dispatch) => {
     dispatch(createTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/`, {
@@ -39,8 +39,7 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
       },
       body: JSON.stringify({
         projectId: projectId,
-        Task: [{ taskId: task }],
-        approved: approved
+        approved: false
       })
     })
       .then((response) => response.json())
@@ -52,8 +51,8 @@ export const createTimesheet = (projectId, task, approved, setMessage) => {
         setMessage(response);
       })
       .catch((error) => {
-        dispatch(createTimesheetError(error));
-        setMessage(error.toString());
+        dispatch(createTimesheetError(error.toString()));
+        setMessage(error);
       });
   };
 };

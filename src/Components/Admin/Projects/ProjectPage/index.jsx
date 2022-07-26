@@ -233,6 +233,7 @@ const ProjectPage = () => {
               setShowModalEdit(true);
             }}
             redirect={redirectAction}
+            sort={{ employeeId: 1, role: 1, rate: 1 }}
           />
         ) : null}
       </div>

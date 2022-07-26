@@ -5,8 +5,8 @@ import Layout from 'Components/Layout';
 import Employees from 'Components/Admin/Employees';
 import EmployeePage from 'Components/Admin/Employees/EmployeePage';
 import Projects from 'Components/Admin/Projects';
-import { faFolderClosed, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
 import ProjectPage from 'Components/Admin/Projects/ProjectPage';
+import { faFolderClosed, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
