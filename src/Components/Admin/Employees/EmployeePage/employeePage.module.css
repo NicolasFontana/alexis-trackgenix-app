@@ -8,14 +8,12 @@
   color: rgba(55, 56, 103, 1);
 }
 
-.btnContainer {
-  display: flex;
-  width: 100%;
-  max-width: 940px;
+.container table {
+  max-width: 500px;
 }
 
-.btnContainer button {
-  margin: 20px 0px 20px 10px;
+.btnContainer {
+  margin: 20px 0px;
 }
 
 .information {

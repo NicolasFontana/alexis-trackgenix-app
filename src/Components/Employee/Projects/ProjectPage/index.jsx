@@ -48,7 +48,9 @@ const ProjectPage = () => {
   }, [!showModalDelete]);
 
   const redirectAction = (memberId) => {
-    history.push(generatePath('/employee/projects/:id/:memberId', { id: id, memberId }));
+    history.push(
+      generatePath('/employee/projects/id=:id/members/id=:memberId', { id: id, memberId })
+    );
   };
 
   const deleteMember = () => {
@@ -232,7 +234,7 @@ const ProjectPage = () => {
       {modalErrorSuccess}
       <div className={isPM ? styles.divContainer : styles.divContainerNotPM}>
         {isPM ? (
-          <div className={styles.btnContainer}>
+          <div className={styles.btnContainerAdd}>
             <ButtonText
               label="ADD MEMBER"
               clickAction={() => {

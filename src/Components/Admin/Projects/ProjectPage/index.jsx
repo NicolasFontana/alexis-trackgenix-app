@@ -211,36 +211,34 @@ const ProjectPage = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      <div className={styles.divContainer}>
-        <div className={styles.btnContainer}>
-          <ButtonText
-            label="ADD MEMBER"
-            clickAction={() => {
-              setShowModalAdd(true);
-            }}
-          ></ButtonText>
-        </div>
-        {project?.members.length ? (
-          <Table
-            data={project?.members}
-            headers={['employeeId', 'role', 'rate']}
-            titles={['Name', 'Role', 'Rate']}
-            modifiers={{
-              employeeId: (x) => `${x.firstName} ${x.lastName}`
-            }}
-            delAction={(id) => {
-              setMemberId(id);
-              setShowModalDelete(true);
-            }}
-            editAction={(id) => {
-              setMemberId(id);
-              setShowModalEdit(true);
-            }}
-            redirect={redirectAction}
-            sort={{ employeeId: 1, role: 1, rate: 1 }}
-          />
-        ) : null}
+      <div className={styles.btnContainerAdd}>
+        <ButtonText
+          label="ADD MEMBER"
+          clickAction={() => {
+            setShowModalAdd(true);
+          }}
+        ></ButtonText>
       </div>
+      {project?.members.length ? (
+        <Table
+          data={project?.members}
+          headers={['employeeId', 'role', 'rate']}
+          titles={['Name', 'Role', 'Rate']}
+          modifiers={{
+            employeeId: (x) => `${x.firstName} ${x.lastName}`
+          }}
+          delAction={(id) => {
+            setMemberId(id);
+            setShowModalDelete(true);
+          }}
+          editAction={(id) => {
+            setMemberId(id);
+            setShowModalEdit(true);
+          }}
+          redirect={redirectAction}
+          sort={{ employeeId: 1, role: 1, rate: 1 }}
+        />
+      ) : null}
     </section>
   );
 };
