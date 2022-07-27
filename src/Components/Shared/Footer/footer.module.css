@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #76a068;
-  height: 80px;
   justify-content: center;
-  padding: 20px;
-  margin-left: 15%;
+  align-items: center;
+  height: 100px;
+  padding: 5px 20px;
+  background-color: #76a068;
+  z-index: 1;
 }
 
 .socialContainer {
@@ -15,9 +15,10 @@
   width: 180px;
 }
 
-.socialContainer * {
-  color: #373867;
+.socialContainer a {
   font-size: 30px;
+  color: #373867;
+  margin: 0px 15px;
 }
 
 .license {
@@ -26,8 +27,6 @@
   justify-content: center;
   align-items: center;
   width: 90%;
-  height: 100px;
-  padding: 0 20px;
   background-color: #76a068;
 }
 
