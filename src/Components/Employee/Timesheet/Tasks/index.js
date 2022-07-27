@@ -22,7 +22,8 @@ function Tasks() {
   );
   const isLoading = useSelector((state) => state.timesheets.isLoading);
   const tasks = useSelector((state) => state.tasks.list);
-
+  const period = timesheet?.createdAt?.slice(0, 7);
+  const currentDate = new Date().toISOString().slice(0, 7);
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -143,7 +144,10 @@ function Tasks() {
         {modalEdit}
         {modalAdd}
         {modalMessage}
-        <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
+
+        {currentDate === period && (
+          <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
+        )}
         {timesheet?.Task.length ? (
           <Table
             data={timesheet?.Task?.filter(
