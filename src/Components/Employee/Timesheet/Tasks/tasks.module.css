@@ -1,21 +1,21 @@
-.container, .containerPreloader {
+.container,
+.containerPreloader {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 2%;
+  margin: 30px 2% 30px 2%;
 }
 
-.container > button:first-of-type {
-  align-self: flex-start;
-  margin-bottom: 20px;
+.btnContainer {
+  text-align: center;
 }
 
 .title {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
+  text-align: center;
   text-shadow: 2px 2px 2px grey;
   color: rgba(55, 56, 103, 1);
 }
@@ -25,7 +25,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  max-width: 300px;
+  margin: 0px auto 10px;
   padding: 10px;
   border: 3px solid #76a068;
   border-radius: 10px;
@@ -33,15 +34,8 @@
   color: rgba(55, 56, 103, 1);
 }
 
-.divContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.divContainer > button {
-  align-self: flex-end;
-  margin-bottom: 20px;
-  padding: 0 30px;
+.divContainer > table {
+  margin: 10px auto;
 }
 
 .divContainer > p {

@@ -4,7 +4,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  margin: 0px 2% 30px 2%;
+  margin: 30px 2% 30px 2%;
 }
 
 .container > section {
@@ -21,8 +21,12 @@
   z-index: 100;
 }
 
-.container table th {
-  width: 15vw;
+.btnContainer {
+  text-align: center;
+}
+
+.container > table {
+  margin: 10px auto;
 }
 
 .title {

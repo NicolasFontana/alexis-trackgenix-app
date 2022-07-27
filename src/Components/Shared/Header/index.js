@@ -18,12 +18,17 @@ const Header = ({ sidebarOpener }) => {
   );
 
   //The title redirect to this url
-  let url =
-    location.pathname.substring(0, 6) === '/admin'
-      ? '/admin'
-      : location.pathname.substring(0, 9) === '/employee'
-      ? '/employee'
-      : '/home';
+  let url;
+
+  if (location.pathname.substring(0, 6) === '/admin') {
+    url = '/admin';
+  } else if (location.pathname.substring(0, 9) === '/employee') {
+    url = '/employee';
+  } else if (location.pathname.substring(0, 12) === '/super-admin') {
+    url = '/super-admin';
+  } else {
+    url = '/home';
+  }
 
   //This comparison is used to show or hide the profile button
   if (
@@ -64,7 +69,7 @@ const Header = ({ sidebarOpener }) => {
           <Link to={url}>Trackgenix</Link>
         </h2>
       </div>
-      {userProfile}
+      <div className={styles.title}>{userProfile}</div>
     </header>
   );
 };
