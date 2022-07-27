@@ -60,18 +60,22 @@ function Projects() {
     </section>
   ) : (
     <div className={styles.maincontainer}>
-      {projectsPM.length || projects.length ? (
-        <>
-          {projectsPM.length ? (
-            <ButtonText
-              label={open ? 'Show all projects' : 'Show PM projects'}
-              clickAction={() => setOpen(!open)}
-            />
-          ) : null}
-          <section className={styles.container}>
+      <section className={styles.container}>
+        {projectsPM.length || projects.length ? (
+          <>
+            {open ? (
+              <h2 className={styles.title}>PM Projects</h2>
+            ) : (
+              <h2 className={styles.title}>All Projects</h2>
+            )}
+            {projectsPM.length ? (
+              <div className={styles.buttonContainer}>
+                <ButtonText label={'Show all projects'} clickAction={() => setOpen(false)} />
+                <ButtonText label={'Show PM projects'} clickAction={() => setOpen(true)} />
+              </div>
+            ) : null}
             {open && (
               <>
-                <h2 className={styles.title}>PM Projects</h2>
                 <Table
                   data={projectsPM}
                   headers={['name', 'clientName', 'startDate', 'endDate', 'active']}
@@ -82,6 +86,7 @@ function Projects() {
                     active: (x) => (x ? 'Active' : 'Inactive')
                   }}
                   editAction={openModalFormEdit}
+                  // editLabel={'Edit'}
                   redirect={redirectAction}
                   sort={{ name: 1, clientName: 1, startDate: 1, endDate: 1, active: 1 }}
                 />
@@ -90,7 +95,6 @@ function Projects() {
             {modalEdit}
             {!open && (
               <>
-                <h2 className={styles.title}>All Projects</h2>
                 <Table
                   data={projects}
                   headers={['name', 'clientName', 'startDate', 'endDate', 'active', 'members']}
@@ -109,11 +113,11 @@ function Projects() {
                 />
               </>
             )}
-          </section>
-        </>
-      ) : (
-        <h3 className={styles.subtitle}> You have not been assigned to any project yet </h3>
-      )}
+          </>
+        ) : (
+          <h3 className={styles.subtitle}> You have not been assigned to any project yet </h3>
+        )}
+      </section>
     </div>
   );
 }

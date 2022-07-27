@@ -1,5 +1,4 @@
 .maincontainer,
-.container,
 .containerPreloader {
   flex: 1;
   display: flex;
@@ -7,6 +6,12 @@
   justify-content: center;
   align-items: center;
   margin: 2%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .container > section {
@@ -23,11 +28,16 @@
 }
 
 .container th {
-  padding: 2% 10px;
+  width: 15%;
+}
+
+.container th:last-child {
+  width: 10%;
 }
 
 .title,
 .subtitle {
+  align-self: center;
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
@@ -38,4 +48,14 @@
 .subtitle {
   font-size: 20px;
   text-shadow: none;
+}
+
+.buttonContainer{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.buttonContainer > button {
+  align-self: flex-start;
 }

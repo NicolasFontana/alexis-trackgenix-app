@@ -152,7 +152,7 @@ function Timesheet() {
     </section>
   ) : (
     <>
-      {timesheets.length && (
+      {timesheets.length !== 0 && (
         <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form}>
           <Select
             label="Project"
