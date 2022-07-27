@@ -230,7 +230,8 @@ function Timesheet() {
                 Task: (x) =>
                   x?.reduce((previous, current) => {
                     return previous + current.taskId.workedHours;
-                  }, 0)
+                  }, 0),
+                createdAt: (x) => x?.slice(0, 7)
               }}
             />
           )}

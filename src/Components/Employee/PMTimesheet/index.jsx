@@ -227,17 +227,18 @@ function Timesheet() {
               redirect={redirect}
               sort={{ projectId: 1, _id: 1, approved: 1, Task: 1, createdAt: 1 }}
               sortModifiers={{
-                projectId: (x) => x?.name
-                // _id: (x) =>
-                //   employees
-                //     ?.filter((employee) =>
-                //       employee.timeSheets?.find((timesheet) => timesheet._id == x.toString())
-                //     )
-                //     .map((employee) => `${employee.firstName} ${employee.lastName}`)
-                // Task: (x) =>
-                //   x?.reduce((previous, current) => {
-                //     return previous + current.taskId.workedHours;
-                //   }, 0)
+                projectId: (x) => x?.name,
+                _id: (x) =>
+                  employees
+                    ?.filter((employee) =>
+                      employee.timeSheets?.find((timesheet) => timesheet._id == x.toString())
+                    )
+                    .map((employee) => `${employee.firstName} ${employee.lastName}`)[0],
+                Task: (x) =>
+                  x?.reduce((previous, current) => {
+                    return previous + current.taskId.workedHours;
+                  }, 0),
+                createdAt: (x) => x?.slice(0, 7)
               }}
             />
           )}

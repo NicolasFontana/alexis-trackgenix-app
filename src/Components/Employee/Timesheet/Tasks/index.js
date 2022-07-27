@@ -171,6 +171,10 @@ function Tasks() {
               description: 1,
               status: 1
             }}
+            sortModifiers={{
+              createdAt: (x) => x?.slice(0, 10),
+              updatedAt: (x) => x?.slice(0, 10)
+            }}
           />
         ) : (
           <p>No tasks have been uploaded for this timesheet</p>
