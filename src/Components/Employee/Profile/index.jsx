@@ -2,16 +2,21 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from 'redux/employees/thunks';
 import styles from './profile.module.css';
-import { ButtonText, ModalForm } from 'Components/Shared';
+import { ButtonText, ModalForm, Preloader } from 'Components/Shared';
 import FormEdit from './Edit';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const userOff = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
 
 const EmployeeProfile = () => {
   const dispatch = useDispatch();
-  // const isLoading = useSelector((state) => state.employees.isLoading);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
   );
+  const employeeLoading = useSelector((state) => state.employees.isLoading);
+
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
 
   const editOpen = () => {
@@ -37,16 +42,23 @@ const EmployeeProfile = () => {
 
   const status = employee?.active ? 'Active' : 'Inactive';
   const isPM = employee?.isProjectManager ? 'Yes' : 'No';
+  const linkPicture = employee?.picture ? employee.picture : '';
 
-  return (
+  return employeeLoading && !showModalFormEdit ? (
+    <section className={styles.containerPreloader}>
+      <Preloader>
+        <p>Loading Employee Page</p>
+      </Preloader>
+    </section>
+  ) : (
     <section className={styles.container}>
       <h2 className={styles.title}>Profile</h2>
       <div className={styles.pictureFrame}>
-        <img
-          src="https://avatars.dicebear.com/api/male/luchito.svg"
-          alt="Profile picture"
-          className={styles.profilePicture}
-        ></img>
+        {linkPicture ? (
+          <img src={linkPicture} alt="Profile picture" className={styles.profilePicture} />
+        ) : (
+          <div className={styles.profilePicture}>{userOff}</div>
+        )}
       </div>
       <div className={styles.data}>
         <div className={styles.row}>

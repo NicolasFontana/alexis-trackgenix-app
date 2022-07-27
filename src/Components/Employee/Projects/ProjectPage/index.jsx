@@ -268,6 +268,10 @@ const ProjectPage = () => {
                 : null
             }
             redirect={isPM ? redirectAction : null}
+            sort={{ employeeId: 1, role: 1 }}
+            sortModifiers={{
+              employeeId: (x) => x.firstName
+            }}
           />
         ) : null}
       </div>

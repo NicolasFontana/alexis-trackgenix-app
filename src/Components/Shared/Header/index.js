@@ -1,13 +1,18 @@
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
 import styles from './header.module.css';
 
-const user = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+const userOff = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
 
 const Header = () => {
   const location = useLocation();
+  const user = useSelector((state) => state.auth.user?.data);
+  const employee = useSelector((state) => state.employees.list).find(
+    (employee) => employee._id === user._id
+  );
   let indexOfLastSlash = location.pathname.lastIndexOf('/');
   let isID = location.pathname.slice(indexOfLastSlash + 1).length === 24;
   let idTitle = location.pathname.slice(
@@ -22,10 +27,18 @@ const Header = () => {
           ? `${idTitle}: ${location.pathname.slice(indexOfLastSlash + 1)}`
           : location.pathname.slice(indexOfLastSlash + 1)}
       </div>
-      <div className={styles.user}>
-        <div> {user} </div>
-        <p> Username</p>
-      </div>
+      <NavLink to={'/employee/profile'} exact className={styles.user}>
+        <div className={styles.userPicture}>
+          {employee?.picture ? (
+            <img src={employee.picture} className={styles.userLogged} />
+          ) : employee ? (
+            userOff
+          ) : null}
+        </div>
+        <p>
+          {employee?.firstName} {employee?.lastName}
+        </p>
+      </NavLink>
     </header>
   );
 };

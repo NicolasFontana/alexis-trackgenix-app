@@ -117,6 +117,7 @@ const Employees = () => {
           isProjectManager: (x) => (x ? 'Yes' : 'No')
         }}
         redirect={redirectAction}
+        sort={{ firstName: 1, lastName: 1, phone: 1, email: 1, active: 1 }}
       />
       {modalEdit}
       {modalDelete}
