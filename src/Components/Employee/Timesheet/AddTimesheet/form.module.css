@@ -5,8 +5,13 @@
     align-items: flex-end;
     align-content: space-between;
     row-gap: 10px;
+    margin: 15px
   }
-  
+
   .form button {
+    margin: 0;
+  }
+
+  .form > p {
     margin: 0;
   }

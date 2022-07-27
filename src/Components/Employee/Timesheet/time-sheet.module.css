@@ -1,9 +1,10 @@
-.container {
+.container, .containerPreloader {
   flex: 1;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
 }
 
 .container > section {
@@ -20,8 +21,42 @@
   z-index: 100;
 }
 
+.divContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.divContainer > button {
+  align-self: flex-end;
+  margin-bottom: 20px;
+  padding: 0 30px;
+}
+
+.divContainer > p {
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(55, 56, 103, 1);
+}
+
 .container table th {
   width: 15vw;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 60px;
+  padding: 20px;
+  border: 3px solid #76a068;
+  border-radius: 10px;
+  font-size: 15px;
+  color: rgba(55, 56, 103, 1);
+}
+
+.form > div {
+  width: 30%;
+  margin-right: 25px
 }
 
 .title {
@@ -29,4 +64,13 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
 }
+
+.warning {
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  color: rgba(55, 56, 103, 1);
+}
+
