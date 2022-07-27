@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   margin: 2%;
+  color: rgba(55, 56, 103, 1);
 }
 
 .container > button:first-of-type {
@@ -16,6 +16,7 @@
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
+  text-align: center;
   text-shadow: 2px 2px 2px grey;
   color: rgba(55, 56, 103, 1);
 }
@@ -33,7 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin: 0px auto 10px;
   padding: 10px;
   border: 3px solid #76a068;
   border-radius: 10px;
@@ -44,7 +45,7 @@
 .divContainer, .divNoTable{
   display: flex;
   flex-direction: column;
-  width: 90%;
+  align-items: center;
 }
 
 .divNoTable {
@@ -52,8 +53,7 @@
 }
 
 .divContainer > button {
-  align-self: flex-end;
-  margin-top: 20px;
+  margin: 20px 0;
   padding: 0 30px;
 }
 
@@ -61,4 +61,8 @@
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
+}
+
+.divContainer table {
+  max-width: 900px;
 }

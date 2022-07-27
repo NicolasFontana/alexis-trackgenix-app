@@ -111,6 +111,12 @@ function Tasks() {
         {modalErrorSuccess}
         {timesheet?.Task.length ? (
           <>
+            <ButtonText
+              label={timesheet?.approved ? 'Remove approval' : 'Approve timesheet'}
+              clickAction={() => {
+                setShowModalApprove(true);
+              }}
+            ></ButtonText>
             <Table
               data={timesheet?.Task?.filter(
                 (task) => task.taskId.createdAt?.slice(0, 7) === timesheet.createdAt?.slice(0, 7)
@@ -144,12 +150,6 @@ function Tasks() {
                 status: 1
               }}
             />
-            <ButtonText
-              label={timesheet?.approved ? 'Remove approval' : 'Approve timesheet'}
-              clickAction={() => {
-                setShowModalApprove(true);
-              }}
-            ></ButtonText>
           </>
         ) : (
           <p>No tasks have been uploaded for this timesheet</p>

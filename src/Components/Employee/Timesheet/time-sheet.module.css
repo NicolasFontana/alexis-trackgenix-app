@@ -1,10 +1,8 @@
 .container, .containerPreloader {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 2%;
+  margin: 30px auto;
 }
 
 .container > section {
@@ -24,10 +22,11 @@
 .divContainer, .divNoTable{
   display: flex;
   flex-direction: column;
-  width: 70%;
+  align-items: center;
 }
 
 .buttonContainer{
+  display: flex;
   margin: 30px 60px;
 }
 
@@ -36,7 +35,6 @@
 }
 
 .divContainer > button {
-  align-self: flex-end;
   margin-bottom: 20px;
   padding: 0 30px;
 }
@@ -64,8 +62,19 @@
   margin-right: 25px
 }
 
+.form > div:last-child  {
+  width: 10%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .container th:last-child {
   width: 10%;
+}
+
+.divContainer table {
+  max-width: 700px;
 }
 
 .title {
@@ -82,5 +91,21 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   color: rgba(55, 56, 103, 1);
+}
+
+@media only screen and (max-width: 760px) {
+  .form{
+    flex-direction: column;
+  }
+
+  .form > div {
+    width: 80%;
+    margin-right: 0
+  }
+
+  .buttonContainer{
+    flex-direction: column;
+  }
+
 }
 

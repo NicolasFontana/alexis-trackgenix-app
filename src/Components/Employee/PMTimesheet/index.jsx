@@ -35,17 +35,19 @@ function Timesheet() {
     )
   );
   const employees = useSelector((state) => state.employees?.list)?.filter((employee) =>
-    projectsPM.find((project) =>
+    projectsPM?.find((project) =>
       project.members.find(
         (member) => member.employeeId._id === employee._id && member.employeeId._id !== employeeId
       )
     )
   );
-  const timesheets = useSelector((state) => state.timesheets.listTimesheet)?.filter((timesheet) =>
-    employees?.find((employee) =>
-      employee.timeSheets.find((employeeTimesheet) => timesheet._id === employeeTimesheet._id)
+  const timesheets = useSelector((state) => state.timesheets.listTimesheet)
+    ?.filter((timesheet) =>
+      employees?.find((employee) =>
+        employee.timeSheets.find((employeeTimesheet) => timesheet._id === employeeTimesheet._id)
+      )
     )
-  );
+    ?.filter((timesheet) => projectsPM?.some((project) => timesheet.projectId._id === project._id));
 
   const [response, setResponse] = useState('');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -184,11 +186,13 @@ function Timesheet() {
             register={register}
             error={errors.period?.message}
           />
-          <ButtonText label="Search" clickAction={handleSubmit(handleOnSubmit)} />
-          <ButtonText
-            label="Reset"
-            clickAction={() => (setFilteredTimesheet(timesheets), reset())}
-          />
+          <div>
+            <ButtonText label="Search" clickAction={handleSubmit(handleOnSubmit)} />
+            <ButtonText
+              label="Reset"
+              clickAction={() => (setFilteredTimesheet(timesheets), reset())}
+            />
+          </div>
         </form>
       )}
       <section className={styles.container}>

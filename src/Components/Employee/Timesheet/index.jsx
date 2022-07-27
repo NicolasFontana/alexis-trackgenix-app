@@ -30,10 +30,13 @@ const schema = Joi.object({
 
 function Timesheet() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.timesheets.isLoading);
+  const isLoading = useSelector((state) => state.projects.isLoading);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
+  );
+  const projectsPM = useSelector((state) => state.projects.list)?.filter((project) =>
+    project.members.find((member) => member.employeeId._id === employeeId && member.role === 'PM')
   );
   const timesheets = useSelector((state) => state.timesheets.listTimesheet)?.filter(
     (listTimesheet) =>
@@ -42,9 +45,7 @@ function Timesheet() {
   const projects = useSelector((state) => state.projects.list)?.filter((project) =>
     timesheets?.some((timesheet) => timesheet.projectId._id === project._id)
   );
-  const projectsPM = projects.filter((project) =>
-    project.members.find((member) => member.employeeId._id === employee._id && member.role === 'PM')
-  );
+
   const [response, setResponse] = useState('');
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -180,11 +181,13 @@ function Timesheet() {
             register={register}
             error={errors.period?.message}
           />
-          <ButtonText label="Search" clickAction={handleSubmit(handleOnSubmit)} />
-          <ButtonText
-            label="Reset"
-            clickAction={() => (setFilteredTimesheet(timesheets), reset())}
-          />
+          <div className={styles.formBtnContainer}>
+            <ButtonText label="Search" clickAction={handleSubmit(handleOnSubmit)} />
+            <ButtonText
+              label="Reset"
+              clickAction={() => (setFilteredTimesheet(timesheets), reset())}
+            />
+          </div>
         </form>
       )}
       <section className={styles.container}>
@@ -223,11 +226,11 @@ function Timesheet() {
               redirect={redirect}
               sort={{ projectId: 1, approved: 1, Task: 1, createdAt: 1 }}
               sortModifiers={{
-                projectId: (x) => x?.name
-                // Task: (x) =>
-                //   x?.reduce((previous, current) => {
-                //     return previous + current.taskId.workedHours;
-                //   }, 0)
+                projectId: (x) => x?.name,
+                Task: (x) =>
+                  x?.reduce((previous, current) => {
+                    return previous + current.taskId.workedHours;
+                  }, 0)
               }}
             />
           )}

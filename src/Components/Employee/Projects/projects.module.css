@@ -1,22 +1,15 @@
-.maincontainer,
+.container,
 .containerPreloader {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.maincontainer {
-  margin: 30px 2% 30px 2%;
-}
-
-.btnContainer {
-  text-align: center;
+  align-items: center;
+  margin: 0px 2% 30px 2%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  width: 80%;
 }
 
 .container > section {
@@ -30,10 +23,6 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
-}
-
-.container > table {
-  margin: 0px auto;
 }
 
 .title,
@@ -54,10 +43,21 @@
 
 .buttonContainer{
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
   margin-bottom: 5px;
 }
 
 .buttonContainer > button {
   align-self: flex-start;
 }
+
+@media only screen and (max-width: 760px) {
+  .buttonContainer > button {
+    align-self: center;
+  }
+  .buttonContainer {
+    width: auto;
+  }
+}
+
