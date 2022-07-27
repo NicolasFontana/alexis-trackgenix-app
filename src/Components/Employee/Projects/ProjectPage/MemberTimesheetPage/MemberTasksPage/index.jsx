@@ -91,7 +91,7 @@ const MemberTasksPage = () => {
   ) : (
     <section className={styles.container}>
       <ButtonText
-        label="Go back to the timesheets"
+        label="Go back to timesheets"
         clickAction={() => {
           history.push(
             generatePath('/employee/projects/id=:id/members/id=:memberId', {

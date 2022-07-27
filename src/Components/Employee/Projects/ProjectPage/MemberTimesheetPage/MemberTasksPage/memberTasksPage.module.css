@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   margin: 2%;
+  color: rgba(55, 56, 103, 1);
 }
 
 .container > button:first-of-type {

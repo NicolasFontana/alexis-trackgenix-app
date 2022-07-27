@@ -133,7 +133,7 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
+      <ButtonText label="Go back to timesheets" clickAction={() => redirect()}></ButtonText>
       <h2 className={styles.title}>Tasks</h2>
       <div className={styles.box}>
         <h4>Project: {timesheet?.projectId?.name}</h4>

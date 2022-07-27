@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   margin: 2%;
+  color: rgba(55, 56, 103, 1);
 }
 
 .container > button {
@@ -22,5 +23,4 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
 }
