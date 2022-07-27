@@ -6,9 +6,6 @@ import Employees from 'Components/Admin/Employees';
 import EmployeePage from 'Components/Admin/Employees/EmployeePage';
 import Projects from 'Components/Admin/Projects';
 import ProjectPage from 'Components/Admin/Projects/ProjectPage';
-import Timesheets from 'Components/Admin/TimeSheets';
-import Tasks from 'Components/Admin/Tasks';
-import TaskId from 'Components/Admin/Tasks/TaskId';
 import { faFolderClosed, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -31,9 +28,6 @@ const Admin = () => {
         <Route exact path={`${url}/employees/:id`} component={EmployeePage} />
         <Route exact path={`${url}/projects`} component={Projects} />
         <Route exact path={`${url}/projects/:id`} component={ProjectPage} />
-        <Route exact path={`${url}/time-sheets`} component={Timesheets} />
-        <Route exact path={`${url}/tasks`} component={Tasks} />
-        <Route exact path={`${url}/tasks/:id`} component={TaskId} />
         <Route exact path={`${url}/`} component={Home} />
         <Redirect to={`${url}`} />
       </Switch>

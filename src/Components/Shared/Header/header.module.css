@@ -18,6 +18,26 @@
 .leftSide .title {
   font-size: 36px;
   padding-left: 10px;
+  margin-right: 5%;
+  text-decoration: none;
+}
+
+.userPicture {
+  display: flex;
+  padding: 3px 0;
+}
+
+.user p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 17px;
+  word-spacing: normal;
+  padding: 3px 0;
+}
+
+.user * {
+  color: #ffffff;
+  font-size: 70px;
 }
 
 .title > a {
@@ -64,4 +84,11 @@
     font-size: 15px;
     margin: 0px;
   }
+}
+
+.userLogged {
+  border-radius: 50%;
+  border: 3px solid #373867;
+  width: 70px;
+  height: 70px;
 }

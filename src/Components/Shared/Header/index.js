@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 
@@ -9,8 +10,13 @@ const Header = ({ sidebarOpener }) => {
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(false);
   const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+  let userProfile;
 
-  let user;
+  const user = useSelector((state) => state.auth.user?.data);
+  const employee = useSelector((state) => state.employees.list).find(
+    (employee) => employee._id === user._id
+  );
+
   //The title redirect to this url
   let url =
     location.pathname.substring(0, 6) === '/admin'
@@ -25,11 +31,19 @@ const Header = ({ sidebarOpener }) => {
     location.pathname !== '/auth/login' &&
     location.pathname !== '/auth/signup'
   ) {
-    user = (
-      <div className={styles.user}>
-        <div>{userIcon}</div>
-        <p>Username</p>
-      </div>
+    userProfile = (
+      <NavLink to={'/employee/profile'} exact className={styles.user}>
+        <div className={styles.userPicture}>
+          {employee?.picture ? (
+            <img src={employee.picture} className={styles.userLogged} />
+          ) : employee ? (
+            userIcon
+          ) : null}
+        </div>
+        <p>
+          {employee?.firstName} {employee?.lastName}
+        </p>
+      </NavLink>
     );
   }
 
@@ -50,7 +64,7 @@ const Header = ({ sidebarOpener }) => {
           <Link to={url}>Trackgenix</Link>
         </h2>
       </div>
-      <div>{user}</div>
+      {userProfile}
     </header>
   );
 };
