@@ -21,6 +21,10 @@
   margin: 0px 15px;
 }
 
+.socialContainer a:hover {
+  color: #373867c5;
+}
+
 .license {
   display: flex;
   flex-direction: column;
