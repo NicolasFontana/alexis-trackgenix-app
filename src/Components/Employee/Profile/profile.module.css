@@ -1,22 +1,32 @@
 .container {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
   font-family: 'Roboto', sans-serif;
+  align-items: center;
 }
 
 .title {
   align-self: center;
   font-weight: bold;
   font-size: 40px;
-  color: #373867
+  color: #373867;
+  margin: 20px 0;
 }
 
-.pictureFrame{
+.pictureFrame {
   align-self: center;
+  margin-bottom: 20px;
+}
+
+.pictureFrame * {
+  color: #ffffff;
+  background-color: #76a068;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
 }
 
 .profilePicture {
@@ -24,49 +34,52 @@
   height: 150px;
   border-radius: 50%;
   border: 5px solid #76a068;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
 }
 
 .data {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  border: 2px solid #76a068;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #76a068;
   border-radius: 10px;
   color: #373867;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
+  max-width: 1000px;
 }
 
 .row {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 35%;
+  width: 90%;
   border-bottom: 1px solid #76a068;
-  margin: 5px;
 }
 
 .data .row:last-child {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
-.rowTitle {
-  margin-block-end: auto;
-  font-size: 16px;
-}
-
+.rowTitle,
 .rowText {
-  /* margin-block-start: auto; */
   font-size: 16px;
   margin-block-end: 0px;
-  /* border: 1px solid #373867;
-  border-radius: 5px;
-  padding: 7px; */
 }
 
 .buttonContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: center;
-  width: 150px;
+  margin: 20px auto;
+}
+
+@media screen and (min-width: 480px) {
+  .data {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .row {
+    width: 40%;
+    margin: 0px auto;
+  }
 }

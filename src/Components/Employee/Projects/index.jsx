@@ -27,7 +27,7 @@ function Projects() {
   }, [showModalFormEdit === false]);
 
   const redirectAction = (id) => {
-    history.push(generatePath('/employee/projects/:id', { id }));
+    history.push(generatePath('/employee/projects/id=:id', { id }));
   };
 
   const closeModalFormEdit = () => {
