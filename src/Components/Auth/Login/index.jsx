@@ -70,32 +70,36 @@ const Login = () => {
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        label="Email"
-        register={register}
-        name="email"
-        type="text"
-        placeholder="juanperez@gmail.com"
-        error={errors.email?.message}
-      />
-      <Input
-        label="Password"
-        name="password"
-        type="password"
-        placeholder="********"
-        register={register}
-        error={errors.password?.message}
-      />
-      <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} />
+      <div className={styles.fields}>
+        <Input
+          label="Email"
+          register={register}
+          name="email"
+          type="text"
+          placeholder="juanperez@gmail.com"
+          error={errors.email?.message}
+        />
+        <Input
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="********"
+          register={register}
+          error={errors.password?.message}
+        />
+        <ButtonText clickAction={handleSubmit(onSubmit)} label={'Login'} />
+      </div>
       {isLoading ? (
         <Preloader />
       ) : (
-        <ErrorSuccessModal
-          show={!!error}
-          closeModal={closeModal}
-          closeModalForm={closeModal}
-          successResponse={{ message: 'Wrong email or password', data: {}, error: true }}
-        />
+        <div className={styles.errorSuccessModal}>
+          <ErrorSuccessModal
+            show={!!error}
+            closeModal={closeModal}
+            closeModalForm={closeModal}
+            successResponse={{ message: 'Wrong email or password', data: {}, error: true }}
+          />
+        </div>
       )}
     </form>
   );

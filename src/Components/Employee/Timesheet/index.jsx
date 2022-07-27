@@ -98,12 +98,14 @@ function Timesheet() {
       {isLoading ? <Preloader /> : null}
       {modalAdd}
       {modalDelete}
-      <ButtonText
-        clickAction={() => {
-          setShowModalAdd(true);
-        }}
-        label="Add Timesheet"
-      />
+      <div className={styles.btnContainer}>
+        <ButtonText
+          clickAction={() => {
+            setShowModalAdd(true);
+          }}
+          label="Add Timesheet"
+        />
+      </div>
       <Table
         data={timesheets}
         headers={['projectId', 'approved', 'Task', 'createdAt']}

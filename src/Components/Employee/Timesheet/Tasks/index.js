@@ -133,7 +133,9 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
+      </div>
       <h2 className={styles.title}>Tasks</h2>
       <div className={styles.box}>
         <h4>Project: {timesheet?.projectId?.name}</h4>
@@ -143,7 +145,9 @@ function Tasks() {
         {modalEdit}
         {modalAdd}
         {modalMessage}
-        <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
+        <div className={styles.btnContainer}>
+          <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
+        </div>
         {timesheet?.Task.length ? (
           <Table
             data={timesheet?.Task?.filter(

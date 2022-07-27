@@ -159,19 +159,21 @@ const ProjectPage = () => {
     !showModalDelete &&
     !showModalEdit &&
     !showModalErrorSuccess ? (
-    <section className={styles.containerPreloader}>
+    <section>
       <Preloader>
         <p>Loading Project</p>
       </Preloader>
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back"
-        clickAction={() => {
-          history.push('/admin/projects');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back"
+          clickAction={() => {
+            history.push('/admin/projects');
+          }}
+        ></ButtonText>
+      </div>
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
@@ -210,12 +212,14 @@ const ProjectPage = () => {
       {modalAdd}
       {modalErrorSuccess}
       <div className={styles.divContainer}>
-        <ButtonText
-          label="ADD MEMBER"
-          clickAction={() => {
-            setShowModalAdd(true);
-          }}
-        ></ButtonText>
+        <div className={styles.btnContainer}>
+          <ButtonText
+            label="ADD MEMBER"
+            clickAction={() => {
+              setShowModalAdd(true);
+            }}
+          ></ButtonText>
+        </div>
         {project?.members.length ? (
           <Table
             data={project?.members}

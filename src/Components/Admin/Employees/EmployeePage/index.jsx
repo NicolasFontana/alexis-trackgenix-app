@@ -54,12 +54,14 @@ const EmployeePage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back"
-        clickAction={() => {
-          history.push('/admin/employees');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back"
+          clickAction={() => {
+            history.push('/admin/employees');
+          }}
+        ></ButtonText>
+      </div>
       <div className={styles.information}>
         <div className={styles.field}>
           <h3>First Name</h3>
@@ -95,20 +97,18 @@ const EmployeePage = () => {
         </div>
       </div>
       <h2 className={styles.title}>Projects</h2>
-      <div className={styles.table}>
-        {employeeProjects?.length ? (
-          <Table
-            data={employeeProjects}
-            headers={['name', 'role', 'rate']}
-            titles={['Project Name', 'Role', 'Rate']}
-            modifiers={{}}
-            redirect={redirectAction}
-            sort={{ name: 1, role: 1, rate: 1 }}
-          />
-        ) : (
-          <p className={styles.message}>Not a member of any project</p>
-        )}
-      </div>
+      {employeeProjects?.length ? (
+        <Table
+          data={employeeProjects}
+          headers={['name', 'role', 'rate']}
+          titles={['Project Name', 'Role', 'Rate']}
+          modifiers={{}}
+          redirect={redirectAction}
+          sort={{ name: 1, role: 1, rate: 1 }}
+        />
+      ) : (
+        <p className={styles.message}>Not a member of any project</p>
+      )}
     </section>
   );
 };

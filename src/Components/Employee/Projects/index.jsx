@@ -63,10 +63,12 @@ function Projects() {
       {projectsPM.length || projects.length ? (
         <>
           {projectsPM.length ? (
-            <ButtonText
-              label={open ? 'Show all projects' : 'Show PM projects'}
-              clickAction={() => setOpen(!open)}
-            />
+            <div className={styles.btnContainer}>
+              <ButtonText
+                label={open ? 'Show all projects' : 'Show PM projects'}
+                clickAction={() => setOpen(!open)}
+              />
+            </div>
           ) : null}
           <section className={styles.container}>
             {open && (

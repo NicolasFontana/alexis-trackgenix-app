@@ -167,78 +167,82 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   return (
     <div>
       <form className={styles.formBody} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          label="First Name"
-          type="text"
-          name="firstName"
-          placeholder="Insert first name"
-          register={register}
-          error={errors.firstName?.message}
-        />
-        <Input
-          label="Last Name"
-          type="text"
-          name="lastName"
-          placeholder="Insert last name"
-          register={register}
-          error={errors.lastName?.message}
-        />
-        <Input
-          label="Phone"
-          type="text"
-          name="phone"
-          placeholder="Insert phone"
-          register={register}
-          error={errors.phone?.message}
-        />
-        <Input
-          label="Email"
-          type="text"
-          name="email"
-          placeholder="Insert email"
-          register={register}
-          error={errors.email?.message}
-        />
-        <Input
-          label="Password"
-          type="password"
-          name="password"
-          placeholder="Insert password"
-          register={register}
-          error={errors.password?.message}
-        />
-        <Input
-          label="Address"
-          type="text"
-          name="address"
-          placeholder="Insert address"
-          register={register}
-          error={errors.address?.message}
-        />
-        <Input
-          label="Profile picture"
-          type="file"
-          name="profilePicture"
-          placeholder="Insert profile picture"
-          register={register}
-          error={errors.profilePicture?.message}
-        />
-        <Input
-          label="DNI"
-          type="text"
-          name="dni"
-          placeholder="Insert DNI"
-          register={register}
-          error={errors.dni?.message}
-        />
-        <Input
-          label="Date of birth"
-          type="date"
-          name="dateBirth"
-          placeholder="Insert date of birth"
-          register={register}
-          error={errors.dateBirth?.message}
-        />
+        <div className={styles.upperFields}>
+          <Input
+            label="First Name"
+            type="text"
+            name="firstName"
+            placeholder="Insert first name"
+            register={register}
+            error={errors.firstName?.message}
+          />
+          <Input
+            label="Last Name"
+            type="text"
+            name="lastName"
+            placeholder="Insert last name"
+            register={register}
+            error={errors.lastName?.message}
+          />
+          <Input
+            label="DNI"
+            type="text"
+            name="dni"
+            placeholder="Insert DNI"
+            register={register}
+            error={errors.dni?.message}
+          />
+          <Input
+            label="Date of birth"
+            type="date"
+            name="dateBirth"
+            placeholder="Insert date of birth"
+            register={register}
+            error={errors.dateBirth?.message}
+          />
+          <Input
+            label="Address"
+            type="text"
+            name="address"
+            placeholder="Insert address"
+            register={register}
+            error={errors.address?.message}
+          />
+          <Input
+            label="Phone"
+            type="text"
+            name="phone"
+            placeholder="Insert phone"
+            register={register}
+            error={errors.phone?.message}
+          />
+        </div>
+        <div className={styles.lowerFields}>
+          <Input
+            label="Picture link"
+            type="text"
+            name="picture"
+            placeholder="Insert picture link"
+            register={register}
+            error={errors.picture?.message}
+          />
+          <Input
+            label="Email"
+            type="text"
+            name="email"
+            placeholder="Insert email"
+            register={register}
+            error={errors.email?.message}
+          />
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            placeholder="Insert password"
+            register={register}
+            error={errors.password?.message}
+          />
+        </div>
       </form>
       <div className={styles.buttonBox}>
         <ButtonText clickAction={closeModalForm} label="Cancel"></ButtonText>

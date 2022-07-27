@@ -178,12 +178,14 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back to Projects"
-        clickAction={() => {
-          history.push('/employee/projects');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back to Projects"
+          clickAction={() => {
+            history.push('/employee/projects');
+          }}
+        ></ButtonText>
+      </div>
       <h2 className={styles.titleRole}>
         {isPM
           ? 'You are the PM of this project'
@@ -230,12 +232,14 @@ const ProjectPage = () => {
       {modalErrorSuccess}
       <div className={isPM ? styles.divContainer : styles.divContainerNotPM}>
         {isPM ? (
-          <ButtonText
-            label="ADD MEMBER"
-            clickAction={() => {
-              setShowModalAdd(true);
-            }}
-          ></ButtonText>
+          <div className={styles.btnContainer}>
+            <ButtonText
+              label="ADD MEMBER"
+              clickAction={() => {
+                setShowModalAdd(true);
+              }}
+            ></ButtonText>
+          </div>
         ) : null}
         {(project?.members.length && !isPM) || (project?.members.length > 1 && isPM) ? (
           <Table
