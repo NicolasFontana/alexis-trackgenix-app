@@ -1,4 +1,3 @@
-import { ButtonText } from 'Components/Shared';
 import styles from './landing.module.css';
 import { faClock, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import { faUsersCog, faSitemap, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +25,6 @@ function Home() {
             quas doloribus optio non officiis consectetur odit totam praesentium illum autem nulla
             maxime unde velit esse. Eius consectetur inventore temporibus id.
           </p>
-          <ButtonText label={'Learn More'} />
         </div>
         <img
           className={styles.img1}
@@ -88,7 +86,6 @@ function Home() {
             <li>{checkIcon} Leadership and team management</li>
             <li>{checkIcon} Decision making</li>
           </ul>
-          <ButtonText label={'Learn More'} />
         </div>
         <img
           className={styles.img2}
