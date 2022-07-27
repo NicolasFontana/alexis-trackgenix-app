@@ -10,7 +10,6 @@ import {
   Select
 } from 'Components/Shared';
 import FormAdd from './AddTimesheet';
-import { getTasks } from 'redux/tasks/thunks';
 import { getEmployees } from 'redux/employees/thunks';
 import { getProjects } from 'redux/projects/thunks';
 import { getAllTimesheets, deleteTimesheet } from 'redux/time-sheets/thunks';
@@ -32,7 +31,6 @@ const schema = Joi.object({
 function Timesheet() {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.timesheets.isLoading);
-  // const employees = useSelector((state) => state.employees?.list);
   const employeeId = useSelector((state) => state.auth.user?.data._id);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === employeeId
@@ -44,6 +42,9 @@ function Timesheet() {
   const projects = useSelector((state) => state.projects.list)?.filter((project) =>
     timesheets?.some((timesheet) => timesheet.projectId._id === project._id)
   );
+  const projectsPM = projects.filter((project) =>
+    project.members.find((member) => member.employeeId._id === employee._id && member.role === 'PM')
+  );
   const [response, setResponse] = useState('');
   const [timeSheetId, setTimeSheetId] = useState();
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -54,16 +55,6 @@ function Timesheet() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    dispatch(getEmployees())
-      .then(dispatch(getAllTimesheets()))
-      .then(() => {
-        if (timesheets.length) {
-          setFilteredTimesheet(timesheets);
-        }
-      });
-  }, []);
-
   const redirect = (id) => {
     history.push(`/employee/time-sheet/${id}`);
   };
@@ -72,10 +63,7 @@ function Timesheet() {
   let modalDelete;
 
   useEffect(() => {
-    dispatch(getTasks());
-    dispatch(getEmployees());
-    dispatch(getProjects());
-    dispatch(getAllTimesheets());
+    dispatch(getAllTimesheets()).then(dispatch(getEmployees())).then(dispatch(getProjects()));
   }, [showSuccessModal === false && showModalDelete === false && showModalAdd === false]);
 
   const closeModalAdd = () => {
@@ -104,7 +92,12 @@ function Timesheet() {
   if (showModalAdd) {
     modalAdd = (
       <ModalForm isOpen={showModalAdd} handleClose={closeModalAdd} title="Add Timesheet">
-        <FormAdd closeModalForm={closeModalAdd} employee={employee} timesheets={timesheets} />
+        <FormAdd
+          closeModalForm={closeModalAdd}
+          employee={employee}
+          timesheets={timesheets}
+          setFilteredTimesheet={setFilteredTimesheet}
+        />
       </ModalForm>
     );
   }
@@ -151,7 +144,19 @@ function Timesheet() {
       <Preloader />
     </section>
   ) : (
-    <>
+    <div>
+      {projectsPM.length !== 0 && (
+        <div className={styles.buttonContainer}>
+          <ButtonText
+            label={'Show my timesheets'}
+            clickAction={() => history.push('/employee/time-sheet/')}
+          />
+          <ButtonText
+            label={'Show Employees timesheets'}
+            clickAction={() => history.push('/employee/employees/time-sheet/')}
+          />
+        </div>
+      )}
       {timesheets.length !== 0 && (
         <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form}>
           <Select
@@ -190,7 +195,7 @@ function Timesheet() {
         )}
         {modalAdd}
         {modalDelete}
-        <div className={styles.divContainer}>
+        <div className={timesheets.length ? styles.divContainer : styles.divNoTable}>
           <ButtonText
             clickAction={() => {
               setShowModalAdd(true), setFilteredTimesheet([]);
@@ -200,8 +205,8 @@ function Timesheet() {
           {timesheets.length !== 0 && (
             <Table
               data={filteredTimesheet.length ? filteredTimesheet : timesheets}
-              headers={['projectId', 'approved', 'Task', 'createdAt']}
-              titles={['Project', 'PMs approval', 'Worked hours', 'Period']}
+              headers={['projectId', 'Task', 'createdAt']}
+              titles={['Project', 'Worked hours', 'Period']}
               delAction={(id) => {
                 setTimeSheetId(id);
                 setShowModalDelete(true);
@@ -209,7 +214,6 @@ function Timesheet() {
               }}
               modifiers={{
                 projectId: (x) => x?.name,
-                approved: (x) => (x ? 'Approved' : 'Not approved'),
                 Task: (x) =>
                   x?.reduce((previous, current) => {
                     return previous + current.taskId.workedHours;
@@ -236,10 +240,15 @@ function Timesheet() {
           closeModalForm={() => {
             setShowSuccessModal(false);
           }}
-          successResponse={response}
+          successResponse={{
+            message: response.error
+              ? response.message
+              : 'The timesheet has been successfully deleted',
+            error: response.error
+          }}
         />
       </section>
-    </>
+    </div>
   );
 }
 

@@ -21,9 +21,18 @@
   z-index: 100;
 }
 
-.divContainer {
+.divContainer, .divNoTable{
   display: flex;
   flex-direction: column;
+  width: 70%;
+}
+
+.buttonContainer{
+  margin: 30px 60px;
+}
+
+.divNoTable {
+  width: auto;
 }
 
 .divContainer > button {
@@ -36,10 +45,6 @@
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
-}
-
-.container table th {
-  width: 15vw;
 }
 
 .form {
@@ -57,6 +62,10 @@
 .form > div {
   width: 30%;
   margin-right: 25px
+}
+
+.container th:last-child {
+  width: 10%;
 }
 
 .title {

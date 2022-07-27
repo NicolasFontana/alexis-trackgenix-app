@@ -18,10 +18,11 @@ const timesheetValidation = Joi.object({
   approved: Joi.boolean().required()
 });
 
-const FormAdd = ({ closeModalForm, employee, timesheets }) => {
+const FormAdd = ({ closeModalForm, employee, timesheets, setFilteredTimesheet }) => {
   const dispatch = useDispatch();
   let currentDate = new Date().toISOString().slice(0, 7);
   const [message, setMessage] = useState('');
+  const [employeeResponse, setEmployeeResponse] = useState('');
   const [showMessageModal, setShowMessageModal] = useState(false);
   const projects = employee.projects?.filter(
     (project) =>
@@ -31,21 +32,19 @@ const FormAdd = ({ closeModalForm, employee, timesheets }) => {
       )
   );
 
-  console.log(projects);
-
   const onSubmit = (data) => {
     let dataToSave;
     dispatch(
       createTimesheet(data.project, (message) => (setMessage(message), (dataToSave = message.data)))
     ).then(() => {
-      setShowMessageModal(true);
       let body = JSON.stringify({
         timeSheets: employee.timeSheets.map((timesheet) => timesheet._id).concat(dataToSave._id)
       });
-      dispatch(updateEmployee(body, employee._id, setMessage)).then(() => {
-        setShowMessageModal(true);
-      });
+      dispatch(updateEmployee(body, employee._id, setEmployeeResponse)).then(() =>
+        setShowMessageModal(true)
+      );
     });
+    setFilteredTimesheet([]);
   };
 
   const {
@@ -91,7 +90,10 @@ const FormAdd = ({ closeModalForm, employee, timesheets }) => {
           setShowMessageModal(false);
         }}
         closeModalForm={closeModalForm}
-        successResponse={message}
+        successResponse={{
+          message: `${message.message}.\n${employeeResponse.message}.`,
+          error: message.error
+        }}
       />
     </form>
   );

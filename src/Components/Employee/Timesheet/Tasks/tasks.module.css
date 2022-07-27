@@ -33,9 +33,14 @@
   color: rgba(55, 56, 103, 1);
 }
 
-.divContainer {
+.divContainer, .divNoTable {
   display: flex;
   flex-direction: column;
+  width: 90%;
+}
+
+.divNoTable {
+  width: auto;
 }
 
 .divContainer > button {
@@ -44,7 +49,7 @@
   padding: 0 30px;
 }
 
-.divContainer > p {
+.divNoTable > p {
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);

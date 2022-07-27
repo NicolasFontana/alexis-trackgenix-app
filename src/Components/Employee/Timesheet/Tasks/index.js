@@ -114,14 +114,6 @@ function Tasks() {
     );
   }
 
-  const redirect = (taskId) => {
-    if (taskId) {
-      history.push(`/employee/time-sheet/${id}/${taskId}`);
-    } else {
-      history.push('/employee/time-sheet');
-    }
-  };
-
   return isLoading &&
     !showModalFormEdit &&
     !showModalFormAdd &&
@@ -134,13 +126,16 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText label="Go back to the timesheets" clickAction={() => redirect()}></ButtonText>
+      <ButtonText
+        label="Go back to the timesheets"
+        clickAction={() => history.goBack()}
+      ></ButtonText>
       <h2 className={styles.title}>Tasks</h2>
       <div className={styles.box}>
         <h4>Project: {timesheet?.projectId?.name}</h4>
         <p>Tasks for {timesheet?.createdAt?.slice(0, 7)} period</p>
       </div>
-      <div className={styles.divContainer}>
+      <div className={timesheet?.Task.length ? styles.divContainer : styles.divNoTable}>
         {modalEdit}
         {modalAdd}
         {modalMessage}
