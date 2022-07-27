@@ -64,7 +64,7 @@
 
 .modalButton {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: space-around;
   width: 70%;
 }

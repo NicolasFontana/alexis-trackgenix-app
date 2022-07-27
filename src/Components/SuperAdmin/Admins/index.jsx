@@ -121,23 +121,23 @@ const Admins = () => {
     </Preloader>
   ) : (
     <section className={styles.container}>
-      <h2 className={styles.title}>Admins</h2>
       {modalEdit}
       {modalAdd}
       {modalDelete}
       {modalErrorSuccess}
       {isLoading ? <Preloader /> : null}
+      <h2 className={styles.title}>Admins</h2>
       <div className={styles.divContainer}>
         <ButtonText label="ADD ADMIN" clickAction={openAddModal}></ButtonText>
-        <Table
-          data={admins}
-          headers={['firstName', 'lastName', 'email']}
-          titles={['First Name', 'Last Name', 'Email']}
-          delAction={openConfirmModal}
-          editAction={openEditModal}
-          modifiers={{}}
-        />
       </div>
+      <Table
+        data={admins}
+        headers={['firstName', 'lastName', 'email']}
+        titles={['First Name', 'Last Name', 'Email']}
+        delAction={openConfirmModal}
+        editAction={openEditModal}
+        modifiers={{}}
+      />
     </section>
   );
 };

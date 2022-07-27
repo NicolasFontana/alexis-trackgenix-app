@@ -2,8 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0px;
   background-color: #76a068;
-  height: 100px;
+  height: 115px;
   padding: 0px 30px;
 }
 
@@ -16,6 +18,27 @@
 .leftSide .title {
   font-size: 36px;
   margin: 0;
+  padding-left: 10px;
+  margin-right: 5%;
+  text-decoration: none;
+}
+
+.userPicture {
+  display: flex;
+  padding: 3px 0;
+}
+
+.user p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 17px;
+  word-spacing: normal;
+  padding: 3px 0;
+}
+
+.user * {
+  color: #ffffff;
+  font-size: 70px;
 }
 
 .title > a {
@@ -116,4 +139,11 @@
     font-size: 15px;
     margin: 0px;
   }
+}
+
+.userLogged {
+  border-radius: 50%;
+  border: 3px solid #373867;
+  width: 70px;
+  height: 70px;
 }

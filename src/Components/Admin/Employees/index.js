@@ -5,14 +5,7 @@ import { getProjects, updateProject } from 'redux/projects/thunks';
 import { useHistory, generatePath } from 'react-router-dom';
 import styles from './employees.module.css';
 import Form from './Form';
-import {
-  Preloader,
-  Table,
-  ModalForm,
-  Select,
-  ConfirmModal,
-  ErrorSuccessModal
-} from 'Components/Shared';
+import { Preloader, Table, ModalForm, ConfirmModal, ErrorSuccessModal } from 'Components/Shared';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -113,31 +106,22 @@ const Employees = () => {
       <h2 className={styles.employees}> Employees </h2>
       <Table
         data={employees}
-        headers={['firstName', 'lastName', 'phone', 'email', 'active', 'projects']}
-        titles={['First Name', 'Last Name', 'Phone', 'Email', 'Active', 'Projects']}
+        headers={['firstName', 'lastName', 'phone', 'email', 'active']}
+        titles={['First Name', 'Last Name', 'Phone', 'Email', 'Active']}
         delAction={(id) => {
           setEmployeeId(id);
           setShowModalFormDelete(true);
         }}
         modifiers={{
           active: (x) => (x ? 'Active' : 'Inactive'),
-          isProjectManager: (x) => (x ? 'Yes' : 'No'),
-          projects: (x) => (
-            <Select
-              title="Projects"
-              defaultValue=""
-              data={[...x.map((project) => project.name)]}
-              disabled
-              register={console.log}
-            />
-          )
+          isProjectManager: (x) => (x ? 'Yes' : 'No')
         }}
         redirect={redirectAction}
+        sort={{ firstName: 1, lastName: 1, phone: 1, email: 1, active: 1 }}
       />
       {modalEdit}
       {modalDelete}
       {employeeLoading ? <Preloader /> : null}
-
       <ErrorSuccessModal
         show={showSuccessModal}
         closeModal={() => {

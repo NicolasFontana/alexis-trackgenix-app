@@ -48,7 +48,9 @@ const ProjectPage = () => {
   }, [!showModalDelete]);
 
   const redirectAction = (memberId) => {
-    history.push(generatePath('/employee/projects/:id/:memberId', { id: id, memberId }));
+    history.push(
+      generatePath('/employee/projects/id=:id/members/id=:memberId', { id: id, memberId })
+    );
   };
 
   const deleteMember = () => {
@@ -178,12 +180,14 @@ const ProjectPage = () => {
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back to Projects"
-        clickAction={() => {
-          history.push('/employee/projects');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back to Projects"
+          clickAction={() => {
+            history.push('/employee/projects');
+          }}
+        ></ButtonText>
+      </div>
       <h2 className={styles.titleRole}>
         {isPM
           ? 'You are the PM of this project'
@@ -230,12 +234,14 @@ const ProjectPage = () => {
       {modalErrorSuccess}
       <div className={isPM ? styles.divContainer : styles.divContainerNotPM}>
         {isPM ? (
-          <ButtonText
-            label="ADD MEMBER"
-            clickAction={() => {
-              setShowModalAdd(true);
-            }}
-          ></ButtonText>
+          <div className={styles.btnContainerAdd}>
+            <ButtonText
+              label="ADD MEMBER"
+              clickAction={() => {
+                setShowModalAdd(true);
+              }}
+            ></ButtonText>
+          </div>
         ) : null}
         {(project?.members.length && !isPM) || (project?.members.length > 1 && isPM) ? (
           <Table
@@ -266,6 +272,10 @@ const ProjectPage = () => {
                 : null
             }
             redirect={isPM ? redirectAction : null}
+            sort={{ employeeId: 1, role: 1 }}
+            sortModifiers={{
+              employeeId: (x) => x.firstName
+            }}
           />
         ) : null}
       </div>

@@ -161,7 +161,7 @@ const Form = () => {
           error={errors.repeatPassword?.message}
         />
       </div>
-      <ButtonText clickAction={handleSubmit(onSubmit)} label={'Create'} />
+      <ButtonText clickAction={handleSubmit(onSubmit)} label={'Create'} enter />
       {isLoading ? (
         <Preloader />
       ) : (

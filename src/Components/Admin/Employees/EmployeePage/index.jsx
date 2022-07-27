@@ -104,6 +104,7 @@ const EmployeePage = () => {
           titles={['Project Name', 'Role', 'Rate']}
           modifiers={{}}
           redirect={redirectAction}
+          sort={{ name: 1, role: 1, rate: 1 }}
         />
       ) : (
         <p className={styles.message}>Not a member of any project</p>

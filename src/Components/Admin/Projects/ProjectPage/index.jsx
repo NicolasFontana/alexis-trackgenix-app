@@ -211,7 +211,7 @@ const ProjectPage = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      <div className={styles.divContainer}>
+      <div className={styles.btnContainerAdd}>
         <ButtonText
           label="ADD MEMBER"
           clickAction={() => {
@@ -236,6 +236,7 @@ const ProjectPage = () => {
             setShowModalEdit(true);
           }}
           redirect={redirectAction}
+          sort={{ employeeId: 1, role: 1, rate: 1 }}
         />
       ) : null}
     </section>

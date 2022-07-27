@@ -7,6 +7,7 @@ import { updateEmployee } from 'redux/employees/thunks';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
+import firebaseApp from 'helper/firebase';
 
 const now = Date.now();
 const cutoffDate = new Date(now - 1000 * 60 * 60 * 24 * 365 * 18);
@@ -61,6 +62,7 @@ const schema = Joi.object({
   picture: Joi.string().allow('').min(4).messages({
     'string.min': 'Invalid picture URL, it must contain more than 4 letters'
   }),
+  profilePicture: Joi.object(),
   dni: Joi.number().allow('', null).integer().min(20000000).max(100000000).messages({
     'number.integer': 'Invalid number, it must be an integer',
     'number.min': 'Invalid number, it must be a valid DNI(Between 20000000 and 100000000)',
@@ -75,11 +77,21 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
   const dispatch = useDispatch();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [response, setResponse] = useState('');
-
   const id = employeeEdit._id;
   let body;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    if (data.profilePicture.length !== 0) {
+      if (!/\.(jpe?g|png)$/i.test(data.profilePicture[0].name)) {
+        setResponse({
+          message: 'The file type must be jpeg, jpg or png. Please select a valid file',
+          data: {},
+          error: true
+        });
+        setShowSuccessModal(true);
+        return null;
+      }
+    }
     if (
       data.firstName === employeeEdit.firstName &&
       data.lastName === employeeEdit.lastName &&
@@ -87,13 +99,20 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
       data.email === employeeEdit.email &&
       data.password === '' &&
       data.address === employeeEdit.address &&
-      data.picture === employeeEdit.picture &&
+      data.profilePicture.length === 0 &&
       data.dni === employeeEdit.dni &&
       (data.dateBirth?.toString() == new Date(employeeEdit.dateBirth) || data.dateBirth === null)
     ) {
       setResponse({ message: "There haven't been any changes", data: {}, error: true });
       setShowSuccessModal(true);
     } else {
+      let enlaceUrl;
+      if (data.profilePicture.length !== 0) {
+        const storageRef = firebaseApp.storage().ref();
+        const pathFile = storageRef.child(`employees/${employeeEdit._id}/pictureProfile`);
+        await pathFile.put(data.profilePicture[0]);
+        enlaceUrl = await pathFile.getDownloadURL();
+      }
       if (data.password === '') {
         body = JSON.stringify({
           firstName: data.firstName,
@@ -101,7 +120,7 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           phone: data.phone,
           email: data.email,
           address: data.address,
-          picture: data.picture,
+          picture: enlaceUrl ? enlaceUrl : data.picture,
           dni: data.dni,
           dateBirth: data.dateBirth
         });
@@ -113,12 +132,12 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
           email: data.email,
           password: data.password,
           address: data.address,
-          picture: data.picture,
+          picture: enlaceUrl ? enlaceUrl : data.picture,
           dni: data.dni,
           dateBirth: data.dateBirth
         });
       }
-      dispatch(updateEmployee(body, id, setResponse)).then(() => {
+      await dispatch(updateEmployee(body, id, setResponse)).then(() => {
         setShowSuccessModal(true);
       });
     }
