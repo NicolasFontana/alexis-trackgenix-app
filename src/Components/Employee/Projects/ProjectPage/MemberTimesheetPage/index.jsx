@@ -68,6 +68,15 @@ const MemberTimesheetPage = () => {
             approved: (x) => (x ? 'Approved' : 'Not approved')
           }}
           redirect={redirectAction}
+          sort={{ projectId: 1, approved: 1, Task: 1, createdAt: 1 }}
+          sortModifiers={{
+            projectId: (x) => x?.name,
+            Task: (x) =>
+              x?.reduce((previous, current) => {
+                return previous + current.taskId.workedHours;
+              }, 0),
+            createdAt: (x) => x?.slice(0, 7)
+          }}
         />
       ) : (
         <p>No timesheets have been uploaded for this project</p>

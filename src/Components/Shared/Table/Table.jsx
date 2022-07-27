@@ -13,44 +13,77 @@ const Table = (props) => {
 
   const sortAscending = (header) => {
     // Find a defined value inside the column for reference
-    let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
+    let refValue =
+      sortModifiers && sortModifiers[header]
+        ? sortModifiers[header](
+            data.find((item) => item[header] !== null && item[header] !== undefined)[header]
+          )
+        : data.find((item) => item[header] !== null && item[header] !== undefined)[header];
     // Reset arrows and define new sort
     setSortDirection({ ...sort, [header]: 'down' });
-    // Modifier (members, employeeId, etc) --> Sorted as a string
-    if (sortModifiers && sortModifiers[header]) {
+    // Number
+    if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
       data.sort((a, b) =>
-        sortModifiers[header](a[header])?.localeCompare(sortModifiers[header](b[header]))
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](a[header]) - sortModifiers[header](b[header])
+          : a[header] - b[header]
       );
-      // Number
-    } else if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
-      data.sort((a, b) => a[header] - b[header]);
       // Boolean
     } else if (typeof refValue === 'boolean') {
-      data.sort((a, b) => b[header] - a[header]);
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](b[header]) - sortModifiers[header](a[header])
+          : b[header] - a[header]
+      );
       // String or Date
     } else if (typeof refValue === 'string') {
-      data.sort((a, b) => a[header]?.localeCompare(b[header]));
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](a[header])?.localeCompare(sortModifiers[header](b[header]))
+          : a[header]?.localeCompare(b[header])
+      );
       // Array
     } else if (Array.isArray(refValue)) {
-      data.sort((a, b) => a[header]?.length - b[header]?.length);
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](a[header])?.length - sortModifiers[header](b[header])?.length
+          : a[header]?.length - b[header]?.length
+      );
     }
   };
 
   const sortDescending = (header) => {
-    let refValue = data.find((item) => item[header] !== null && item[header] !== undefined)[header];
+    let refValue =
+      sortModifiers && sortModifiers[header]
+        ? sortModifiers[header](
+            data.find((item) => item[header] !== null && item[header] !== undefined)[header]
+          )
+        : data.find((item) => item[header] !== null && item[header] !== undefined)[header];
     setSortDirection({ ...sort, [header]: 'up' });
-    if (sortModifiers && sortModifiers[header]) {
+    if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
       data.sort((a, b) =>
-        sortModifiers[header](b[header])?.localeCompare(sortModifiers[header](a[header]))
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](b[header]) - sortModifiers[header](a[header])
+          : b[header] - a[header]
       );
-    } else if (!isNaN(refValue) && !isNaN(parseFloat(refValue))) {
-      data.sort((a, b) => b[header] - a[header]);
     } else if (typeof refValue === 'boolean') {
-      data.sort((a, b) => a[header] - b[header]);
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](a[header]) - sortModifiers[header](b[header])
+          : a[header] - b[header]
+      );
     } else if (typeof refValue === 'string') {
-      data.sort((a, b) => b[header]?.localeCompare(a[header]));
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](b[header])?.localeCompare(sortModifiers[header](a[header]))
+          : b[header]?.localeCompare(a[header])
+      );
     } else if (Array.isArray(refValue)) {
-      data.sort((a, b) => b[header]?.length - a[header]?.length);
+      data.sort((a, b) =>
+        sortModifiers && sortModifiers[header]
+          ? sortModifiers[header](b[header])?.length - sortModifiers[header](a[header])?.length
+          : b[header]?.length - a[header]?.length
+      );
     }
   };
 
