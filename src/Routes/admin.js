@@ -18,7 +18,7 @@ const adminsRoutes = [
   { icon: home, name: 'Home', path: '/admin' },
   { icon: users, name: 'Employees', path: '/admin/employees' },
   { icon: projects, name: 'Projects', path: '/admin/projects' },
-  { icon: users, name: 'Restore', path: '/super-admin/restore' }
+  { icon: users, name: 'Restore', path: '/admin/restore' }
 ];
 
 const Admin = () => {

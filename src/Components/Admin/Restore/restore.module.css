@@ -27,3 +27,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 5;
 }
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 10vw;
+}
