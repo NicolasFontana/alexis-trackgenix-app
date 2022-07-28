@@ -13,7 +13,10 @@ import {
   EDIT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  RESTORE_ADMIN_PENDING,
+  RESTORE_ADMIN_SUCCESS,
+  RESTORE_ADMIN_ERROR
 } from './constants';
 
 export const getAdminsPending = () => ({
@@ -83,5 +86,19 @@ export const deleteAdminSucces = (dataId) => ({
 
 export const deleteAdminError = (error) => ({
   type: DELETE_ADMIN_ERROR,
+  payload: error
+});
+
+export const restoreAdminPending = () => ({
+  type: RESTORE_ADMIN_PENDING
+});
+
+export const restoreAdminSucces = (data) => ({
+  type: RESTORE_ADMIN_SUCCESS,
+  payload: data
+});
+
+export const restoreAdminError = (error) => ({
+  type: RESTORE_ADMIN_ERROR,
   payload: error
 });

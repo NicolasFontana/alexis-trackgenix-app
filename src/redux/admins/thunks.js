@@ -13,7 +13,10 @@ import {
   editAdminError,
   deleteAdminPending,
   deleteAdminSucces,
-  deleteAdminError
+  deleteAdminError,
+  restoreAdminPending,
+  restoreAdminSucces,
+  restoreAdminError
 } from './actions';
 
 export const getAdmins = () => {
@@ -110,6 +113,28 @@ export const delAdmin = (id, setResponse) => {
       })
       .catch((error) => {
         dispatch(deleteAdminError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const restoreAdmin = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(restoreAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/restore/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(restoreAdminSucces(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(restoreAdminError(error.toString()));
         setResponse(error);
       });
   };

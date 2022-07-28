@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 2% 30px 2%;
+}
+
+.title {
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
+}
+
+.container > section {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.divContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 10px;
+}
+
+.divContainer > button {
+  align-self: flex-end;
+}
+
+@media only screen and (max-width: 760px) {
+  .divContainer > button {
+    align-self: center;
+  }
+}

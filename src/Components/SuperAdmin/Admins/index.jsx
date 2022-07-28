@@ -32,7 +32,7 @@ const Admins = () => {
 
   useEffect(() => {
     dispatch(getAdmins());
-  }, [showModalFormAdd === false, showModalFormEdit === false, showModalFormDelete === false]);
+  }, [!showModalFormAdd, !showModalFormEdit, !showModalFormDelete]);
 
   const handleConfirm = () => {
     dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
@@ -136,7 +136,7 @@ const Admins = () => {
         titles={['First Name', 'Last Name', 'Email']}
         delAction={openConfirmModal}
         editAction={openEditModal}
-        modifiers={{}}
+        sort={{ firstName: 1, lastName: 1, email: 1 }}
       />
     </section>
   );
