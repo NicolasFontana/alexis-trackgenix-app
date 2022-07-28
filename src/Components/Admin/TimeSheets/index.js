@@ -9,7 +9,8 @@ import {
   ConfirmModal,
   ButtonAdd,
   ModalForm,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  ScrollToTop
 } from 'Components/Shared';
 import FormAdd from './FormAdd';
 import FormEdit from './FormEdit';
@@ -165,6 +166,7 @@ function TimeSheets() {
         }}
         successResponse={response}
       />
+      <ScrollToTop />
     </section>
   );
 }

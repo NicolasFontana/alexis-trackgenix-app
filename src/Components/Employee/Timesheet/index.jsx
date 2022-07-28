@@ -6,7 +6,8 @@ import {
   ConfirmModal,
   ButtonText,
   ModalForm,
-  ErrorSuccessModal
+  ErrorSuccessModal,
+  ScrollToTop
 } from 'Components/Shared';
 import FormAdd from './AddTimesheet';
 import { getTasks } from 'redux/tasks/thunks';
@@ -137,6 +138,7 @@ function Timesheet() {
         }}
         successResponse={response}
       />
+      <ScrollToTop />
     </section>
   );
 }

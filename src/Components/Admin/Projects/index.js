@@ -9,7 +9,8 @@ import {
   ModalForm,
   ConfirmModal,
   ErrorSuccessModal,
-  ButtonText
+  ButtonText,
+  ScrollToTop
 } from 'Components/Shared';
 import Form from './Form';
 import styles from './projects.module.css';
@@ -194,6 +195,7 @@ const Projects = () => {
           members: (x) => x.find((member) => member.role === 'PM')?.employeeId.firstName
         }}
       />
+      <ScrollToTop />
     </section>
   );
 };

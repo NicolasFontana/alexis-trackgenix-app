@@ -11,3 +11,17 @@
 .container img {
   height: 35vw;
 }
+
+.container h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  color: #373867;
+  margin: 20px 0;
+}
+
+.container p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: #373867;
+}
