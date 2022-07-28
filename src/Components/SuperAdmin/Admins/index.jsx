@@ -134,8 +134,8 @@ const Admins = () => {
         data={admins}
         headers={['firstName', 'lastName', 'email']}
         titles={['First Name', 'Last Name', 'Email']}
-        delAction={openConfirmModal}
         editAction={openEditModal}
+        delAction={openConfirmModal}
         sort={{ firstName: 1, lastName: 1, email: 1 }}
       />
     </section>

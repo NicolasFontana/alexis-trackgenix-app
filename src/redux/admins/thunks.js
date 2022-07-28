@@ -139,3 +139,22 @@ export const restoreAdmin = (id, setResponse) => {
       });
   };
 };
+
+export const removeAdmin = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(deleteAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/remove/${id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(deleteAdminSucces(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(deleteAdminError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
