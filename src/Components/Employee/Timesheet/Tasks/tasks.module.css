@@ -4,11 +4,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 30px 2% 30px 2%;
+  margin: 2%;
+  color: rgba(55, 56, 103, 1);
 }
 
-.btnContainer {
-  text-align: center;
+.container > button:first-of-type {
+  align-self: flex-start;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -34,17 +36,26 @@
   color: rgba(55, 56, 103, 1);
 }
 
-.divContainer {
+.divContainer, .divNoTable {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.divNoTable {
+  width: auto;
 }
 
 .divContainer > table {
   margin: 10px auto;
 }
 
-.divContainer > p {
+.divContainer > button {
+  margin: 20px 0;
+  padding: 0 30px;
+}
+
+.divNoTable > p {
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);

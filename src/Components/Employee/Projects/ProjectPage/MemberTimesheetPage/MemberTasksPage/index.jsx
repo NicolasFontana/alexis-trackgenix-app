@@ -112,20 +112,40 @@ const MemberTasksPage = () => {
         <div className={styles.divContainer}>
           {modalApprove}
           {modalErrorSuccess}
-          <Table
-            data={timesheet?.Task.map((task) => task.taskId)}
-            headers={['taskName', 'description', 'startDate', 'status', 'workedHours']}
-            titles={['Task Name', 'Description', 'Start Date', 'Status', 'Worked Hours']}
-            modifiers={{
-              startDate: (x) => x?.slice(0, 10)
-            }}
-          />
           <ButtonText
             label={timesheet?.approved ? 'Remove approval' : 'Approve timesheet'}
             clickAction={() => {
               setShowModalApprove(true);
             }}
           ></ButtonText>
+          <Table
+            data={timesheet?.Task.map((task) => task.taskId)}
+            headers={['taskName', 'createdAt', 'updatedAt', 'workedHours', 'description', 'status']}
+            titles={[
+              'Task Name',
+              'Created at',
+              'Updated at',
+              'Worked Hours',
+              'Description',
+              'Status'
+            ]}
+            modifiers={{
+              createdAt: (x) => x?.slice(0, 10),
+              updatedAt: (x) => x?.slice(0, 10)
+            }}
+            sort={{
+              taskName: 1,
+              createdAt: 1,
+              updatedAt: 1,
+              workedHours: 1,
+              description: 1,
+              status: 1
+            }}
+            sortModifiers={{
+              createdAt: (x) => x?.slice(0, 10),
+              updatedAt: (x) => x?.slice(0, 10)
+            }}
+          />
         </div>
       ) : (
         <p>No tasks have been uploaded for this timesheet</p>

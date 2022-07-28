@@ -22,7 +22,8 @@ function Tasks() {
   );
   const isLoading = useSelector((state) => state.timesheets.isLoading);
   const tasks = useSelector((state) => state.tasks.list);
-
+  const period = timesheet?.createdAt?.slice(0, 7);
+  const currentDate = new Date().toISOString().slice(0, 7);
   const [showModalFormAdd, setShowModalFormAdd] = useState(false);
   const [showModalFormEdit, setShowModalFormEdit] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -113,14 +114,6 @@ function Tasks() {
     );
   }
 
-  const redirect = (taskId) => {
-    if (taskId) {
-      history.push(`/employee/time-sheet/${id}/${taskId}`);
-    } else {
-      history.push('/employee/time-sheet');
-    }
-  };
-
   return isLoading &&
     !showModalFormEdit &&
     !showModalFormAdd &&
@@ -133,21 +126,23 @@ function Tasks() {
     </section>
   ) : (
     <section className={styles.container}>
-      <div className={styles.btnContainer}>
-        <ButtonText label="Go back to timesheets" clickAction={() => redirect()}></ButtonText>
-      </div>
+      <ButtonText
+        label="Go back to the timesheets"
+        clickAction={() => history.goBack()}
+      ></ButtonText>
       <h2 className={styles.title}>Tasks</h2>
       <div className={styles.box}>
         <h4>Project: {timesheet?.projectId?.name}</h4>
         <p>Tasks for {timesheet?.createdAt?.slice(0, 7)} period</p>
       </div>
-      <div className={styles.divContainer}>
+      <div className={timesheet?.Task.length ? styles.divContainer : styles.divNoTable}>
         {modalEdit}
         {modalAdd}
         {modalMessage}
-        <div className={styles.btnContainer}>
+
+        {currentDate === period && (
           <ButtonText label="Add Task" clickAction={() => openAddModal()}></ButtonText>
-        </div>
+        )}
         {timesheet?.Task.length ? (
           <Table
             data={timesheet?.Task?.filter(
@@ -165,6 +160,18 @@ function Tasks() {
             delAction={openConfirmModal}
             editAction={openEditModal}
             modifiers={{
+              createdAt: (x) => x?.slice(0, 10),
+              updatedAt: (x) => x?.slice(0, 10)
+            }}
+            sort={{
+              taskName: 1,
+              createdAt: 1,
+              updatedAt: 1,
+              workedHours: 1,
+              description: 1,
+              status: 1
+            }}
+            sortModifiers={{
               createdAt: (x) => x?.slice(0, 10),
               updatedAt: (x) => x?.slice(0, 10)
             }}
