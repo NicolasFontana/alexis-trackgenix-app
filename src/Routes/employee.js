@@ -17,12 +17,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
 const projects = <FontAwesomeIcon icon={faFolderClosed}></FontAwesomeIcon>;
 const timesheets = <FontAwesomeIcon icon={faClock}></FontAwesomeIcon>;
+const profile = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
 
-const employeesRoutes = [
-  { icon: home, name: 'Home', path: '/employee' },
-  { icon: projects, name: 'Projects', path: '/employee/projects' },
-  { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' }
-];
+let windowsSize = window.screen.width;
+
+let employeesRoutes;
+
+console.log(location.pathname.substring(0, 9) === '/employee' && windowsSize <= 480);
+
+if (location.pathname.substring(0, 9) === '/employee' && windowsSize <= 480) {
+  employeesRoutes = [
+    { icon: home, name: 'Home', path: '/employee' },
+    { icon: projects, name: 'Projects', path: '/employee/projects' },
+    { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' },
+    { icon: profile, name: 'Profile', path: '/employee/profile' }
+  ];
+} else {
+  employeesRoutes = [
+    { icon: home, name: 'Home', path: '/employee' },
+    { icon: projects, name: 'Projects', path: '/employee/projects' },
+    { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' }
+  ];
+}
 
 const Employee = () => {
   const { url } = useRouteMatch();
