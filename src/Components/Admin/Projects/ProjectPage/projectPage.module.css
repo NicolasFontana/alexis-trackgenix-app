@@ -1,32 +1,23 @@
-.container,
-.containerPreloader {
-  flex: 1;
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2%;
+  margin: 0px 2% 30px 2%;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
 }
 
-.container > button {
-  align-self: flex-start;
+.container table {
+  max-width: 600px;
+}
+
+.btnContainer {
+  margin: 20px 0;
+}
+
+.btnContainerAdd {
   margin-bottom: 20px;
-  padding: 0 30px;
-}
-
-.container td {
-  max-width: unset;
-  padding: 0 40px;
-}
-
-.container td:last-child {
-  padding: unset;
-}
-
-.container td:nth-last-child(2) {
-  padding: unset;
 }
 
 .box {
@@ -34,15 +25,15 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 90%;
-  margin: 10px;
+  max-width: 820px;
+  margin: 10px auto;
   border: 3px solid #76a068;
   border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
 }
 
 .field {
-  width: 30%;
-  min-width: 200px;
-  max-width: 350px;
+  width: 90%;
   margin: 5px 0px;
   text-align: center;
 }
@@ -60,7 +51,6 @@
 
 .fieldDescription {
   width: 60%;
-  min-width: 200px;
   margin: 5px 0px;
   text-align: center;
 }
@@ -81,15 +71,17 @@
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px grey;
+  text-align: center;
 }
 
 .divContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.divContainer > button {
-  align-self: flex-end;
-  margin-bottom: 20px;
-  padding: 0 30px;
+@media screen and (min-width: 480px) {
+  .field {
+    width: 45%;
+  }
 }

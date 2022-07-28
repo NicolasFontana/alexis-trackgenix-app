@@ -1,10 +1,17 @@
-.maincontainer, .container, .containerPreloader {
-  flex: 1;
+.maincontainer,
+.container,
+.containerPreloader {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 2%;
+}
+
+.maincontainer {
+  margin: 30px 2% 30px 2%;
+}
+
+.btnContainer {
+  text-align: center;
 }
 
 .container > section {
@@ -20,10 +27,16 @@
   z-index: 100;
 }
 
-.title, .subtitle {
+.container > table {
+  margin: 0px auto;
+}
+
+.title,
+.subtitle {
   font-size: 30px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
+  text-align: center;
   text-shadow: 2px 2px 2px grey;
   color: rgba(55, 56, 103, 1);
 }

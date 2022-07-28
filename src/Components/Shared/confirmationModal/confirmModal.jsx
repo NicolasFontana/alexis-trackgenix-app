@@ -23,8 +23,8 @@ const ConfirmModal = ({ isOpen, handleClose, confirmDelete, title, message }) =>
         </div>
         <div className={styles.message}>{message}</div>
         <div className={styles.modalButton}>
-          <ButtonText clickAction={confirmDelete} label={'Confirm'} />
           <ButtonText clickAction={handleClose} label={'Close'} />
+          <ButtonText clickAction={confirmDelete} label={'Confirm'} />
         </div>
       </div>
     </div>

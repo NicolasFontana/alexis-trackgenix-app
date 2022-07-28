@@ -1,18 +1,21 @@
 .formBody {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    column-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.formBody div {
+.upperFields {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.upperFields > div {
   width: 45%;
+  margin: 0px auto;
 }
 
-  .buttonBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-self: flex-end;
-  }
+.lowerFields > div {
+  width: 95%;
+  margin: 0px auto;
+}

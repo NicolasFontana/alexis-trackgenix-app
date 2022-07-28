@@ -1,0 +1,12 @@
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: space-between;
+    row-gap: 10px;
+  }
+  
+  .form button {
+    margin: 0;
+  }

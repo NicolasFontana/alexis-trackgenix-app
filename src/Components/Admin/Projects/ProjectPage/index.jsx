@@ -159,19 +159,21 @@ const ProjectPage = () => {
     !showModalDelete &&
     !showModalEdit &&
     !showModalErrorSuccess ? (
-    <section className={styles.containerPreloader}>
+    <section>
       <Preloader>
         <p>Loading Project</p>
       </Preloader>
     </section>
   ) : (
     <section className={styles.container}>
-      <ButtonText
-        label="Go back"
-        clickAction={() => {
-          history.push('/admin/projects');
-        }}
-      ></ButtonText>
+      <div className={styles.btnContainer}>
+        <ButtonText
+          label="Go back"
+          clickAction={() => {
+            history.push('/admin/projects');
+          }}
+        ></ButtonText>
+      </div>
       <div className={styles.box}>
         <div className={styles.field}>
           <h3>Project Name</h3>
@@ -209,33 +211,34 @@ const ProjectPage = () => {
       {modalDelete}
       {modalAdd}
       {modalErrorSuccess}
-      <div className={styles.divContainer}>
+      <div className={styles.btnContainerAdd}>
         <ButtonText
           label="ADD MEMBER"
           clickAction={() => {
             setShowModalAdd(true);
           }}
         ></ButtonText>
-        {project?.members.length ? (
-          <Table
-            data={project?.members}
-            headers={['employeeId', 'role', 'rate']}
-            titles={['Name', 'Role', 'Rate']}
-            modifiers={{
-              employeeId: (x) => `${x.firstName} ${x.lastName}`
-            }}
-            delAction={(id) => {
-              setMemberId(id);
-              setShowModalDelete(true);
-            }}
-            editAction={(id) => {
-              setMemberId(id);
-              setShowModalEdit(true);
-            }}
-            redirect={redirectAction}
-          />
-        ) : null}
       </div>
+      {project?.members.length ? (
+        <Table
+          data={project?.members}
+          headers={['employeeId', 'role', 'rate']}
+          titles={['Name', 'Role', 'Rate']}
+          modifiers={{
+            employeeId: (x) => `${x.firstName} ${x.lastName}`
+          }}
+          delAction={(id) => {
+            setMemberId(id);
+            setShowModalDelete(true);
+          }}
+          editAction={(id) => {
+            setMemberId(id);
+            setShowModalEdit(true);
+          }}
+          redirect={redirectAction}
+          sort={{ employeeId: 1, role: 1, rate: 1 }}
+        />
+      ) : null}
     </section>
   );
 };

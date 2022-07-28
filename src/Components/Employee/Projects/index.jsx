@@ -27,7 +27,7 @@ function Projects() {
   }, [showModalFormEdit === false]);
 
   const redirectAction = (id) => {
-    history.push(generatePath('/employee/projects/:id', { id }));
+    history.push(generatePath('/employee/projects/id=:id', { id }));
   };
 
   const closeModalFormEdit = () => {
@@ -63,10 +63,12 @@ function Projects() {
       {projectsPM.length || projects.length ? (
         <>
           {projectsPM.length ? (
-            <ButtonText
-              label={open ? 'Show all projects' : 'Show PM projects'}
-              clickAction={() => setOpen(!open)}
-            />
+            <div className={styles.btnContainer}>
+              <ButtonText
+                label={open ? 'Show all projects' : 'Show PM projects'}
+                clickAction={() => setOpen(!open)}
+              />
+            </div>
           ) : null}
           <section className={styles.container}>
             {open && (
@@ -83,6 +85,7 @@ function Projects() {
                   }}
                   editAction={openModalFormEdit}
                   redirect={redirectAction}
+                  sort={{ name: 1, clientName: 1, startDate: 1, endDate: 1, active: 1 }}
                 />
               </>
             )}
@@ -98,9 +101,13 @@ function Projects() {
                     startDate: (x) => x?.slice(0, 10),
                     endDate: (x) => (x ? x.slice(0, 10) : 'To be defined'),
                     active: (x) => (x ? 'Active' : 'Inactive'),
-                    members: (x) => x.find((e) => e.employeeId._id === employee._id)?.role
+                    members: (x) => x.find((member) => member.employeeId._id === employee._id)?.role
                   }}
                   redirect={redirectAction}
+                  sort={{ name: 1, clientName: 1, startDate: 1, endDate: 1, active: 1, members: 1 }}
+                  sortModifiers={{
+                    members: (x) => x.find((member) => member.employeeId._id === employee._id)?.role
+                  }}
                 />
               </>
             )}

@@ -1,16 +1,20 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import styles from './sidebar.module.css';
+import { NavLink } from 'react-router-dom';
 import firebase from 'helper/firebase';
+import styles from './sidebar.module.css';
 
-const SideBar = ({ routes, logout }) => {
+const SideBar = ({ state, routes, logout }) => {
+  let width = '';
+  let windowsSize = window.screen.width;
+
+  if (windowsSize > 1024) {
+    width = state ? '200px' : '0px';
+  } else {
+    width = state ? '150px' : '0px';
+  }
+
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.headerContainer}>
-        <Link className={styles.header} to="/home">
-          Trackgenix
-        </Link>
-      </div>
+    <aside style={{ width }} className={styles.sidebar}>
       <nav>
         <ul className={styles.ul}>
           {routes?.map((route) => (
