@@ -13,7 +13,13 @@ import {
   UPDATE_EMPLOYEE_ERROR,
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
-  DELETE_EMPLOYEE_ERROR
+  DELETE_EMPLOYEE_ERROR,
+  RESTORE_EMPLOYEE_PENDING,
+  RESTORE_EMPLOYEE_SUCCESS,
+  RESTORE_EMPLOYEE_ERROR,
+  REMOVE_EMPLOYEE_PENDING,
+  REMOVE_EMPLOYEE_SUCCESS,
+  REMOVE_EMPLOYEE_ERROR
 } from './constants';
 
 export const getEmployeesPending = () => ({
@@ -83,5 +89,33 @@ export const deleteEmployeeSuccess = (data) => ({
 
 export const deleteEmployeeError = (error) => ({
   type: DELETE_EMPLOYEE_ERROR,
+  payload: error
+});
+
+export const restoreEmployeePending = () => ({
+  type: RESTORE_EMPLOYEE_PENDING
+});
+
+export const restoreEmployeeSuccess = (data) => ({
+  type: RESTORE_EMPLOYEE_SUCCESS,
+  payload: data
+});
+
+export const restoreEmployeeError = (error) => ({
+  type: RESTORE_EMPLOYEE_ERROR,
+  payload: error
+});
+
+export const removeEmployeePending = () => ({
+  type: REMOVE_EMPLOYEE_PENDING
+});
+
+export const removeEmployeeSuccess = (dataId) => ({
+  type: REMOVE_EMPLOYEE_SUCCESS,
+  payload: dataId
+});
+
+export const removeEmployeeError = (error) => ({
+  type: REMOVE_EMPLOYEE_ERROR,
   payload: error
 });

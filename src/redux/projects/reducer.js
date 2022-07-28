@@ -13,7 +13,10 @@ import {
   ADD_PROJECT_ERROR,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_SUCCESS,
-  DELETE_PROJECT_ERROR
+  DELETE_PROJECT_ERROR,
+  REMOVE_PROJECT_PENDING,
+  REMOVE_PROJECT_SUCCESS,
+  REMOVE_PROJECT_ERROR
 } from './constants';
 
 const initialState = {
@@ -116,6 +119,23 @@ export const projectsReducer = (state = initialState, action) => {
         isLoading: true
       };
     case DELETE_PROJECT_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case REMOVE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((item) => item._id !== action.payload),
+        isLoading: false
+      };
+    case REMOVE_PROJECT_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case REMOVE_PROJECT_ERROR:
       return {
         ...state,
         isLoading: false,

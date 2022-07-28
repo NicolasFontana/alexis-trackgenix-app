@@ -13,7 +13,10 @@ import {
   CREATE_TIMESHEET_ERROR,
   PUT_TIMESHEET_PENDING,
   PUT_TIMESHEET_SUCCESS,
-  PUT_TIMESHEET_ERROR
+  PUT_TIMESHEET_ERROR,
+  REMOVE_TIMESHEET_PENDING,
+  REMOVE_TIMESHEET_SUCCESS,
+  REMOVE_TIMESHEET_ERROR
 } from './constants';
 
 export const getAllTimesheetsPending = () => ({
@@ -83,5 +86,19 @@ export const deleteTimesheetSuccess = (data) => ({
 
 export const deleteTimesheetError = (error) => ({
   type: DELETE_TIMESHEET_ERROR,
+  payload: error
+});
+
+export const removeTimesheetPending = () => ({
+  type: REMOVE_TIMESHEET_PENDING
+});
+
+export const removeTimesheetSuccess = (data) => ({
+  type: REMOVE_TIMESHEET_SUCCESS,
+  payload: data
+});
+
+export const removeTimesheetError = (error) => ({
+  type: REMOVE_TIMESHEET_ERROR,
   payload: error
 });
