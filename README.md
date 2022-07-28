@@ -44,7 +44,7 @@ You will also see any lint errors in the console.
 <img src="https://avatars.githubusercontent.com/u/20587232?v=4" height="50" width="50">| Esteban Frare | esteban.frare@radiumrocket.com | [@estefrare](https://github.com/estefrare)
 <img src="https://avatars.githubusercontent.com/u/77452441?v=4" height="50" width="50">| Alexis Maximiliano Lionel Pucheta | alexis.pucheta@radiumrocket.com | [@AlexisPuchetaRR](https://github.com/AlexisPuchetaRR)
 <img src="https://avatars.githubusercontent.com/u/63616157?v=4" height="50" width="50">| Javier Cervera | javieralejandrocervera@gmail.com | [@Javier-Cervera](https://github.com/Javier-Cervera)
-<img src="https://avatars.githubusercontent.com/u/99230234?v=4" height="50" width="50">| Iara Criscenti | --- | [@iaracriscenti](https://github.com/iaracriscenti)
+<img src="https://avatars.githubusercontent.com/u/99230234?v=4" height="50" width="50">| Iara Criscenti | iaracriscenti@gmail.com | [@iaracriscenti](https://github.com/iaracriscenti)
 <img src="https://avatars.githubusercontent.com/u/98777077?v=4" height="50" width="50">| Agustin Gomez | agusleongomez@gmail.com | [@agusting19](https://github.com/agusting19)
 <img src="https://avatars.githubusercontent.com/u/101274948?v=4" height="50" width="50">| Johsua Nowak | johsua.nowak@gmail.com | [@Johsua30](https://github.com/Johsua30)
 <img src="https://avatars.githubusercontent.com/u/94578945?v=4" height="50" width="50">| Nicolas Fontana | nico.fontana12@gmail.com | [@NicolasFontana](https://github.com/NicolasFontana)
