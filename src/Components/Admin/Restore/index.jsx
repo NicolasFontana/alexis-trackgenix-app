@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDeletedEmployees, restoreEmployee, removeEmployee } from 'redux/employees/thunks';
 import { getDeletedProjects, updateProject, removeProject } from 'redux/projects/thunks';
-import { getDeletedTimesheets, putTimesheet, removeTimesheet } from 'redux/time-sheets/thunks';
-import { getDeletedTasks, editTask, removeTask } from 'redux/tasks/thunks';
+import { getDeletedTimesheets, removeTimesheet } from 'redux/time-sheets/thunks';
+import { getDeletedTasks, removeTask } from 'redux/tasks/thunks';
 import styles from './restore.module.css';
 
 const Restore = () => {
@@ -43,12 +43,6 @@ const Restore = () => {
         break;
       case 'Projects':
         restoreDispatch = updateProject(itemId, { isDeleted: false }, setResponse);
-        break;
-      case 'Timesheets':
-        restoreDispatch = putTimesheet({ isDeleted: false }, itemId, setResponse);
-        break;
-      case 'Tasks':
-        restoreDispatch = editTask({ isDeleted: false }, itemId, setResponse);
         break;
     }
     dispatch(restoreDispatch).then(() => {
@@ -200,18 +194,17 @@ const Restore = () => {
             approved: (x) => (x ? 'Approved' : 'Not approved'),
             Task: (x) =>
               x?.reduce((previous, current) => {
-                return previous + current.taskId.workedHours;
+                return previous + current.taskId?.workedHours;
               }, 0),
             createdAt: (x) => x?.slice(0, 7)
           }}
-          editAction={openConfirmModalRestore}
           delAction={openConfirmModalRemove}
           sort={{ projectId: 1, approved: 1, Task: 1, createdAt: 1 }}
           sortModifiers={{
             projectId: (x) => x?.name,
             Task: (x) =>
               x?.reduce((previous, current) => {
-                return previous + current.taskId.workedHours;
+                return previous + current.taskId?.workedHours;
               }, 0),
             createdAt: (x) => x?.slice(0, 7)
           }}
@@ -233,7 +226,6 @@ const Restore = () => {
             createdAt: (x) => x?.slice(0, 10),
             updatedAt: (x) => x?.slice(0, 10)
           }}
-          editAction={openConfirmModalRestore}
           delAction={openConfirmModalRemove}
           sort={{
             taskName: 1,
