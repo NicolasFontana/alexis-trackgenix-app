@@ -13,7 +13,10 @@ import {
   editTaskError,
   deleteTaskPending,
   deleteTaskSuccess,
-  deleteTaskError
+  deleteTaskError,
+  removeTaskPending,
+  removeTaskSuccess,
+  removeTaskError
 } from './actions';
 
 export const getTasks = () => {
@@ -110,6 +113,25 @@ export const delTask = (id, setMessage) => {
       })
       .catch((error) => {
         dispatch(deleteTaskError(error.toString()));
+        setMessage(error);
+      });
+  };
+};
+
+export const removeTask = (id, setMessage) => {
+  return (dispatch) => {
+    dispatch(removeTaskPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/tasks/remove/${id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(removeTaskSuccess(id));
+        setMessage(response);
+      })
+      .catch((error) => {
+        dispatch(removeTaskError(error.toString()));
         setMessage(error);
       });
   };

@@ -13,7 +13,10 @@ import {
   EDIT_TASK_ERROR,
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_ERROR
+  DELETE_TASK_ERROR,
+  REMOVE_TASK_PENDING,
+  REMOVE_TASK_SUCCESS,
+  REMOVE_TASK_ERROR
 } from './constants';
 
 export const getTasksPending = () => ({
@@ -83,5 +86,19 @@ export const deleteTaskSuccess = (data) => ({
 
 export const deleteTaskError = (error) => ({
   type: DELETE_TASK_ERROR,
+  payload: error
+});
+
+export const removeTaskPending = () => ({
+  type: REMOVE_TASK_PENDING
+});
+
+export const removeTaskSuccess = (data) => ({
+  type: REMOVE_TASK_SUCCESS,
+  payload: data
+});
+
+export const removeTaskError = (error) => ({
+  type: REMOVE_TASK_ERROR,
   payload: error
 });

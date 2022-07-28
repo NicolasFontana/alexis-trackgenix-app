@@ -1,5 +1,4 @@
-.container,
-.containerPreloader {
+.container, .containerPreloader {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -14,13 +13,20 @@
 }
 
 .title {
-  text-align: center;
+  font-size: 30px;
   font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-  font-size: 35px;
-  color: #373867;
-  margin: 20px 0;
-  text-transform: uppercase
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 2px 2px 2px grey;
+  color: rgba(55, 56, 103, 1);
+}
+
+.divContainer th {
+  width: 20%;
+}
+
+.divContainer th:last-child {
+  width: 15%;
 }
 
 .box {
@@ -28,7 +34,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 300px;
   margin: 0px auto 10px;
   padding: 10px;
   border: 3px solid #76a068;
@@ -37,7 +42,7 @@
   color: rgba(55, 56, 103, 1);
 }
 
-.divContainer, .divNoTable {
+.divContainer, .divNoTable{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,10 +50,6 @@
 
 .divNoTable {
   width: auto;
-}
-
-.divContainer > table {
-  margin: 10px auto;
 }
 
 .divContainer > button {
@@ -60,4 +61,8 @@
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
   color: rgba(55, 56, 103, 1);
+}
+
+.divContainer table {
+  max-width: 900px;
 }

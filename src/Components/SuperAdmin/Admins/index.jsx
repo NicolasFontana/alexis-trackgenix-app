@@ -33,7 +33,7 @@ const Admins = () => {
 
   useEffect(() => {
     dispatch(getAdmins());
-  }, [showModalFormAdd === false, showModalFormEdit === false, showModalFormDelete === false]);
+  }, [!showModalFormAdd, !showModalFormEdit, !showModalFormDelete]);
 
   const handleConfirm = () => {
     dispatch(delAdmin(idDelete, (response) => setResponse(response))).then(() => {
@@ -135,9 +135,9 @@ const Admins = () => {
         data={admins}
         headers={['firstName', 'lastName', 'email']}
         titles={['First Name', 'Last Name', 'Email']}
-        delAction={openConfirmModal}
         editAction={openEditModal}
-        modifiers={{}}
+        delAction={openConfirmModal}
+        sort={{ firstName: 1, lastName: 1, email: 1 }}
       />
       <ScrollToTop />
     </section>

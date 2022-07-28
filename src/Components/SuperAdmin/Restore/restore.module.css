@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 2% 30px 2%;
+}
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  color: #373867;
+  margin: 20px 0;
+  text-transform: uppercase
+}
+
+.container > section {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}

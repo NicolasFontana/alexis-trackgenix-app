@@ -1,17 +1,15 @@
-.maincontainer,
 .container,
 .containerPreloader {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  margin: 0px 2% 30px 2%;
 }
 
-.maincontainer {
-  margin: 30px 2% 30px 2%;
-}
-
-.btnContainer {
-  text-align: center;
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 .container > section {
@@ -25,10 +23,6 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
-}
-
-.container > table {
-  margin: 0px auto;
 }
 
 .title,
@@ -46,3 +40,24 @@
   font-size: 20px;
   text-shadow: none;
 }
+
+.buttonContainer{
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 5px;
+}
+
+.buttonContainer > button {
+  align-self: flex-start;
+}
+
+@media only screen and (max-width: 760px) {
+  .buttonContainer > button {
+    align-self: center;
+  }
+  .buttonContainer {
+    width: auto;
+  }
+}
+

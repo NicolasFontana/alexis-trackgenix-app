@@ -13,7 +13,10 @@ import {
   addProjectError,
   deleteProjectPending,
   deleteProjectSuccess,
-  deleteProjectError
+  deleteProjectError,
+  removeProjectPending,
+  removeProjectSuccess,
+  removeProjectError
 } from './actions';
 
 export const getProjects = () => {
@@ -117,6 +120,24 @@ export const deleteProject = (_id, setMessage) => {
       })
       .catch((error) => {
         dispatch(deleteProjectError(error.toString()));
+      });
+  };
+};
+
+export const removeProject = (_id, setMessage) => {
+  return (dispatch) => {
+    dispatch(removeProjectPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/projects/remove/${_id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(removeProjectSuccess(_id));
+        setMessage(response);
+      })
+      .catch((error) => {
+        dispatch(removeProjectError(error.toString()));
       });
   };
 };
