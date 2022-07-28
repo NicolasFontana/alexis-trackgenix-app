@@ -13,7 +13,10 @@ import {
   createTimesheetError,
   putTimesheetPending,
   putTimesheetSuccess,
-  putTimesheetError
+  putTimesheetError,
+  removeTimesheetPending,
+  removeTimesheetSuccess,
+  removeTimesheetError
 } from './actions';
 
 export const getAllTimesheets = () => {
@@ -114,6 +117,25 @@ export const deleteTimesheet = (id, setResponse) => {
       })
       .catch((error) => {
         dispatch(deleteTimesheetError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const removeTimesheet = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(removeTimesheetPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/remove/${id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(removeTimesheetSuccess(id));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(removeTimesheetError(error.toString()));
         setResponse(error);
       });
   };

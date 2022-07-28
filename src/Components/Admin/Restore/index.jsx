@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDeletedEmployees, restoreEmployee, removeEmployee } from 'redux/employees/thunks';
 import { getDeletedProjects, updateProject, removeProject } from 'redux/projects/thunks';
-import { getDeletedTimesheets, putTimesheet } from 'redux/time-sheets/thunks';
-import { getDeletedTasks, editTask } from 'redux/tasks/thunks';
+import { getDeletedTimesheets, putTimesheet, removeTimesheet } from 'redux/time-sheets/thunks';
+import { getDeletedTasks, editTask, removeTask } from 'redux/tasks/thunks';
 import styles from './restore.module.css';
 
 const Restore = () => {
@@ -67,10 +67,10 @@ const Restore = () => {
         removeDispatch = removeProject(itemId, setResponse);
         break;
       case 'Timesheets':
-        removeDispatch = putTimesheet({ isDeleted: false }, itemId, setResponse);
+        removeDispatch = removeTimesheet(itemId, setResponse);
         break;
       case 'Tasks':
-        removeDispatch = editTask({ isDeleted: false }, itemId, setResponse);
+        removeDispatch = removeTask(itemId, setResponse);
         break;
     }
     dispatch(removeDispatch).then(() => {
