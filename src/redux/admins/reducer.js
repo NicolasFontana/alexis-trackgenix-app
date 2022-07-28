@@ -13,7 +13,13 @@ import {
   EDIT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  RESTORE_ADMIN_PENDING,
+  RESTORE_ADMIN_SUCCESS,
+  RESTORE_ADMIN_ERROR,
+  REMOVE_ADMIN_PENDING,
+  REMOVE_ADMIN_SUCCESS,
+  REMOVE_ADMIN_ERROR
 } from './constants';
 
 const initialState = {
@@ -113,6 +119,45 @@ export const adminsReducer = (state = initialState, action) => {
         isLoading: false
       };
     case DELETE_ADMIN_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case RESTORE_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case RESTORE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
+        isLoading: false
+      };
+    case RESTORE_ADMIN_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case REMOVE_ADMIN_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case REMOVE_ADMIN_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((admin) => admin._id !== action.payload),
+        isLoading: false
+      };
+    case REMOVE_ADMIN_ERROR:
       return {
         ...state,
         list: action.payload,

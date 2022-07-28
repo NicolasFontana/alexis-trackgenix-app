@@ -13,7 +13,13 @@ import {
   updateEmployeeError,
   deleteEmployeePending,
   deleteEmployeeSuccess,
-  deleteEmployeeError
+  deleteEmployeeError,
+  restoreEmployeePending,
+  restoreEmployeeSuccess,
+  restoreEmployeeError,
+  removeEmployeePending,
+  removeEmployeeSuccess,
+  removeEmployeeError
 } from './actions';
 
 export const getEmployees = () => {
@@ -137,6 +143,47 @@ export const deleteEmployee = (id, setResponse) => {
       })
       .catch((error) => {
         dispatch(deleteEmployeeError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const restoreEmployee = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(restoreEmployeePending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/employees/restore/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(restoreEmployeeSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(restoreEmployeeError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const removeEmployee = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(removeEmployeePending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/employees/remove/${id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(removeEmployeeSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(removeEmployeeError(error.toString()));
         setResponse(error);
       });
   };

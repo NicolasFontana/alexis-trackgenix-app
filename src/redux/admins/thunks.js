@@ -6,14 +6,20 @@ import {
   getDeletedAdminsSuccess,
   getDeletedAdminsError,
   addAdminPending,
-  addAdminSucces,
+  addAdminSuccess,
   addAdminError,
   editAdminPending,
-  editAdminSucces,
+  editAdminSuccess,
   editAdminError,
   deleteAdminPending,
-  deleteAdminSucces,
-  deleteAdminError
+  deleteAdminSuccess,
+  deleteAdminError,
+  restoreAdminPending,
+  restoreAdminSuccess,
+  restoreAdminError,
+  removeAdminPending,
+  removeAdminSuccess,
+  removeAdminError
 } from './actions';
 
 export const getAdmins = () => {
@@ -62,7 +68,7 @@ export const addAdmin = (newAdmin, setResponse) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.error === false) {
-          dispatch(addAdminSucces(response.data));
+          dispatch(addAdminSuccess(response.data));
         }
         setResponse(response);
       })
@@ -86,7 +92,7 @@ export const editAdmin = (id, admin, setResponse) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(editAdminSucces(response.data));
+        dispatch(editAdminSuccess(response.data));
         setResponse(response);
       })
       .catch((error) => {
@@ -105,11 +111,52 @@ export const delAdmin = (id, setResponse) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(deleteAdminSucces(response.data));
+        dispatch(deleteAdminSuccess(response.data));
         setResponse(response);
       })
       .catch((error) => {
         dispatch(deleteAdminError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const restoreAdmin = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(restoreAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/restore/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(restoreAdminSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(restoreAdminError(error.toString()));
+        setResponse(error);
+      });
+  };
+};
+
+export const removeAdmin = (id, setResponse) => {
+  return (dispatch) => {
+    dispatch(removeAdminPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/remove/${id}`, {
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(removeAdminSuccess(response.data));
+        setResponse(response);
+      })
+      .catch((error) => {
+        dispatch(removeAdminError(error.toString()));
         setResponse(error);
       });
   };

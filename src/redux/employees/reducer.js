@@ -13,7 +13,13 @@ import {
   UPDATE_EMPLOYEE_ERROR,
   DELETE_EMPLOYEE_PENDING,
   DELETE_EMPLOYEE_SUCCESS,
-  DELETE_EMPLOYEE_ERROR
+  DELETE_EMPLOYEE_ERROR,
+  RESTORE_EMPLOYEE_PENDING,
+  RESTORE_EMPLOYEE_SUCCESS,
+  RESTORE_EMPLOYEE_ERROR,
+  REMOVE_EMPLOYEE_PENDING,
+  REMOVE_EMPLOYEE_SUCCESS,
+  REMOVE_EMPLOYEE_ERROR
 } from './constants';
 
 const initialState = {
@@ -113,6 +119,45 @@ export const employeesReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.payload
+      };
+    case RESTORE_EMPLOYEE_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case RESTORE_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          if (item._id === action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
+        isLoading: false
+      };
+    case RESTORE_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case REMOVE_EMPLOYEE_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case REMOVE_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((employee) => employee._id !== action.payload),
+        isLoading: false
+      };
+    case REMOVE_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
       };
     default:
       return state;

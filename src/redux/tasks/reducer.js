@@ -13,7 +13,10 @@ import {
   EDIT_TASK_ERROR,
   DELETE_TASK_PENDING,
   DELETE_TASK_SUCCESS,
-  DELETE_TASK_ERROR
+  DELETE_TASK_ERROR,
+  REMOVE_TASK_PENDING,
+  REMOVE_TASK_SUCCESS,
+  REMOVE_TASK_ERROR
 } from './constants';
 
 const initialState = {
@@ -114,6 +117,23 @@ export const tasksReducer = (state = initialState, action) => {
         isLoading: false
       };
     case DELETE_TASK_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case REMOVE_TASK_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case REMOVE_TASK_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((item) => item._id !== action.payload),
+        isLoading: false
+      };
+    case REMOVE_TASK_ERROR:
       return {
         ...state,
         list: action.payload,

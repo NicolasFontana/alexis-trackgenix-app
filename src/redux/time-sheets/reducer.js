@@ -13,7 +13,10 @@ import {
   PUT_TIMESHEET_ERROR,
   DELETE_TIMESHEET_PENDING,
   DELETE_TIMESHEET_SUCCESS,
-  DELETE_TIMESHEET_ERROR
+  DELETE_TIMESHEET_ERROR,
+  REMOVE_TIMESHEET_PENDING,
+  REMOVE_TIMESHEET_SUCCESS,
+  REMOVE_TIMESHEET_ERROR
 } from './constants';
 
 const initialState = {
@@ -114,6 +117,23 @@ export const timesheetsReducer = (state = initialState, action) => {
         isLoading: false
       };
     case DELETE_TIMESHEET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+    case REMOVE_TIMESHEET_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case REMOVE_TIMESHEET_SUCCESS:
+      return {
+        ...state,
+        listTimesheet: state.listTimesheet.filter((timesheet) => timesheet._id !== action.payload),
+        isLoading: false
+      };
+    case REMOVE_TIMESHEET_ERROR:
       return {
         ...state,
         error: action.payload,

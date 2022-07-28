@@ -13,7 +13,13 @@ import {
   EDIT_ADMIN_ERROR,
   DELETE_ADMIN_PENDING,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
+  RESTORE_ADMIN_PENDING,
+  RESTORE_ADMIN_SUCCESS,
+  RESTORE_ADMIN_ERROR,
+  REMOVE_ADMIN_PENDING,
+  REMOVE_ADMIN_SUCCESS,
+  REMOVE_ADMIN_ERROR
 } from './constants';
 
 export const getAdminsPending = () => ({
@@ -48,7 +54,7 @@ export const addAdminPending = () => ({
   type: ADD_ADMIN_PENDING
 });
 
-export const addAdminSucces = (data) => ({
+export const addAdminSuccess = (data) => ({
   type: ADD_ADMIN_SUCCESS,
   payload: data
 });
@@ -62,7 +68,7 @@ export const editAdminPending = () => ({
   type: EDIT_ADMIN_PENDING
 });
 
-export const editAdminSucces = (data) => ({
+export const editAdminSuccess = (data) => ({
   type: EDIT_ADMIN_SUCCESS,
   payload: data
 });
@@ -76,12 +82,40 @@ export const deleteAdminPending = () => ({
   type: DELETE_ADMIN_PENDING
 });
 
-export const deleteAdminSucces = (dataId) => ({
+export const deleteAdminSuccess = (dataId) => ({
   type: DELETE_ADMIN_SUCCESS,
   payload: dataId
 });
 
 export const deleteAdminError = (error) => ({
   type: DELETE_ADMIN_ERROR,
+  payload: error
+});
+
+export const restoreAdminPending = () => ({
+  type: RESTORE_ADMIN_PENDING
+});
+
+export const restoreAdminSuccess = (data) => ({
+  type: RESTORE_ADMIN_SUCCESS,
+  payload: data
+});
+
+export const restoreAdminError = (error) => ({
+  type: RESTORE_ADMIN_ERROR,
+  payload: error
+});
+
+export const removeAdminPending = () => ({
+  type: REMOVE_ADMIN_PENDING
+});
+
+export const removeAdminSuccess = (dataId) => ({
+  type: REMOVE_ADMIN_SUCCESS,
+  payload: dataId
+});
+
+export const removeAdminError = (error) => ({
+  type: REMOVE_ADMIN_ERROR,
   payload: error
 });
