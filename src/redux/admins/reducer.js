@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_DELETED_ADMINS_PENDING,
+  GET_DELETED_ADMINS_SUCCESS,
+  GET_DELETED_ADMINS_ERROR,
   ADD_ADMIN_PENDING,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_ERROR,
@@ -34,6 +37,23 @@ export const adminsReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_ADMINS_ERROR:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case GET_DELETED_ADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_DELETED_ADMINS_SUCCESS:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case GET_DELETED_ADMINS_ERROR:
       return {
         ...state,
         list: action.payload,

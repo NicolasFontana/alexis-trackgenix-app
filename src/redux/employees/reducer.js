@@ -2,6 +2,9 @@ import {
   GET_EMPLOYEES_PENDING,
   GET_EMPLOYEES_SUCCESS,
   GET_EMPLOYEES_ERROR,
+  GET_DELETED_EMPLOYEES_PENDING,
+  GET_DELETED_EMPLOYEES_SUCCESS,
+  GET_DELETED_EMPLOYEES_ERROR,
   CREATE_EMPLOYEE_PENDING,
   CREATE_EMPLOYEE_SUCCESS,
   CREATE_EMPLOYEE_ERROR,
@@ -33,6 +36,23 @@ export const employeesReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case GET_DELETED_EMPLOYEES_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_DELETED_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false
+      };
+    case GET_DELETED_EMPLOYEES_ERROR:
       return {
         ...state,
         isLoading: false,

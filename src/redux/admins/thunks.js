@@ -2,6 +2,9 @@ import {
   getAdminsPending,
   getAdminsSuccess,
   getAdminsError,
+  getDeletedAdminsPending,
+  getDeletedAdminsSuccess,
+  getDeletedAdminsError,
   addAdminPending,
   addAdminSucces,
   addAdminError,
@@ -29,6 +32,22 @@ export const getAdmins = () => {
   };
 };
 
+export const getDeletedAdmins = () => {
+  return (dispatch) => {
+    dispatch(getDeletedAdminsPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/admins/deleted`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getDeletedAdminsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getDeletedAdminsError(error.toString()));
+      });
+  };
+};
+
 export const addAdmin = (newAdmin, setResponse) => {
   return (dispatch) => {
     dispatch(addAdminPending());
@@ -36,7 +55,8 @@ export const addAdmin = (newAdmin, setResponse) => {
       method: 'POST',
       body: newAdmin,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => response.json())
@@ -60,7 +80,8 @@ export const editAdmin = (id, admin, setResponse) => {
       method: 'PUT',
       body: admin,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => response.json())
@@ -79,7 +100,8 @@ export const delAdmin = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {

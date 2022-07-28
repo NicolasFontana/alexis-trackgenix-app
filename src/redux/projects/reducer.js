@@ -2,9 +2,9 @@ import {
   GET_PROJECTS_PENDING,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_ERROR,
-  GET_PROJECT_BY_ID_PENDING,
-  GET_PROJECT_BY_ID_SUCCESS,
-  GET_PROJECT_BY_ID_ERROR,
+  GET_DELETED_PROJECTS_PENDING,
+  GET_DELETED_PROJECTS_SUCCESS,
+  GET_DELETED_PROJECTS_ERROR,
   UPDATE_PROJECT_PENDING,
   UPDATE_PROJECT_SUCCESS,
   UPDATE_PROJECT_ERROR,
@@ -17,7 +17,6 @@ import {
 } from './constants';
 
 const initialState = {
-  project: {},
   list: [],
   isLoading: true,
   error: false,
@@ -44,23 +43,23 @@ export const projectsReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload
       };
-    //GET PROJECT BY ID
-    case GET_PROJECT_BY_ID_PENDING:
+    //GET DELETED PROJECTS
+    case GET_DELETED_PROJECTS_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case GET_PROJECT_BY_ID_SUCCESS:
+    case GET_DELETED_PROJECTS_SUCCESS:
       return {
         ...state,
-        project: action.payload,
+        list: action.payload,
         isLoading: false
       };
-    case GET_PROJECT_BY_ID_ERROR:
+    case GET_DELETED_PROJECTS_ERROR:
       return {
         ...state,
-        error: action.payload,
-        isLoading: false
+        isLoading: false,
+        error: action.payload
       };
     //ADD PROJECT
     case ADD_PROJECT_SUCCESS:
