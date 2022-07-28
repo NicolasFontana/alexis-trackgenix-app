@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDeletedAdmins, restoreAdmin, removeAdmin } from 'redux/admins/thunks';
 import styles from './restore.module.css';
 
-const Admins = () => {
+const Restore = () => {
   const dispatch = useDispatch();
   const admins = useSelector((state) => state.admins.list);
   const isLoading = useSelector((state) => state.admins.isLoading);
@@ -89,7 +89,7 @@ const Admins = () => {
     );
   }
 
-  return isLoading && !showModalFormRestore && !showSuccessModal ? (
+  return isLoading && !showModalFormRestore && !showModalFormRemove && !showSuccessModal ? (
     <Preloader>
       <p>Loading Admins</p>
     </Preloader>
@@ -112,4 +112,4 @@ const Admins = () => {
   );
 };
 
-export default Admins;
+export default Restore;

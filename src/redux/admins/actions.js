@@ -54,7 +54,7 @@ export const addAdminPending = () => ({
   type: ADD_ADMIN_PENDING
 });
 
-export const addAdminSucces = (data) => ({
+export const addAdminSuccess = (data) => ({
   type: ADD_ADMIN_SUCCESS,
   payload: data
 });
@@ -68,7 +68,7 @@ export const editAdminPending = () => ({
   type: EDIT_ADMIN_PENDING
 });
 
-export const editAdminSucces = (data) => ({
+export const editAdminSuccess = (data) => ({
   type: EDIT_ADMIN_SUCCESS,
   payload: data
 });
@@ -82,7 +82,7 @@ export const deleteAdminPending = () => ({
   type: DELETE_ADMIN_PENDING
 });
 
-export const deleteAdminSucces = (dataId) => ({
+export const deleteAdminSuccess = (dataId) => ({
   type: DELETE_ADMIN_SUCCESS,
   payload: dataId
 });
@@ -96,7 +96,7 @@ export const restoreAdminPending = () => ({
   type: RESTORE_ADMIN_PENDING
 });
 
-export const restoreAdminSucces = (data) => ({
+export const restoreAdminSuccess = (data) => ({
   type: RESTORE_ADMIN_SUCCESS,
   payload: data
 });
@@ -110,7 +110,7 @@ export const removeAdminPending = () => ({
   type: REMOVE_ADMIN_PENDING
 });
 
-export const removeAdminSucces = (dataId) => ({
+export const removeAdminSuccess = (dataId) => ({
   type: REMOVE_ADMIN_SUCCESS,
   payload: dataId
 });
