@@ -1,0 +1,29 @@
+.containerButton {
+  position: relative;
+}
+
+.iconToTop {
+  position: fixed;
+  bottom: 40px;
+  right: 25px;
+  z-index: 20;
+  background-color: #373867;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: -13rem;
+  transition: margin-bottom 0.2s ease-in;
+}
+
+.iconActive {
+  margin-bottom: 0;
+}
+
+.iconToTop:hover {
+  animation: none;
+  background: #fff;
+  color: #373867;
+  border: 2px solid #373867;
+}

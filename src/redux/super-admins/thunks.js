@@ -38,7 +38,8 @@ export const postSuperAdmin = (newSuperAdmin, setResponse) => {
       method: 'POST',
       body: newSuperAdmin,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => response.json())
@@ -62,7 +63,8 @@ export const putSuperAdmin = (superAdminId, editedSuperAdmin, setResponse) => {
       method: 'PUT',
       body: editedSuperAdmin,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       }
     })
       .then((response) => response.json())
@@ -81,7 +83,8 @@ export const deleteSuperAdmin = (id, setMessage) => {
   return (dispatch) => {
     dispatch(deleteSuperAdminPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/super-admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {

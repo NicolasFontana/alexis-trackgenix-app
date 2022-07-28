@@ -4,7 +4,7 @@ import { Header, Footer, SideBar } from 'Components/Shared';
 import styles from './layout.module.css';
 
 function Layout(props) {
-  const { routes, logout } = props;
+  const { routes, routesHeader, logout } = props;
   const [sidebar, setSidebar] = useState(false);
 
   const history = useHistory();
@@ -21,7 +21,7 @@ function Layout(props) {
 
   return (
     <div className={styles.container}>
-      <Header sidebarOpener={sidebarOpenClose} />
+      <Header sidebarOpener={sidebarOpenClose} routesHeader={routesHeader} />
       <SideBar state={sidebar} routes={routes} logout={logout} />
       <div className={styles.currentScreen}>{props.children}</div>
       <Footer />

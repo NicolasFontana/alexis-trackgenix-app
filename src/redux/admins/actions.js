@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_SUCCESS,
   GET_ADMINS_ERROR,
+  GET_DELETED_ADMINS_PENDING,
+  GET_DELETED_ADMINS_SUCCESS,
+  GET_DELETED_ADMINS_ERROR,
   ADD_ADMIN_PENDING,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_ERROR,
@@ -24,6 +27,20 @@ export const getAdminsSuccess = (data) => ({
 
 export const getAdminsError = (error) => ({
   type: GET_ADMINS_ERROR,
+  payload: error
+});
+
+export const getDeletedAdminsPending = () => ({
+  type: GET_DELETED_ADMINS_PENDING
+});
+
+export const getDeletedAdminsSuccess = (data) => ({
+  type: GET_DELETED_ADMINS_SUCCESS,
+  payload: data
+});
+
+export const getDeletedAdminsError = (error) => ({
+  type: GET_DELETED_ADMINS_ERROR,
   payload: error
 });
 

@@ -2,13 +2,12 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Layout from 'Components/Layout';
 import Login from 'Components/Auth/Login';
 import SignUp from 'Components/Auth/SignUp';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHouse } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
+// const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
 
 const authRoutes = [
-  { icon: home, name: 'Home', path: '/' },
   { name: 'Log In', path: '/auth/login' },
   { name: 'Sign Up', path: '/auth/signup' }
 ];
@@ -16,7 +15,7 @@ const authRoutes = [
 const AuthRoutes = () => {
   const { url } = useRouteMatch();
   return (
-    <Layout routes={authRoutes}>
+    <Layout routesHeader={authRoutes}>
       <Switch>
         <Route path={`${url}/login`} component={Login} />
         <Route path={`${url}/signup`} component={SignUp} />

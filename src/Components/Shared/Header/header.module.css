@@ -5,7 +5,7 @@
   position: sticky;
   top: 0px;
   background-color: #76a068;
-  height: 100px;
+  height: 115px;
   padding: 0px 30px;
 }
 
@@ -17,6 +17,7 @@
 
 .leftSide .title {
   font-size: 36px;
+  margin: 0;
   padding-left: 10px;
   margin-right: 5%;
   text-decoration: none;
@@ -49,6 +50,7 @@
 .burger {
   display: inline-block;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .bar1,
@@ -61,12 +63,65 @@
   transition: 0.4s;
 }
 
+.rightSide {
+  display: flex;
+  align-items: center;
+}
+
+.ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+  list-style: none;
+  text-decoration: none;
+}
+
+.li {
+  margin-left: 20px;
+  list-style: none;
+  padding: 5px 0;
+  background-image: linear-gradient(
+    transparent 0%,
+    transparent 90%,
+    #373867 90%,
+    #373867 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position-x: right;
+  transition: background-size 1000ms;
+}
+
+.li:hover {
+  background-size: 100% 100%;
+  background-position-x: left;
+}
+
+.li a {
+  list-style: none;
+  text-decoration: none;
+  color: #373867;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 /* User styles */
 .user {
   display: none;
 }
 
 @media screen and (min-width: 480px) {
+  .ul {
+    flex-direction: row;
+  }
+
+  .li a {
+    font-size: 20px;
+  }
+
   .user {
     display: flex;
     flex-direction: column;

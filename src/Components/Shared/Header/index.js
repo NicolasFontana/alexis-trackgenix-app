@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 
-const Header = ({ sidebarOpener }) => {
+const Header = ({ sidebarOpener, routesHeader }) => {
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(false);
   const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
@@ -60,16 +60,32 @@ const Header = ({ sidebarOpener }) => {
   return (
     <header className={styles.header}>
       <div className={styles.leftSide}>
-        <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
-          <div className={styles.bar1}></div>
-          <div className={styles.bar2}></div>
-          <div className={styles.bar3}></div>
-        </div>
+        {user ? (
+          <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
+            <div className={styles.bar1}></div>
+            <div className={styles.bar2}></div>
+            <div className={styles.bar3}></div>
+          </div>
+        ) : null}
         <h2 className={styles.title}>
           <Link to={url}>Trackgenix</Link>
         </h2>
       </div>
-      <div className={styles.title}>{userProfile}</div>
+      <div className={styles.rightSide}>
+        <nav>
+          <ul className={styles.ul}>
+            {routesHeader?.map((route) => (
+              <li key={route.name} className={styles.li}>
+                <NavLink to={route.path} exact activeStyle={{ fontWeight: 'bold' }}>
+                  {route.icon}
+                  {route.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className={styles.title}>{userProfile}</div>
+      </div>
     </header>
   );
 };

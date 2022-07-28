@@ -2,6 +2,9 @@ import {
   getAllTimesheetsPending,
   getAllTimesheetsError,
   getAllTimesheetsSuccess,
+  getDeletedTimesheetsPending,
+  getDeletedTimesheetsError,
+  getDeletedTimesheetsSuccess,
   deleteTimesheetPending,
   deleteTimesheetSuccess,
   deleteTimesheetError,
@@ -29,13 +32,30 @@ export const getAllTimesheets = () => {
   };
 };
 
+export const getDeletedTimesheets = () => {
+  return (dispatch) => {
+    dispatch(getDeletedTimesheetsPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/deleted`, {
+      headers: { token: sessionStorage.getItem('token') }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        dispatch(getDeletedTimesheetsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getDeletedTimesheetsError(error.toString()));
+      });
+  };
+};
+
 export const createTimesheet = (projectId, setMessage) => {
   return (dispatch) => {
     dispatch(createTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify({
         projectId: projectId,
@@ -63,7 +83,8 @@ export const putTimesheet = (userInput, id, setMessage) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token: sessionStorage.getItem('token')
       },
       body: JSON.stringify(userInput)
     })
@@ -83,7 +104,8 @@ export const deleteTimesheet = (id, setResponse) => {
   return (dispatch) => {
     dispatch(deleteTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/api/time-sheets/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token: sessionStorage.getItem('token') }
     })
       .then((response) => response.json())
       .then((response) => {

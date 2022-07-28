@@ -2,6 +2,9 @@ import {
   GET_TIMESHEETS_PENDING,
   GET_TIMESHEETS_SUCCESS,
   GET_TIMESHEETS_ERROR,
+  GET_DELETED_TIMESHEETS_PENDING,
+  GET_DELETED_TIMESHEETS_SUCCESS,
+  GET_DELETED_TIMESHEETS_ERROR,
   CREATE_TIMESHEET_PENDING,
   CREATE_TIMESHEET_SUCCESS,
   CREATE_TIMESHEET_ERROR,
@@ -34,6 +37,24 @@ export const timesheetsReducer = (state = initialState, action) => {
         isLoading: false
       };
     case GET_TIMESHEETS_ERROR:
+      return {
+        ...state,
+        error: true,
+        isLoading: false
+      };
+    //GET DELETED TIMESHEETS
+    case GET_DELETED_TIMESHEETS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case GET_DELETED_TIMESHEETS_SUCCESS:
+      return {
+        ...state,
+        listTimesheet: action.payload,
+        isLoading: false
+      };
+    case GET_DELETED_TIMESHEETS_ERROR:
       return {
         ...state,
         error: true,
