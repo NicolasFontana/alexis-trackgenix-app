@@ -17,12 +17,11 @@ function Home() {
         <div>
           <h2 className={styles.title}>What is Trackgenix?</h2>
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam quam quisquam esse,
-            ducimus molestias, quae cupiditate obcaecati sed, nisi animi eius asperiores quas quidem
-            ad distinctio atque velit impedit cum. Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Deserunt tempore delectus fugiat est fuga harum nisi quasi rem, veniam
-            quas doloribus optio non officiis consectetur odit totam praesentium illum autem nulla
-            maxime unde velit esse. Eius consectetur inventore temporibus id.
+            Trackgenix is a web system to ease the registration of the hours worked by each employee
+            in each project and work team. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Possimus maxime iure delectus! Ad itaque dolorum culpa maiores! Unde nihil blanditiis
+            consequuntur reiciendis, molestiae laudantium mollitia beatae quidem nostrum, soluta
+            labore.
           </p>
         </div>
         <img
@@ -39,8 +38,8 @@ function Home() {
             <div>
               <h3 className={styles.subtitle}>Hours log</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
-                consequatur inventore asperiores illo atque at.
+                Track work just as you are used to, but simpler. Your employees can write down when
+                and what they worked on at any time so you all can be updated at all times.
               </p>
             </div>
           </div>
@@ -49,8 +48,9 @@ function Home() {
             <div>
               <h3 className={styles.subtitle}>Resource management</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
-                consequatur inventore asperiores illo atque at.
+                Trackgenix web system guarantees you a better management of the resources you have.
+                It increases considerably the productivity as it allows you to get more work done in
+                less time.
               </p>
             </div>
           </div>
@@ -59,8 +59,8 @@ function Home() {
             <div>
               <h3 className={styles.subtitle}>Reports</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
-                consequatur inventore asperiores illo atque at.
+                Trackgenix guarantees you a reliable data source to be based on when you have to
+                make decisions whether simple or complex.
               </p>
             </div>
           </div>
@@ -69,8 +69,9 @@ function Home() {
             <div>
               <h3 className={styles.subtitle}>Multiple Roles</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi
-                consequatur inventore asperiores illo atque at.
+                we are commited to flexible work and to building tools that fit into any workflow.
+                In order to improve your company leadership and team management, we offer you this
+                tool which can be easily adapted to your employees necessities.
               </p>
             </div>
           </div>
@@ -96,12 +97,11 @@ function Home() {
         <div>
           <h2 className={styles.title}>Our History</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, consequuntur, beatae
-            labore dolores a asperiores quo recusandae deserunt animi in iure non voluptatibus nulla
-            accusamus dignissimos magnam, aperiam eius nobis! Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Explicabo nam excepturi voluptas voluptatibus fuga tempore, sit
-            numquam veritatis sed. Accusantium tempora iure eaque cupiditate reiciendis eum nam ipsa
-            eveniet magnam?
+            In Trackgenix SA we are a group of software developers that offer our services to other
+            companies since 2020. Our main goal as a team is to give you an appropriate tool
+            according to your needs. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            Voluptas officiis incidunt non amet accusantium minima expedita veniam quas aliquid
+            dignissimos eum similique suscipit, ad minus.
           </p>
         </div>
         <img
