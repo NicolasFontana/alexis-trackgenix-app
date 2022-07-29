@@ -14,7 +14,10 @@
 
 .inputs {
   width: 90%;
-  margin: 15px 0px;
+}
+
+.inputs > div {
+  margin-bottom: 10px;
 }
 
 .container > div:last-child {

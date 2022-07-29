@@ -7,11 +7,12 @@
 }
 
 .title {
-  font-size: 30px;
   font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
+  font-weight: bold;
+  font-size: 35px;
+  color: #373867;
+  margin: 20px 0;
+  text-transform: uppercase
 }
 
 .container > section {

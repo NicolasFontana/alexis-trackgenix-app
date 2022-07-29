@@ -14,12 +14,13 @@
 }
 
 .title {
-  font-size: 30px;
-  font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
   text-align: center;
-  text-shadow: 2px 2px 2px grey;
-  color: rgba(55, 56, 103, 1);
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  color: #373867;
+  margin: 20px 0;
+  text-transform: uppercase
 }
 
 .box {

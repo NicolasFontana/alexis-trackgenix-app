@@ -4,7 +4,8 @@ import {
   ErrorSuccessModal,
   ModalForm,
   Preloader,
-  Table
+  Table,
+  ScrollToTop
 } from 'Components/Shared';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -138,6 +139,7 @@ const Admins = () => {
         delAction={openConfirmModal}
         sort={{ firstName: 1, lastName: 1, email: 1 }}
       />
+      <ScrollToTop />
     </section>
   );
 };

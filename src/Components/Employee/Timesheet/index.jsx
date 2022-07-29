@@ -7,6 +7,7 @@ import {
   ButtonText,
   ModalForm,
   ErrorSuccessModal,
+  ScrollToTop,
   Select
 } from 'Components/Shared';
 import FormAdd from './AddTimesheet';
@@ -252,6 +253,7 @@ function Timesheet() {
           }}
         />
       </section>
+      <ScrollToTop />
     </div>
   );
 }

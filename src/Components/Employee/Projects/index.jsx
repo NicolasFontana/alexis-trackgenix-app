@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, ModalForm, Preloader, ButtonText } from 'Components/Shared';
+import { Table, ModalForm, Preloader, ButtonText, ScrollToTop } from 'Components/Shared';
 import Form from './Form';
 import styles from './projects.module.css';
 import { getProjects } from 'redux/projects/thunks';
@@ -116,6 +116,7 @@ function Projects() {
       ) : (
         <h3 className={styles.subtitle}> You have not been assigned to any project yet </h3>
       )}
+      <ScrollToTop />
     </section>
   );
 }

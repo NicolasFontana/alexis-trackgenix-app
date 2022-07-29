@@ -5,7 +5,14 @@ import { getProjects, updateProject } from 'redux/projects/thunks';
 import { useHistory, generatePath } from 'react-router-dom';
 import styles from './employees.module.css';
 import Form from './Form';
-import { Preloader, Table, ModalForm, ConfirmModal, ErrorSuccessModal } from 'Components/Shared';
+import {
+  Preloader,
+  Table,
+  ModalForm,
+  ConfirmModal,
+  ErrorSuccessModal,
+  ScrollToTop
+} from 'Components/Shared';
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -132,6 +139,7 @@ const Employees = () => {
         }}
         successResponse={response}
       />
+      <ScrollToTop />
     </section>
   );
 };

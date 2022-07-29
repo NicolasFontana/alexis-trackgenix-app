@@ -14,6 +14,7 @@ import Preloader from './Preloader/Preloader';
 import Select from './Select';
 import Table from './Table/Table';
 import Textarea from './Textarea';
+import ScrollToTop from './ScrollToTop';
 
 export {
   ButtonAdd,
@@ -31,5 +32,6 @@ export {
   Preloader,
   Select,
   Table,
-  Textarea
+  Textarea,
+  ScrollToTop
 };
