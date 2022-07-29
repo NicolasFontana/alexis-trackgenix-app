@@ -11,21 +11,34 @@ import Layout from 'Components/Layout';
 import Profile from 'Components/Employee/Profile';
 import Projects from 'Components/Employee/Projects';
 import Tasks from 'Components/Employee/Timesheet/Tasks';
-import { faClock, faFolderClosed, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faFolderClosed, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const home = <FontAwesomeIcon icon={faHouse}></FontAwesomeIcon>;
-const projects = <FontAwesomeIcon icon={faFolderClosed}></FontAwesomeIcon>;
-const timesheets = <FontAwesomeIcon icon={faClock}></FontAwesomeIcon>;
-
-const employeesRoutes = [
-  { icon: home, name: 'Home', path: '/employee' },
-  { icon: projects, name: 'Projects', path: '/employee/projects' },
-  { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' }
-];
 
 const Employee = () => {
   const { url } = useRouteMatch();
+  let windowsSize = window.screen.width;
+  let employeesRoutes;
+
+  const home = <FontAwesomeIcon icon={faHouse} />;
+  const projects = <FontAwesomeIcon icon={faFolderClosed} />;
+  const timesheets = <FontAwesomeIcon icon={faClock} />;
+  const profile = <FontAwesomeIcon icon={faUser} />;
+
+  if (location.pathname.substring(0, 9) === '/employee' && windowsSize <= 480) {
+    employeesRoutes = [
+      { icon: home, name: 'Home', path: '/employee' },
+      { icon: projects, name: 'Projects', path: '/employee/projects' },
+      { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' },
+      { icon: profile, name: 'Profile', path: '/employee/profile' }
+    ];
+  } else {
+    employeesRoutes = [
+      { icon: home, name: 'Home', path: '/employee' },
+      { icon: projects, name: 'Projects', path: '/employee/projects' },
+      { icon: timesheets, name: 'Time-Sheet', path: '/employee/time-sheet' }
+    ];
+  }
+
   return (
     <Layout routes={employeesRoutes} logout>
       <Switch>

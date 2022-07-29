@@ -8,16 +8,16 @@ import { Link } from 'react-router-dom';
 
 const Header = ({ sidebarOpener, routesHeader }) => {
   const location = useLocation();
-  const [openSidebar, setOpenSidebar] = useState(false);
-  const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
-  let userProfile;
-
   const user = useSelector((state) => state.auth.user?.data);
   const employee = useSelector((state) => state.employees.list).find(
     (employee) => employee._id === user._id
   );
 
-  //The title redirect to this url
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const userIcon = <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>;
+  let userProfile;
+  let burgerIcon;
   let url;
 
   if (location.pathname.substring(0, 6) === '/admin') {
@@ -30,7 +30,6 @@ const Header = ({ sidebarOpener, routesHeader }) => {
     url = '/home';
   }
 
-  //This comparison is used to show or hide the profile button
   if (
     location.pathname !== '/home' &&
     location.pathname !== '/auth/login' &&
@@ -50,6 +49,15 @@ const Header = ({ sidebarOpener, routesHeader }) => {
         </p>
       </NavLink>
     );
+    burgerIcon = (
+      <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
+        <div className={styles.bar1}></div>
+        <div className={styles.bar2}></div>
+        <div className={styles.bar3}></div>
+      </div>
+    );
+  } else {
+    burgerIcon = '';
   }
 
   const sidebarOpenClose = (state) => {
@@ -60,13 +68,7 @@ const Header = ({ sidebarOpener, routesHeader }) => {
   return (
     <header className={styles.header}>
       <div className={styles.leftSide}>
-        {user ? (
-          <div className={styles.burger} onClick={() => sidebarOpenClose(openSidebar)}>
-            <div className={styles.bar1}></div>
-            <div className={styles.bar2}></div>
-            <div className={styles.bar3}></div>
-          </div>
-        ) : null}
+        {burgerIcon}
         <h2 className={styles.title}>
           <Link to={url}>Trackgenix</Link>
         </h2>

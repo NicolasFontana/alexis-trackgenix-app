@@ -17,7 +17,7 @@ const MemberTimesheetPage = () => {
   );
   const timesheets = useSelector((state) => state.timesheets.listTimesheet)?.filter(
     (timesheet) =>
-      timesheet.projectId._id === id &&
+      timesheet.projectId?._id === id &&
       member?.timeSheets.some((memberTS) => memberTS._id === timesheet._id)
   );
   const project = member?.projects.find((project) => project._id === id);
