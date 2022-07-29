@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 const Header = ({ sidebarOpener, routesHeader }) => {
   const location = useLocation();
   const user = useSelector((state) => state.auth.user?.data);
-  const employee = useSelector((state) => state.employees.list).find(
-    (employee) => employee._id === user._id
+  const employee = useSelector((state) => state.employees.list)?.find(
+    (employee) => employee._id === user?._id
   );
 
   const [openSidebar, setOpenSidebar] = useState(false);

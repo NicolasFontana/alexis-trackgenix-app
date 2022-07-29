@@ -220,11 +220,11 @@ const EmployeeFormEdit = ({ employeeEdit, closeModalForm }) => {
         <div className={styles.lowerFields}>
           <Input
             label="Picture link"
-            type="text"
-            name="picture"
+            type="file"
+            name="profilePicture"
             placeholder="Insert picture link"
             register={register}
-            error={errors.picture?.message}
+            error={errors.profilePicture?.message}
           />
           <Input
             label="Email"
