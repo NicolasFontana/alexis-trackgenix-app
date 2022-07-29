@@ -41,7 +41,6 @@ const EmployeeProfile = () => {
   }
 
   const status = employee?.active ? 'Active' : 'Inactive';
-  const isPM = employee?.isProjectManager ? 'Yes' : 'No';
   const linkPicture = employee?.picture ? employee.picture : '';
 
   return employeeLoading && !showModalFormEdit ? (
@@ -80,10 +79,6 @@ const EmployeeProfile = () => {
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Status:</h3>
           <p className={styles.rowText}>{`${status}`}</p>
-        </div>
-        <div className={styles.row}>
-          <h3 className={styles.rowTitle}>Is Project Manager:</h3>
-          <p className={styles.rowText}>{`${isPM}`}</p>
         </div>
         <div className={styles.row}>
           <h3 className={styles.rowTitle}>Address:</h3>
