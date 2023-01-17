@@ -23,7 +23,6 @@ const Restore = () => {
   const [response, setResponse] = useState('');
   const [itemId, setItemId] = useState();
   const [table, setTable] = useState('');
-
   let modalRestore;
   let modalRemove;
   let modalErrorSuccess;
@@ -166,7 +165,7 @@ const Restore = () => {
           sort={{ firstName: 1, lastName: 1, phone: 1, email: 1, active: 1 }}
         />
       ) : null}
-      {table === 'Projects' && projects.length ? (
+      {table === 'Projects' && projects?.length ? (
         <Table
           data={projects}
           headers={['name', 'clientName', 'startDate', 'endDate', 'active']}
