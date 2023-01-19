@@ -68,15 +68,6 @@ function Timesheet() {
   }, []);
 
   const handleOnSubmit = (data) => {
-    console.log(
-      timesheets.filter((timesheet) =>
-        employees
-          ?.filter((employee) => data.employee === employee._id)
-          .find((employee) =>
-            employee.timeSheets.find((employeeTimesheet) => timesheet._id === employeeTimesheet._id)
-          )
-      )
-    );
     setFilteredTimesheet(
       timesheets
         .filter(

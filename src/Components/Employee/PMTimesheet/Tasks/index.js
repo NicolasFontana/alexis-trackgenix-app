@@ -34,8 +34,6 @@ function Tasks() {
     dispatch(getEmployees());
   }, [!showModalApprove]);
 
-  console.log(employee);
-
   const history = useHistory();
 
   const approveTimesheet = () => {
