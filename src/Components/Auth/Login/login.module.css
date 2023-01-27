@@ -35,3 +35,34 @@
   align-items: center;
   z-index: 2;
 }
+
+.containerTwo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 550px;
+  padding: 30px 10px;
+  margin: 30px auto;
+}
+
+.cardAccount {
+  background-color: #ecf0f1;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin:  10px 0;
+}
+
+.textAccount {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+
+.titleCard {
+  font-weight: 500;
+  margin: 0 0 10px 0;
+}
